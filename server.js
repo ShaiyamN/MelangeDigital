@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-// Serves the Vite build for Hostinger Node entry (process.env.PORT).
+// Serves the Vite build for Hostinger Node entry when app root is the repo.
 const DIST = path.join(__dirname, "client", "dist");
 const PORT = Number(process.env.PORT) || 3000;
 
@@ -23,13 +23,34 @@ const MIME = {
   ".mp4": "video/mp4",
   ".xml": "application/xml",
   ".txt": "text/plain",
+  ".jfif": "image/jpeg",
 };
 
-function safeJoin(root, urlPath) {
-  const decoded = decodeURIComponent(urlPath.split("?")[0]);
-  const resolved = path.normalize(path.join(root, decoded));
-  if (!resolved.startsWith(root)) return null;
-  return resolved;
+function underRoot(root, candidate) {
+  const rootResolved = path.resolve(root);
+  const candidateResolved = path.resolve(candidate);
+  return (
+    candidateResolved === rootResolved ||
+    candidateResolved.startsWith(rootResolved + path.sep)
+  );
+}
+
+function resolveFile(root, urlPath) {
+  const raw = decodeURIComponent((urlPath || "/").split("?")[0].split("#")[0]);
+  const relative = raw.replace(/^\/+/, "");
+  let candidate = path.resolve(root, relative);
+
+  if (!underRoot(root, candidate)) return null;
+
+  if (fs.existsSync(candidate) && fs.statSync(candidate).isDirectory()) {
+    candidate = path.join(candidate, "index.html");
+    if (!underRoot(root, candidate)) return null;
+  }
+
+  if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+    return candidate;
+  }
+  return null;
 }
 
 function send(res, filePath, status = 200) {
@@ -45,15 +66,20 @@ if (!fs.existsSync(path.join(DIST, "index.html"))) {
 
 http
   .createServer((req, res) => {
-    const urlPath = req.url === "/" ? "/index.html" : req.url;
-    let filePath = safeJoin(DIST, urlPath);
+    const urlPath = (req.url || "/").split("?")[0];
 
-    if (filePath && fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    if (urlPath === "/tourism") {
+      res.writeHead(302, { Location: "/tourism/" });
+      res.end();
+      return;
+    }
+
+    const filePath = resolveFile(DIST, urlPath);
+    if (filePath) {
       send(res, filePath);
       return;
     }
 
-    // SPA fallback
     send(res, path.join(DIST, "index.html"));
   })
   .listen(PORT, () => {
