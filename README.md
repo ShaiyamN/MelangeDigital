@@ -8,7 +8,8 @@ Website (`client/`) + API (`server/`). Work on branch `staging` unless releasing
 | --- | --- |
 | `client/` | Vite + React frontend (Hostinger static / Node web app) |
 | `server/` | Express API: careers email + Zoho CRM leads |
-| `server.js` | Root static file server for Hostinger (serves `client/dist`) |
+| `client/server.cjs` | Hostinger Node entry (serves `client/dist`; CommonJS so it works with `"type": "module"`) |
+| `server.js` | Root static file server if app root is the repo (serves `client/dist`) |
 
 ## Backend (`server/`)
 
@@ -47,6 +48,6 @@ Build for Hostinger: `npm run build` (from `client/`, or `npm run build` at repo
 | Branch | `staging` |
 | Build | `npm run build` |
 | Output | `dist` if app root is `client`, else `client/dist` |
-| Entry | `server.js` |
+| Entry | `server.cjs` |
 
 API is **not** deployed by that static build — run `server/` on its own host (Render, Hostinger Node, etc.).

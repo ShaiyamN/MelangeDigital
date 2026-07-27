@@ -13,7 +13,7 @@
     "check:imports": "node scripts/check-imports.cjs",
     "sync-tourism": "node scripts/sync-tourism.mjs",
     "prerender": "node prerender.js",
-    "start": "node server.js",
+    "start": "node server.cjs",
     "preview": "vite preview"
   },
   "dependencies": {
