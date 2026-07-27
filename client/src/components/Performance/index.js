@@ -1,0 +1,9 @@
+export { default as Header } from "./Header";
+export { default as LogosSection } from "./LogosSection";
+export { default as Part4 } from "./Part4";
+export { default as Solutions } from "./Solutions";
+export { default as Revenue } from "./Revenue";
+export { default as BetterResult } from "./BetterResult";
+export { default as FAQ } from "./FAQ";
+export { default as TestimonialSlider } from "./TestimonialSlider";
+export { default as EcommerceModal } from "./EcommerceModal";

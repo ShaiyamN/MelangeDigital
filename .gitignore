@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.vscode/
+.qodo/
+.cursor/
+.agents/
+__pycache__/
+*.log
+assets/
+server/uploads/
