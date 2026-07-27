@@ -50,7 +50,7 @@ import cl13 from "./cl13.svg";
 import cl14 from "./cl14.svg";
 import cl15 from "./cl15.svg";
 import cl16 from "./cl16.svg";
-import headBlue from "./headBlue.png";
+import headBlue from "./headblue.png";
 import headPink from "./headPink.png";
 import arrow from "./arrow.svg";
 import mSer1 from "./mSer1.png";
