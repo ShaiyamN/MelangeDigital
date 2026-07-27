@@ -9,5 +9,5 @@ dist/
 .agents/
 __pycache__/
 *.log
-assets/
+/assets/
 server/uploads/

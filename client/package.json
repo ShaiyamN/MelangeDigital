@@ -6,11 +6,13 @@
   "proxy": "http://localhost:8000/",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/sync-tourism.mjs && vite build && npm run prerender",
-    "build:hostinger": "node scripts/sync-tourism.mjs && vite build",
-    "build:tourism": "npm run build",
+    "build": "node scripts/sync-tourism.mjs && vite build",
+    "build:hostinger": "npm run build",
+    "build:prerender": "npm run build && npm run prerender",
+    "build:tourism": "npm run build:prerender",
     "sync-tourism": "node scripts/sync-tourism.mjs",
     "prerender": "node prerender.js",
+    "start": "node server.js",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -13,7 +13,7 @@ Hostinger builds the frontend and publishes **`client/dist` only**. Do not point
 | Repository | `https://github.com/ShaiyamN/MelangeDigital.git` |
 | Branch | `staging` (production later: `main`) |
 | Build command | `npm run build` |
-| Output directory | `client/dist` |
+| Output directory | `dist` (if Hostinger app root is `client`) or `client/dist` (if app root is repo root) |
 | Entry file | `server.js` |
 
 `npm run build` at the repo root installs `client` deps and runs `build:hostinger` (sync tourism + Vite). It skips Puppeteer prerender so Hostinger builds do not need Chrome.
