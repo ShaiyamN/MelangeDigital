@@ -2,7 +2,7 @@
   "name": "melange-digital",
   "private": true,
   "scripts": {
-    "build": "git lfs pull && npm ci --prefix client && npm run build:hostinger --prefix client",
+    "build": "npm ci --prefix client && npm run build:hostinger --prefix client",
     "start": "node server.js"
   }
 }
