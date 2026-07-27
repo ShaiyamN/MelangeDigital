@@ -63,7 +63,7 @@ import {
   displayLogo,
 } from "../../assets/images";
 import { ins1, ins2, ins3, whatsapp } from "../../assets/newImages";
-import HomeFaq from "../Performance/HomeFAQ";
+import HomeFaq from "../Performance/HomeFaq";
 
 const Home = () => {
   const images = [
