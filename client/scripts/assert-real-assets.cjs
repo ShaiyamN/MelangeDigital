@@ -1,25 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-const { execSync } = require("child_process");
 
-// Hostinger clones often skip LFS smudge — Vite then emits garbage "PNG"s and
-// hcdn returns 422 for them. Pull LFS when available, then refuse to build on pointers.
+// Refuse to build if image files are still Git LFS pointers (Hostinger has no git-lfs).
 
 const root = path.join(__dirname, "..");
-
-function tryLfsPull() {
-  try {
-    execSync("git lfs version", { stdio: "ignore", cwd: root });
-  } catch {
-    console.warn("git lfs not installed — skipping git lfs pull");
-    return;
-  }
-  try {
-    execSync("git lfs pull", { stdio: "inherit", cwd: path.join(root, "..") });
-  } catch (e) {
-    console.warn("git lfs pull failed:", e.message);
-  }
-}
 
 function isLfsPointer(filePath) {
   const fd = fs.openSync(filePath, "r");
@@ -28,8 +12,6 @@ function isLfsPointer(filePath) {
   fs.closeSync(fd);
   return buf.slice(0, n).toString("utf8").startsWith("version https://git-lfs.github.com");
 }
-
-tryLfsPull();
 
 const samples = [
   "src/assets/images/Bpost1.png",
@@ -47,13 +29,12 @@ for (const rel of samples) {
   }
   if (isLfsPointer(abs)) {
     console.error(`LFS pointer (not real file): ${rel}`);
-    console.error("Hostinger/Linux builds must run: git lfs pull");
     bad++;
   }
 }
 
 if (bad) {
-  console.error(`\n${bad} asset check(s) failed. Refusing to build broken images.`);
+  console.error(`\n${bad} asset check(s) failed. Re-commit assets without Git LFS.`);
   process.exit(1);
 }
 
