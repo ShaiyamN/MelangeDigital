@@ -1,43 +1,52 @@
 # MelangeDigital
 
-Main repo for Melange Digital's primary website (`client/` Vite React app + `server/` API).
+Website (`client/`) + API (`server/`). Work on branch `staging` unless releasing to production (`main`).
 
-## Hostinger built-in Git deploy
+## Repo layout
 
-Hostinger builds the frontend and publishes **`client/dist` only**. Do not point deploy at the repo root as the web root.
+| Path | Purpose |
+| --- | --- |
+| `client/` | Vite + React frontend (Hostinger static / Node web app) |
+| `server/` | Express API: careers email + Zoho CRM leads |
+| `server.js` | Root static file server for Hostinger (serves `client/dist`) |
 
-### Build settings (hPanel)
+## Backend (`server/`)
+
+```bash
+cd server
+cp .env.example .env   # fill values
+npm install
+npm start              # http://localhost:8000
+```
+
+### Routes
+
+| Method | Path | Notes |
+| --- | --- | --- |
+| `POST` | `/careers/submit` | Career form + PDF resume → Gmail (`EMAIL_USER` / `EMAIL_PASS`) |
+| `POST` | `/performance-marketing/submit` | Same career router (legacy mount) |
+| `POST` | `/token-generate` | Zoho lead create (contact form). Two handlers are stacked — split paths when refactoring |
+
+Env keys: see [`server/.env.example`](server/.env.example).
+
+## Frontend (`client/`)
+
+```bash
+cd client
+cp .env.example .env   # VITE_FIREBASE_* / VITE_CLOUDINARY_*
+npm install
+npm run dev
+```
+
+Build for Hostinger: `npm run build` (from `client/`, or `npm run build` at repo root).
+
+## Hostinger (frontend only)
 
 | Setting | Value |
 | --- | --- |
-| Repository | `https://github.com/ShaiyamN/MelangeDigital.git` |
-| Branch | `staging` (production later: `main`) |
-| Build command | `npm run build` |
-| Output directory | `dist` (if Hostinger app root is `client`) or `client/dist` (if app root is repo root) |
-| Entry file | `server.js` |
+| Branch | `staging` |
+| Build | `npm run build` |
+| Output | `dist` if app root is `client`, else `client/dist` |
+| Entry | `server.js` |
 
-`npm run build` at the repo root installs `client` deps and runs `build:hostinger` (sync tourism + Vite). It skips Puppeteer prerender so Hostinger builds do not need Chrome.
-
-### Environment variables (hPanel → build env)
-
-Add the same keys as `client/.env.example` (`VITE_FIREBASE_*`, `VITE_CLOUDINARY_*`). Never commit real `.env` files.
-
-### Safety: do not auto-deploy straight to production
-
-1. Create a **staging subdomain** in Hostinger and connect Git there first.
-2. On staging: enable automatic deploy from `main` (or a `staging` branch).
-3. On the **live domain**: use **manual** deploy only (Deploy button after you verify staging).
-4. Keep Hostinger backups/snapshots on before the first production deploy.
-
-### After connecting Git
-
-1. Push these repo changes to GitHub.
-2. In hPanel → Websites (or Advanced → Git), connect the repo and set the table above.
-3. Deploy staging → open the site → check home, `/tourism/`, admin login, forms.
-4. Only then manual-deploy production.
-
-### Notes
-
-- `server/` is not part of this static deploy; run the API elsewhere (or Hostinger Node) separately.
-- Large media uses Git LFS. If images are missing after deploy, confirm Hostinger’s Git pull fetches LFS objects (or re-upload assets into `client/public`).
-- Local full build with prerender: `cd client && npm run build`.
+API is **not** deployed by that static build — run `server/` on its own host (Render, Hostinger Node, etc.).

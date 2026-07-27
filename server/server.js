@@ -1,42 +1,24 @@
 const express = require("express");
 const cors = require("cors");
-const pkg = require("body-parser");
-require('dotenv').config()
-// import careerRoutes from "./careerForm.js"; 
+require("dotenv").config();
+
 const addUserToLeads = require("./route/addUserToLeads");
 const addUserToLeadsFromPerfomance = require("./route/addUserToLeadsFromPerfomance");
-// const getAccessToken = require("./controller/lead");
-const { urlencoded, json } = pkg;
-
-
+const careerForm = require("./route/careerForm");
 
 const app = express();
 app.use(cors());
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Subdomain routing middleware
-app.use((req, res, next) => {
-  const host = req.get('host');
-  
-  // Handle gulf subdomain - serve location/gulf content but keep subdomain URL
-  if (host && host.includes('gulf.melangedigital.co')) {
-    // Rewrite the URL internally to /location/gulf
-    req.url = '/location/gulf';
-    // Don't redirect - just rewrite internally
-  }
-  
-  next();
-});
-
-// Use the career routes
-app.use("/careers", require("./route/careerForm"));
+app.use("/careers", careerForm);
+app.use("/performance-marketing", careerForm);
+// Contact / lead forms (Zoho). Both handlers are mounted for historical reasons —
+// prefer splitting paths when you refactor (e.g. /leads vs /leads/performance).
 app.use("/token-generate", addUserToLeads);
-
-// Use the career routes
-app.use("/performance-marketing", require("./route/careerForm"));
 app.use("/token-generate", addUserToLeadsFromPerfomance);
 
-app.listen(8000, () => {
-  console.log("Server is running.......");
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
