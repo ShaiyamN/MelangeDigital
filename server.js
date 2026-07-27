@@ -55,7 +55,11 @@ function resolveFile(root, urlPath) {
 
 function send(res, filePath, status = 200) {
   const ext = path.extname(filePath).toLowerCase();
-  res.writeHead(status, { "Content-Type": MIME[ext] || "application/octet-stream" });
+  const stat = fs.statSync(filePath);
+  res.writeHead(status, {
+    "Content-Type": MIME[ext] || "application/octet-stream",
+    "Content-Length": stat.size,
+  });
   fs.createReadStream(filePath).pipe(res);
 }
 

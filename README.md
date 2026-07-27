@@ -39,15 +39,19 @@ npm install
 npm run dev
 ```
 
-Build for Hostinger: `npm run build` (from `client/`, or `npm run build` at repo root).
+Images/videos are Git LFS. After clone: `git lfs pull`.
 
 ## Hostinger (frontend only)
 
 | Setting | Value |
 | --- | --- |
 | Branch | `staging` |
-| Build | `npm run build` |
+| Build | `git lfs pull && npm run build` |
 | Output | `dist` if app root is `client`, else `client/dist` |
 | Entry | `server.cjs` |
 
-API is **not** deployed by that static build — run `server/` on its own host (Render, Hostinger Node, etc.).
+If PNGs/JPGs return **422** from `hcdn` while SVG/admin (Cloudinary) images work, the build used LFS **pointer** files. Fix: install Git LFS on the build image and use the build command above, then redeploy.
+
+If images are still 422 after a real LFS build, disable Hostinger **CDN / image optimization** for the staging site (hPanel → CDN).
+
+API is **not** deployed by that static build — run `server/` on its own host.
