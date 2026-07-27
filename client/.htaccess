@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteBase /
+
+# Tourism: clean URL in the address bar (/tourism/), not /tourism/index.html
+RewriteRule ^tourism/index\.html$ /tourism/ [R=301,L]
+RewriteRule ^tourism$ /tourism/ [R=301,L]
+RewriteRule ^tourism/$ - [L]
+
+# Serve the index.html for all requests (except real files and directories)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [QSA,L]

@@ -1,0 +1,14 @@
+export { default as HomeHero } from "./HomeHero";
+export { default as PageBreaker } from "./PageBreaker";
+export { default as NewServices } from "./NewServices";
+export { default as Partnered } from "./Partnered";
+export { default as ContentPartners } from "./ContentPartners";
+export { default as Insights } from "./Insights";
+export { default as LetsTalk } from "./LetsTalk";
+export { default as TextReveal } from "./TextReveal";
+export { default as LoaderCounter } from "./LoaderCounter";
+export { default as NewServicesMobile } from "./NewServicesMobile";
+export { default as FeaturedIn } from "./FeaturedIn";
+export { default as CopyrightFooter } from "./CopyrightFooter";
+export { default as TextRevealMobile } from "./TextRevealMobile";
+export { default as HomeVideo } from "./HomeVideo";

@@ -1,0 +1,7 @@
+# Prefer the static tourism landing; keep the clean URL in the browser
+/tourism/index.html /tourism/             301
+/tourism            /tourism/             301
+/tourism/           /tourism/index.html   200
+
+# SPA fallback for everything else
+/*                  /index.html           200

@@ -1,0 +1,13 @@
+export { default as Home } from "./Home";
+export { default as Services } from "./Services";
+export { default as Contact } from "./Contact";
+export { default as About } from "./About";
+export { default as Works } from "./Works";
+export { default as Error } from "./Error";
+export { default as TermsofService } from "./TermsofService";
+export { default as PrivatePolicy } from "./PrivatePolicy";
+export { default as Refund } from "./Refund";
+export { default as Cookies } from "./Cookies";
+export { default as Career } from "./Career";
+export { default as ItbTourism } from "./ItbTourism";
+export { default as PerformanceLandingPage } from "./PerformanceLandingPage";
