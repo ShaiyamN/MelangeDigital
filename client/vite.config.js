@@ -5,22 +5,30 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const tourismDir = path.join(__dirname, "public", "tourism");
-const tourismStagingDir = path.join(__dirname, "tourism-landing-staging");
+const REPORT_SLUG = "indian-outbound-tourism-report";
+const reportPublicDir = path.join(__dirname, "public", REPORT_SLUG);
+const reportStagingDir = path.join(__dirname, "tourism-landing-staging");
 
-function tourismDevMiddleware() {
+function reportLandingDevMiddleware() {
   return {
-    name: "tourism-dev-middleware",
+    name: "report-landing-dev-middleware",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = req.url?.split("?")[0] || "";
-        if (!url.startsWith("/tourism")) {
+
+        if (url === "/tourism" || url === "/tourism/") {
+          res.writeHead(301, { Location: `/${REPORT_SLUG}/` });
+          res.end();
+          return;
+        }
+
+        if (!url.startsWith(`/${REPORT_SLUG}`)) {
           next();
           return;
         }
 
-        const sourceRoot = fs.existsSync(tourismDir) ? tourismDir : tourismStagingDir;
-        const relativePath = url.replace(/^\/tourism\/?/, "") || "index.html";
+        const sourceRoot = fs.existsSync(reportPublicDir) ? reportPublicDir : reportStagingDir;
+        const relativePath = url.replace(new RegExp(`^/${REPORT_SLUG}/?`), "") || "index.html";
         const filePath = path.join(sourceRoot, relativePath === "" ? "index.html" : relativePath);
 
         if (!filePath.startsWith(sourceRoot)) {
@@ -44,6 +52,7 @@ function tourismDevMiddleware() {
             ".webp": "image/webp",
             ".ico": "image/x-icon",
             ".mp4": "video/mp4",
+            ".pdf": "application/pdf",
           };
           res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
           fs.createReadStream(filePath).pipe(res);
@@ -65,7 +74,7 @@ function tourismDevMiddleware() {
 
 export default defineConfig({
   base: "/",
-  plugins: [react(), tourismDevMiddleware()],
+  plugins: [react(), reportLandingDevMiddleware()],
   server: {
     host: true,
     port: 5173,

@@ -2,46 +2,22 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Copies the static tourism landing into public/tourism/ for build:tourism.
-// Default `npm run build` does NOT run this — see TOURISM_DEPLOY.md.
-//
-// Windows note: never rmdir the public/tourism root — Vite (and Explorer) often
-// hold a handle on that folder (EBUSY). Empty children instead, with retries.
+// Copies tourism-landing-staging → public/indian-outbound-tourism-report/ before every build.
+// public/indian-outbound-tourism-report/ is gitignored; source of truth is tourism-landing-staging/.
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CLIENT_ROOT = path.join(__dirname, '..');
-const DEFAULT_SOURCE = path.join(
-  CLIENT_ROOT,
-  '..',
-  '..',
-  '..',
-  'melange-digital-tourism-board-landing (1)',
-);
-const STAGING_SOURCE = path.join(CLIENT_ROOT, 'tourism-landing-staging');
-const configuredSource = process.env.TOURISM_LANDING_PATH
+const SOURCE = process.env.TOURISM_LANDING_PATH
   ? path.resolve(process.env.TOURISM_LANDING_PATH)
-  : null;
-const SOURCE = configuredSource && fs.existsSync(configuredSource)
-  ? configuredSource
-  : fs.existsSync(STAGING_SOURCE)
-    ? STAGING_SOURCE
-    : DEFAULT_SOURCE;
-const DEST = path.join(CLIENT_ROOT, 'public', 'tourism');
+  : path.join(CLIENT_ROOT, 'tourism-landing-staging');
+const REPORT_SLUG = 'indian-outbound-tourism-report';
+const DEST = path.join(CLIENT_ROOT, 'public', REPORT_SLUG);
 
-const COPY_ENTRIES = [
-  'index.html',
-  '404.html',
-  'css',
-  'js',
-  'images',
-  'videos',
-];
+const COPY_ENTRIES = ['index.html', '404.html', 'css', 'js', 'images', 'videos'];
 
 function sleepSync(ms) {
   const end = Date.now() + ms;
-  while (Date.now() < end) {
-    /* busy-wait — sync script only, short retries */
-  }
+  while (Date.now() < end) { /* ponytail: sync retries only */ }
 }
 
 function rmPath(target, attempts = 12) {
@@ -49,34 +25,24 @@ function rmPath(target, attempts = 12) {
   for (let i = 0; i < attempts; i++) {
     try {
       if (!fs.existsSync(target)) return;
-      fs.rmSync(target, {
-        recursive: true,
-        force: true,
-        maxRetries: 8,
-        retryDelay: 100,
-      });
+      fs.rmSync(target, { recursive: true, force: true, maxRetries: 8, retryDelay: 100 });
       return;
     } catch (err) {
       lastErr = err;
-      const code = err && err.code;
-      if (code !== 'EBUSY' && code !== 'EPERM' && code !== 'ENOTEMPTY') {
-        throw err;
-      }
+      const code = err?.code;
+      if (code !== 'EBUSY' && code !== 'EPERM' && code !== 'ENOTEMPTY') throw err;
       sleepSync(150 + i * 100);
     }
   }
   throw lastErr;
 }
 
-/** Clear DEST contents without removing DEST itself (avoids Windows EBUSY on root). */
 function emptyDirContents(dir) {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
     return;
   }
-  for (const name of fs.readdirSync(dir)) {
-    rmPath(path.join(dir, name));
-  }
+  for (const name of fs.readdirSync(dir)) rmPath(path.join(dir, name));
 }
 
 function copyRecursive(src, dest) {

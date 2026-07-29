@@ -126,10 +126,19 @@ function ScrollToTop() {
   return null;
 }
 
-/** Static landing lives in public/tourism — leave the SPA with a full document load. */
+/** Static report landing — full document load, not SPA. */
+const REPORT_LANDING = "/indian-outbound-tourism-report/";
+
 function TourismLandingRedirect() {
   useEffect(() => {
-    window.location.replace("/tourism/");
+    window.location.replace(REPORT_LANDING);
+  }, []);
+  return null;
+}
+
+function TourismLegacyRedirect() {
+  useEffect(() => {
+    window.location.replace(REPORT_LANDING);
   }, []);
   return null;
 }
@@ -187,9 +196,11 @@ function App() {
           <Route exact path="/about" Component={About} />
           <Route exact path="/contact" Component={Contact} />
           <Route exact path="/careers" Component={Career} />
-          {/* If the SPA ever lands on /tourism, hard-navigate to the static landing */}
-          <Route path="/tourism" element={<TourismLandingRedirect />} />
-          <Route path="/tourism/" element={<TourismLandingRedirect />} />
+          {/* Static outbound report landing (synced at build); legacy /tourism → new slug */}
+          <Route path="/tourism" element={<TourismLegacyRedirect />} />
+          <Route path="/tourism/" element={<TourismLegacyRedirect />} />
+          <Route path="/indian-outbound-tourism-report" element={<TourismLandingRedirect />} />
+          <Route path="/indian-outbound-tourism-report/" element={<TourismLandingRedirect />} />
           <Route exact path="/location/:locationId" Component={Location} />
           <Route
             exact

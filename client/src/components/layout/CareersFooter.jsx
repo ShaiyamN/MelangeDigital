@@ -30,7 +30,7 @@ const CareersFooter = () => {
   const companyLinks = [
     { to: "/about", text: "About Us" },
     { to: "/work", text: "Our Work" },
-    { href: "/tourism/", text: "Tourism", external: true },
+    { href: "/indian-outbound-tourism-report/", text: "Tourism", external: true },
     { to: "/blogs", text: "Blogs" },
     { to: "/careers", text: "Careers" },
   ];

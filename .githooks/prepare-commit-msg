@@ -1,0 +1,4 @@
+#!/bin/sh
+# Strip AI co-author trailers (Cursor/Claude) from commit messages.
+file=$1
+sed '/cursoragent@cursor\.com/d; /noreply@anthropic\.com/d; /^Made-with: Cursor/d; /^Co-authored-by: Cursor/d; /^Co-Authored-By: Claude/d; /^Co-authored-by: Claude/d' "$file" > "$file.tmp" && mv "$file.tmp" "$file"

@@ -23,6 +23,7 @@ const MIME = {
   ".mp4": "video/mp4",
   ".xml": "application/xml",
   ".txt": "text/plain",
+  ".pdf": "application/pdf",
   ".jfif": "image/jpeg",
 };
 
@@ -72,9 +73,13 @@ http
   .createServer((req, res) => {
     const urlPath = (req.url || "/").split("?")[0];
 
-    // Clean URL: /tourism → /tourism/
-    if (urlPath === "/tourism") {
-      res.writeHead(302, { Location: "/tourism/" });
+    if (urlPath === "/tourism" || urlPath === "/tourism/") {
+      res.writeHead(301, { Location: "/indian-outbound-tourism-report/" });
+      res.end();
+      return;
+    }
+    if (urlPath === "/indian-outbound-tourism-report") {
+      res.writeHead(302, { Location: "/indian-outbound-tourism-report/" });
       res.end();
       return;
     }

@@ -2,21 +2,20 @@
 <html data-wf-page="6a2fe657a827b7d915b35cb7" data-wf-site="6a2fe655a827b7d915b35c60" data-wf-status="1" lang="en">
  <head>
   <meta charset="utf-8"/>
-  <title>
-   Destination Marketing Agency for Tourism Boards | Melange Digital
-  </title>
-  <meta content="A global destination marketing agency that makes the world's destinations irresistible to Indian travellers. Backed by 10+ national tourism boards." name="description"/>
-  <meta content="Melange Digital: Creator & Influencer Marketing for Tourism Boards" property="og:title"/>
-  <meta content="Melange Digital helps tourism boards and government destinations reach and convert Indian travellers through creator-led storytelling, influencer marketing, and strategic activation." property="og:description"/>
-  <meta content="https://melangedigital.co/tourism/images/melange-digital-og-img.png" property="og:image"/>
-  <meta content="https://melangedigital.co/tourism/" property="og:url"/>
-  <meta content="Melange Digital: Creator & Influencer Marketing for Tourism Boards" name="twitter:title"/>
-  <meta content="Melange Digital helps tourism boards and government destinations reach and convert Indian travellers through creator-led storytelling, influencer marketing, and strategic activation." name="twitter:description"/>
-  <meta content="website" property="og:type"/>
+  <title>Indian Outbound Tourism Trends 2026 - Report by Melange Digital</title>
+  <meta name="description" content="Indian outbound tourism trends 2026: our report reveals why 67% of Indian travellers are inspired by creator content, not price. Read the full findings."/>
+  <meta property="og:title" content="Indian Outbound Tourism Trends 2026 - Report by Melange Digital"/>
+  <meta property="og:description" content="Indian outbound tourism trends 2026: our report reveals why 67% of Indian travellers are inspired by creator content, not price. Read the full findings."/>
+  <meta content="https://melangedigital.co/indian-outbound-tourism-report/images/melange-digital-og-img.png?v=20260729" property="og:image"/>
+  <meta property="og:url" content="https://melangedigital.co/indian-outbound-tourism-report"/>
+  <meta property="og:type" content="website"/>
+  <meta content="Indian Outbound Tourism Trends 2026 - Report by Melange Digital" name="twitter:title"/>
+  <meta content="Indian outbound tourism trends 2026: our report reveals why 67% of Indian travellers are inspired by creator content, not price. Read the full findings." name="twitter:description"/>
   <meta content="summary_large_image" name="twitter:card"/>
+  <meta name="twitter:image" content="https://melangedigital.co/indian-outbound-tourism-report/images/melange-digital-og-img.png?v=20260729"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <base href="/tourism/"/>
+  <base href="/indian-outbound-tourism-report/"/>
   <link href="css/melange-shared.css?v=20260724e" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" href="css/form.css?v=20260724e">
   <link href="css/melange.css?v=20260725j" rel="stylesheet" type="text/css"/>
@@ -34,7 +33,7 @@
   <link href="images/favicon.ico" rel="icon" type="image/x-icon" sizes="32x32"/>
   <link href="images/favicon.png" rel="icon" type="image/png"/>
   <link href="images/app-icon.png" rel="apple-touch-icon"/>
-  <link href="https://melangedigital.co/tourism/" rel="canonical"/>
+  <link href="https://melangedigital.co/indian-outbound-tourism-report" rel="canonical"/>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1VTPL005KG"></script>
   <script>
    window.dataLayer = window.dataLayer || [];
@@ -46,9 +45,9 @@
    {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "url": "https://melangedigital.co/tourism/",
-  "name": "Melange Digital",
-  "description": "Melange Digital helps tourism boards and government destinations reach and convert Indian travellers through creator-led storytelling, influencer marketing, and strategic activation.",
+  "url": "https://melangedigital.co/indian-outbound-tourism-report",
+  "name": "Indian Outbound Tourism Trends 2026 - Melange Digital",
+  "description": "Indian outbound tourism trends 2026: our report reveals why 67% of Indian travellers are inspired by creator content, not price.",
   "publisher": {
     "@type": "Organization",
     "name": "Melange Digital"
@@ -767,7 +766,7 @@
        <div class="audiences-card-media">
         <img alt="" loading="lazy" src="images/audiences/fam-trips-pr.png?v=20260724bq"/>
        </div>
-       <h3 class="heading-25">Fam Trips &amp; PR</h3>
+       <h3 class="heading-25">FAM Trips &amp; PR</h3>
        <p class="builtfor-descp">We get the right creators and press on the ground, then turn everything they see into stories all of India ends up sharing.</p>
       </article>
      </div>
@@ -1271,7 +1270,8 @@ method='POST'
 onSubmit='javascript:document.charset="UTF-8"; return zf_ValidateAndSubmit();'
 accept-charset='UTF-8' enctype='multipart/form-data' id='form'>
 <input type="hidden" name="zf_referrer_name" value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
-<input type="hidden" name="zf_redirect_url" value="https://workdrive.zoho.in/file/znge7ca294c432a8b411c9aef1b412a00d08a"><!-- Post-submit redirect → outbound report (WorkDrive) -->
+<!-- Post-submit PDF: default for production; JS below rewrites to current origin so local/staging work too (was Zoho WorkDrive) -->
+<input type="hidden" name="zf_redirect_url" value="https://melangedigital.co/assets/reports/indian-outbound-tourism-trends-2026.pdf">
 <input type="hidden" name="zc_gad" value=""><!-- If GCLID is enabled in Zoho CRM Integration, click details of AdWords Ads will be pushed to Zoho CRM -->
 <div class="zf-templateWrapper"><ul class="zf-tempHeadBdr"><li class="zf-tempHeadContBdr"><h3 class="zf-frmTitle">
 <em>Tell us about your destination</em>
@@ -1410,6 +1410,11 @@ var salesIQFieldsArray = [];
   zf_ValidateAndSubmit = function () {
     var ok = origValidate();
     if (!ok) return false;
+    // Same-origin PDF so localhost/staging don't redirect to production Coming Soon
+    var redirect = document.querySelector('input[name="zf_redirect_url"]');
+    if (redirect) {
+      redirect.value = window.location.origin + "/assets/reports/indian-outbound-tourism-trends-2026.pdf";
+    }
     try { sessionStorage.setItem(FORM_CLEAR_KEY, "1"); } catch (e) {}
     var f = document.getElementById("form");
     if (f) setTimeout(function () { f.reset(); }, 0);
@@ -1486,8 +1491,8 @@ var salesIQFieldsArray = [];
          </li>
          <li class="list-item-9">
           <a class="navigation-link for-footer w-inline-block" href="#services">
-           <div class="nav-text first">Fam Trips &amp; PR</div>
-           <div class="nav-text second">Fam Trips &amp; PR</div>
+           <div class="nav-text first">FAM Trips &amp; PR</div>
+           <div class="nav-text second">FAM Trips &amp; PR</div>
           </a>
          </li>
         </ul>

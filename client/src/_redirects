@@ -1,7 +1,10 @@
-# Prefer the static tourism landing; keep the clean URL in the browser
-/tourism/index.html /tourism/             301
-/tourism            /tourism/             301
-/tourism/           /tourism/index.html   200
+# Report landing (static)
+/tourism/index.html /indian-outbound-tourism-report/ 301
+/tourism            /indian-outbound-tourism-report/ 301
+/tourism/           /indian-outbound-tourism-report/ 301
+/indian-outbound-tourism-report/index.html /indian-outbound-tourism-report/ 301
+/indian-outbound-tourism-report /indian-outbound-tourism-report/ 301
+/indian-outbound-tourism-report/ /indian-outbound-tourism-report/index.html 200
 
 # SPA fallback for everything else
 /*                  /index.html           200
