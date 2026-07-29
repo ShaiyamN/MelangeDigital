@@ -1271,7 +1271,7 @@ onSubmit='javascript:document.charset="UTF-8"; return zf_ValidateAndSubmit();'
 accept-charset='UTF-8' enctype='multipart/form-data' id='form'>
 <input type="hidden" name="zf_referrer_name" value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
 <!-- Post-submit PDF: default for production; JS below rewrites to current origin so local/staging work too (was Zoho WorkDrive) -->
-<input type="hidden" name="zf_redirect_url" value="https://melangedigital.co/assets/reports/indian-outbound-tourism-trends-2026.pdf">
+<input type="hidden" name="zf_redirect_url" value="https://melangedigital.co/assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf">
 <input type="hidden" name="zc_gad" value=""><!-- If GCLID is enabled in Zoho CRM Integration, click details of AdWords Ads will be pushed to Zoho CRM -->
 <div class="zf-templateWrapper"><ul class="zf-tempHeadBdr"><li class="zf-tempHeadContBdr"><h3 class="zf-frmTitle">
 <em>Tell us about your destination</em>
@@ -1413,7 +1413,7 @@ var salesIQFieldsArray = [];
     // Same-origin PDF so localhost/staging don't redirect to production Coming Soon
     var redirect = document.querySelector('input[name="zf_redirect_url"]');
     if (redirect) {
-      redirect.value = window.location.origin + "/assets/reports/indian-outbound-tourism-trends-2026.pdf";
+      redirect.value = window.location.origin + "/assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf";
     }
     try { sessionStorage.setItem(FORM_CLEAR_KEY, "1"); } catch (e) {}
     var f = document.getElementById("form");
