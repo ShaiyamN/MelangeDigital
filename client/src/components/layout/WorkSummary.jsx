@@ -195,7 +195,7 @@ const WorkSummary = ({ worksData, ready = true }) => {
             {displayWorks.map((work, index) => (
               <Work key={work.path || work.title || index} {...work} />
             ))}
-            <div className="min-w-[40px] shrink-0" />
+            <div className="min-w-[80px] shrink-0" />
           </div>
         </div>
       </div>

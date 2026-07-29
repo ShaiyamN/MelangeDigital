@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { works } from "../../constants";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { whiteArrw } from "../../assets/images";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,12 +19,12 @@ const raiseFromBottom = {
   },
 };
 
-// Work Card
-const Work = ({ icon, tag1, tag2, tag3, title, path }) => {
+// Work Card (match homepage card layout)
+const Work = ({ icon, tag1, tag2, tag3, title, path, services }) => {
   return (
-    <motion.div className="relative lg:min-w-[500px] lg:mr-10 mb-7">
+    <motion.div className="relative lg:w-[420px] lg:min-w-[420px] shrink-0 lg:mr-8 mb-4 lg:mb-0">
       <Link to={path}>
-        <div className="service-wrapper relative overflow-hidden">
+        <div className="service-wrapper relative overflow-hidden rounded-[30px]">
           <div className="overlay-services absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-all duration-300">
             <div className="w-[72px] h-[72px] bg-[#141414] rounded-full flex items-center justify-center">
               <img src={whiteArrw} alt="" />
@@ -32,21 +33,31 @@ const Work = ({ icon, tag1, tag2, tag3, title, path }) => {
 
           <img
             src={icon}
-            alt="Icon"
-            className="w-full lg:h-[450px] h-[330px] object-cover"
+            alt={title || "Case study"}
+            className="work-card-media w-full h-auto block"
+            loading="eager"
+            decoding="async"
           />
         </div>
       </Link>
 
-      <div className="flex py-1 text-[#1A1A1A] font-bold lg:text-[17px] text-[12px] lg:pt-[15px] pt-2">
-        <p>{tag1}</p>
-        <p className="mx-3">{tag2}</p>
-        <p>{tag3}</p>
+      <div className="flex flex-wrap py-1 text-[#1A1A1A] font-bold lg:text-[17px] text-[12px] lg:pt-3 pt-2 gap-x-3 gap-y-2">
+        {services && services.length > 0 ? (
+          services.slice(0, 3).map((service, idx) => (
+            <p key={idx}>{service}</p>
+          ))
+        ) : (
+          <>
+            {tag1 && <p>{tag1}</p>}
+            {tag2 && <p>{tag2}</p>}
+            {tag3 && <p>{tag3}</p>}
+          </>
+        )}
       </div>
 
       <Link to={path}>
         <motion.h2
-          className="font-bold lg:text-[45px] text-[36px] text-[#141F59] whitespace-nowrap"
+          className="font-bold lg:text-[28px] text-[22px] text-[#141F59] leading-[1.25] mt-1"
           variants={raiseFromBottom}
           initial="hidden"
           whileInView="visible"
@@ -62,10 +73,52 @@ const WorkSummary = () => {
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
 
+  const [displayWorks, setDisplayWorks] = useState([]);
+  const [worksReady, setWorksReady] = useState(false);
+
+  // Pull the same "Stories in Action" items as the homepage
+  // (homepage uses casestudies + showOnHome flag).
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const worksQuery = query(
+          collection(db, "casestudies"),
+          where("showOnHome", "==", true)
+        );
+        const worksSnapshot = await getDocs(worksQuery);
+
+        const fetchedWorks = worksSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            icon: data.bannerImage,
+            tag1: data.services?.[0] || "",
+            tag2: data.services?.[1] || "",
+            tag3: data.services?.[2] || "",
+            title: data.title,
+            path: `/work/${data.slug}`,
+            createdAt: data.createdAt || 0,
+          };
+        });
+
+        fetchedWorks.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setDisplayWorks(fetchedWorks);
+      } catch (err) {
+        console.error("Error fetching services page data:", err);
+      } finally {
+        setWorksReady(true);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!worksReady || !displayWorks.length) return;
+
     const container = containerRef.current;
     const wrapper = wrapperRef.current;
-
     if (!container || !wrapper) return;
 
     const totalWidth = wrapper.scrollWidth;
@@ -89,7 +142,9 @@ const WorkSummary = () => {
     }, container);
 
     return () => ctx.revert();
-  }, []);
+  }, [worksReady, displayWorks.length]);
+
+  if (!worksReady || !displayWorks.length) return null;
 
   return (
     <div className="lg:px-0 px-5 lg:pt-[150px] pt-10 pb-[80px] overflow-hidden bg-white font-bricolage">
@@ -117,15 +172,16 @@ const WorkSummary = () => {
           ref={wrapperRef}
           className="flex gap-10"
         >
-          {works.map((work, index) => (
+          {displayWorks.map((work, index) => (
             <Work key={index} {...work} />
           ))}
+          <div className="min-w-[80px] shrink-0" />
         </div>
       </div>
 
       {/* Mobile Layout */}
       <div className="mt-0 lg:hidden grid grid-cols-1">
-        {works.slice(0, 4).map((work, index) => (
+        {displayWorks.slice(0, 4).map((work, index) => (
           <Work key={index} {...work} />
         ))}
       </div>
