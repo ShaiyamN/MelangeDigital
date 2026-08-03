@@ -2,14 +2,18 @@
   RewriteEngine On
   RewriteBase /
 
-  # Legacy /tourism/ → report landing slug
-  RewriteRule ^tourism/?$ /indian-outbound-tourism-report/ [R=301,L]
-  RewriteRule ^tourism/index\.html$ /indian-outbound-tourism-report/ [R=301,L]
+  # Legacy /tourism → destination-marketing-agency
+  RewriteRule ^tourism/?$ /destination-marketing-agency/ [R=301,L]
+  RewriteRule ^tourism/index\.html$ /destination-marketing-agency/ [R=301,L]
+  RewriteRule ^tourism/(.*)$ /destination-marketing-agency/$1 [R=301,L]
 
-  # Report landing: clean URL (not …/index.html)
-  RewriteRule ^indian-outbound-tourism-report/index\.html$ /indian-outbound-tourism-report/ [R=301,L]
-  RewriteRule ^indian-outbound-tourism-report$ /indian-outbound-tourism-report/ [R=301,L]
-  RewriteRule ^indian-outbound-tourism-report/$ - [L]
+  # Destination marketing landing (static folder)
+  RewriteRule ^destination-marketing-agency/index\.html$ /destination-marketing-agency/ [R=301,L]
+  RewriteRule ^destination-marketing-agency$ /destination-marketing-agency/ [R=301,L]
+  RewriteRule ^destination-marketing-agency/$ - [L]
+
+  # Pretty PDF URL — keep address bar as /indian-outbound-tourism-report, serve the file
+  RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]
 
   # Don't rewrite requests for actual files and directories
   RewriteCond %{REQUEST_FILENAME} !-f

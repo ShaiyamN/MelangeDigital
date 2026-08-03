@@ -1,6 +1,7 @@
 # Outbound tourism report PDF
 
-File: `indian-outbound-tourism-trends-2026.pdf`  
-Served at: `/assets/reports/indian-outbound-tourism-trends-2026.pdf`
+File: `The Indian Outbound Inspiration report 2026.pdf`  
+Pretty URL (form post-submit): `/indian-outbound-tourism-report`  
+Asset path: `/assets/reports/The Indian Outbound Inspiration report 2026.pdf`
 
-Zoho form post-submit redirect points here (gated by form submission).
+Landing page with the lead form: `/destination-marketing-agency/`

@@ -5,10 +5,16 @@ import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 const BlogCatg = ({ handleCategorySelect }) => {
   const tags = [
     { label: "All", filter: "all" },
+    { label: "Content Marketing", filter: "content-marketing" },
     { label: "Brand Strategy", filter: "brand-strategy" },
+    { label: "E-commerce Management", filter: "ecommerce-management" },
+    { label: "Design Solutions", filter: "design-solutions" },
+    { label: "Performance Marketing", filter: "performance-marketing" },
+    { label: "Website Development & SEO", filter: "website-development-seo" },
+    // Legacy IDs still present on older Firestore posts
     { label: "Influencer Marketing", filter: "influencer-marketing" },
+    { label: "Content Strategy", filter: "content-strategy" },
     { label: "Design & Development", filter: "design-dev" },
-    { label: "Content Strategy ", filter: "content-strategy" },
     { label: "Storytelling", filter: "storytelling" },
     { label: "IPs & PR", filter: "pr" },
   ];

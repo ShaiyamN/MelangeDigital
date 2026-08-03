@@ -2,16 +2,21 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Copies tourism-landing-staging → public/indian-outbound-tourism-report/ before every build.
-// public/indian-outbound-tourism-report/ is gitignored; source of truth is tourism-landing-staging/.
+// Copies tourism-landing-staging → public/destination-marketing-agency/ before every build.
+// public/destination-marketing-agency/ is gitignored; source of truth is tourism-landing-staging/.
+// Form post-submit opens the PDF at /indian-outbound-tourism-report (pretty URL → assets PDF).
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CLIENT_ROOT = path.join(__dirname, '..');
 const SOURCE = process.env.TOURISM_LANDING_PATH
   ? path.resolve(process.env.TOURISM_LANDING_PATH)
   : path.join(CLIENT_ROOT, 'tourism-landing-staging');
-const REPORT_SLUG = 'indian-outbound-tourism-report';
-const DEST = path.join(CLIENT_ROOT, 'public', REPORT_SLUG);
+const LANDING_SLUG = 'destination-marketing-agency';
+const DEST = path.join(CLIENT_ROOT, 'public', LANDING_SLUG);
+const STALE_DIRS = [
+  path.join(CLIENT_ROOT, 'public', 'tourism'),
+  path.join(CLIENT_ROOT, 'public', 'indian-outbound-tourism-report'),
+];
 
 const COPY_ENTRIES = ['index.html', '404.html', 'css', 'js', 'images', 'videos'];
 
@@ -64,6 +69,8 @@ if (!fs.existsSync(SOURCE)) {
   process.exit(1);
 }
 
+for (const stale of STALE_DIRS) rmPath(stale);
+
 fs.mkdirSync(DEST, { recursive: true });
 emptyDirContents(DEST);
 
@@ -73,7 +80,7 @@ for (const entry of COPY_ENTRIES) {
   copyRecursive(srcPath, path.join(DEST, entry));
 }
 
-const htaccessSrc = path.join(SOURCE, 'tourism', '.htaccess');
+const htaccessSrc = path.join(SOURCE, '.htaccess');
 if (fs.existsSync(htaccessSrc)) {
   fs.copyFileSync(htaccessSrc, path.join(DEST, '.htaccess'));
 }

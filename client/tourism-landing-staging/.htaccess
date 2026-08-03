@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /indian-outbound-tourism-report/
+RewriteBase /destination-marketing-agency/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ 404.html [L]

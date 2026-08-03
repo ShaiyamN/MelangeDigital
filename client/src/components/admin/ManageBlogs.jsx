@@ -5,6 +5,8 @@ import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Edit2, X, Sun, Moon, Image as ImageIcon, Calendar, User, AlignLeft, Tag, BookOpen, Check, Table, PlusCircle, LayoutTemplate, Type, FileText, Target, Video, ArrowUp, ArrowDown } from "lucide-react";
 import CloudinaryUpload from "./CloudinaryUpload";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const ManageBlogs = () => {
   const [user, setUser] = useState(null);
@@ -23,8 +25,10 @@ const ManageBlogs = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
-  const [category, setCategory] = useState("content-strategy"); // Legacy
-  const [categories, setCategories] = useState(["content-strategy"]);
+  const [bannerFit, setBannerFit] = useState("cover");
+  const [bannerHeight, setBannerHeight] = useState("medium");
+  const [category, setCategory] = useState("content-marketing"); // Legacy
+  const [categories, setCategories] = useState(["content-marketing"]);
   // SEO State
   const [seoTitle, setSeoTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
@@ -112,8 +116,10 @@ const ManageBlogs = () => {
     setDescription("");
     setContent("");
     setImage("");
-    setCategory("content-strategy");
-    setCategories(["content-strategy"]);
+    setBannerFit("cover");
+    setBannerHeight("medium");
+    setCategory("content-marketing");
+    setCategories(["content-marketing"]);
     // Reset new fields
     setSeoTitle("");
     setMetaDescription("");
@@ -138,10 +144,12 @@ const ManageBlogs = () => {
     setDescription(blog.description || "");
     setContent(blog.content || "");
     setImage(blog.image || "");
-    setCategory(blog.category || "content-strategy");
+    setBannerFit(blog.bannerFit || "cover");
+    setBannerHeight(blog.bannerHeight || "medium");
+    setCategory(blog.category || "content-marketing");
     
     // Load new fields
-    setCategories(blog.categories || (blog.category ? [blog.category] : ["content-strategy"]));
+    setCategories(blog.categories || (blog.category ? [blog.category] : ["content-marketing"]));
     setSeoTitle(blog.seoTitle || "");
     setMetaDescription(blog.metaDescription || "");
     setFocusKeywords(blog.focusKeywords || "");
@@ -166,6 +174,8 @@ const ManageBlogs = () => {
       description,
       content,
       image,
+      bannerFit,
+      bannerHeight,
       category: categories.length > 0 ? categories[0] : category, // Fallback for old code
       categories,
       seoTitle,
@@ -226,6 +236,14 @@ const ManageBlogs = () => {
     setSections(newSections);
   };
 
+  const moveSection = (index, direction) => {
+    const copy = [...sections];
+    const temp = copy[index];
+    copy[index] = copy[index + direction];
+    copy[index + direction] = temp;
+    setSections(copy);
+  };
+
   const addTableRow = () => {
     setTableRows([...tableRows, Array(tableHeaders.length).fill("")]);
   };
@@ -271,11 +289,13 @@ const ManageBlogs = () => {
     if (type === "section") {
       newBlock = { ...newBlock, subheading: "", paragraph: "" };
     } else if (type === "image") {
-      newBlock = { ...newBlock, url: "" };
+      newBlock = { ...newBlock, url: "", imageSize: "medium", imageFit: "contain" };
     } else if (type === "video") {
       newBlock = { ...newBlock, url: "" };
     } else if (type === "split") {
-      newBlock = { ...newBlock, subheading: "", paragraph: "", url: "", imagePosition: "right" };
+      newBlock = { ...newBlock, subheading: "", paragraph: "", url: "", imagePosition: "right", imageSize: "medium" };
+    } else if (type === "image-row") {
+      newBlock = { ...newBlock, images: ["", ""], columns: 2 };
     }
     setContentBlocks([...contentBlocks, newBlock]);
   };
@@ -289,6 +309,24 @@ const ManageBlogs = () => {
   const updateContentBlock = (index, field, value) => {
     const copy = [...contentBlocks];
     copy[index][field] = value;
+    setContentBlocks(copy);
+  };
+
+  const updateImageRowSlot = (blockIdx, imgIdx, url) => {
+    const copy = [...contentBlocks];
+    const images = [...(copy[blockIdx].images || [])];
+    images[imgIdx] = url;
+    copy[blockIdx].images = images;
+    setContentBlocks(copy);
+  };
+
+  const setImageRowColumns = (blockIdx, cols) => {
+    const copy = [...contentBlocks];
+    let imgs = [...(copy[blockIdx].images || [])];
+    while (imgs.length < cols) imgs.push("");
+    imgs = imgs.slice(0, cols);
+    copy[blockIdx].images = imgs;
+    copy[blockIdx].columns = cols;
     setContentBlocks(copy);
   };
 
@@ -452,12 +490,95 @@ const ManageBlogs = () => {
                 <form id="blog-form" onSubmit={handleSave} className="space-y-8">
                   
                   {/* Banner Upload Section */}
-                  <div className="bg-slate-50 dark:bg-black/20 p-6 rounded-2xl border border-slate-200/80 dark:border-white/5">
+                  <div className="bg-slate-50 dark:bg-black/20 p-6 rounded-2xl border border-slate-200/80 dark:border-white/5 space-y-5">
                     <CloudinaryUpload 
                       label="Article Banner Image" 
                       currentImageUrl={image} 
                       onUploadSuccess={setImage} 
                     />
+
+                    {/* Live Banner Preview + Display Controls */}
+                    {image && (
+                      <div className="space-y-4">
+                        {/* Live Preview */}
+                        <div>
+                          <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Live Preview</p>
+                          <div
+                            className="w-full rounded-xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-black/20"
+                            style={{
+                              height: bannerHeight === 'small' ? '180px' : bannerHeight === 'medium' ? '300px' : bannerHeight === 'large' ? '420px' : '540px'
+                            }}
+                          >
+                            <img
+                              src={image}
+                              alt="Banner preview"
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: bannerFit,
+                                objectPosition: 'center'
+                              }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Controls Row */}
+                        <div className="grid grid-cols-2 gap-4">
+                          {/* Object Fit */}
+                          <div>
+                            <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Fit / Crop Style</label>
+                            <div className="grid grid-cols-3 gap-2">
+                              {[
+                                { value: 'cover', label: 'Cover', desc: 'Fills & crops' },
+                                { value: 'contain', label: 'Contain', desc: 'Full image' },
+                                { value: 'fill', label: 'Stretch', desc: 'Stretches' }
+                              ].map(opt => (
+                                <button
+                                  key={opt.value}
+                                  type="button"
+                                  onClick={() => setBannerFit(opt.value)}
+                                  className={`flex flex-col items-center p-2.5 rounded-xl border-2 transition-all text-center ${
+                                    bannerFit === opt.value
+                                      ? 'border-purple-500 bg-purple-50 dark:bg-purple-500/10'
+                                      : 'border-slate-200 dark:border-white/10 hover:border-purple-300'
+                                  }`}
+                                >
+                                  <span className={`text-xs font-bold ${bannerFit === opt.value ? 'text-purple-600 dark:text-purple-400' : 'text-slate-700 dark:text-slate-300'}`}>{opt.label}</span>
+                                  <span className="text-[10px] text-slate-400 mt-0.5">{opt.desc}</span>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Banner Height */}
+                          <div>
+                            <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Banner Height</label>
+                            <div className="grid grid-cols-2 gap-2">
+                              {[
+                                { value: 'small', label: 'Small', desc: '~250px' },
+                                { value: 'medium', label: 'Medium', desc: '~400px' },
+                                { value: 'large', label: 'Large', desc: '~500px' },
+                                { value: 'extra-large', label: 'X-Large', desc: '~600px' }
+                              ].map(opt => (
+                                <button
+                                  key={opt.value}
+                                  type="button"
+                                  onClick={() => setBannerHeight(opt.value)}
+                                  className={`flex flex-col items-center p-2.5 rounded-xl border-2 transition-all text-center ${
+                                    bannerHeight === opt.value
+                                      ? 'border-purple-500 bg-purple-50 dark:bg-purple-500/10'
+                                      : 'border-slate-200 dark:border-white/10 hover:border-purple-300'
+                                  }`}
+                                >
+                                  <span className={`text-xs font-bold ${bannerHeight === opt.value ? 'text-purple-600 dark:text-purple-400' : 'text-slate-700 dark:text-slate-300'}`}>{opt.label}</span>
+                                  <span className="text-[10px] text-slate-400 mt-0.5">{opt.desc}</span>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
@@ -511,13 +632,12 @@ const ManageBlogs = () => {
                         </label>
                         <div className="flex flex-wrap gap-4 p-4 bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl">
                           {[
+                            { id: "content-marketing", label: "Content Marketing" },
                             { id: "brand-strategy", label: "Brand Strategy" },
-                            { id: "influencer-marketing", label: "Influencer Marketing" },
-                            { id: "design-development", label: "Design & Development" },
-                            { id: "content-strategy", label: "Content Strategy" },
-                            { id: "ips-pr", label: "PR, IPs & Outreach" },
-                            { id: "aeo-seo", label: "AEO & SEO" },
-                            { id: "ecommerce", label: "E-Commerce" }
+                            { id: "ecommerce-management", label: "E-commerce Management" },
+                            { id: "design-solutions", label: "Design Solutions" },
+                            { id: "performance-marketing", label: "Performance Marketing" },
+                            { id: "website-development-seo", label: "Website Development & SEO" }
                           ].map(cat => (
                             <label key={cat.id} className="flex items-center gap-2 cursor-pointer group/cb">
                               <div className={`w-5 h-5 flex-shrink-0 rounded flex items-center justify-center border transition-all ${categories.includes(cat.id) ? 'bg-indigo-500 border-indigo-500' : 'border-slate-300 dark:border-slate-600 group-hover/cb:border-indigo-400'}`}>
@@ -603,15 +723,30 @@ const ManageBlogs = () => {
                   <div className="relative group">
                     <label className="flex justify-between items-end text-slate-700 dark:text-slate-300 text-sm font-bold mb-2">
                       <span>Full Blog Content</span>
-                      <span className="text-xs font-mono font-normal text-slate-400 px-2 py-1 bg-slate-100 dark:bg-white/5 rounded-md">Supports HTML</span>
+                      <span className="text-xs font-mono font-normal text-slate-400 px-2 py-1 bg-slate-100 dark:bg-white/5 rounded-md">Rich Text Editor</span>
                     </label>
-                    <textarea
-                      value={content}
-                      onChange={(e) => setContent(e.target.value)}
-                      rows={14}
-                      className="w-full px-5 py-4 bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/10 rounded-2xl text-slate-900 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 focus:bg-white dark:focus:bg-black/60 transition-all font-mono text-sm leading-relaxed custom-scrollbar shadow-inner"
-                      placeholder="<p>Start writing your amazing article here...</p>"
-                    />
+                    <div className="cs-quill-editor">
+                      <ReactQuill
+                        theme="snow"
+                        value={content || ''}
+                        onChange={setContent}
+                        placeholder="Write your amazing article here (bold, links, etc.)..."
+                        modules={{
+                          toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            [{ size: ['small', false, 'large', 'huge'] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ color: [] }, { background: [] }],
+                            [{ list: 'ordered' }, { list: 'bullet' }],
+                            [{ indent: '-1' }, { indent: '+1' }],
+                            [{ align: [] }],
+                            ['blockquote', 'link', 'image'],
+                            ['clean']
+                          ]
+                        }}
+                        formats={['header','size','bold','italic','underline','strike','color','background','list','bullet','indent','align','blockquote','link','image']}
+                      />
+                    </div>
                   </div>
 
                   {/* Dynamic Sections Builder */}
@@ -626,9 +761,11 @@ const ManageBlogs = () => {
                     </div>
                     {sections.map((section, idx) => (
                       <div key={section.id} className="p-5 bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 rounded-xl relative group/sec space-y-4">
-                        <button type="button" onClick={() => removeSection(idx)} className="absolute top-4 right-4 p-1.5 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-lg opacity-0 group-hover/sec:opacity-100 transition-opacity hover:bg-red-100 dark:hover:bg-red-500/20">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                          <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover/sec:opacity-100 transition-opacity">
+                            <button type="button" onClick={() => moveSection(idx, -1)} disabled={idx === 0} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white disabled:opacity-30 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg shadow-sm"><ArrowUp className="w-4 h-4" /></button>
+                            <button type="button" onClick={() => moveSection(idx, 1)} disabled={idx === sections.length - 1} className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white disabled:opacity-30 bg-white dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg shadow-sm"><ArrowDown className="w-4 h-4" /></button>
+                            <button type="button" onClick={() => removeSection(idx)} className="p-1.5 bg-red-50 dark:bg-red-500/10 text-red-500 rounded-lg hover:bg-red-100 dark:hover:bg-red-500/20 shadow-sm"><Trash2 className="w-4 h-4" /></button>
+                          </div>
                         <div className="pr-8 flex gap-4">
                           <div className="flex-1">
                             <label className="flex items-center gap-2 text-slate-700 dark:text-slate-300 text-xs font-bold mb-2 uppercase tracking-wider">Section Subheading</label>
@@ -645,7 +782,28 @@ const ManageBlogs = () => {
                         </div>
                         <div>
                           <label className="flex items-center gap-2 text-slate-700 dark:text-slate-300 text-xs font-bold mb-2 uppercase tracking-wider">Paragraph Content</label>
-                          <textarea value={section.paragraph} onChange={(e) => updateSection(idx, "paragraph", e.target.value)} rows={4} className="w-full px-4 py-3 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-slate-900 dark:text-white resize-y custom-scrollbar" placeholder="Section content..." />
+                          <div className="cs-quill-editor">
+                            <ReactQuill
+                              theme="snow"
+                              value={section.paragraph || ''}
+                              onChange={(val) => updateSection(idx, "paragraph", val)}
+                              placeholder="Section content..."
+                              modules={{
+                                toolbar: [
+                                  [{ header: [1, 2, 3, false] }],
+                                  [{ size: ['small', false, 'large', 'huge'] }],
+                                  ['bold', 'italic', 'underline', 'strike'],
+                                  [{ color: [] }, { background: [] }],
+                                  [{ list: 'ordered' }, { list: 'bullet' }],
+                                  [{ indent: '-1' }, { indent: '+1' }],
+                                  [{ align: [] }],
+                                  ['blockquote', 'link'],
+                                  ['clean']
+                                ]
+                              }}
+                              formats={['header','size','bold','italic','underline','strike','color','background','list','bullet','indent','align','blockquote','link']}
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -730,6 +888,7 @@ const ManageBlogs = () => {
                       <div className="flex flex-wrap gap-2">
                         <button type="button" onClick={() => addContentBlock('section')} className="text-xs font-bold px-3 py-1.5 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-500/30">+ Text</button>
                         <button type="button" onClick={() => addContentBlock('image')} className="text-xs font-bold px-3 py-1.5 bg-pink-100 dark:bg-pink-500/20 text-pink-700 dark:text-pink-300 rounded-lg hover:bg-pink-200 dark:hover:bg-pink-500/30">+ Image</button>
+                        <button type="button" onClick={() => addContentBlock('image-row')} className="text-xs font-bold px-3 py-1.5 bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-300 rounded-lg hover:bg-rose-200 dark:hover:bg-rose-500/30">+ Image Row</button>
                         <button type="button" onClick={() => addContentBlock('video')} className="text-xs font-bold px-3 py-1.5 bg-orange-100 dark:bg-orange-500/20 text-orange-700 dark:text-orange-300 rounded-lg hover:bg-orange-200 dark:hover:bg-orange-500/30">+ Video</button>
                         <button type="button" onClick={() => addContentBlock('split')} className="text-xs font-bold px-3 py-1.5 bg-teal-100 dark:bg-teal-500/20 text-teal-700 dark:text-teal-300 rounded-lg hover:bg-teal-200 dark:hover:bg-teal-500/30">+ Split Screen</button>
                       </div>
@@ -755,11 +914,28 @@ const ManageBlogs = () => {
                                 </select>
                               </div>
                               <input type="text" value={block.subheading || ''} onChange={(e) => updateContentBlock(idx, 'subheading', e.target.value)} placeholder="Subheading (optional)" className="w-full px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500" />
-                              <textarea value={block.paragraph || ''} onChange={(e) => updateContentBlock(idx, 'paragraph', e.target.value)} placeholder="Paragraph content" rows="3" className="w-full px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-indigo-500 custom-scrollbar"></textarea>
-                              <label className="flex items-center gap-2 mt-2 cursor-pointer w-fit">
-                                <input type="checkbox" checked={block.isList || false} onChange={(e) => updateContentBlock(idx, 'isList', e.target.checked)} className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
-                                <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Format text as bullet list (each new line is a bullet point)</span>
-                              </label>
+                              <div className="cs-quill-editor">
+                                <ReactQuill
+                                  theme="snow"
+                                  value={block.paragraph || ''}
+                                  onChange={(val) => updateContentBlock(idx, 'paragraph', val)}
+                                  placeholder="Paragraph content..."
+                                  modules={{
+                                    toolbar: [
+                                      [{ header: [1, 2, 3, false] }],
+                                      [{ size: ['small', false, 'large', 'huge'] }],
+                                      ['bold', 'italic', 'underline', 'strike'],
+                                      [{ color: [] }, { background: [] }],
+                                      [{ list: 'ordered' }, { list: 'bullet' }],
+                                      [{ indent: '-1' }, { indent: '+1' }],
+                                      [{ align: [] }],
+                                      ['blockquote', 'link'],
+                                      ['clean']
+                                    ]
+                                  }}
+                                  formats={['header','size','bold','italic','underline','strike','color','background','list','bullet','indent','align','blockquote','link']}
+                                />
+                              </div>
                             </div>
                           )}
 
@@ -767,6 +943,57 @@ const ManageBlogs = () => {
                             <div className="space-y-3 pt-4">
                               <div className="text-xs font-bold text-pink-500 flex items-center gap-1 mb-2"><ImageIcon className="w-4 h-4" /> Image Upload</div>
                               <CloudinaryUpload onUploadSuccess={(url) => updateContentBlock(idx, 'url', url)} currentImageUrl={block.url} label="Upload Image Block" />
+                              <div className="grid grid-cols-2 gap-3 mt-2">
+                                <div>
+                                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">Image Size</label>
+                                  <select value={block.imageSize || 'medium'} onChange={(e) => updateContentBlock(idx, 'imageSize', e.target.value)}
+                                    className="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white outline-none cursor-pointer">
+                                    <option value="extra-small">Extra Small</option>
+                                    <option value="small">Small</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="extra-large">Extra Large</option>
+                                    <option value="large">Full Width</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">Image Fit</label>
+                                  <select value={block.imageFit || 'contain'} onChange={(e) => updateContentBlock(idx, 'imageFit', e.target.value)}
+                                    className="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white outline-none cursor-pointer">
+                                    <option value="contain">Fit to Size</option>
+                                    <option value="cover">Crop</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {block.type === 'image-row' && (
+                            <div className="space-y-3 pt-4">
+                              <div className="text-xs font-bold text-rose-500 flex items-center justify-between gap-1 mb-2">
+                                <div className="flex items-center gap-1"><ImageIcon className="w-4 h-4" /> Image Row</div>
+                                <div className="flex items-center gap-2">
+                                  <label className="text-[11px] uppercase tracking-wider text-slate-500 font-bold">Columns:</label>
+                                  <select value={block.columns || 2} onChange={(e) => setImageRowColumns(idx, parseInt(e.target.value))}
+                                    className="text-xs px-2 py-1 rounded bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white outline-none cursor-pointer">
+                                    <option value={2}>2 Images</option>
+                                    <option value={3}>3 Images</option>
+                                  </select>
+                                  <label className="text-[11px] uppercase tracking-wider text-slate-500 font-bold ml-2">Fit:</label>
+                                  <select value={block.imageFit || 'cover'} onChange={(e) => updateContentBlock(idx, 'imageFit', e.target.value)}
+                                    className="text-xs px-2 py-1 rounded bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white outline-none cursor-pointer">
+                                    <option value="contain">Fit Full Image</option>
+                                    <option value="cover">Crop</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div className={`grid gap-3 ${(block.columns || 2) === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                                {(block.images || ["", ""]).map((imgUrl, imgIdx) => (
+                                  <div key={imgIdx} className="border border-dashed border-rose-200 dark:border-rose-500/30 rounded-xl p-2">
+                                    <p className="text-[10px] font-bold text-rose-400 mb-1">Image {imgIdx + 1}</p>
+                                    <CloudinaryUpload onUploadSuccess={(url) => updateImageRowSlot(idx, imgIdx, url)} currentImageUrl={imgUrl} label={`Image ${imgIdx + 1}`} />
+                                  </div>
+                                ))}
+                              </div>
                             </div>
                           )}
 
@@ -791,16 +1018,42 @@ const ManageBlogs = () => {
                                     <option value="right">Img Right</option>
                                     <option value="left">Img Left</option>
                                   </select>
+                                  <label className="text-[11px] uppercase tracking-wider text-slate-500 font-bold ml-2">Size:</label>
+                                  <select value={block.imageSize || 'medium'} onChange={(e) => updateContentBlock(idx, 'imageSize', e.target.value)}
+                                    className="text-xs px-2 py-1 rounded bg-slate-100 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white outline-none cursor-pointer">
+                                    <option value="extra-small">Extra Small</option>
+                                    <option value="small">Small</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="extra-large">Extra Large</option>
+                                    <option value="large">Full Width</option>
+                                  </select>
                                 </div>
                               </div>
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-3">
                                   <input type="text" value={block.subheading || ''} onChange={(e) => updateContentBlock(idx, 'subheading', e.target.value)} placeholder="Subheading" className="w-full px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-teal-500" />
-                                  <textarea value={block.paragraph || ''} onChange={(e) => updateContentBlock(idx, 'paragraph', e.target.value)} placeholder="Text Content" rows="5" className="w-full px-4 py-2 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white focus:outline-none focus:border-teal-500 custom-scrollbar"></textarea>
-                                  <label className="flex items-center gap-2 cursor-pointer w-fit">
-                                    <input type="checkbox" checked={block.isList || false} onChange={(e) => updateContentBlock(idx, 'isList', e.target.checked)} className="rounded border-slate-300 text-teal-600 focus:ring-teal-500 cursor-pointer" />
-                                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300">Format as bullet list</span>
-                                  </label>
+                                  <div className="cs-quill-editor">
+                                    <ReactQuill
+                                      theme="snow"
+                                      value={block.paragraph || ''}
+                                      onChange={(val) => updateContentBlock(idx, 'paragraph', val)}
+                                      placeholder="Text content..."
+                                      modules={{
+                                        toolbar: [
+                                          [{ header: [1, 2, 3, false] }],
+                                          [{ size: ['small', false, 'large', 'huge'] }],
+                                          ['bold', 'italic', 'underline', 'strike'],
+                                          [{ color: [] }, { background: [] }],
+                                          [{ list: 'ordered' }, { list: 'bullet' }],
+                                          [{ indent: '-1' }, { indent: '+1' }],
+                                          [{ align: [] }],
+                                          ['blockquote', 'link'],
+                                          ['clean']
+                                        ]
+                                      }}
+                                      formats={['header','size','bold','italic','underline','strike','color','background','list','bullet','indent','align','blockquote','link']}
+                                    />
+                                  </div>
                                 </div>
                                 <div className="border border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-3 bg-slate-50/50 dark:bg-white/5 flex flex-col justify-center">
                                   <CloudinaryUpload onUploadSuccess={(url) => updateContentBlock(idx, 'url', url)} currentImageUrl={block.url} label="Upload Image" />

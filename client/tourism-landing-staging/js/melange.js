@@ -1939,8 +1939,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var nodes = [];
     var activePointerId = null;
 
-    root.setAttribute("data-lenis-prevent", "");
-    /* iOS: allow page scroll unless the user is actively dragging the globe */
+    /* Do NOT set data-lenis-prevent here — that trapped vertical page scroll
+       whenever the cursor hovered the globe (same bug as the work carousel).
+       Drag still rotates via pointer events; wheel should scroll the page. */
     root.style.touchAction = "pan-y";
 
     var stage = document.createElement("div");

@@ -3,15 +3,24 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { closeBtn } from "../../assets/images";
 
-const OpeningPositions = ({ scrollToForm }) => {
+const OpeningPositions = ({ scrollToForm, onApply }) => {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
     getDocs(collection(db, "jobs"))
-      .then((snapshot) => setJobs(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))))
+      .then((snapshot) =>
+        setJobs(
+          snapshot.docs
+            .map((doc) => ({ id: doc.id, ...doc.data() }))
+            .filter((job) => job.active !== false)
+        )
+      )
       .catch((error) => console.error("Error loading jobs:", error));
   }, []);
+
+  const hasText = (html) =>
+    typeof html === "string" && html.replace(/<[^>]*>/g, "").trim().length > 0;
 
   const closeDetails = () => {
     setSelectedJob(null);
@@ -32,7 +41,13 @@ const OpeningPositions = ({ scrollToForm }) => {
             <p className="font-bricolage lg:text-[24px] text-[20px] leading-[30px] text-[#1A1A1A]">{job.title}</p>
             <div className="flex items-center lg:justify-normal justify-end space-x-5 lg:mt-0 mt-5">
               <button className="multiColor underline font-semibold text-[16px]" onClick={() => openDetails(job)}>View Details</button>
-              <button className="border border-[#D940FF] rounded-[30px] py-2 px-[12px] font-semibold text-[16px] applyBtn" onClick={scrollToForm}>Apply Now</button>
+              <button
+                className="border border-[#D940FF] rounded-[30px] py-2 px-[12px] font-semibold text-[16px] applyBtn"
+                onClick={() => {
+                  if (onApply) onApply(job.title);
+                  scrollToForm();
+                }}
+              >Apply Now</button>
             </div>
           </div>
         )) : <p className="mt-6 text-[#555]">There are no open positions at the moment.</p>}
@@ -44,8 +59,8 @@ const OpeningPositions = ({ scrollToForm }) => {
             <h3 className="text-2xl font-bold pr-10">{selectedJob.title}</h3>
             
             {/* Legacy description if it exists */}
-            {selectedJob.description && (
-              <div className="mt-5 whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: selectedJob.description }} />
+            {hasText(selectedJob.description) && (
+              <div className="mt-5 about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.description }} />
             )}
             
             {/* Legacy sections if they exist */}
@@ -59,34 +74,46 @@ const OpeningPositions = ({ scrollToForm }) => {
             ))}
             
             {/* New Admin Panel Fields */}
-            {selectedJob.about && (
-              <div className="mt-5 text-[#1A1A1A] leading-relaxed whitespace-pre-wrap about-html-content" dangerouslySetInnerHTML={{ __html: selectedJob.about }} />
+            {hasText(selectedJob.about) && (
+              <div className="mt-5 text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.about }} />
             )}
             
-            {selectedJob.keyResponsibilities && selectedJob.keyResponsibilities.length > 0 && (
+            {((Array.isArray(selectedJob.keyResponsibilities) && selectedJob.keyResponsibilities.some(Boolean)) || hasText(selectedJob.keyResponsibilities)) && (
               <div className="mt-5">
                 <h4 className="font-bold mb-2 text-lg text-[#1A1A1A]">Key Responsibilities</h4>
-                <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
-                  {selectedJob.keyResponsibilities.map((item, index) => <li key={index}>{item}</li>)}
-                </ul>
+                {Array.isArray(selectedJob.keyResponsibilities) ? (
+                  <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
+                    {selectedJob.keyResponsibilities.map((item, index) => <li key={index}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <div className="text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.keyResponsibilities }} />
+                )}
               </div>
             )}
             
-            {selectedJob.qualifications && selectedJob.qualifications.length > 0 && (
+            {((Array.isArray(selectedJob.qualifications) && selectedJob.qualifications.some(Boolean)) || hasText(selectedJob.qualifications)) && (
               <div className="mt-5">
                 <h4 className="font-bold mb-2 text-lg text-[#1A1A1A]">Qualifications</h4>
-                <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
-                  {selectedJob.qualifications.map((item, index) => <li key={index}>{item}</li>)}
-                </ul>
+                {Array.isArray(selectedJob.qualifications) ? (
+                  <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
+                    {selectedJob.qualifications.map((item, index) => <li key={index}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <div className="text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.qualifications }} />
+                )}
               </div>
             )}
             
-            {selectedJob.benefits && selectedJob.benefits.length > 0 && (
+            {((Array.isArray(selectedJob.benefits) && selectedJob.benefits.some(Boolean)) || hasText(selectedJob.benefits)) && (
               <div className="mt-5">
                 <h4 className="font-bold mb-2 text-lg text-[#1A1A1A]">Benefits</h4>
-                <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
-                  {selectedJob.benefits.map((item, index) => <li key={index}>{item}</li>)}
-                </ul>
+                {Array.isArray(selectedJob.benefits) ? (
+                  <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
+                    {selectedJob.benefits.map((item, index) => <li key={index}>{item}</li>)}
+                  </ul>
+                ) : (
+                  <div className="text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.benefits }} />
+                )}
               </div>
             )}
             

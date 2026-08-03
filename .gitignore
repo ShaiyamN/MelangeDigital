@@ -2,6 +2,7 @@ node_modules/
 dist/
 client/public/indian-outbound-tourism-report/
 client/public/tourism/
+client/public/destination-marketing-agency/
 .env
 .env.*
 !.env.example

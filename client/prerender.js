@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { createServer } from "http";
 import { fileURLToPath } from "url";
+import { prerenderRoutes as routes } from "./scripts/site-routes.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -42,102 +43,6 @@ function startServer(distPath, port) {
   });
 }
 
-const routes = [
-  "/",
-  "/services",
-  "/work",
-  "/about",
-  "/contact",
-  "/blogs",
-  "/careers",
-  "/terms-of-service",
-  "/privacy-policy",
-  "/cancellation-and-refund-policy",
-  "/cookie-policy",
-  "/performance-marketing",
-  "/work/zee5",
-  "/work/costa-cruises",
-  "/work/kalon",
-  "/work/duvon",
-  "/work/make-my-trip",
-  "/work/sportz-village",
-  "/work/active-club",
-  "/work/kunal-rathod",
-  "/work/sportz-village-xp",
-  "/work/proportunity",
-  "/work/dhruvak",
-  "/work/travel-stop",
-  "/work/GenVR",
-  "/work/rock-highland",
-  "/work/aartech-solonics",
-  "/work/enerqual",
-  "/work/resorts-world-cruises",
-  "/work/ganga-fashions",
-  "/work/versailles-dental-clinic",
-  "/work/healthy-mithai",
-  "/work/jewel-houze",
-  "/work/neoTraders",
-  "/work/devBoost",
-  "/work/singapore-tourism-board",
-  "/work/singapore-tourism-board-stb",
-  "/work/her-hk",
-  "/work/akbar-travels",
-  "/work/zambia-tourism",
-  "/work/navi-savi",
-  "/services/brand-strategy",
-  "/services/influencer-marketing",
-  "/services/immersive-brand-storytelling",
-  "/services/design-and-development",
-  "/services/content-strategy-and-production",
-  "/services/pr-and-outreach",
-  "/services/content-marketing",
-  "/services/ecommerce",
-  "/services/design-solutions",
-  "/services/performance-marketing",
-  "/services/website-development-seo",
-  "/services/brand-strategy/market-research",
-  "/services/brand-strategy/brand-audit",
-  "/services/brand-strategy/competition-category-benchmarking",
-  "/services/brand-strategy/audience-profiling",
-  "/services/brand-strategy/brand-experience",
-  "/services/brand-strategy/communication-design",
-  "/services/design-solutions/branding",
-  "/services/design-solutions/graphic-design",
-  "/services/design-solutions/data-visualization",
-  "/services/content-marketing/social-media",
-  "/services/content-marketing/influencer-marketing",
-  "/services/content-marketing/video-graphy",
-  "/services/content-marketing/photo-graphy",
-  "/services/content-marketing/motion-graphics",
-  "/services/content-marketing/articles",
-  "/services/content-marketing/ad-copywriting",
-  "/services/content-marketing/b2b-marketing",
-  "/services/performance-marketing/ads",
-  "/services/performance-marketing/media-buying-planning",
-  "/services/performance-marketing/automation",
-  "/services/performance-marketing/analytics",
-  "/services/website-development-seo/web-development",
-  "/services/website-development-seo/ui-ux",
-  "/services/website-development-seo/content",
-  "/services/website-development-seo/seo",
-  "/services/ecommerce/market-research",
-  "/services/ecommerce/d2c",
-  "/services/ecommerce/marketplace-management",
-  "/services/ecommerce/paid-campaigns",
-  "/blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships",
-  "/blogs/sustainable-design-and-packaging-why-2025-consumers-judge-before-they-click-buy",
-  "/blogs/community-first-content-stacks-why-owning-your-audience-is-the-new-moat",
-  "/blogs/from-products-to-experiences-how-micro-events-and-community-activations-are-shaping-brand-ip-in-2025",
-  "/singapore-tourism",
-  "/singapore-tourism-aeo-seo",
-  "/siam-malls",
-  "/work/green-label",
-  "/ganga-fashion",
-  "/work/maison-luxe",
-  "/work/veda-naturals",
-  "/services/aeo-seo",
-];
-
 const PORT = 3033;
 const distPath = path.join(__dirname, "dist");
 
@@ -145,8 +50,16 @@ console.log("Starting server...");
 const server = await startServer(distPath, PORT);
 console.log(`Server running at http://localhost:${PORT}`);
 
+const chromePath =
+  process.env.PUPPETEER_EXECUTABLE_PATH ||
+  (process.platform === "win32"
+    ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    : undefined);
+
 const browser = await puppeteer.launch({
-  executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  ...(chromePath && fs.existsSync(chromePath)
+    ? { executablePath: chromePath }
+    : {}),
   args: ["--no-sandbox", "--disable-setuid-sandbox"],
 });
 

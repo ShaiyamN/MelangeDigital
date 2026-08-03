@@ -5,30 +5,52 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REPORT_SLUG = "indian-outbound-tourism-report";
-const reportPublicDir = path.join(__dirname, "public", REPORT_SLUG);
-const reportStagingDir = path.join(__dirname, "tourism-landing-staging");
+const TOURISM_SLUG = "destination-marketing-agency";
+const tourismPublicDir = path.join(__dirname, "public", TOURISM_SLUG);
+const tourismStagingDir = path.join(__dirname, "tourism-landing-staging");
+const REPORT_PDF_FILE = path.join(
+  __dirname,
+  "public",
+  "assets",
+  "reports",
+  "The Indian Outbound Inspiration report 2026.pdf",
+);
 
-function reportLandingDevMiddleware() {
+function tourismDevMiddleware() {
   return {
-    name: "report-landing-dev-middleware",
+    name: "tourism-dev-middleware",
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = req.url?.split("?")[0] || "";
 
         if (url === "/tourism" || url === "/tourism/") {
-          res.writeHead(301, { Location: `/${REPORT_SLUG}/` });
+          res.writeHead(301, { Location: `/${TOURISM_SLUG}/` });
           res.end();
           return;
         }
 
-        if (!url.startsWith(`/${REPORT_SLUG}`)) {
+        if (url === "/indian-outbound-tourism-report" || url === "/indian-outbound-tourism-report/") {
+          if (!fs.existsSync(REPORT_PDF_FILE)) {
+            res.statusCode = 404;
+            res.end("Report PDF not found");
+            return;
+          }
+          res.setHeader("Content-Type", "application/pdf");
+          res.setHeader(
+            "Content-Disposition",
+            'inline; filename="The Indian Outbound Inspiration report 2026.pdf"',
+          );
+          fs.createReadStream(REPORT_PDF_FILE).pipe(res);
+          return;
+        }
+
+        if (!url.startsWith(`/${TOURISM_SLUG}`)) {
           next();
           return;
         }
 
-        const sourceRoot = fs.existsSync(reportPublicDir) ? reportPublicDir : reportStagingDir;
-        const relativePath = url.replace(new RegExp(`^/${REPORT_SLUG}/?`), "") || "index.html";
+        const sourceRoot = fs.existsSync(tourismPublicDir) ? tourismPublicDir : tourismStagingDir;
+        const relativePath = url.replace(new RegExp(`^/${TOURISM_SLUG}/?`), "") || "index.html";
         const filePath = path.join(sourceRoot, relativePath === "" ? "index.html" : relativePath);
 
         if (!filePath.startsWith(sourceRoot)) {
@@ -74,7 +96,7 @@ function reportLandingDevMiddleware() {
 
 export default defineConfig({
   base: "/",
-  plugins: [react(), reportLandingDevMiddleware()],
+  plugins: [react(), tourismDevMiddleware()],
   server: {
     host: true,
     port: 5173,

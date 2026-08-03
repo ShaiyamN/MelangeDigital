@@ -1,10 +1,17 @@
-# Report landing (static)
-/tourism/index.html /indian-outbound-tourism-report/ 301
-/tourism            /indian-outbound-tourism-report/ 301
-/tourism/           /indian-outbound-tourism-report/ 301
-/indian-outbound-tourism-report/index.html /indian-outbound-tourism-report/ 301
-/indian-outbound-tourism-report /indian-outbound-tourism-report/ 301
-/indian-outbound-tourism-report/ /indian-outbound-tourism-report/index.html 200
+# Legacy tourism → destination-marketing-agency
+/tourism/index.html /destination-marketing-agency/ 301
+/tourism            /destination-marketing-agency/ 301
+/tourism/           /destination-marketing-agency/ 301
+/tourism/*          /destination-marketing-agency/:splat 301
+
+# Destination marketing landing (static)
+/destination-marketing-agency/index.html /destination-marketing-agency/ 301
+/destination-marketing-agency            /destination-marketing-agency/ 301
+/destination-marketing-agency/           /destination-marketing-agency/index.html 200
+
+# Pretty PDF URL (rewrite — URL stays /indian-outbound-tourism-report)
+/indian-outbound-tourism-report /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf 200
+/indian-outbound-tourism-report/ /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf 200
 
 # SPA fallback for everything else
 /*                  /index.html           200

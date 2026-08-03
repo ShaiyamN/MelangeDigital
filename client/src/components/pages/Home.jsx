@@ -114,11 +114,22 @@ const Home = () => {
             tag3: data.services?.[2] || "",
             title: data.title,
             path: `/work/${data.slug}`,
-            createdAt: data.createdAt || 0
+            createdAt: data.createdAt || 0,
+            sortOrder: data.sortOrder,
+            homeOrder: data.homeOrder
           };
         });
         
-        fetchedWorks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Sort by homeOrder (home-specific order), then sortOrder, then createdAt as fallback
+        fetchedWorks.sort((a, b) => {
+          if (a.homeOrder !== undefined && b.homeOrder !== undefined) return a.homeOrder - b.homeOrder;
+          if (a.homeOrder !== undefined) return -1;
+          if (b.homeOrder !== undefined) return 1;
+          if (a.sortOrder !== undefined && b.sortOrder !== undefined) return a.sortOrder - b.sortOrder;
+          if (a.sortOrder !== undefined) return -1;
+          if (b.sortOrder !== undefined) return 1;
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
         setDynamicWorks(fetchedWorks);
       } catch (err) {
         console.error("Error fetching homepage data:", err);

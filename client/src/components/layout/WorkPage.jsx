@@ -78,7 +78,25 @@ const   WorkSummary = () => {
 
   useEffect(() => {
     getDocs(collection(db, "casestudies"))
-      .then((snapshot) => setWorks(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data(), icon: doc.data().bannerImage, path: `/work/${doc.data().slug}`, filter: doc.data().categories || (doc.data().category ? [doc.data().category] : []) }))))
+      .then((snapshot) => {
+        const list = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+          icon: doc.data().bannerImage,
+          path: `/work/${doc.data().slug}`,
+          filter: doc.data().filters?.length
+            ? doc.data().filters
+            : (doc.data().categories || (doc.data().category ? [doc.data().category] : [])),
+        }));
+        // Sort by admin-defined sortOrder, then createdAt as fallback
+        list.sort((a, b) => {
+          if (a.sortOrder !== undefined && b.sortOrder !== undefined) return a.sortOrder - b.sortOrder;
+          if (a.sortOrder !== undefined) return -1;
+          if (b.sortOrder !== undefined) return 1;
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        });
+        setWorks(list);
+      })
       .catch((error) => console.error("Error loading case studies:", error));
   }, []);
 

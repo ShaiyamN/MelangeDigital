@@ -33,6 +33,7 @@ const Career = () => {
   const isMobile = window.innerWidth <= 768;
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const [selectedPosition, setSelectedPosition] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -121,79 +122,6 @@ const Career = () => {
           `}
         </script>
 
-        {/* Schema Markup - JobPosting: HR & Admin Executive */}
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "JobPosting",
-              "title": "HR & Admin Executive",
-              "description": "We are looking for an HR and Admin Executive to manage human resources operations and administrative functions at Mélange Digital. The role involves recruitment, onboarding, employee relations, and office administration.",
-              "datePosted": "2025-01-01",
-              "validThrough": "2025-12-31",
-              "employmentType": "FULL_TIME",
-              "jobLocationType": "TELECOMMUTE",
-              "workHours": "Monday to Friday, 9:00 AM - 6:00 PM",
-              "applicantLocationRequirements": {
-                "@type": "Country",
-                "name": "IN"
-              },
-              "jobLocation": {
-                "@type": "Place",
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressLocality": "Goa",
-                  "addressRegion": "Goa",
-                  "addressCountry": "IN"
-                }
-              },
-              "hiringOrganization": {
-                "@type": "Organization",
-                "name": "Mélange Digital",
-                "sameAs": "https://melangedigital.co",
-                "logo": "https://melangedigital.co/assets/mainLogo-8756aff9.png"
-              },
-              "directApply": true
-            }
-          `}
-        </script>
-
-        {/* Schema Markup - JobPosting: Graphic Designer & Video Editor */}
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "JobPosting",
-              "title": "Graphic Designer & Video Editor",
-              "description": "We are looking for a talented Graphic Designer and Video Editor to join Mélange Digital. The role involves creating compelling visual content, motion graphics, and video edits for digital marketing campaigns across multiple platforms.",
-              "datePosted": "2025-01-01",
-              "validThrough": "2025-12-31",
-              "employmentType": "FULL_TIME",
-              "jobLocationType": "TELECOMMUTE",
-              "workHours": "Monday to Friday, 9:00 AM - 6:00 PM",
-              "applicantLocationRequirements": {
-                "@type": "Country",
-                "name": "IN"
-              },
-              "jobLocation": {
-                "@type": "Place",
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressLocality": "Goa",
-                  "addressRegion": "Goa",
-                  "addressCountry": "IN"
-                }
-              },
-              "hiringOrganization": {
-                "@type": "Organization",
-                "name": "Mélange Digital",
-                "sameAs": "https://melangedigital.co",
-                "logo": "https://melangedigital.co/assets/mainLogo-8756aff9.png"
-              },
-              "directApply": true
-            }
-          `}
-        </script>
         {/* End of Schema Markup */}
       </Helmet>
 
@@ -299,8 +227,8 @@ const Career = () => {
             </div>
           </div>
         </div>
-        <OpeningPositions scrollToForm={scrollToForm} />
-        <CareerForm ref={formRef} />
+        <OpeningPositions scrollToForm={scrollToForm} onApply={setSelectedPosition} />
+        <CareerForm ref={formRef} selectedPosition={selectedPosition} />
       </div>
 
       <Footer />

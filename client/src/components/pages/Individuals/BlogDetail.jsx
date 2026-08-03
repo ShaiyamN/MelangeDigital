@@ -29,12 +29,13 @@ const BlogDetail = () => {
           }
           return {
             id: h2.id,
-            text: h2.innerText
+            text: h2.textContent || h2.innerText
           };
         });
-        setToc(tocItems);
+        // Filter out any completely empty headings just in case
+        setToc(tocItems.filter(item => item.text && item.text.trim() !== ""));
       }
-    }, 200); // slight delay to ensure DOM is fully painted
+    }, 500); // increased delay and switched to textContent for production reliability
     return () => clearTimeout(timer);
   }, [blog]);
 
@@ -123,10 +124,39 @@ const BlogDetail = () => {
   // Helper to humanize category label
   const formatCategory = (cat) => {
     if (!cat) return "";
-    return cat
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+    const categoryMap = {
+      "content-marketing": "Content Marketing",
+      "brand-strategy": "Brand Strategy",
+      "ecommerce-management": "E-commerce Management",
+      "design-solutions": "Design Solutions",
+      "performance-marketing": "Performance Marketing",
+      "website-development-seo": "Website Development & SEO",
+      // Legacy support for older blogs
+      "influencer-marketing": "Influencer Marketing",
+      "design-development": "Design & Development",
+      "content-strategy": "Content Strategy",
+      "ips-pr": "PR, IPs & Outreach",
+      "aeo-seo": "AEO & SEO",
+      "ecommerce": "E-Commerce"
+    };
+    return categoryMap[cat] || cat.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  };
+
+  // Map imageSize value to CSS classes
+  const getImageSizeClass = (imageSize) => {
+    switch (imageSize) {
+      case 'extra-small': return 'max-w-xs w-full';
+      case 'small': return 'max-w-sm w-full';
+      case 'medium': return 'max-w-2xl w-full';
+      case 'extra-large': return 'max-w-4xl w-full';
+      case 'large': return 'w-full';
+      default: return 'max-w-2xl w-full';
+    }
+  };
+
+  // Map imageFit value to object-fit class
+  const getImageFitClass = (imageFit) => {
+    return imageFit === 'cover' ? 'object-cover' : 'object-contain';
   };
 
   const renderVideo = (url) => {
@@ -152,8 +182,8 @@ const BlogDetail = () => {
   return (
     <div>
       <Helmet>
-        <title>{blog.seoTitle || blog.title} | Blog & Insights | Mélange Digital</title>
-        <meta name="title" content={`${blog.seoTitle || blog.title} | Blog & Insights`} data-rh="true" />
+        <title>{blog.seoTitle || blog.title}</title>
+        <meta name="title" content={`${blog.seoTitle || blog.title}`} data-rh="true" />
         <meta name="description" content={blog.metaDescription || blog.description || ""} data-rh="true" />
         {blog.focusKeywords && <meta name="keywords" content={blog.focusKeywords} data-rh="true" />}
         <meta property="og:image" content={blog.image || ""} data-rh="true" />
@@ -179,48 +209,46 @@ const BlogDetail = () => {
         </div>
 
         {/* Title */}
-        <div className="multiverse-text my-[16px] lg:text-[40px] text-2xl lg:font-semibold font-bold lg:leading-[48px] leading-[31.20px] font-nunito mt-4 lg:mt-4">
+        <h1 className="multiverse-text my-[16px] lg:text-[40px] text-2xl lg:font-semibold font-bold lg:leading-[48px] leading-[31.20px] font-nunito mt-4 lg:mt-4">
           {blog.title}
-        </div>
+        </h1>
 
         {/* Banner image */}
-        {blog.image && (
-          <div className="w-full mt-5">
-            <img
-              src={blog.image}
-              alt={blog.altText || blog.title}
-              className="w-full h-[250px] md:h-[400px] lg:h-[500px] object-cover lg:rounded-[30px] rounded-xl shadow-md"
-            />
-          </div>
-        )}
+        {blog.image && (() => {
+          const heightMap = {
+            'small': { mobile: '200px', tablet: '280px', desktop: '300px' },
+            'medium': { mobile: '220px', tablet: '350px', desktop: '450px' },
+            'large': { mobile: '250px', tablet: '400px', desktop: '550px' },
+            'extra-large': { mobile: '280px', tablet: '460px', desktop: '650px' },
+          };
+          const h = heightMap[blog.bannerHeight] || heightMap['medium'];
+          const fit = blog.bannerFit || 'cover';
+          return (
+            <div className="w-full mt-5">
+              <picture>
+                <img
+                  src={blog.image}
+                  alt={blog.altText || blog.title}
+                  className="w-full lg:rounded-[30px] rounded-xl shadow-md"
+                  style={{
+                    objectFit: fit,
+                    objectPosition: 'center',
+                    height: `clamp(${h.mobile}, 35vw, ${h.desktop})`,
+                    display: 'block',
+                  }}
+                />
+              </picture>
+            </div>
+          );
+        })()}
 
         {/* Content grid */}
         <div className="lg:flex lg:gap-x-10 lg:mt-[32px] mt-5">
-          {/* Main article content */}
-          <div className="firstSection font-nunito lg:w-[70%] w-full">
-            
-            {toc.length > 0 && (
-              <div className="bg-[#dbe6ec] p-6 md:p-8 rounded-xl mb-10 shadow-sm">
-                <h3 className="text-[28px] md:text-[32px] font-bold text-slate-800 mb-6">Jump To:</h3>
-                <ul className="space-y-4">
-                  {toc.map((item) => (
-                    <li key={item.id} className="border-b border-slate-500/30 pb-3 last:border-0 last:pb-0">
-                      <button 
-                        onClick={() => scrollToHeading(item.id)}
-                        className="text-left text-[16px] md:text-[18px] font-bold text-slate-800 hover:text-[#3858ff] transition-colors flex items-center w-full group"
-                      >
-                        <span className="pr-2">{item.text}</span>
-                        <span className="transform transition-transform group-hover:translate-x-2 text-xl font-normal">→</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {blog.content && (
+            {/* Main article content */}
+            <div className="firstSection font-nunito lg:w-[70%] w-full">
+              {blog.content && (
               <div 
-                className="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] lg:mt-4 mt-2 whitespace-pre-line blog-content"
+                className="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] lg:mt-4 mt-2 blog-content cs-rendered-content"
                 dangerouslySetInnerHTML={{ __html: blog.content }}
               />
             )}
@@ -231,17 +259,18 @@ const BlogDetail = () => {
                   <div key={idx} className="section-block">
                     {section.subheading && (
                       section.headingLevel === 'h3' ? (
-                        <h3 className="text-2xl font-bold text-zinc-900 mb-4">{section.subheading}</h3>
+                        <h3 className="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">{section.subheading}</h3>
                       ) : section.headingLevel === 'h4' ? (
-                        <h4 className="text-xl font-bold text-zinc-900 mb-4">{section.subheading}</h4>
+                        <h4 className="text-[18px] md:text-[20px] font-bold text-zinc-900 mb-4">{section.subheading}</h4>
                       ) : (
-                        <h2 className="text-2xl font-bold text-zinc-900 mb-4">{section.subheading}</h2>
+                        <h2 className="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4">{section.subheading}</h2>
                       )
                     )}
                     {section.paragraph && (
-                      <p className="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] whitespace-pre-line">
-                        {section.paragraph}
-                      </p>
+                      <div
+                        className="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"
+                        dangerouslySetInnerHTML={{ __html: section.paragraph }}
+                      />
                     )}
                   </div>
                 ))}
@@ -285,24 +314,25 @@ const BlogDetail = () => {
                       <div className="flex flex-col">
                         {block.subheading && (
                           block.headingLevel === 'h3' ? (
-                            <h3 className="multiverse-text font-bold text-[24px] md:text-[28px] leading-[32px] lg:leading-[36px] mb-3">{block.subheading}</h3>
+                            <h3 className="multiverse-text font-bold text-[20px] md:text-[22px] leading-[28px] lg:leading-[32px] mb-3">{block.subheading}</h3>
                           ) : block.headingLevel === 'h4' ? (
-                            <h4 className="multiverse-text font-bold text-[20px] md:text-[24px] leading-[28px] lg:leading-[32px] mb-3">{block.subheading}</h4>
+                            <h4 className="multiverse-text font-bold text-[18px] md:text-[20px] leading-[24px] lg:leading-[28px] mb-3">{block.subheading}</h4>
                           ) : (
                             <h2 className="multiverse-text font-bold text-[28px] md:text-[32px] leading-[36px] lg:leading-[40px] mb-3">{block.subheading}</h2>
                           )
                         )}
                         {block.paragraph && (
-                          block.isList ? (
+                          block.isList && !/<[a-z][\s\S]*>/i.test(block.paragraph) ? (
                             <ul className="list-disc list-outside mt-2 text-[16px] md:text-[18px] lg:text-[20px] space-y-3 ml-6 leading-relaxed whitespace-pre-wrap text-zinc-900">
                               {block.paragraph.split('\n').filter(line => line.trim() !== '').map((line, bIdx) => (
                                 <li key={bIdx}>{line}</li>
                               ))}
                             </ul>
                           ) : (
-                            <p className="text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed whitespace-pre-wrap text-zinc-900">
-                              {block.paragraph}
-                            </p>
+                            <div
+                              className="text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed text-zinc-900 blog-content cs-rendered-content"
+                              dangerouslySetInnerHTML={{ __html: block.paragraph }}
+                            />
                           )
                         )}
                         {/* Bullet list support in content blocks */}
@@ -322,8 +352,25 @@ const BlogDetail = () => {
                         <img
                           src={block.url}
                           alt="Blog content"
-                          className="max-w-2xl w-full max-h-[480px] rounded-2xl shadow-lg object-contain"
+                          className={`${getImageSizeClass(block.imageSize)} ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-2xl shadow-lg ${getImageFitClass(block.imageFit)}`}
                         />
+                      </div>
+                    )}
+
+                    {/* IMAGE ROW SECTION — 2 or 3 images side by side */}
+                    {block.type === 'image-row' && block.images && block.images.some(img => img) && (
+                      <div className={`grid gap-4 md:gap-6 ${(block.columns || 2) === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'}`}>
+                        {block.images.map((imgUrl, imgIdx) =>
+                          imgUrl ? (
+                            <div key={imgIdx} className="w-full overflow-hidden rounded-2xl shadow-md">
+                              <img
+                                src={imgUrl}
+                                alt={`Blog image ${imgIdx + 1}`}
+                                className={`w-full h-[220px] md:h-[280px] lg:h-[340px] ${getImageFitClass(block.imageFit || 'cover')}`}
+                              />
+                            </div>
+                          ) : null
+                        )}
                       </div>
                     )}
 
@@ -350,27 +397,28 @@ const BlogDetail = () => {
                             )
                           )}
                           {block.paragraph && (
-                            block.isList ? (
+                            block.isList && !/<[a-z][\s\S]*>/i.test(block.paragraph) ? (
                               <ul className="list-disc list-outside mt-3 text-[#1a1a1a] text-[18px] md:text-[20px] lg:text-[22px] leading-[32px] space-y-3 ml-6 font-medium opacity-90 break-words">
                                 {block.paragraph.split('\n').filter(line => line.trim() !== '').map((line, bIdx) => (
                                   <li key={bIdx}>{line}</li>
                                 ))}
                               </ul>
                             ) : (
-                              <p className="text-[#1a1a1a] text-[18px] md:text-[20px] lg:text-[22px] leading-[32px] whitespace-pre-wrap break-words opacity-90 font-medium">
-                                {block.paragraph}
-                              </p>
+                              <div
+                                className="text-[#1a1a1a] text-[18px] md:text-[20px] lg:text-[22px] leading-[32px] break-words opacity-90 font-medium blog-content cs-rendered-content"
+                                dangerouslySetInnerHTML={{ __html: block.paragraph }}
+                              />
                             )
                           )}
                         </div>
                         {block.url && (
                           <div className={`w-full flex justify-center ${block.imagePosition === 'left' ? 'lg:order-1 order-1' : 'lg:order-2 order-1'}`}>
-                            <div className="relative group w-full">
+                            <div className={`relative group ${getImageSizeClass(block.imageSize)}`}>
                               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-[32px] blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
                               <img
                                 src={block.url}
                                 alt={block.subheading || "Blog split content"}
-                                className="w-full max-h-[600px] rounded-[32px] shadow-2xl object-cover relative z-10 border border-black/5 dark:border-white/10"
+                                className={`w-full ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-[32px] shadow-2xl object-cover relative z-10 border border-black/5 dark:border-white/10`}
                               />
                             </div>
                           </div>
@@ -411,6 +459,29 @@ const BlogDetail = () => {
 
           {/* Sidebar */}
           <div className="secSection lg:block hidden font-nunito w-[30%]">
+            
+            {/* Table of Contents - Now in Sidebar */}
+            {toc.length > 0 && (
+              <div className="w-full h-auto bg-zinc-100 p-6 rounded-2xl mb-10">
+                <p className="text-zinc-900 text-2xl font-bold leading-[27px] lg:leading-[34px] mb-4">
+                  Table of Contents
+                </p>
+                <ul className="space-y-3">
+                  {toc.map((item) => (
+                    <li key={item.id} className="border-b border-zinc-200 pb-3 last:border-0 last:pb-0">
+                      <button 
+                        onClick={() => scrollToHeading(item.id)}
+                        className="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"
+                      >
+                        <span className="pr-2 flex-1">{item.text}</span>
+                        <span className="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className="w-full h-auto bg-zinc-100 p-6 rounded-2xl">
               <p className="text-zinc-900 text-2xl font-bold leading-[27px] lg:leading-[34px]">
                 Categories

@@ -5,6 +5,68 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Rich Text — rendered content on PUBLIC frontend ─────────────────────── */
+.cs-rendered-content {
+  white-space: normal !important;
+}
+.cs-rendered-content h1 { font-size: 1.75em; font-weight: 700; margin-bottom: 0.5em; }
+.cs-rendered-content h2 { font-size: 1.4em;  font-weight: 700; margin-bottom: 0.5em; }
+.cs-rendered-content h3 { font-size: 1.2em;  font-weight: 700; margin-bottom: 0.5em; }
+.cs-rendered-content p  { margin-bottom: 0.75em; }
+.cs-rendered-content p:last-child { margin-bottom: 0; }
+.cs-rendered-content blockquote {
+  border-left: 4px solid #a78bfa;
+  padding-left: 1rem;
+  color: #6b7280;
+  font-style: italic;
+  margin: 0.75em 0;
+}
+.cs-rendered-content a { color: #7c3aed; text-decoration: underline; }
+.cs-rendered-content b,
+.cs-rendered-content strong { font-weight: 700 !important; }
+.cs-rendered-content i,
+.cs-rendered-content em { font-style: italic !important; }
+.cs-rendered-content u { text-decoration: underline !important; }
+.cs-rendered-content ul {
+  list-style-type: disc !important;
+  padding-left: 1.5em !important;
+  margin-bottom: 0.75em;
+}
+.cs-rendered-content ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5em !important;
+  margin-bottom: 0.75em;
+}
+.cs-rendered-content li {
+  display: list-item !important;
+  margin-bottom: 0.35em;
+  line-height: 1.7;
+}
+
+/* ─── Quill editor — admin panel styling ─────────────────────────────────── */
+.cs-quill-editor .ql-toolbar {
+  border-radius: 8px 8px 0 0;
+  border-color: #e2e8f0;
+  background: #f8fafc;
+}
+.cs-quill-editor .ql-container {
+  border-radius: 0 0 8px 8px;
+  border-color: #e2e8f0;
+  font-size: 14px;
+  min-height: 100px;
+  background: #f8fafc;
+  color: #1e293b;
+}
+.cs-quill-editor .ql-editor { min-height: 120px; line-height: 1.65; }
+.cs-quill-editor .ql-editor.ql-blank::before { color: #94a3b8; font-style: normal; }
+.dark .cs-quill-editor .ql-toolbar { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+.dark .cs-quill-editor .ql-toolbar .ql-stroke { stroke: #cbd5e1; }
+.dark .cs-quill-editor .ql-toolbar .ql-fill { fill: #cbd5e1; }
+.dark .cs-quill-editor .ql-toolbar button:hover .ql-stroke { stroke: #fff; }
+.dark .cs-quill-editor .ql-toolbar button:hover .ql-fill { fill: #fff; }
+.dark .cs-quill-editor .ql-container { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.1); color: #f1f5f9; }
+.dark .cs-quill-editor .ql-editor.ql-blank::before { color: #64748b; }
+
 .no-scrollbar {
   -ms-overflow-style: none; /* for Internet Explorer and Edge */
   scrollbar-width: none; /* for Firefox */
@@ -2659,4 +2721,22 @@ body {
   padding-left: 1.5rem !important;
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
+}
+
+/* Blog Content Typography */
+.blog-content h3, .cs-quill-editor h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+.blog-content h4, .cs-quill-editor h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+@media (max-width: 768px) {
+  .blog-content h3, .cs-quill-editor h3 { font-size: 20px; }
+  .blog-content h4, .cs-quill-editor h4 { font-size: 18px; }
 }

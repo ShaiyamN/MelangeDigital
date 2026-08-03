@@ -1,6 +1,9 @@
 {
   "name": "melange-digital",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "npm ci --prefix client && npm run build --prefix client",
     "start": "node server.js"
