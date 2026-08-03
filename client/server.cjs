@@ -41,6 +41,19 @@ app.get("/destination-marketing-agency", (_req, res) => {
   res.redirect(302, "/destination-marketing-agency/");
 });
 
+// Serve DMA landing explicitly so a missing/odd static match never hits SPA redirect logic
+const DMA_INDEX = path.join(DIST, "destination-marketing-agency", "index.html");
+app.get(
+  ["/destination-marketing-agency/", "/destination-marketing-agency/index.html"],
+  (_req, res) => {
+    if (!fs.existsSync(DMA_INDEX)) {
+      res.status(404).type("text/plain").send("Destination marketing landing not built — run sync-tourism + build");
+      return;
+    }
+    res.sendFile(DMA_INDEX);
+  }
+);
+
 // Pretty PDF URL — browser address bar stays /indian-outbound-tourism-report
 app.get(
   ["/indian-outbound-tourism-report", "/indian-outbound-tourism-report/"],

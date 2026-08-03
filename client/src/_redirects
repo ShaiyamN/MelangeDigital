@@ -1,11 +1,9 @@
 # Legacy tourism → destination-marketing-agency
-/tourism/index.html /destination-marketing-agency/ 301
 /tourism            /destination-marketing-agency/ 301
 /tourism/           /destination-marketing-agency/ 301
 /tourism/*          /destination-marketing-agency/:splat 301
 
-# Destination marketing landing (static)
-/destination-marketing-agency/index.html /destination-marketing-agency/ 301
+# Destination marketing landing (static) — no index.html⇄slash bounce (causes redirect loops)
 /destination-marketing-agency            /destination-marketing-agency/ 301
 /destination-marketing-agency/           /destination-marketing-agency/index.html 200
 

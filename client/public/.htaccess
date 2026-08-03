@@ -2,15 +2,19 @@
   RewriteEngine On
   RewriteBase /
 
-  # Legacy /tourism → destination-marketing-agency
+  # Legacy /tourism → destination-marketing-agency (external redirects only)
   RewriteRule ^tourism/?$ /destination-marketing-agency/ [R=301,L]
+  # Only when the client literally requested …/index.html (not DirectoryIndex internals)
+  RewriteCond %{THE_REQUEST} \s/+tourism/index\.html[\s?] [NC]
   RewriteRule ^tourism/index\.html$ /destination-marketing-agency/ [R=301,L]
-  RewriteRule ^tourism/(.*)$ /destination-marketing-agency/$1 [R=301,L]
+  RewriteRule ^tourism/(.+)$ /destination-marketing-agency/$1 [R=301,L]
 
   # Destination marketing landing (static folder)
+  RewriteCond %{THE_REQUEST} \s/+destination-marketing-agency/index\.html[\s?] [NC]
   RewriteRule ^destination-marketing-agency/index\.html$ /destination-marketing-agency/ [R=301,L]
   RewriteRule ^destination-marketing-agency$ /destination-marketing-agency/ [R=301,L]
-  RewriteRule ^destination-marketing-agency/$ - [L]
+  # Serve the static directory; do not fall through to SPA
+  RewriteRule ^destination-marketing-agency/(.*)$ - [L]
 
   # Pretty PDF URL — keep address bar as /indian-outbound-tourism-report, serve the file
   RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]
