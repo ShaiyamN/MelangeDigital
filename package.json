@@ -6,6 +6,6 @@
   },
   "scripts": {
     "build": "npm ci --prefix client && npm run build --prefix client",
-    "start": "node server.js"
+    "start": "node client/server.cjs"
   }
 }

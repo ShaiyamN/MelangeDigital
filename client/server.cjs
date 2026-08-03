@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Hostinger entry when app root is client/ — serves Vite dist on process.env.PORT.
+// Root package.json also starts this file via `node client/server.cjs`.
 const DIST = path.join(__dirname, "dist");
 const PORT = Number(process.env.PORT) || 3000;
 const REPORT_PDF = path.join(
@@ -53,14 +54,27 @@ app.get(
   }
 );
 
-// Serves /destination-marketing-agency/ from dist/ as a normal static folder — no redirects
-app.use(express.static(DIST));
+// Hashed /assets/* can be cached forever; index.html must not be (else stale HTML → 404 chunks)
+app.use(
+  express.static(DIST, {
+    setHeaders(res, filePath) {
+      if (filePath.endsWith(`${path.sep}index.html`) || filePath.endsWith("/index.html")) {
+        res.setHeader("Cache-Control", "no-cache");
+        return;
+      }
+      if (filePath.includes(`${path.sep}assets${path.sep}`) || filePath.includes("/assets/")) {
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      }
+    },
+  })
+);
 
 app.use((req, res) => {
   if (req.path.startsWith("/assets/")) {
     res.status(404).type("text/plain").send("Not found");
     return;
   }
+  res.setHeader("Cache-Control", "no-cache");
   res.sendFile(path.join(DIST, "index.html"));
 });
 
