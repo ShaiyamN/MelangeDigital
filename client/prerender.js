@@ -11,13 +11,21 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function startServer(distPath, port) {
   return new Promise((resolve) => {
     const server = createServer((req, res) => {
+      const urlPath = (req.url || "/").split("?")[0];
       let filePath = path.join(
         distPath,
-        req.url === "/" ? "/index.html" : req.url,
+        urlPath === "/" ? "/index.html" : urlPath,
       );
 
-      // Handle SPA routing - serve index.html for unknown paths
-      if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
+      const exists = fs.existsSync(filePath) && fs.statSync(filePath).isFile();
+      if (!exists) {
+        // Don't serve HTML for missing JS/CSS — that triggers browser MIME errors
+        if (urlPath.startsWith("/assets/")) {
+          res.statusCode = 404;
+          res.setHeader("Content-Type", "text/plain");
+          res.end("Not found");
+          return;
+        }
         filePath = path.join(distPath, "index.html");
       }
 
@@ -33,6 +41,8 @@ function startServer(distPath, port) {
         ".ico": "image/x-icon",
         ".woff": "font/woff",
         ".woff2": "font/woff2",
+        ".webp": "image/webp",
+        ".mp4": "video/mp4",
       };
 
       res.setHeader("Content-Type", mimeTypes[ext] || "text/plain");

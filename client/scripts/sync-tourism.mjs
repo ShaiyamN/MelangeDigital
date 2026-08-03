@@ -85,4 +85,19 @@ if (fs.existsSync(htaccessSrc)) {
   fs.copyFileSync(htaccessSrc, path.join(DEST, '.htaccess'));
 }
 
+// Stub so /tourism/ never Hostinger-404s if RewriteRule is skipped (empty/missing dir).
+const tourismStub = path.join(CLIENT_ROOT, 'public', 'tourism');
+fs.mkdirSync(tourismStub, { recursive: true });
+fs.writeFileSync(
+  path.join(tourismStub, 'index.html'),
+  `<!DOCTYPE html><html lang="en"><head>` +
+    `<meta charset="utf-8"/>` +
+    `<meta http-equiv="refresh" content="0;url=/${LANDING_SLUG}/"/>` +
+    `<link rel="canonical" href="https://melangedigital.co/${LANDING_SLUG}/"/>` +
+    `<title>Redirecting...</title></head><body>` +
+    `<p><a href="/${LANDING_SLUG}/">Continue to Destination Marketing</a></p>` +
+    `</body></html>\n`,
+);
+
 console.log(`Synced tourism landing from ${SOURCE} to ${DEST}`);
+console.log(`Wrote /tourism/ → /${LANDING_SLUG}/ redirect stub`);

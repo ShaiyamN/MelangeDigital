@@ -15,6 +15,10 @@
   # Pretty PDF URL — keep address bar as /indian-outbound-tourism-report, serve the file
   RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]
 
+  # Missing hashed assets must 404 as plain text — not index.html (breaks type=module)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^assets/ - [R=404,L]
+
   # Don't rewrite requests for actual files and directories
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

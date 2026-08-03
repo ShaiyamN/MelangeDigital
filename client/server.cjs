@@ -59,7 +59,12 @@ app.get(
 );
 
 app.use(express.static(DIST));
-app.use((_req, res) => {
+// Never SPA-fallback missing /assets/* — that returns HTML and browsers throw MIME errors on module scripts
+app.use((req, res) => {
+  if (req.path.startsWith("/assets/")) {
+    res.status(404).type("text/plain").send("Not found");
+    return;
+  }
   res.sendFile(path.join(DIST, "index.html"));
 });
 

@@ -2,6 +2,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 
 import { useEffect, useLayoutEffect, lazy, Suspense } from "react";
@@ -11,19 +12,22 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Critical imports - keep as regular imports for initial load
-import { Home, Error } from "./components/pages";
-import Services from "./components/pages/Services";
-import Works from "./components/pages/Works";
-import About from "./components/pages/About";
-import Contact from "./components/pages/Contact";
-import Blogs from "./components/pages/Blogs";
-import SingaporeTourism from "./components/pages/Individuals/SingaporeTourism";
-import SiamMalls from "./components/pages/Individuals/SiamMalls";
-import GreenLabel from "./components/pages/Individuals/GreenLabel";
-import GangaFashion from "./components/pages/Individuals/GangaFashion";
-import AeoSeoService from "./components/pages/Individuals/AeoSeoService";
-import SingaporeTourismAeoSeo from "./components/pages/Individuals/SingaporeTourismAeoSeo";
+// Homepage + error stay eager for first paint / 404
+import Home from "./components/pages/Home";
+import Error from "./components/pages/Error";
+
+// Everything else: load on navigation
+const Services = lazy(() => import("./components/pages/Services"));
+const Works = lazy(() => import("./components/pages/Works"));
+const About = lazy(() => import("./components/pages/About"));
+const Contact = lazy(() => import("./components/pages/Contact"));
+const Blogs = lazy(() => import("./components/pages/Blogs"));
+const SingaporeTourism = lazy(() => import("./components/pages/Individuals/SingaporeTourism"));
+const SiamMalls = lazy(() => import("./components/pages/Individuals/SiamMalls"));
+const GreenLabel = lazy(() => import("./components/pages/Individuals/GreenLabel"));
+const GangaFashion = lazy(() => import("./components/pages/Individuals/GangaFashion"));
+const AeoSeoService = lazy(() => import("./components/pages/Individuals/AeoSeoService"));
+const SingaporeTourismAeoSeo = lazy(() => import("./components/pages/Individuals/SingaporeTourismAeoSeo"));
 
 // Lazy load less frequently visited routes
 const TermsofService = lazy(() => import("./components/pages/TermsofService"));
@@ -178,6 +182,7 @@ function App() {
           <Route exact path="/blogs/:slug" Component={BlogDetail} />
 
           {/* Admin routes */}
+          <Route exact path="/admin" element={<Navigate to="/admin/login" replace />} />
           <Route exact path="/admin/login" Component={AdminLogin} />
           <Route exact path="/admin/dashboard" Component={AdminDashboard} />
           <Route exact path="/admin/manage-case-studies" Component={ManageCaseStudies} />
@@ -189,11 +194,10 @@ function App() {
           <Route exact path="/about" Component={About} />
           <Route exact path="/contact" Component={Contact} />
           <Route exact path="/careers" Component={Career} />
-          {/* Static landing; legacy /tourism → new slug */}
+          {/* Static landing; legacy /tourism → new slug (full page load to static folder) */}
           <Route path="/tourism" element={<TourismLandingRedirect />} />
           <Route path="/tourism/" element={<TourismLandingRedirect />} />
-          <Route path="/destination-marketing-agency" element={<TourismLandingRedirect />} />
-          <Route path="/destination-marketing-agency/" element={<TourismLandingRedirect />} />
+          {/* DMA itself is a static folder — do not SPA-catch it (avoids reload loop if folder missing) */}
           <Route exact path="/location/:locationId" Component={Location} />
           <Route
             exact
