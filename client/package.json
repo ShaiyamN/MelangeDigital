@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/assert-real-assets.cjs && node scripts/check-imports.cjs && node scripts/sync-tourism.mjs && node scripts/generate-sitemap.mjs && vite build",
+    "build": "node scripts/assert-real-assets.cjs && node scripts/check-imports.cjs && node scripts/sync-tourism.mjs && node scripts/generate-sitemap.mjs && vite build && node scripts/write-spa-shells.cjs",
     "build:prerender": "npm run build && npm run prerender",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "check:imports": "node scripts/check-imports.cjs",

@@ -7,6 +7,7 @@ const path = require("path");
 // Root package.json also starts this file via `node client/server.cjs`.
 const DIST = path.join(__dirname, "dist");
 const PORT = Number(process.env.PORT) || 3000;
+const INDEX = path.join(DIST, "index.html");
 const REPORT_PDF = path.join(
   DIST,
   "assets",
@@ -14,10 +15,13 @@ const REPORT_PDF = path.join(
   "The Indian Outbound Inspiration report 2026.pdf"
 );
 
-if (!fs.existsSync(path.join(DIST, "index.html"))) {
-  console.error(`Missing ${path.join(DIST, "index.html")} — run npm run build first`);
+if (!fs.existsSync(INDEX)) {
+  console.error(`Missing ${INDEX} — run npm run build first`);
   process.exit(1);
 }
+
+// Buffer once — Hostinger has been returning Express finalhandler 404 from sendFile failures
+const INDEX_HTML = fs.readFileSync(INDEX);
 
 const app = express();
 
@@ -31,6 +35,12 @@ if (stagingUser && stagingPass) {
       realm: "Melange Digital Staging",
     })
   );
+}
+
+function sendIndex(res) {
+  res.setHeader("Cache-Control", "no-cache");
+  res.type("html");
+  res.send(INDEX_HTML);
 }
 
 // Old /tourism bookmark → landing folder (nav already uses /destination-marketing-agency/)
@@ -50,13 +60,15 @@ app.get(
       "Content-Disposition",
       'inline; filename="The Indian Outbound Inspiration report 2026.pdf"'
     );
-    res.sendFile(REPORT_PDF);
+    fs.createReadStream(REPORT_PDF).pipe(res);
   }
 );
 
-// Hashed /assets/* can be cached forever; index.html must not be (else stale HTML → 404 chunks)
 app.use(
   express.static(DIST, {
+    // Avoid /admin/login → /admin/login/ 301 (breaks behind some Hostinger proxies)
+    redirect: false,
+    // Physical admin/*/index.html shells (from write-spa-shells) are served here
     setHeaders(res, filePath) {
       if (filePath.endsWith(`${path.sep}index.html`) || filePath.endsWith("/index.html")) {
         res.setHeader("Cache-Control", "no-cache");
@@ -74,8 +86,7 @@ app.use((req, res) => {
     res.status(404).type("text/plain").send("Not found");
     return;
   }
-  res.setHeader("Cache-Control", "no-cache");
-  res.sendFile(path.join(DIST, "index.html"));
+  sendIndex(res);
 });
 
 app.listen(PORT, () => {
