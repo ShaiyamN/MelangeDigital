@@ -2,9 +2,15 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-// Serves the Vite build for Hostinger Node entry when app root is the repo.
+// Hostinger Node entry when app root is the repo (see root package.json "start").
 const DIST = path.join(__dirname, "client", "dist");
 const PORT = Number(process.env.PORT) || 3000;
+const REPORT_PDF = path.join(
+  DIST,
+  "assets",
+  "reports",
+  "The Indian Outbound Inspiration report 2026.pdf"
+);
 
 const MIME = {
   ".html": "text/html; charset=utf-8",
@@ -64,6 +70,15 @@ function send(res, filePath, status = 200) {
   fs.createReadStream(filePath).pipe(res);
 }
 
+function sendText(res, status, text, type = "text/plain; charset=utf-8") {
+  const body = Buffer.from(text);
+  res.writeHead(status, {
+    "Content-Type": type,
+    "Content-Length": body.length,
+  });
+  res.end(body);
+}
+
 if (!fs.existsSync(path.join(DIST, "index.html"))) {
   console.error(`Missing ${path.join(DIST, "index.html")} — run npm run build first`);
   process.exit(1);
@@ -73,20 +88,39 @@ http
   .createServer((req, res) => {
     const urlPath = (req.url || "/").split("?")[0];
 
+    // Old bookmark only — landing lives at /destination-marketing-agency/
     if (urlPath === "/tourism" || urlPath === "/tourism/") {
-      res.writeHead(301, { Location: "/indian-outbound-tourism-report/" });
+      res.writeHead(302, { Location: "/destination-marketing-agency/" });
       res.end();
       return;
     }
-    if (urlPath === "/indian-outbound-tourism-report") {
-      res.writeHead(302, { Location: "/indian-outbound-tourism-report/" });
-      res.end();
+
+    if (
+      urlPath === "/indian-outbound-tourism-report" ||
+      urlPath === "/indian-outbound-tourism-report/"
+    ) {
+      if (!fs.existsSync(REPORT_PDF)) {
+        sendText(res, 404, "Report PDF not found");
+        return;
+      }
+      res.writeHead(200, {
+        "Content-Type": "application/pdf",
+        "Content-Disposition":
+          'inline; filename="The Indian Outbound Inspiration report 2026.pdf"',
+        "Content-Length": fs.statSync(REPORT_PDF).size,
+      });
+      fs.createReadStream(REPORT_PDF).pipe(res);
       return;
     }
 
     const filePath = resolveFile(DIST, urlPath);
     if (filePath) {
       send(res, filePath);
+      return;
+    }
+
+    if (urlPath.startsWith("/assets/")) {
+      sendText(res, 404, "Not found");
       return;
     }
 
