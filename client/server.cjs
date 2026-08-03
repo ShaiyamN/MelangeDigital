@@ -20,7 +20,6 @@ if (!fs.existsSync(path.join(DIST, "index.html"))) {
 
 const app = express();
 
-// Staging-only: Hostinger staging sets STAGING_USER/STAGING_PASS; production FTP never runs this server.
 const stagingUser = process.env.STAGING_USER;
 const stagingPass = process.env.STAGING_PASS;
 if (stagingUser && stagingPass) {
@@ -33,28 +32,11 @@ if (stagingUser && stagingPass) {
   );
 }
 
+// Old /tourism bookmark → landing folder (nav already uses /destination-marketing-agency/)
 app.get(["/tourism", "/tourism/"], (_req, res) => {
-  res.redirect(301, "/destination-marketing-agency/");
-});
-
-app.get("/destination-marketing-agency", (_req, res) => {
   res.redirect(302, "/destination-marketing-agency/");
 });
 
-// Serve DMA landing explicitly so a missing/odd static match never hits SPA redirect logic
-const DMA_INDEX = path.join(DIST, "destination-marketing-agency", "index.html");
-app.get(
-  ["/destination-marketing-agency/", "/destination-marketing-agency/index.html"],
-  (_req, res) => {
-    if (!fs.existsSync(DMA_INDEX)) {
-      res.status(404).type("text/plain").send("Destination marketing landing not built — run sync-tourism + build");
-      return;
-    }
-    res.sendFile(DMA_INDEX);
-  }
-);
-
-// Pretty PDF URL — browser address bar stays /indian-outbound-tourism-report
 app.get(
   ["/indian-outbound-tourism-report", "/indian-outbound-tourism-report/"],
   (_req, res) => {
@@ -71,8 +53,9 @@ app.get(
   }
 );
 
+// Serves /destination-marketing-agency/ from dist/ as a normal static folder — no redirects
 app.use(express.static(DIST));
-// Never SPA-fallback missing /assets/* — that returns HTML and browsers throw MIME errors on module scripts
+
 app.use((req, res) => {
   if (req.path.startsWith("/assets/")) {
     res.status(404).type("text/plain").send("Not found");

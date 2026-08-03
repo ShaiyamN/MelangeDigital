@@ -131,14 +131,6 @@ function ScrollToTop() {
 }
 
 /** Static destination marketing landing — full document load, not SPA. */
-const TOURISM_LANDING = "/destination-marketing-agency/";
-
-function TourismLandingRedirect() {
-  useEffect(() => {
-    window.location.replace(TOURISM_LANDING);
-  }, []);
-  return null;
-}
 
 // Hook to handle tab visibility change (only title changes)
 function useTabVisibility() {
@@ -194,10 +186,6 @@ function App() {
           <Route exact path="/about" Component={About} />
           <Route exact path="/contact" Component={Contact} />
           <Route exact path="/careers" Component={Career} />
-          {/* Static landing; legacy /tourism → new slug (full page load to static folder) */}
-          <Route path="/tourism" element={<TourismLandingRedirect />} />
-          <Route path="/tourism/" element={<TourismLandingRedirect />} />
-          {/* DMA itself is a static folder — do not SPA-catch it (avoids reload loop if folder missing) */}
           <Route exact path="/location/:locationId" Component={Location} />
           <Route
             exact

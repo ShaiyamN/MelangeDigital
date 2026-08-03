@@ -1,15 +1,10 @@
-# Legacy tourism → destination-marketing-agency
-/tourism            /destination-marketing-agency/ 301
-/tourism/           /destination-marketing-agency/ 301
-/tourism/*          /destination-marketing-agency/:splat 301
+# Legacy bookmark only
+/tourism  /destination-marketing-agency/  302
+/tourism/ /destination-marketing-agency/  302
 
-# Destination marketing landing (static) — no index.html⇄slash bounce (causes redirect loops)
-/destination-marketing-agency            /destination-marketing-agency/ 301
-/destination-marketing-agency/           /destination-marketing-agency/index.html 200
+# Pretty PDF URL
+/indian-outbound-tourism-report  /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf  200
+/indian-outbound-tourism-report/ /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf  200
 
-# Pretty PDF URL (rewrite — URL stays /indian-outbound-tourism-report)
-/indian-outbound-tourism-report /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf 200
-/indian-outbound-tourism-report/ /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf 200
-
-# SPA fallback for everything else
-/*                  /index.html           200
+# SPA fallback (real files/dirs like destination-marketing-agency/ are served first)
+/*  /index.html  200
