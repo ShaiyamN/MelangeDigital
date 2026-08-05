@@ -3520,11 +3520,12 @@ input.zf-submitColor,
 }
 
 .hero-eyebrow {
-  font-family: var(--melange-body);
-  font-weight: 500;
+  /* !important: keep body look when this is an <h1> (global h1/h2 use display !important) */
+  font-family: var(--melange-body) !important;
+  font-weight: 500 !important;
   font-size: var(--type-body, 16px);
   line-height: 1.35;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.06em !important;
   text-transform: none;
   color: var(--melange-highlight);
   margin: 0 0 16px;

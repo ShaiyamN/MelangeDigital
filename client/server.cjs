@@ -64,6 +64,26 @@ app.get(
   }
 );
 
+// Live sitemap from Firestore (blogs + casestudies). Before static so dist/sitemap.xml is not used.
+const { getSitemapXml } = require("./scripts/live-sitemap.cjs");
+app.get("/sitemap.xml", async (_req, res) => {
+  try {
+    const xml = await getSitemapXml();
+    res
+      .type("application/xml")
+      .set("Cache-Control", "public, max-age=300")
+      .send(xml);
+  } catch (err) {
+    console.error("live sitemap failed, falling back to static:", err.message);
+    const fallback = path.join(DIST, "sitemap.xml");
+    if (fs.existsSync(fallback)) {
+      res.type("application/xml").sendFile(fallback);
+      return;
+    }
+    res.status(500).type("text/plain").send("sitemap unavailable");
+  }
+});
+
 app.use(
   express.static(DIST, {
     // Avoid /admin/login → /admin/login/ 301 (breaks behind some Hostinger proxies)
