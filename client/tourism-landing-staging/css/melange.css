@@ -5843,6 +5843,8 @@ input.zf-submitColor,
 /* ===== Site spacing — shared stylesheet overrides ===== */
 .creative-mind-wrapper {
   margin-top: 0 !important;
+  /* 6 leaders → 3 per row on desktop (shared CSS still has 4 cols) */
+  grid-template-columns: 1fr 1fr 1fr !important;
 }
 
 .pricing-grid,
