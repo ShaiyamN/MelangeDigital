@@ -4876,7 +4876,7 @@ br.hero-br-desktop {
 }
 
 .profile-card > img {
-  width: 100%;
+  width: min(82%, 360px);
   height: auto;
   display: block;
   margin: 0 auto;
