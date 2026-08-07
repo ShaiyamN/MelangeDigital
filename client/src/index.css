@@ -1966,7 +1966,7 @@ body {
   font-weight: bold;
 }
 .heroBG {
-  background: url("assets/video/final.webp");
+  background: url("assets/video/final.gif");
   background-repeat: no-repeat;
   height: 850px;
   background-size: cover;
@@ -2295,7 +2295,7 @@ body {
   }
 
   .heroBG {
-    background: url("assets/video/mobileBanner.webp");
+    background: url("assets/video/mobileBanner.gif");
     background-repeat: no-repeat;
     height: 900px;
     background-size: cover;
