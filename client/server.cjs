@@ -46,11 +46,10 @@ function sendIndex(res) {
 const DMA = "destination-marketing-agency";
 const DMA_INDEX = path.join(DIST, DMA, "index.html");
 
-// Canonical tourism URL has no trailing slash (matches rest of site + sitemap).
-app.get(`/${DMA}/`, (_req, res) => {
-  res.redirect(301, `/${DMA}`);
-});
-app.get(`/${DMA}`, (_req, res) => {
+// Serve both slash forms — do NOT 301 between them (Hostinger/proxy adds a
+// trailing slash for this directory; stripping it causes ERR_TOO_MANY_REDIRECTS).
+// Nav + sitemap use the no-slash URL; either form returns the landing HTML.
+app.get([`/${DMA}`, `/${DMA}/`], (_req, res) => {
   if (!fs.existsSync(DMA_INDEX)) {
     res.status(404).send("Tourism landing not found");
     return;

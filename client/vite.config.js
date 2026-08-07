@@ -29,12 +29,6 @@ function tourismDevMiddleware() {
           return;
         }
 
-        if (url === `/${TOURISM_SLUG}/`) {
-          res.writeHead(301, { Location: `/${TOURISM_SLUG}` });
-          res.end();
-          return;
-        }
-
         if (url === "/indian-outbound-tourism-report" || url === "/indian-outbound-tourism-report/") {
           if (!fs.existsSync(REPORT_PDF_FILE)) {
             res.statusCode = 404;
