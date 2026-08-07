@@ -3,7 +3,7 @@
 Source: `client/tourism-landing-staging/`  
 Build output: `dist/destination-marketing-agency/` (synced before every `npm run build`)
 
-Public landing URL: `/destination-marketing-agency/`  
+Public landing URL: `/destination-marketing-agency`  
 Legacy: `/tourism/` → 301 to the new slug
 
 Report PDF (after form submit): `/indian-outbound-tourism-report`  

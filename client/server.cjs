@@ -43,9 +43,26 @@ function sendIndex(res) {
   res.send(INDEX_HTML);
 }
 
-// Old /tourism bookmark → landing folder (nav already uses /destination-marketing-agency/)
+const DMA = "destination-marketing-agency";
+const DMA_INDEX = path.join(DIST, DMA, "index.html");
+
+// Canonical tourism URL has no trailing slash (matches rest of site + sitemap).
+app.get(`/${DMA}/`, (_req, res) => {
+  res.redirect(301, `/${DMA}`);
+});
+app.get(`/${DMA}`, (_req, res) => {
+  if (!fs.existsSync(DMA_INDEX)) {
+    res.status(404).send("Tourism landing not found");
+    return;
+  }
+  res.setHeader("Cache-Control", "no-cache");
+  res.type("html");
+  res.sendFile(DMA_INDEX);
+});
+
+// Old /tourism bookmark → landing
 app.get(["/tourism", "/tourism/"], (_req, res) => {
-  res.redirect(302, "/destination-marketing-agency/");
+  res.redirect(301, `/${DMA}`);
 });
 
 app.get(

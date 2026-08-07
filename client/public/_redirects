@@ -1,6 +1,7 @@
 # Legacy bookmark only
-/tourism  /destination-marketing-agency/  302
-/tourism/ /destination-marketing-agency/  302
+/tourism  /destination-marketing-agency  301
+/tourism/ /destination-marketing-agency  301
+/destination-marketing-agency/  /destination-marketing-agency  301
 
 # Pretty PDF URL
 /indian-outbound-tourism-report  /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf  200

@@ -24,7 +24,13 @@ function tourismDevMiddleware() {
         const url = req.url?.split("?")[0] || "";
 
         if (url === "/tourism" || url === "/tourism/") {
-          res.writeHead(301, { Location: `/${TOURISM_SLUG}/` });
+          res.writeHead(301, { Location: `/${TOURISM_SLUG}` });
+          res.end();
+          return;
+        }
+
+        if (url === `/${TOURISM_SLUG}/`) {
+          res.writeHead(301, { Location: `/${TOURISM_SLUG}` });
           res.end();
           return;
         }

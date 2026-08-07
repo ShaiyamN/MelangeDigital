@@ -9,8 +9,14 @@
   RewriteEngine On
   RewriteBase /
 
+  # Tourism landing: no trailing slash (same as SPA routes)
+  # Stop Apache from 301'ing the folder to …/agency/
+  DirectorySlash Off
+  RewriteRule ^destination-marketing-agency/$ /destination-marketing-agency [R=301,L]
+  RewriteRule ^destination-marketing-agency$ destination-marketing-agency/index.html [L]
+
   # One legacy bookmark redirect — nothing else for the landing URL
-  RewriteRule ^tourism/?$ /destination-marketing-agency/ [R=302,L]
+  RewriteRule ^tourism/?$ /destination-marketing-agency [R=301,L]
 
   # Pretty PDF URL
   RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]

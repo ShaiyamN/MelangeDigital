@@ -38,7 +38,7 @@ const Footer = ({ customInsights }) => {
   const companyLinks = [
     { to: "/about", text: "About Us" },
     { to: "/work", text: "Our Work" },
-    { href: "/destination-marketing-agency/", text: "Tourism", external: true },
+    { href: "/destination-marketing-agency", text: "Tourism", external: true },
     { to: "/blogs", text: "Blogs" },
     { to: "/careers", text: "Careers" },
   ];

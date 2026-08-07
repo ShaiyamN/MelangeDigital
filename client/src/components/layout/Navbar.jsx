@@ -79,14 +79,14 @@ const navLinks = [
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About Us" },
-  { href: "/destination-marketing-agency/", label: "Tourism", external: true },
+    { href: "/destination-marketing-agency", label: "Tourism", external: true },
 ];
 
 const mobileNavLinks = [
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About Us" },
-  { href: "/destination-marketing-agency/", label: "Tourism", external: true },
+    { href: "/destination-marketing-agency", label: "Tourism", external: true },
   { to: "/contact", label: "Contact Us" },
 ];
 
