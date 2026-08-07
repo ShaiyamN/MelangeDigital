@@ -15,6 +15,7 @@
     "assert:assets": "node scripts/assert-real-assets.cjs",
     "sync-tourism": "node scripts/sync-tourism.mjs",
     "prerender": "node prerender.js",
+    "postinstall": "node scripts/maybe-hostinger-build.cjs",
     "start": "node server.cjs",
     "preview": "vite preview"
   },
