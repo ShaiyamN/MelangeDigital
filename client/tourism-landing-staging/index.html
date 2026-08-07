@@ -42,16 +42,188 @@
    gtag('config', 'G-1VTPL005KG');
   </script>
   <script type="application/ld+json">
-   {
+{
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "url": "https://melangedigital.co/destination-marketing-agency",
-  "name": "Indian Outbound Tourism Trends 2026 - Melange Digital",
-  "description": "Indian outbound tourism trends 2026: our report reveals why 67% of Indian travellers are inspired by creator content, not price.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Melange Digital"
-  }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://melangedigital.co/#organization",
+      "name": "Melange Digital",
+      "url": "https://melangedigital.co/",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://melangedigital.co/#logo",
+        "url": "https://melangedigital.co/destination-marketing-agency/images/figma/logo-nav.png",
+        "contentUrl": "https://melangedigital.co/destination-marketing-agency/images/figma/logo-nav.png"
+      },
+      "image": { "@id": "https://melangedigital.co/#logo" },
+      "description": "Melange Digital is a destination marketing agency helping national tourism boards and destination brands reach India's outbound travellers through creator and celebrity marketing, branded content, experiential activation, and full-funnel strategy.",
+      "email": "hello@melangedigital.co",
+      "telephone": "+91 93725 67722",
+      "sameAs": [
+        "https://www.linkedin.com/company/melangedigital",
+        "https://www.instagram.com/melangedigital.co"
+      ],
+      "award": [
+        "India Business Awards 2025 – Most Impactful Full-Service Marketing Agency",
+        "Brand Impact Award 2024 – Outstanding Professional Achievement and Contribution Towards Nation Building",
+        "Asia Leadership Award 2024 – Best Use of AI in Marketing"
+      ],
+      "areaServed": [
+        { "@type": "Country", "name": "India" },
+        { "@type": "Country", "name": "United Kingdom" },
+        { "@type": "Country", "name": "United Arab Emirates" },
+        { "@type": "Country", "name": "Singapore" },
+        { "@type": "Country", "name": "Zambia" }
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91 93725 67722",
+          "email": "hello@melangedigital.co",
+          "contactType": "sales",
+          "areaServed": "Worldwide"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://melangedigital.co/#website",
+      "url": "https://melangedigital.co/",
+      "name": "Melange Digital",
+      "publisher": { "@id": "https://melangedigital.co/#organization" }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://melangedigital.co/destination-marketing-agency#service",
+      "serviceType": "Destination Marketing",
+      "name": "Destination Marketing Agency for Global Tourism Boards",
+      "provider": { "@id": "https://melangedigital.co/#organization" },
+      "areaServed": "Worldwide",
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "National Tourism Boards and Destination Marketing Organizations"
+      },
+      "description": "Full-funnel destination marketing for national tourism boards and destination brands — combining cultural strategy, Indian creator and celebrity marketing, branded content and IP, experiential activation, FAM trips, and PR to convert India outbound tourism demand into measurable arrivals.",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Destination Marketing Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Influencer & Celebrity Marketing",
+              "provider": { "@id": "https://melangedigital.co/#organization" }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Branded Content & IP",
+              "provider": { "@id": "https://melangedigital.co/#organization" }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Experiential Marketing",
+              "provider": { "@id": "https://melangedigital.co/#organization" }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "FAM Trips & PR",
+              "provider": { "@id": "https://melangedigital.co/#organization" }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://melangedigital.co/destination-marketing-agency#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://melangedigital.co/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Destination Marketing Agency",
+          "item": "https://melangedigital.co/destination-marketing-agency"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://melangedigital.co/destination-marketing-agency#webpage",
+      "url": "https://melangedigital.co/destination-marketing-agency",
+      "name": "India's Destination Marketing Agency for Global Tourism Boards | Melange Digital",
+      "description": "Melange Digital is a destination marketing agency helping national tourism boards and destination brands reach India's outbound travellers through creator-led campaigns, branded content, experiential marketing, and full-funnel strategy.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": "https://melangedigital.co/#website" },
+      "about": { "@id": "https://melangedigital.co/destination-marketing-agency#service" },
+      "breadcrumb": { "@id": "https://melangedigital.co/destination-marketing-agency#breadcrumb" },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://melangedigital.co/destination-marketing-agency/images/figma/hero_banner.png"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://melangedigital.co/destination-marketing-agency#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a destination marketing agency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A destination marketing agency helps a country, city or region turn itself into a place travellers actively choose. It shapes the destination's story, puts it in front of the right audience through the channels and voices that audience trusts, and connects that demand to real bookings and arrivals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Mélange different from other tourism board marketing agencies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most tourism board marketing agencies buy media and report reach. We are a destination marketing agency built around cultural access: 5,000+ actively managed Indian creators and celebrities, and 15 years of relationships you cannot brief your way into."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you only work with tourism boards in India?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We are a tourism board marketing agency in India by base and by specialism, but our clients are national boards and destination brands worldwide."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you measure success?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By the number the board answers for. Year-on-year arrivals growth, attributed sales, earned media value, perception shift, qualified trade connections."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a typical engagement cover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Full funnel. Audience intelligence, cultural strategy, creator and celebrity casting, branded entertainment and IP, performance marketing, PR, trade activation and on-ground market entry."
+          }
+        }
+      ]
+    }
+  ]
 }
   </script>
   <link href="https://unpkg.com/lenis@1.1.14/dist/lenis.css" rel="stylesheet"/>
