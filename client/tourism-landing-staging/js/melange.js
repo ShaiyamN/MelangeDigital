@@ -122,7 +122,7 @@
   function probeOffset() {
     return navStickyOffset() + 4;
   }
-  var LOCK_MS = 1400;
+  var LOCK_MS = 2000;
 
   var lockedHash = null;
   var lockUntil = 0;
@@ -151,20 +151,49 @@
 
   function activeHashFromScroll() {
     var links = document.querySelectorAll(DESKTOP_SEL);
-    var bestHash = null;
-    var bestTop = -Infinity;
+    var probe = probeOffset();
+    var entries = [];
+    var i;
+    for (i = 0; i < links.length; i++) {
+      var section = sectionFromLink(links[i]);
+      if (!section) continue;
+      entries.push({
+        hash: links[i].getAttribute("href"),
+        el: section,
+      });
+    }
 
-    links.forEach(function (link) {
-      var section = sectionFromLink(link);
-      if (!section) return;
-      var top = section.getBoundingClientRect().top;
-      if (top <= probeOffset() && top >= bestTop) {
-        bestTop = top;
-        bestHash = link.getAttribute("href");
+    /* Section heading visible under the nav but top not yet past probe (common
+       after Lenis scroll-to-hash / while reading the Reports intro) — check FIRST
+       so #services doesn’t keep the range until #pricing finally crosses. */
+    var slack = Math.min(220, Math.round(window.innerHeight * 0.35));
+    var nearest = null;
+    var nearestDist = Infinity;
+    for (i = 0; i < entries.length; i++) {
+      var t = entries[i].el.getBoundingClientRect().top;
+      if (t > probe && t <= probe + slack && t - probe < nearestDist) {
+        nearestDist = t - probe;
+        nearest = entries[i].hash;
       }
-    });
+    }
+    if (nearest) return nearest;
 
-    return bestHash;
+    /* Each nav item owns the range from its section top → next nav section top
+       (covers testimonials/infra between #services and #pricing). */
+    var bestPassed = null;
+    for (i = 0; i < entries.length; i++) {
+      var top = entries[i].el.getBoundingClientRect().top;
+      var nextTop =
+        i + 1 < entries.length
+          ? entries[i + 1].el.getBoundingClientRect().top
+          : Number.POSITIVE_INFINITY;
+      if (top <= probe && nextTop > probe) {
+        return entries[i].hash;
+      }
+      if (top <= probe) bestPassed = entries[i].hash;
+    }
+
+    return bestPassed;
   }
 
   function targetArrived(hash) {
@@ -191,6 +220,15 @@
     setActive(hash);
     if (unlockTimer) window.clearTimeout(unlockTimer);
     unlockTimer = window.setTimeout(function () {
+      /* Stay on the clicked hash if spy would still disagree for a beat (Lenis settle) */
+      if (lockedHash && !targetArrived(lockedHash)) {
+        lockUntil = Date.now() + 800;
+        unlockTimer = window.setTimeout(function () {
+          clearLock();
+          setActive(activeHashFromScroll());
+        }, 800);
+        return;
+      }
       clearLock();
       setActive(activeHashFromScroll());
     }, LOCK_MS);
