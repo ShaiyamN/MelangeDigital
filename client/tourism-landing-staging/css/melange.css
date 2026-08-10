@@ -4077,6 +4077,102 @@ br.hero-br-desktop {
   font-weight: 600;
 }
 
+/* The Shift — two market stats (typography, not cards) */
+.shift-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 48px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: 8px;
+  text-align: center;
+}
+.home-shift-heading {
+  text-align: center;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  color: var(--melange-ink) !important;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .home-shift-heading {
+    white-space: normal;
+  }
+}
+
+.shift-stat__value {
+  margin: 0 0 8px;
+  font-family: var(--melange-display);
+  font-size: clamp(40px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--melange-highlight) !important;
+  font-weight: 700;
+  display: block;
+}
+.shift-stat__label {
+  margin: 0;
+  font-family: var(--melange-body);
+  font-size: var(--type-body, 16px);
+  line-height: 1.45;
+  color: var(--black-60);
+}
+.network-stat.count,
+.network-geo-pct.count {
+  color: var(--melange-highlight) !important;
+}
+.network-geo-pct {
+  font-weight: 700;
+}
+.network-partner-cta {
+  margin-top: 28px;
+  display: inline-flex;
+}
+.work-view-all-wrap {
+  text-align: center;
+  margin: 12px 0 0;
+  padding-bottom: 8px;
+}
+.work-view-all {
+  font-family: var(--melange-body);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--melange-accent, #6E1EEE);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+@media (max-width: 640px) {
+  .shift-stats {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+.home-our-work-section {
+  padding-bottom: clamp(32px, 4vw, 48px) !important;
+}
+.footer-strategy-cta.hero-download-btn,
+.footer .footer-strategy-cta {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 14px 22px !important;
+  border-radius: 999px;
+  text-decoration: none !important;
+  vertical-align: middle;
+}
+.footer-strategy-cta .text-block-6 {
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+.footer-strategy-cta .hero-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
 .home-shift-proof-label {
   max-width: 720px;
   margin: 0 auto;

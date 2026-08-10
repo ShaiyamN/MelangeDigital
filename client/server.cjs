@@ -44,24 +44,18 @@ function sendIndex(res) {
 }
 
 const DMA = "destination-marketing-agency";
-const DMA_INDEX = path.join(DIST, DMA, "index.html");
 
-// Serve both slash forms — do NOT 301 between them (Hostinger/proxy adds a
-// trailing slash for this directory; stripping it causes ERR_TOO_MANY_REDIRECTS).
-// Nav + sitemap use the no-slash URL; either form returns the landing HTML.
+// Tourism landing lives at `/` (React shell). Old URLs redirect; assets stay under /DMA/.
 app.get([`/${DMA}`, `/${DMA}/`], (_req, res) => {
-  if (!fs.existsSync(DMA_INDEX)) {
-    res.status(404).send("Tourism landing not found");
-    return;
-  }
-  res.setHeader("Cache-Control", "no-cache");
-  res.type("html");
-  res.sendFile(DMA_INDEX);
+  res.redirect(301, "/");
 });
 
-// Old /tourism bookmark → landing
 app.get(["/tourism", "/tourism/"], (_req, res) => {
-  res.redirect(301, `/${DMA}`);
+  res.redirect(301, "/");
+});
+
+app.get(["/destination-marketing", "/destination-marketing/"], (_req, res) => {
+  res.redirect(301, "/");
 });
 
 app.get(

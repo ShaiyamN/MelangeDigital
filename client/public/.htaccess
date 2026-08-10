@@ -9,13 +9,11 @@
   RewriteEngine On
   RewriteBase /
 
-  # Tourism: serve index for both slash forms (no cross-redirect — Hostinger
-  # DirectorySlash fights strip-slash 301s → ERR_TOO_MANY_REDIRECTS)
+  # Tourism landing is SPA home (`/`). Old URLs redirect; assets stay under DMA/.
   DirectorySlash Off
-  RewriteRule ^destination-marketing-agency/?$ destination-marketing-agency/index.html [L]
-
-  # One legacy bookmark redirect — nothing else for the landing URL
-  RewriteRule ^tourism/?$ /destination-marketing-agency [R=301,L]
+  RewriteRule ^destination-marketing-agency/?$ / [R=301,L]
+  RewriteRule ^destination-marketing/?$ / [R=301,L]
+  RewriteRule ^tourism/?$ / [R=301,L]
 
   # Pretty PDF URL
   RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]

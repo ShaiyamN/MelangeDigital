@@ -810,56 +810,50 @@ positionCards();
    
       })();
 
-/* --- Shift-section CountUp counters (index only) --- */
-document.addEventListener("DOMContentLoaded", function () {
-    if (typeof countUp === 'undefined') return;
+/* --- CountUp counters (Shift + Network; SPA-safe) --- */
+(function initMelangeCountUps() {
+  function run() {
+    if (typeof countUp === "undefined") return;
 
-    const counters = document.querySelectorAll(".count");
+    var counters = document.querySelectorAll(".count[data-count]");
     if (!counters.length) return;
 
-    const observer = new IntersectionObserver((entries) => {
-
-        entries.forEach(entry=>{
-
-            if(!entry.isIntersecting) return;
-
-            const el=entry.target;
-
-            const value=parseFloat(el.dataset.count);
-
-            const decimals=parseInt(el.dataset.decimals||0);
-
-            const counter=new countUp.CountUp(el,value,{
-
-                duration:2,
-
-                decimalPlaces:decimals,
-
-                useEasing:true,
-
-                separator:","
-
-            });
-
-            if(!counter.error){
-
-                counter.start();
-
-            }
-
-            observer.unobserve(el);
-
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          var value = parseFloat(el.dataset.count);
+          if (isNaN(value)) return;
+          var decimals = parseInt(el.dataset.decimals || "0", 10);
+          var prefix = el.dataset.prefix || "";
+          var suffix = el.dataset.suffix || "";
+          var counter = new countUp.CountUp(el, value, {
+            duration: 2,
+            decimalPlaces: decimals,
+            useEasing: true,
+            separator: ",",
+            prefix: prefix,
+            suffix: suffix,
+          });
+          if (!counter.error) counter.start();
+          observer.unobserve(el);
         });
+      },
+      { threshold: 0.5 }
+    );
 
-    },{
-
-        threshold:.5
-
+    counters.forEach(function (counter) {
+      observer.observe(counter);
     });
+  }
 
-    counters.forEach(counter=>observer.observe(counter));
-
-});
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run, { once: true });
+  } else {
+    run();
+  }
+})();
 
 /* --- Our Work carousel: autoplay + trackpad + side nav buttons (no grab-drag) --- */
 (function initWorkCarousel() {

@@ -23,8 +23,15 @@ function tourismDevMiddleware() {
       server.middlewares.use((req, res, next) => {
         const url = req.url?.split("?")[0] || "";
 
-        if (url === "/tourism" || url === "/tourism/") {
-          res.writeHead(301, { Location: `/${TOURISM_SLUG}` });
+        if (
+          url === "/tourism" ||
+          url === "/tourism/" ||
+          url === `/${TOURISM_SLUG}` ||
+          url === `/${TOURISM_SLUG}/` ||
+          url === "/destination-marketing" ||
+          url === "/destination-marketing/"
+        ) {
+          res.writeHead(301, { Location: "/" });
           res.end();
           return;
         }
@@ -44,14 +51,20 @@ function tourismDevMiddleware() {
           return;
         }
 
-        if (!url.startsWith(`/${TOURISM_SLUG}`)) {
+        if (!url.startsWith(`/${TOURISM_SLUG}/`)) {
           next();
           return;
         }
 
         const sourceRoot = fs.existsSync(tourismPublicDir) ? tourismPublicDir : tourismStagingDir;
-        const relativePath = url.replace(new RegExp(`^/${TOURISM_SLUG}/?`), "") || "index.html";
-        const filePath = path.join(sourceRoot, relativePath === "" ? "index.html" : relativePath);
+        const relativePath = url.replace(new RegExp(`^/${TOURISM_SLUG}/?`), "") || "";
+        if (!relativePath || relativePath === "index.html") {
+          res.writeHead(301, { Location: "/" });
+          res.end();
+          return;
+        }
+
+        const filePath = path.join(sourceRoot, relativePath);
 
         if (!filePath.startsWith(sourceRoot)) {
           res.statusCode = 403;
@@ -78,13 +91,6 @@ function tourismDevMiddleware() {
           };
           res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
           fs.createReadStream(filePath).pipe(res);
-          return;
-        }
-
-        const indexPath = path.join(sourceRoot, "index.html");
-        if (fs.existsSync(indexPath)) {
-          res.setHeader("Content-Type", "text/html");
-          fs.createReadStream(indexPath).pipe(res);
           return;
         }
 

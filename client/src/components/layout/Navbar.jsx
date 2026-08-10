@@ -79,14 +79,12 @@ const navLinks = [
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About Us" },
-    { href: "/destination-marketing-agency", label: "Tourism", external: true },
 ];
 
 const mobileNavLinks = [
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About Us" },
-    { href: "/destination-marketing-agency", label: "Tourism", external: true },
   { to: "/contact", label: "Contact Us" },
 ];
 
@@ -476,7 +474,7 @@ const Navbar = () => {
       `}</style>
 
       <div
-        className={`fixed z-20 w-full transition-transform duration-300 font-bricolage mb-5 ${
+        className={`fixed top-0 left-0 z-20 w-full transition-transform duration-300 font-bricolage mb-5 ${
           visible ? "translate-y-0" : "-translate-y-full"
         }`}
       >

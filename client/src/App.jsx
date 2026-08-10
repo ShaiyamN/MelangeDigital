@@ -167,6 +167,16 @@ function App() {
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
         <Routes>
           <Route exact path="/" Component={Home} />
+          <Route
+            exact
+            path="/destination-marketing"
+            element={<Navigate to="/" replace />}
+          />
+          <Route
+            exact
+            path="/destination-marketing-agency"
+            element={<Navigate to="/" replace />}
+          />
 
           {/* Dynamic templates */}
           <Route exact path="/work/:slug" Component={CaseStudyDetail} />
