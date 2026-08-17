@@ -815,7 +815,7 @@ positionCards();
   function run() {
     if (typeof countUp === "undefined") return;
 
-    var counters = document.querySelectorAll(".count[data-count]");
+    var counters = document.querySelectorAll("[data-melange-count][data-count]");
     if (!counters.length) return;
 
     var observer = new IntersectionObserver(
@@ -1823,7 +1823,7 @@ positionCards();
     { src: "images/creators/ites-14.png", alt: "Creator — ITES 14", title: "ITES 14" },
   ];
 
-  var SPHERE_COUNT = 25;
+  var SPHERE_COUNT = UNIQUE_IMAGES.length;
   var DEG = Math.PI / 180;
 
   function degToRad(d) { return d * DEG; }

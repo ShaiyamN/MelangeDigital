@@ -7,7 +7,7 @@ const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260810i`,
+  `${ASSET}/css/melange.css?v=20260817i`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
@@ -21,7 +21,7 @@ const SCRIPT_BASES = [
   `${ASSET}/js/scrolltrigger.min.js`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
-  `${ASSET}/js/melange.js?v=20260810i`,
+  `${ASSET}/js/melange.js?v=20260814x`,
 ];
 
 function loadCss(href) {

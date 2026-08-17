@@ -8,7 +8,9 @@ client/public/destination-marketing-agency/
 !.env.example
 .vscode/
 .qodo/
-.cursor/
+.cursor/*
+!.cursor/mcp.json
+!.cursor/settings.json
 .agents/
 __pycache__/
 *.log

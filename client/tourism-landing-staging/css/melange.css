@@ -792,6 +792,23 @@ section:not(:first-of-type)::before{
     margin:0 0 12px;
 }
 
+.network-stats{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+    width:100%;
+    margin:0 0 8px;
+}
+
+.network-stats .network-stat-block{
+    margin:0;
+}
+
+.network-stats .network-stat-label{
+    max-width:18em;
+}
+
 .network-stat{
     font-family: var(--melange-display);
     font-size:clamp(56px, 6vw, 72px);
@@ -1037,6 +1054,10 @@ section:not(:first-of-type)::before{
 }
 
 .network-stat-block{
+    align-items:center;
+}
+
+.network-stats{
     align-items:center;
 }
 
@@ -3276,18 +3297,21 @@ html {
 #home,
 #about-us,
 #services,
+#opportunity,
 #governments,
+#global-reach,
+#report,
 #work,
 #pricing,
 #award,
-#team,
 #faq,
 #lead-form,
 .home-logo-section,
 .home-infra-section,
 .home-awards-section,
 .home-testimonial-section,
-.home-leadform-section {
+.home-leadform-section,
+.home-prefooter-cta {
   scroll-margin-top: calc(var(--nav-sticky-offset, 69px) + 12px);
 }
 
@@ -4154,17 +4178,22 @@ br.hero-br-desktop {
 .footer .footer-strategy-cta {
   display: inline-flex !important;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-  padding: 14px 22px !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  max-width: 100%;
+  align-self: flex-start;
+  margin-top: 0;
+  padding: 8px 8px 8px 22px !important;
   border-radius: 999px;
   text-decoration: none !important;
-  vertical-align: middle;
 }
 .footer-strategy-cta .text-block-6 {
   margin: 0 !important;
   line-height: 1.2 !important;
+  white-space: nowrap;
 }
 .footer-strategy-cta .hero-btn-icon {
   display: inline-flex;
@@ -6539,7 +6568,7 @@ body {
 .trusted-heading,
 .video-heading,
 .our-work-heading,
-.crafting-heading:not(.caas-heading):not(.leadform-heading),
+.crafting-heading:not(.caas-heading):not(.leadform-heading):not(.report-promo-heading),
 .home-heading-h2,
 .builtfor-heading-form,
 .testimonial-heading-h2,
@@ -6568,7 +6597,7 @@ body {
   .trusted-heading,
   .video-heading,
   .our-work-heading,
-  .crafting-heading:not(.caas-heading):not(.leadform-heading),
+  .crafting-heading:not(.caas-heading):not(.leadform-heading):not(.report-promo-heading),
   .home-heading-h2,
   .builtfor-heading-form,
   .testimonial-heading-h2,
@@ -6996,6 +7025,8 @@ h3.zf-frmTitle {
   line-height: 1.3 !important;
   font-weight: 600 !important;
   margin: 0 0 18px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 .footer .list-5 {
   margin: 0 !important;
@@ -7357,4 +7388,338 @@ a.leadform-contact-item:hover {
 .main > .section-8,
 .main > .section-6 {
   background-color: #ffffff !important;
+}
+
+/* —— Home polish 2026-08-11: win against earlier Webflow/.count rules —— */
+.home-shift-section .container-4 {
+  max-width: 1400px !important;
+}
+.home-shift-heading {
+  white-space: nowrap !important;
+}
+.home-shift-line,
+.home-shift-section .home-shift-line.descp {
+  max-width: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+.shift-stat__value {
+  color: var(--melange-highlight) !important;
+  -webkit-text-fill-color: var(--melange-highlight) !important;
+}
+@media (max-width: 640px) {
+  .home-shift-heading {
+    white-space: normal !important;
+  }
+}
+
+.work-carousel {
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+.div-block-214 {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-bottom: 0 !important;
+}
+.home-our-work-section {
+  padding-bottom: 24px !important;
+}
+.work-view-all-wrap {
+  margin: 16px 0 0 !important;
+  padding: 0 !important;
+  text-align: center !important;
+  order: 2;
+  position: relative;
+  z-index: 2;
+}
+.work-carousel .div-block-214 {
+  order: 1;
+}
+
+@media (max-width: 991px) {
+  .footer-column-1 {
+    align-items: center !important;
+    text-align: center;
+    max-width: none !important;
+  }
+  .footer-column-1 .div-block-42 {
+    justify-content: center;
+  }
+  .footer-strategy-cta.hero-download-btn {
+    align-self: center;
+  }
+}
+
+/* —— Wireframe: Global Reach —— */
+.home-global-section {
+  padding: var(--section-pad-y, clamp(48px, 6vw, 72px)) 0;
+}
+.home-global-section .container-4 {
+  max-width: min(1680px, calc(100vw - 32px)) !important;
+  margin: 0 auto;
+}
+.global-reach-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+}
+.home-global-heading {
+  max-width: none;
+  margin: 0 0 12px !important;
+  font-size: clamp(36px, 4.5vw, 48px) !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  line-height: 1.08 !important;
+}
+@media (max-width: 640px) {
+  .home-global-heading {
+    white-space: normal !important;
+  }
+}
+.global-reach-desc {
+  margin: 0 0 28px;
+  max-width: 36em;
+  line-height: 1.65;
+  font-size: var(--type-body, 16px);
+  color: rgba(15, 3, 48, 0.78);
+}
+.global-reach-visual {
+  position: relative;
+  display: block;
+  margin: 0 auto 24px;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  overflow: visible;
+}
+.global-reach-map {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.global-reach-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+.home-global-section .hero-download-btn,
+.home-global-section .button.hero-download-btn {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 8px 8px 8px 26px !important;
+  border-radius: 30px !important;
+  text-decoration: none !important;
+  background: linear-gradient(90deg, var(--melange-accent), var(--melange-cta-mid)) !important;
+  border: 2px solid var(--melange-cta-border) !important;
+  color: #fff !important;
+}
+.home-global-section .hero-download-btn .text-block-6 {
+  color: #fff !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+.home-global-section .hero-download-btn .hero-btn-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  flex: 0 0 34px !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+}
+
+/* —— Wireframe: Report promo (node 58:252) —— */
+.home-report-promo-section {
+  padding: clamp(64px, 7vw, 96px) 0;
+  background: #fff;
+}
+.home-report-promo-section .container-4 {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.report-promo-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  gap: clamp(28px, 4vw, 52px);
+  align-items: center;
+}
+.report-promo-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  min-width: 0;
+  max-width: 520px;
+}
+#home .report-promo-heading,
+.home-report-promo-section .report-promo-heading {
+  max-width: none;
+  text-align: left !important;
+  white-space: normal !important;
+  margin: 0 0 16px;
+  line-height: 1.08;
+  font-size: clamp(36px, 4.2vw, 52px) !important;
+}
+.report-promo-heading__lead {
+  white-space: nowrap;
+}
+.home-report-promo-section .report-promo-heading__accent,
+.home-report-promo-section .report-promo-heading .span-txt {
+  white-space: nowrap !important;
+  display: inline;
+}
+.home-report-promo-section .container-4,
+.report-promo-grid,
+.report-promo-visual {
+  overflow: visible;
+}
+.report-promo-desc {
+  text-align: left;
+  margin: 0 0 18px;
+  max-width: 520px;
+  line-height: 1.6;
+  font-size: var(--type-body, 16px);
+}
+.report-promo-benefits {
+  border: 2px solid rgba(138, 39, 198, 0.45);
+  border-radius: 20px;
+  background: #fafafa;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  max-width: 520px;
+  width: 100%;
+}
+.report-promo-benefits__title {
+  margin: 0 0 12px;
+  font-weight: 600;
+  font-size: var(--type-body, 16px);
+  color: var(--black-100, #0f0330);
+}
+.report-promo-benefits__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55em;
+}
+.report-promo-benefits__list li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--black-60, rgba(15, 3, 48, 0.6));
+  font-size: var(--type-body, 16px);
+  line-height: 1.65;
+}
+.report-promo-benefits__list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--black-60, rgba(15, 3, 48, 0.6));
+}
+.home-report-promo-section a.report-promo-download {
+  text-decoration: none !important;
+  min-width: 237px;
+}
+.report-promo-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  overflow: visible;
+}
+.report-promo-mockup {
+  display: block;
+  width: 100%;
+  max-width: 920px;
+  height: auto;
+  object-fit: contain;
+  transform: none;
+  filter: drop-shadow(0 18px 40px rgba(15, 3, 48, 0.14));
+}
+@media (max-width: 640px) {
+  .report-promo-heading__lead {
+    white-space: normal;
+  }
+}
+
+/* ponytail: hide lead form until Zoho flow is ready — re-enable by deleting this rule */
+.home-leadform-section {
+  display: none !important;
+}
+
+/* —— Wireframe: Pre-footer CTA —— */
+.home-prefooter-cta {
+  padding: clamp(32px, 4vw, 48px) 0 clamp(40px, 5vw, 56px);
+  text-align: center;
+  background: linear-gradient(180deg, rgba(247, 244, 255, 0.45) 0%, #fff 100%);
+  border-top: 1px solid rgba(15, 3, 48, 0.06);
+}
+.home-prefooter-cta .container-4 {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.home-prefooter-heading {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(30px, 3.8vw, 42px) !important;
+  line-height: 1.12 !important;
+}
+.home-prefooter-btn {
+  margin-top: 4px !important;
+}
+
+@media (max-width: 991px) {
+  .global-reach-desc {
+    margin-bottom: 24px;
+  }
+  .global-reach-visual {
+    margin-bottom: 24px;
+  }
+  .global-reach-map {
+    width: 100%;
+  }
+  .report-promo-grid {
+    grid-template-columns: 1fr;
+  }
+  .report-promo-heading,
+  .report-promo-desc,
+  .report-promo-benefits {
+    max-width: none;
+  }
+  .report-promo-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .report-promo-visual {
+    justify-content: center;
+  }
+  .report-promo-mockup {
+    width: min(100%, 560px);
+    margin: 0 auto;
+    transform: none;
+  }
 }

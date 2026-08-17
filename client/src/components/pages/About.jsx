@@ -1,42 +1,16 @@
 import { useEffect } from "react";
-import {
-  Navbar,
-  AboutHeadNew,
-  OurMission,
-  OurApproach,
-  OurHistory,
-  OurTeam,
-  OurPrinciples,
-  BreadCrumbs,
-  Footer,
-  AwardsAndRecoAbout,
-} from "../layout";
+import { Navbar } from "../layout";
 import { Helmet } from "react-helmet-async";
-import { FeaturedIn } from "../RevamperHome";
-import {
-  feat1,
-  feat2,
-  feat3,
-  feat4,
-  feat5,
-  feat6,
-  feat7,
-} from "../../assets/newImages";
+import AboutBody from "./About/AboutBody";
+import "./About/about.css";
 
 const About = () => {
-  const breadcrumbs = [
-    { displayName: "Home", url: "/" },
-    { displayName: "About Us", url: "/about" },
-  ];
-
-  const imagesFeatured = [feat1, feat2, feat3, feat4, feat5, feat6, feat7];
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="overflow-hidden">
+    <div>
       <Helmet>
   <title>About Mélange Digital: Our Story, Mission & Vision</title>
   <meta name="title" content="About Mélange Digital: Our Story, Mission & Vision" data-react-helmet="true" />
@@ -47,6 +21,12 @@ const About = () => {
   <meta property="og:image" content="https://melangedigital.co/assets/mainLogo-8756aff9.png" />
   <meta property="og:url" content="https://melangedigital.co/about" />
   <link rel="canonical" href="https://melangedigital.co/about" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          rel="stylesheet"
+        />
 
         <script type="application/ld+json">
           {`{
@@ -420,20 +400,13 @@ const About = () => {
         </script>
         {/* End of Schema Markup */}
       </Helmet>
+      <a className="about-skip" href="#main-content">
+        Skip to main content
+      </a>
       <Navbar />
-      <div className="font-nunito pt-28 lg:pt-32 text-[16px] lg:text-[18px] ml-6 lg:px-20 px-5 max-container lg:mb-6 mb-[2.5rem] ">
-        <BreadCrumbs breadcrumbs={breadcrumbs} />
-      </div>
-
-      <AboutHeadNew />
-      <OurMission />
-      <OurApproach />
-      <OurHistory />
-      <OurTeam />
-      <OurPrinciples />
-      <AwardsAndRecoAbout />
-      <FeaturedIn images={imagesFeatured} />
-      <Footer />
+      <main id="main-content" className="pt-24 sm:pt-[6.75rem]">
+        <AboutBody />
+      </main>
     </div>
   );
 };
