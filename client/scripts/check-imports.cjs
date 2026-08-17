@@ -77,7 +77,7 @@ for (const file of files) {
   let m;
   re.lastIndex = 0;
   while ((m = re.exec(text))) {
-    const spec = m[1];
+    const spec = m[1].replace(/[?#].*$/, "");
     if (!spec.startsWith(".")) continue;
     const result = resolveCaseSensitive(file, spec);
     if (result == null) {
