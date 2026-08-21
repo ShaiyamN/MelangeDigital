@@ -1446,7 +1446,11 @@ section:not(:first-of-type)::before{
 }
 
 .work-carousel:hover .work-carousel-nav,
-.work-carousel:focus-within .work-carousel-nav {
+.work-carousel:focus-within .work-carousel-nav,
+.testimonial-stagger-carousel:hover .work-carousel-nav,
+.testimonial-stagger-carousel:focus-within .work-carousel-nav,
+.report-promo-carousel:hover .work-carousel-nav,
+.report-promo-carousel:focus-within .work-carousel-nav {
   opacity: 0.72;
 }
 
@@ -1862,14 +1866,19 @@ box-sizing:border-box;
     color:rgba(255,255,255,.8);
 }
 
-/* ---------- Controls — stay aligned with page grid ---------- */
-.testimonial-stagger-controls{
-    display:flex;
-    justify-content:center;
-    gap:16px;
-    margin-top:16px;
-    margin-bottom:8px;
-    padding:0 40px;
+/* ---------- Controls — side arrows match case studies carousel ---------- */
+.testimonial-stagger-carousel {
+  position: relative;
+  width: 100%;
+}
+
+.testimonial-stagger-carousel .work-carousel-nav,
+.report-promo-carousel .work-carousel-nav {
+  z-index: 50;
+}
+
+.testimonial-stagger-controls {
+  display: none;
 }
 
 .stagger-nav-btn{
@@ -2815,6 +2824,52 @@ box-sizing:border-box;
     gap:32px;
 }
 
+.awards-track-left .awards-row{
+    animation:awards-left 38s linear infinite;
+}
+
+.awards-track{
+    overflow:hidden;
+    position:relative;
+    -webkit-mask-image:none;
+    mask-image:none;
+}
+.awards-track::before,
+.awards-track::after{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    width:36px;
+    z-index:2;
+    pointer-events:none;
+}
+.awards-track::before{
+    left:0;
+    background:linear-gradient(90deg,#fff,rgba(255,255,255,0));
+}
+.awards-track::after{
+    right:0;
+    background:linear-gradient(270deg,#fff,rgba(255,255,255,0));
+}
+
+.awards-row{
+    display:flex;
+    gap:28px;
+    width:max-content;
+    will-change:transform;
+}
+
+@keyframes awards-left{
+    from{transform:translate3d(0,0,0);}
+    to{transform:translate3d(-50%,0,0);}
+}
+
+@keyframes awards-right{
+    from{transform:translate3d(-50%,0,0);}
+    to{transform:translate3d(0,0,0);}
+}
+
 /* Compact award cards inside the marquee */
 .home-awards-section .award-card{
     width:360px;
@@ -2890,52 +2945,6 @@ box-sizing:border-box;
     flex:1;
 }
 
-.awards-track-left .awards-row{
-    animation:awards-left 38s linear infinite;
-}
-
-.awards-track{
-    overflow:hidden;
-    position:relative;
-    -webkit-mask-image:none;
-    mask-image:none;
-}
-/* Soft edge fade without -webkit-mask (same iOS-safe approach as logo/infra) */
-.awards-track::before,
-.awards-track::after{
-    content:"";
-    position:absolute;
-    top:0;
-    bottom:0;
-    width:36px;
-    z-index:2;
-    pointer-events:none;
-}
-.awards-track::before{
-    left:0;
-    background:linear-gradient(90deg,#fff,rgba(255,255,255,0));
-}
-.awards-track::after{
-    right:0;
-    background:linear-gradient(270deg,#fff,rgba(255,255,255,0));
-}
-
-.awards-row{
-    display:flex;
-    gap:28px;
-    width:max-content;
-    will-change:transform;
-}
-
-@keyframes awards-left{
-    from{transform:translate3d(0,0,0);}
-    to{transform:translate3d(-50%,0,0);}
-}
-
-@keyframes awards-right{
-    from{transform:translate3d(-50%,0,0);}
-    to{transform:translate3d(0,0,0);}
-}
 
 .award-card{
     width:400px;
@@ -7310,7 +7319,6 @@ a.leadform-contact-item:hover {
   }
 }
 
-/* Force continuous marquee on touch / coarse pointers (no sticky hover pause) */
 @media (hover: none), (pointer: coarse) {
   .marquee-css-scroll,
   .infra-track,
@@ -7585,7 +7593,7 @@ a.leadform-contact-item:hover {
   --report-header-gap: clamp(16px, 2svh, 24px);
   --report-card-pad-y: clamp(20px, 2.5svh, 28px);
   --report-card-pad-x: clamp(20px, 2.5vw, 32px);
-  --report-photo-max-h: min(36svh, 340px);
+  --report-photo-max-h: min(44svh, 420px);
   padding: var(--report-pad-y) 0;
   background: #fff;
 }
@@ -7621,10 +7629,47 @@ a.leadform-contact-item:hover {
   color: rgba(15, 3, 48, 0.78);
 }
 .report-promo-carousel {
+  --report-nav-size: 44px;
+  --report-nav-gap: clamp(12px, 2vw, 20px);
+  display: grid;
+  grid-template-columns: var(--report-nav-size) minmax(0, 1fr) var(--report-nav-size);
+  column-gap: var(--report-nav-gap);
+  align-items: center;
+  max-width: min(100%, 1180px);
+  margin-inline: auto;
   position: relative;
+  overflow: visible;
+  box-sizing: border-box;
 }
 .report-promo-slides {
+  grid-column: 2;
+  grid-row: 1;
   min-width: 0;
+}
+.report-promo-carousel .work-carousel-nav {
+  position: relative;
+  inset: auto;
+  top: auto;
+  left: auto;
+  right: auto;
+  transform: none;
+  justify-self: center;
+  align-self: center;
+}
+.report-promo-carousel .work-carousel-nav--prev {
+  grid-column: 1;
+  grid-row: 1;
+}
+.report-promo-carousel .work-carousel-nav--next {
+  grid-column: 3;
+  grid-row: 1;
+}
+.report-promo-carousel .work-carousel-nav:hover,
+.report-promo-carousel .work-carousel-nav:focus-visible {
+  transform: scale(1.06);
+}
+.report-promo-carousel .work-carousel-nav:active {
+  transform: scale(0.97);
 }
 .report-promo-card {
   box-sizing: border-box;
@@ -7640,15 +7685,16 @@ a.leadform-contact-item:hover {
 }
 .report-promo-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: 16px;
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(16px, 2.5vw, 32px);
+  align-items: stretch;
 }
 .report-promo-copy {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 0;
   min-width: 0;
 }
 .report-promo-card__title {
@@ -7666,7 +7712,7 @@ a.leadform-contact-item:hover {
   color: var(--black-100, #0f0330);
 }
 .report-promo-benefits__list {
-  margin: 0 0 20px;
+  margin: 0 0 24px;
   padding: 0 0 0 1.25em;
   list-style: disc;
   display: flex;
@@ -7684,6 +7730,8 @@ a.leadform-contact-item:hover {
 .home-report-promo-section .report-promo-download {
   text-decoration: none !important;
   min-width: 237px;
+  flex-shrink: 0;
+  margin-top: 4px;
 }
 .report-promo-download:disabled {
   opacity: 0.55;
@@ -7692,23 +7740,30 @@ a.leadform-contact-item:hover {
 }
 .report-promo-visual {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: center;
+  min-height: 100%;
   min-width: 0;
   width: 100%;
   overflow: visible;
+  padding: 12px 18px 20px 24px;
+  box-sizing: border-box;
 }
 .report-promo-stack {
-  width: 100%;
+  --report-stack-optical-x: -16px;
+  width: auto;
+  max-width: 100%;
   display: flex;
-  justify-content: flex-end;
-  padding: 12px 8px 8px 0;
+  justify-content: center;
+  padding: 0;
+  margin-left: var(--report-stack-optical-x);
   box-sizing: border-box;
 }
 .report-promo-stack__frame {
   position: relative;
-  width: min(100%, 380px);
+  width: min(100%, 460px);
   max-width: 100%;
+  transform: none;
 }
 .report-promo-stack__layer {
   position: absolute;
@@ -7742,7 +7797,7 @@ a.leadform-contact-item:hover {
   justify-content: center;
   width: 100%;
   max-height: var(--report-photo-max-h);
-  aspect-ratio: 352 / 320;
+  aspect-ratio: 440 / 400;
   border: 1.5px dashed rgba(27, 29, 30, 0.18);
   background: rgba(255, 255, 255, 0.72);
   color: rgba(15, 3, 48, 0.45);
@@ -7751,29 +7806,12 @@ a.leadform-contact-item:hover {
   font-weight: 600;
   box-shadow: none;
 }
-.report-promo-navs {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: clamp(12px, 1.8svh, 20px);
-}
-.home-report-promo-section .report-promo-nav {
-  width: 48px;
-  height: 48px;
-  border-color: var(--melange-highlight, #c671f9);
-  color: var(--melange-accent, #6e1eee);
-}
-.home-report-promo-section .report-promo-nav:hover {
-  background: var(--melange-accent, #6e1eee);
-  border-color: var(--melange-highlight, #c671f9);
-  color: #fff;
-}
 @media (min-width: 992px) and (max-height: 820px) {
   .home-report-promo-section {
     --report-pad-y: clamp(16px, 2.5svh, 28px);
     --report-header-gap: clamp(12px, 1.6svh, 18px);
     --report-card-pad-y: clamp(16px, 2svh, 22px);
-    --report-photo-max-h: min(30svh, 280px);
+    --report-photo-max-h: min(34svh, 320px);
   }
 }
 @media (max-width: 640px) {
@@ -7833,9 +7871,17 @@ a.leadform-contact-item:hover {
   }
   .report-promo-visual {
     justify-content: center;
+    align-items: center;
+    min-height: 0;
+    padding: 14px;
   }
   .report-promo-stack {
+    width: 100%;
     justify-content: center;
-    padding: 14px;
+    padding: 0;
+    margin-left: 0;
+  }
+  .report-promo-stack__frame {
+    transform: none;
   }
 }

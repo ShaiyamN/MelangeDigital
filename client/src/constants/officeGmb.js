@@ -1,10 +1,6 @@
 /** Google Business Profile links for each Melange office. */
 export const FOOTER_OFFICES = [
   {
-    label: "India",
-    href: "https://www.google.com/search?q=Melange+Digital+-+Digital+Marketing+Agency+in+Mumbai&stick=H4sIAAAAAAAA_-NgU1IxqDBOSjVPNrc0sjC1MDcyskiyAgolmpkapxikJVumGJqlJi1iNfFNzUnMS09VcMlMzyxJzFHQhbN8E4uyU0sy89IVHNNT85IrFTLzFHxLc5MSMwGc1a-3XwAAAA&hl=en&mat=CXURLByRurxJElcBTVDHnocuWm8UY_VmbPsFeKjLu9DaE00haSc6qR0hnWUe7Sv_140W4khMLG2RoGXMcHilJJENvyMRs3YvqJbFyRky5jakyxJXfqjJr0UXh6tuWppkrVU&authuser=0",
-  },
-  {
     label: "United Kingdom",
     href: "https://www.google.com/search?q=M%C3%A9lange+Digital+-+Digital+Marketing+Agency+in+United+Kingdom&stick=H4sIAAAAAAAA_-NgU1I1qDBJSzVPtkg0NDIxSkkyt7C0MqhINTE3STUxNjUxSEtNMTIwXMRq63t4ZU5iXnqqgktmemZJYo6CLpzlm1iUnVqSmZeu4JiempdcqZCZpxCal1mSmqLgDRRNyc8FANT9lOZpAAAA&hl=en&mat=CX8owslq2k0pElYBTVDHnm-NhFjmSo-V6S8R81AdPlgHLF0Kpoy01jkJXDWmPyJEWF0nxEPUGKbSr3We0u8oyKXz_BGQIPr65XGX5JwHqBdAWNDRGq2hs5deTetn-b79JQ&authuser=0",
   },

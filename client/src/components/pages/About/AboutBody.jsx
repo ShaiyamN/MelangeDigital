@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FOOTER_OFFICES } from "../../../constants/officeGmb";
 import NetworkSphere from "./NetworkSphere";
@@ -67,6 +68,136 @@ function Cta({ to, href, children }) {
     <a href={href} className="about-cta">
       {inner}
     </a>
+  );
+}
+
+const DMA_IMG = "/destination-marketing-agency/images";
+const REPORT_COVER = `${DMA_IMG}/report/report-desk-cover.png?v=20260821d`;
+const REPORT_ARROW = `${DMA_IMG}/arrow-top-right-purple.svg`;
+
+const REPORT_SLIDES = [
+  {
+    title: "The Indian Outbound Inspiration Report 2026",
+    bullets: [
+      "The full India Outbound Inspiration Report 2026, 4,200 respondents, 12 cities, T1 through T3",
+      "Which inspiration channels move Indian travellers to consider new destinations",
+      "Which of the six Indian traveller cohorts is most likely to choose your destination",
+      "A follow-up from the Mélange team if you want to talk through the implications",
+    ],
+    href: "/indian-outbound-tourism-report",
+    cta: "Download the Report",
+  },
+  {
+    title: "Next report — coming soon",
+    bullets: [
+      "Full report download once it goes live",
+      "Audience and market findings for a new travel brief",
+      "Cohort and channel takeaways boards can act on",
+      "A follow-up from the Mélange team when you're ready",
+    ],
+    cta: "Coming soon",
+    placeholder: true,
+  },
+];
+
+function ReportPromo() {
+  const [slide, setSlide] = useState(0);
+  const show = (n) => setSlide((n + REPORT_SLIDES.length) % REPORT_SLIDES.length);
+
+  return (
+    <section className="about-report" id="report">
+      <div className="about-wrap">
+        <header className="report-promo-header">
+          <h2 className="report-promo-heading">
+            India Outbound <span className="about-accent">Travel Marketing</span> Specialists
+          </h2>
+          <p className="report-promo-desc">
+            India&apos;s OTM is set to nearly triple by 2033, and most boards still get India wrong.
+            <br />
+            Here&apos;s our India Outbound Inspiration Report 2026 telling you why India needs a multi-level cultural strategy.
+          </p>
+        </header>
+        <div className="report-promo-carousel">
+          <div className="report-promo-slides">
+            {REPORT_SLIDES.map((item, index) => (
+              <article className="report-promo-card" key={item.title} hidden={index !== slide}>
+                <div className="report-promo-grid">
+                  <div className="report-promo-copy">
+                    <h3 className="report-promo-card__title">{item.title}</h3>
+                    <ul className="report-promo-benefits__list">
+                      {item.bullets.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                    {item.href ? (
+                      <a className="about-cta report-promo-download" href={item.href}>
+                        <span>{item.cta}</span>
+                        <span className="about-cta__icon" aria-hidden="true">
+                          <img src={REPORT_ARROW} width="12" height="12" alt="" />
+                        </span>
+                      </a>
+                    ) : (
+                      <button className="about-cta report-promo-download" type="button" disabled>
+                        <span>{item.cta}</span>
+                        <span className="about-cta__icon" aria-hidden="true">
+                          <img src={REPORT_ARROW} width="12" height="12" alt="" />
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                  <div className="report-promo-visual">
+                    <div className="report-promo-stack">
+                      <div className="report-promo-stack__frame">
+                        <span className="report-promo-stack__layer report-promo-stack__layer--grey" aria-hidden="true" />
+                        <span className="report-promo-stack__layer report-promo-stack__layer--purple" aria-hidden="true" />
+                        {item.placeholder ? (
+                          <div
+                            className="report-promo-stack__photo report-promo-stack__photo--placeholder"
+                            role="img"
+                            aria-label="Second report coming soon"
+                          >
+                            Coming soon
+                          </div>
+                        ) : (
+                          <img
+                            className="report-promo-stack__photo"
+                            src={REPORT_COVER}
+                            alt="The Indian Outbound Inspiration Report 2026 on a desk"
+                            width="440"
+                            height="400"
+                            loading="lazy"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          <button
+            className="work-carousel-nav work-carousel-nav--prev"
+            type="button"
+            aria-label="Previous report"
+            onClick={() => show(slide - 1)}
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+              <path d="M15.5 5.5L9 12l6.5 6.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            className="work-carousel-nav work-carousel-nav--next"
+            type="button"
+            aria-label="Next report"
+            onClick={() => show(slide + 1)}
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+              <path d="M8.5 5.5L15 12l-6.5 6.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -172,7 +303,7 @@ const AboutBody = () => (
       <figure className="global-reach-visual">
         <img
           className="global-reach-map"
-          src="/destination-marketing-agency/images/global/world-map-reach.svg?v=20260821x"
+          src="/destination-marketing-agency/images/global/world-map-reach.svg?v=20260821c"
           alt="Melange offices in India, United Kingdom, Portugal, United Arab Emirates, Singapore, and Zambia"
           width="1002"
           height="392"
@@ -205,34 +336,7 @@ const AboutBody = () => (
       </div>
     </section>
 
-    <section className="about-report">
-      <div className="about-wrap about-report__grid">
-        <div>
-          <h2 className="about-h2">
-            India Outbound <span className="about-accent">Travel Marketing</span> Specialists
-          </h2>
-          <p className="about-lede">
-            We surveyed 4,200 Indian outbound-eligible travellers across 12 cities to find out what actually triggers a destination decision. Download the India Outbound Inspiration Report 2026 for free.
-          </p>
-          <ul>
-            <li>The full India Outbound Inspiration Report 2026, 4,200 respondents, 12 cities, T1 through T3</li>
-            <li>Which inspiration channels move Indian travellers to consider new destinations</li>
-            <li>Which of the six Indian traveller cohorts is most likely to choose your destination</li>
-            <li>A follow-up from the Mélange team if you want to talk through the implications</li>
-          </ul>
-          <Cta href="/indian-outbound-tourism-report">Download the Report</Cta>
-        </div>
-        <div className="about-report__visual">
-          <img
-            src={`${IMG}/report-mockup.png`}
-            alt="The Indian Outbound Inspiration Report 2026 — cover and sample pages"
-            width="838"
-            height="559"
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </section>
+    <ReportPromo />
 
     <section className="about-lead about-wrap">
       <h2 className="about-h2">

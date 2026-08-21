@@ -12,7 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const WEB_ROOT = path.join(__dirname, "../public");
 const PAGE = "/destination-marketing-agency/index.html";
 const ASSET = path.join(__dirname, "../tourism-landing-staging/images/global/world-map-reach.svg");
-const CACHE = "20260821x";
+const CACHE = "20260821c";
 const EXPECT_W = 1002;
 const EXPECT_H = 392;
 const MAX_RENDER_W = 1130;
@@ -31,6 +31,33 @@ const expected = [
 for (const [ok, what] of expected) {
   if (!ok) {
     console.error(`map asset is missing ${what}; rebuild with scripts/prepare-world-map.py`);
+    process.exit(1);
+  }
+}
+
+// India came off the original trace as one blob fused to a piece of south-east Asia and ringed by
+// 26 single-pixel specks, which read as stray dabs of purple in the sea around it.
+const specks = (svg.match(/id="india"[^>]*\sd="([^"]+)"/)?.[1] ?? "")
+  .split("M")
+  .filter((sub) => sub.trim())
+  .filter((sub) => {
+    const n = sub.match(/-?\d+\.?\d*/g).map(Number);
+    const xs = n.filter((_, i) => i % 2 === 0);
+    const ys = n.filter((_, i) => i % 2);
+    return Math.max(...xs) - Math.min(...xs) < 4 && Math.max(...ys) - Math.min(...ys) < 4;
+  });
+if (specks.length) {
+  console.error(`india outline has ${specks.length} stray specks; rebuild with scripts/restyle-world-map.py`);
+  process.exit(1);
+}
+
+// The arcs fitted from the original export bowed so high that two of them ran off the top of the
+// canvas. A cubic stays inside its control polygon, so checking the control points is enough.
+for (const [, d] of svg.matchAll(/<path d="(M[-\d.]+ [-\d.]+ C[^"]+)"/g)) {
+  const n = d.match(/-?\d+\.?\d*/g).map(Number);
+  const outside = n.some((v, i) => (i % 2 ? v < 0 || v > EXPECT_H : v < 0 || v > EXPECT_W));
+  if (outside) {
+    console.error(`route path leaves the canvas, so it will be clipped: ${d}`);
     process.exit(1);
   }
 }
