@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { FOOTER_OFFICES } from "../../../constants/officeGmb";
 import NetworkSphere from "./NetworkSphere";
 import "./about.css";
 
@@ -171,10 +172,10 @@ const AboutBody = () => (
       <figure className="global-reach-visual">
         <img
           className="global-reach-map"
-          src="/destination-marketing-agency/images/global/world-map-reach.png?v=20260817c"
+          src="/destination-marketing-agency/images/global/world-map-reach.svg?v=20260821x"
           alt="Melange offices in India, United Kingdom, Portugal, United Arab Emirates, Singapore, and Zambia"
-          width="3072"
-          height="1035"
+          width="1002"
+          height="392"
           loading="lazy"
         />
       </figure>
@@ -213,7 +214,6 @@ const AboutBody = () => (
           <p className="about-lede">
             We surveyed 4,200 Indian outbound-eligible travellers across 12 cities to find out what actually triggers a destination decision. Download the India Outbound Inspiration Report 2026 for free.
           </p>
-          <p className="about-report__list-title">What you get</p>
           <ul>
             <li>The full India Outbound Inspiration Report 2026, 4,200 respondents, 12 cities, T1 through T3</li>
             <li>Which inspiration channels move Indian travellers to consider new destinations</li>
@@ -302,7 +302,6 @@ const AboutBody = () => (
             <li><Link to="/services/pr-and-outreach">Branded Content &amp; IP</Link></li>
             <li><Link to="/services/immersive-brand-storytelling">Experiential Marketing</Link></li>
             <li><Link to="/services/pr-and-outreach">FAM Trips + PR</Link></li>
-            <li><Link to="/services/aeo-seo">AEO and SEO</Link></li>
           </ul>
         </div>
         <div>
@@ -317,11 +316,13 @@ const AboutBody = () => (
         <div>
           <h3>Global Presence</h3>
           <ul>
-            <li><a href="https://www.melangedigital.co/india" target="_blank" rel="noopener noreferrer">India</a></li>
-            <li><a href="https://www.melangedigital.co/uk" target="_blank" rel="noopener noreferrer">United Kingdom</a></li>
-            <li><a href="https://www.melangedigital.co/uae" target="_blank" rel="noopener noreferrer">UAE</a></li>
-            <li><a href="https://www.melangedigital.co/singapore" target="_blank" rel="noopener noreferrer">Singapore</a></li>
-            <li><a href="https://www.melangedigital.co/zambia" target="_blank" rel="noopener noreferrer">Zambia</a></li>
+            {FOOTER_OFFICES.map((office) => (
+              <li key={office.label}>
+                <a href={office.href} target="_blank" rel="noopener noreferrer">
+                  {office.label === "United Arab Emirates" ? "UAE" : office.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
         <div>

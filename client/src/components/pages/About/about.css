@@ -36,6 +36,10 @@
   font-family: var(--melange-body);
 }
 
+.about-page h3 {
+  font-family: "Lato", sans-serif !important;
+}
+
 .about-page a:focus-visible,
 .about-page button:focus-visible {
   outline: 2px solid var(--melange-accent);
@@ -380,7 +384,7 @@
 .about-global .global-reach-visual {
   position: relative;
   display: block;
-  width: min(1680px, calc(100vw - 32px));
+  width: min(1130px, calc(100vw - 32px));
   max-width: none;
   min-width: 0;
   margin: 40px auto 0;

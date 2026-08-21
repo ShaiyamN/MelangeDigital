@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "../../layout";
 import markup from "./markup.html?raw";
@@ -7,7 +7,7 @@ const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260817i`,
+  `${ASSET}/css/melange.css?v=20260821m`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
@@ -21,7 +21,7 @@ const SCRIPT_BASES = [
   `${ASSET}/js/scrolltrigger.min.js`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
-  `${ASSET}/js/melange.js?v=20260814x`,
+  `${ASSET}/js/melange.js?v=20260821a`,
 ];
 
 function loadCss(href) {
@@ -57,6 +57,12 @@ function loadScript(src) {
   });
 }
 
+// main.jsx clears the boot loader as soon as React mounts, which is well before these sheets land.
+// Holding it over that gap shows the spinner instead of a blank page.
+function showBootLoader(show) {
+  document.getElementById("boot-loader")?.classList.toggle("hidden", !show);
+}
+
 function teardownDmaAssets() {
   document.querySelectorAll("link[data-dma-css]").forEach((el) => el.remove());
   document.querySelectorAll("script[data-dma-js]").forEach((el) => el.remove());
@@ -78,6 +84,11 @@ const DestinationMarketingAgency = () => {
   const rootRef = useRef(null);
   const bootId = useRef(0);
   const [cssReady, setCssReady] = useState(false);
+
+  // Before paint, or the markup's first frame is a blank gated page and the spinner returns late.
+  useLayoutEffect(() => {
+    showBootLoader(true);
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.add("w-mod-js");
@@ -103,6 +114,7 @@ const DestinationMarketingAgency = () => {
       await Promise.all(CSS.map(loadCss));
       if (cancelled || bootId.current !== id) return;
       setCssReady(true);
+      showBootLoader(false);
 
       const bust = `dma=${id}`;
       try {
@@ -118,6 +130,7 @@ const DestinationMarketingAgency = () => {
 
     return () => {
       cancelled = true;
+      showBootLoader(false);
       document.body.classList.remove("body", "dma-react");
       document.querySelectorAll("base[data-dma-base]").forEach((el) => el.remove());
       teardownDmaAssets();
@@ -134,6 +147,12 @@ const DestinationMarketingAgency = () => {
           content="Melange is a travel and tourism marketing agency turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a strategy call."
         />
         <link rel="canonical" href="https://melangedigital.co/" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Lato:wght@400;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          rel="stylesheet"
+        />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/" />
         <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Melange Digital" />
@@ -172,14 +191,6 @@ const DestinationMarketingAgency = () => {
               --nav-sticky-offset: 84.8px;
               padding-top: 5.3rem;
             }
-          }
-          /* Gate unstyled tourism HTML until sheets load */
-          body.dma-react .dma-react-root {
-            opacity: 0;
-            transition: opacity 0.2s ease;
-          }
-          body.dma-react .dma-react-root.dma-css-ready {
-            opacity: 1;
           }
         `}</style>
       </Helmet>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FOOTER_OFFICES } from "../../constants/officeGmb";
 
 const CareersFooter = () => {
   const fadeInUp = {
@@ -35,13 +36,7 @@ const CareersFooter = () => {
     { to: "/careers", text: "Careers" },
   ];
 
-  const locations = [
-    { href: "https://melangedigital.co/india", label: "India" },
-    { href: "https://melangedigital.co/uk", label: "United Kingdom" },
-    { href: "https://melangedigital.co/uae", label: "United Arab Emirates" },
-    { href: "https://melangedigital.co/singapore", label: "Singapore" },
-    { href: "https://melangedigital.co/zambia", label: "Zambia" },
-  ];
+  const locations = FOOTER_OFFICES;
 
   const letsTalkText = "Let's Talk".split("");
 

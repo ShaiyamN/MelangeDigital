@@ -810,6 +810,36 @@ positionCards();
    
       })();
 
+/* --- Report promo carousel (two hosted reports; slide 2 is placeholder) --- */
+(function () {
+  var root = document.querySelector("[data-report-carousel]");
+  if (!root) return;
+  var slides = root.querySelectorAll("[data-report-slide]");
+  var prev = root.querySelector("[data-report-prev]");
+  var next = root.querySelector("[data-report-next]");
+  if (!slides.length || !prev || !next) return;
+  var i = 0;
+  var startX = 0;
+
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (slide, j) {
+      slide.hidden = j !== i;
+    });
+  }
+
+  prev.addEventListener("click", function () { show(i - 1); });
+  next.addEventListener("click", function () { show(i + 1); });
+  root.addEventListener("touchstart", function (e) {
+    startX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  root.addEventListener("touchend", function (e) {
+    var dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) < 40) return;
+    show(i + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+})();
+
 /* --- CountUp counters (Shift + Network; SPA-safe) --- */
 (function initMelangeCountUps() {
   function run() {

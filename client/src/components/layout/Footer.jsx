@@ -10,6 +10,8 @@ import {
   blog263Banner,
 } from "../../assets/blogImages";
 
+import { FOOTER_OFFICES } from "../../constants/officeGmb";
+
 const Footer = ({ customInsights }) => {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -43,13 +45,7 @@ const Footer = ({ customInsights }) => {
     { to: "/careers", text: "Careers" },
   ];
 
-  const locations = [
-    { href: "https://melangedigital.co/india", label: "India" },
-    { href: "https://melangedigital.co/uk", label: "United Kingdom" },
-    { href: "https://melangedigital.co/uae", label: "United Arab Emirates" },
-    { href: "https://melangedigital.co/singapore", label: "Singapore" },
-    { href: "https://melangedigital.co/zambia", label: "Zambia" },
-  ];
+  const locations = FOOTER_OFFICES;
 
   const letsTalkText = "Let's Talk".split("");
 
