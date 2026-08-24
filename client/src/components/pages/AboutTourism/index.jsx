@@ -6,7 +6,7 @@ import markup from "./markup.html?raw";
 const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260824ay`,
+  `${ASSET}/css/melange.css?v=20260824az`,
 ];
 const SCRIPT_BASES = [
   "/about/network-sphere.js",
@@ -220,17 +220,6 @@ const AboutTourism = () => {
             --nav-sticky-offset: 64px;
             padding-top: 4rem;
             background: #fff;
-            scrollbar-width: none !important;
-          }
-          html:has(body.abt-react),
-          html:has(body.abt-react) * {
-            scrollbar-width: none !important;
-          }
-          html:has(body.abt-react)::-webkit-scrollbar,
-          html:has(body.abt-react) *::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
           }
           @media (min-width: 640px) {
             body.abt-react {

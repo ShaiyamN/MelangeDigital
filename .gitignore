@@ -16,3 +16,5 @@ __pycache__/
 *.log
 /assets/
 server/uploads/
+.tmp-*/
+client/scripts/tmp-*
