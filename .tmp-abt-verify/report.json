@@ -1,0 +1,99 @@
+{
+  "desk": {
+    "title": "About Mélange Digital: Our Story, Mission & Vision",
+    "css": "http://localhost:5173/destination-marketing-agency/css/melange.css?v=20260824ap",
+    "h1": "We crackedthe world's biggestTravel Market",
+    "h1Size": "65px",
+    "h2Size": "51.984px",
+    "h1Count": 1,
+    "h4Count": 0,
+    "leaders": 6,
+    "leaderNames": [
+      "Sanket Bolinjkar",
+      "Ekaterina Bolinjkar",
+      "Jason Dias",
+      "Kaustubh Shetye",
+      "Julien Cordon",
+      "Maria Masiri"
+    ],
+    "livePhotos": [
+      {
+        "src": "http://localhost:5173/destination-marketing-agency/images/team/ekaterina-bolinjkar.webp",
+        "w": 0,
+        "h": 0,
+        "fit": "cover",
+        "pos": "50% 16%"
+      },
+      {
+        "src": "http://localhost:5173/destination-marketing-agency/images/team/jason-dias.webp",
+        "w": 0,
+        "h": 0,
+        "fit": "cover",
+        "pos": "58% 14%"
+      },
+      {
+        "src": "http://localhost:5173/destination-marketing-agency/images/team/julien-cordon.webp",
+        "w": 0,
+        "h": 0,
+        "fit": "cover",
+        "pos": "50% 16%"
+      }
+    ],
+    "footer": true,
+    "footerH": 391,
+    "sphereReady": true,
+    "sphereNodes": 17,
+    "reportCards": 2,
+    "hiddenReport": 1,
+    "dvhLock": false
+  },
+  "afterClick": 1,
+  "mobile": {
+    "title": "About Mélange Digital: Our Story, Mission & Vision",
+    "css": "http://localhost:5173/destination-marketing-agency/css/melange.css?v=20260824ap",
+    "h1": "We crackedthe world's biggestTravel Market",
+    "h1Size": "40px",
+    "h2Size": "32px",
+    "h1Count": 1,
+    "h4Count": 0,
+    "leaders": 6,
+    "leaderNames": [
+      "Sanket Bolinjkar",
+      "Ekaterina Bolinjkar",
+      "Jason Dias",
+      "Kaustubh Shetye",
+      "Julien Cordon",
+      "Maria Masiri"
+    ],
+    "livePhotos": [
+      {
+        "src": "http://localhost:5173/destination-marketing-agency/images/team/ekaterina-bolinjkar.webp",
+        "w": 768,
+        "h": 1024,
+        "fit": "cover",
+        "pos": "50% 16%"
+      },
+      {
+        "src": "http://localhost:5173/destination-marketing-agency/images/team/jason-dias.webp",
+        "w": 682,
+        "h": 1024,
+        "fit": "cover",
+        "pos": "58% 14%"
+      },
+      {
+        "src": "http://localhost:5173/destination-marketing-agency/images/team/julien-cordon.webp",
+        "w": 682,
+        "h": 1024,
+        "fit": "cover",
+        "pos": "50% 16%"
+      }
+    ],
+    "footer": true,
+    "footerH": 1134,
+    "sphereReady": true,
+    "sphereNodes": 17,
+    "reportCards": 2,
+    "hiddenReport": 1,
+    "dvhLock": false
+  }
+}

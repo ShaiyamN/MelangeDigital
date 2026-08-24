@@ -18,7 +18,7 @@ const STALE_DIRS = [
   path.join(CLIENT_ROOT, 'public', 'indian-outbound-tourism-report'),
 ];
 
-const COPY_ENTRIES = ['index.html', '404.html', 'css', 'js', 'images', 'videos'];
+const COPY_ENTRIES = ['index.html', '404.html', 'services.html', 'about.html', 'css', 'js', 'images', 'videos'];
 
 function sleepSync(ms) {
   const end = Date.now() + ms;

@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 const require = createRequire(import.meta.url);
 const puppeteer = require("puppeteer-core");
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ORIGIN = process.env.VERIFY_ORIGIN || "http://localhost:5173";
+const ORIGIN = process.env.VERIFY_ORIGIN || "http://127.0.0.1:3000";
 const WIDGET =
   "https://salesiq.zohopublic.in/widget?wc=siqc7d0ce652d28d2f589045cdec7219da7147e109a95c024619d5d0af39690f3dd";
 const WIDGET_CODE = "siqc7d0ce652d28d2f589045cdec7219da7147e109a95c024619d5d0af39690f3dd";
@@ -24,9 +24,30 @@ if (!widgetRes.ok) {
   process.exit(1);
 }
 const widgetBody = await widgetRes.text();
-if (widgetBody.length < 200) {
-  console.error("Zoho widget script response looks empty or invalid");
+const widgetType = widgetRes.headers.get("content-type") ?? "";
+if (!/javascript/i.test(widgetType)) {
+  console.error(`Zoho widget URL must return JavaScript, got ${widgetType}`);
   process.exit(1);
+}
+if (widgetBody.length < 200 || widgetBody.trimStart().startsWith("{")) {
+  console.error("Zoho widget URL looks like JSON/config, not the JS loader");
+  process.exit(1);
+}
+if (html.includes("visitor/v2/channels/website")) {
+  console.error("index.html still uses the JSON API URL for SalesIQ — use /widget?wc=");
+  process.exit(1);
+}
+
+if (process.env.VERIFY_LIVE === "1") {
+  const live = await fetch("https://melangedigital.co/").then((r) => r.text());
+  if (live.includes("visitor/v2/channels/website")) {
+    console.error("live melangedigital.co still serves the broken SalesIQ embed — deploy dist/");
+    process.exit(1);
+  }
+  if (!live.includes("widget?wc=") || !live.includes(WIDGET_CODE)) {
+    console.error("live melangedigital.co is missing the SalesIQ widget loader");
+    process.exit(1);
+  }
 }
 
 const browser = await puppeteer.launch({

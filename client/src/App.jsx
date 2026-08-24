@@ -17,9 +17,9 @@ import Home from "./components/pages/Home";
 import Error from "./components/pages/Error";
 
 // Everything else: load on navigation
-const Services = lazy(() => import("./components/pages/Services"));
+const Services = lazy(() => import("./components/pages/ServicesTourism"));
 const Works = lazy(() => import("./components/pages/Works"));
-const About = lazy(() => import("./components/pages/About"));
+const About = lazy(() => import("./components/pages/AboutTourism"));
 const Contact = lazy(() => import("./components/pages/Contact"));
 const Blogs = lazy(() => import("./components/pages/Blogs"));
 const SingaporeTourism = lazy(() => import("./components/pages/Individuals/SingaporeTourism"));
