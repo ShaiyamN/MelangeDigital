@@ -20,48 +20,10 @@ const STALE_DIRS = [
 
 const COPY_ENTRIES = ['index.html', '404.html', 'services.html', 'about.html', 'css', 'js', 'images', 'videos'];
 
-function sleepSync(ms) {
-  const end = Date.now() + ms;
-  while (Date.now() < end) { /* ponytail: sync retries only */ }
-}
-
-function rmPath(target, attempts = 12) {
-  let lastErr;
-  for (let i = 0; i < attempts; i++) {
-    try {
-      if (!fs.existsSync(target)) return;
-      fs.rmSync(target, { recursive: true, force: true, maxRetries: 8, retryDelay: 100 });
-      return;
-    } catch (err) {
-      lastErr = err;
-      const code = err?.code;
-      if (code !== 'EBUSY' && code !== 'EPERM' && code !== 'ENOTEMPTY') throw err;
-      sleepSync(150 + i * 100);
-    }
-  }
-  throw lastErr;
-}
-
-function emptyDirContents(dir) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-    return;
-  }
-  for (const name of fs.readdirSync(dir)) rmPath(path.join(dir, name));
-}
-
-function copyRecursive(src, dest) {
-  const stat = fs.statSync(src);
-  if (stat.isDirectory()) {
-    fs.mkdirSync(dest, { recursive: true });
-    for (const entry of fs.readdirSync(src)) {
-      copyRecursive(path.join(src, entry), path.join(dest, entry));
-    }
-    return;
-  }
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.copyFileSync(src, dest);
-}
+// A running dev server holds handles under DEST, so Windows throws EBUSY/EPERM
+// mid-delete. rmSync's own retry loop is what covers that.
+const rm = (target) =>
+  fs.rmSync(target, { recursive: true, force: true, maxRetries: 20, retryDelay: 150 });
 
 if (!fs.existsSync(SOURCE)) {
   console.error(`Tourism landing source not found: ${SOURCE}`);
@@ -69,15 +31,16 @@ if (!fs.existsSync(SOURCE)) {
   process.exit(1);
 }
 
-for (const stale of STALE_DIRS) rmPath(stale);
+for (const stale of STALE_DIRS) rm(stale);
 
+// Empty DEST's contents rather than DEST itself; the dir handle is the one Vite watches.
 fs.mkdirSync(DEST, { recursive: true });
-emptyDirContents(DEST);
+for (const name of fs.readdirSync(DEST)) rm(path.join(DEST, name));
 
 for (const entry of COPY_ENTRIES) {
   const srcPath = path.join(SOURCE, entry);
   if (!fs.existsSync(srcPath)) continue;
-  copyRecursive(srcPath, path.join(DEST, entry));
+  fs.cpSync(srcPath, path.join(DEST, entry), { recursive: true });
 }
 
 // Nested .htaccess omitted on purpose — root public/.htaccess is enough.
