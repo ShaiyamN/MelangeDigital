@@ -195,7 +195,7 @@ const PrOutreachService = () => {
         <title>PR & Outreach Services | Mélange Digital</title>
         <meta
           name="description"
-          content="Amplify your brand with Mélange Digital's AEO and SEO services. Be cited by AI assistants, rank in search, and build authority across modern answer engines."
+          content="Travel PR and outreach for tourism boards and travel brands. Media, FAM trips, and industry visibility from Mélange Digital."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -218,11 +218,11 @@ const PrOutreachService = () => {
       {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "@id": "https://melangedigital.co/services/aeo-seo#breadcrumb",
+        "@id": "https://melangedigital.co/services/pr-and-outreach#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://melangedigital.co" },
           { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://melangedigital.co/services" },
-          { "@type": "ListItem", "position": 3, "name": "AEO & SEO", "item": "https://melangedigital.co/services/aeo-seo" }
+          { "@type": "ListItem", "position": 3, "name": "PR & Outreach", "item": "https://melangedigital.co/services/pr-and-outreach" }
         ]
       }
     `}
@@ -233,12 +233,12 @@ const PrOutreachService = () => {
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "@id": "https://melangedigital.co/services/aeo-seo#webpage",
-        "url": "https://melangedigital.co/services/aeo-seo",
-        "name": "AEO & SEO Services | Mélange Digital",
-        "description": "Be found in search and be cited in AI answers with Mélange Digital's AEO and SEO services.",
+        "@id": "https://melangedigital.co/services/pr-and-outreach#webpage",
+        "url": "https://melangedigital.co/services/pr-and-outreach",
+        "name": "PR & Outreach Services | Mélange Digital",
+        "description": "Travel PR and outreach for tourism boards and travel brands from Mélange Digital.",
         "isPartOf": { "@type": "WebSite", "@id": "https://melangedigital.co/#website" },
-        "breadcrumb": { "@id": "https://melangedigital.co/services/aeo-seo#breadcrumb" },
+        "breadcrumb": { "@id": "https://melangedigital.co/services/pr-and-outreach#breadcrumb" },
         "inLanguage": "en-US"
       }
     `}
@@ -249,15 +249,15 @@ const PrOutreachService = () => {
       {
         "@context": "https://schema.org",
         "@type": "Service",
-        "@id": "https://melangedigital.co/services/aeo-seo#service",
-        "name": "AEO & SEO Services",
-        "url": "https://melangedigital.co/services/aeo-seo",
-        "description": "Mélange Digital helps brands improve visibility across traditional search engines and AI answer platforms like ChatGPT, Google AI Overviews, Perplexity, and Bing Copilot.",
+        "@id": "https://melangedigital.co/services/pr-and-outreach#service",
+        "name": "PR & Outreach Services",
+        "url": "https://melangedigital.co/services/pr-and-outreach",
+        "description": "Mélange Digital runs PR, FAM trips, and outreach for tourism boards and travel brands.",
         "provider": {
           "@type": "Organization",
           "name": "Mélange Digital",
           "url": "https://melangedigital.co",
-          "logo": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+          "logo": "https://melangedigital.co/logo.png",
           "telephone": "+919372567722",
           "email": "hello@melangedigital.co",
           "address": {
@@ -278,12 +278,10 @@ const PrOutreachService = () => {
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
-          "name": "AEO & SEO Services",
+          "name": "PR & Outreach Services",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Visibility Audit & Strategy", "description": "Understand your brand's visibility across AI assistants and answer engines with a detailed strategic roadmap." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answer-Optimized Content Creation", "description": "Build content designed to earn citations, featured snippets, and AI-driven answer visibility." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical AEO Implementation", "description": "Deploy structured data, AI-friendly content architecture, and technical optimization to improve discoverability." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Continuous AI Performance Tracking", "description": "Track your brand's presence across AI systems and refine your visibility strategy continuously." } }
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Travel PR", "description": "Media relations and industry coverage for tourism boards and travel brands." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "FAM Trips & Outreach", "description": "Hosted press and creator trips that generate authentic destination coverage." } }
           ]
         }
       }

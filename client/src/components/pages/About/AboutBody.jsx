@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FOOTER_OFFICES } from "../../../constants/officeGmb";
 import NetworkSphere from "./NetworkSphere";
 import "./about.css";
 
@@ -19,13 +18,13 @@ const LEADERS = [
   {
     name: "Ekaterina Bolinjkar",
     title: "Head of HR & Finance",
-    img: `${TEAM}/ekaterina-shevchenko-framed.png`,
+    img: `${TEAM}/ekaterina-bolinjkar-framed.webp?v=20260826d`,
     linkedin: "https://www.linkedin.com/in/ekaterina-bolinjkar-8bb33720/",
   },
   {
     name: "Jason Dias",
     title: "Director of Growth & Strategy",
-    img: `${TEAM}/jason-dias-framed.png`,
+    img: `${TEAM}/jason-dias-framed.webp?v=20260826c`,
     linkedin: "https://www.linkedin.com/in/jasondias01/",
   },
   {
@@ -37,7 +36,7 @@ const LEADERS = [
   {
     name: "Julien Cordon",
     title: "Regional Director, GCC",
-    img: `${TEAM}/julien-cordon-framed.png`,
+    img: `${TEAM}/julien-cordon-framed.webp?v=20260826c`,
     linkedin: "https://www.linkedin.com/in/julien-r-r-cordon-0a5204ba/",
   },
   {
@@ -303,10 +302,10 @@ const AboutBody = () => (
       <figure className="global-reach-visual">
         <img
           className="global-reach-map"
-          src="/destination-marketing-agency/images/global/world-map-reach.svg?v=20260821c"
+          src="/destination-marketing-agency/images/global/world-map-reach.png?v=20260826i"
           alt="Melange offices in India, United Kingdom, Portugal, United Arab Emirates, Singapore, and Zambia"
-          width="1002"
-          height="392"
+          width="2800"
+          height="958"
           loading="lazy"
         />
       </figure>
@@ -383,69 +382,6 @@ const AboutBody = () => (
       </h2>
       <Cta to="/contact">Book a strategy call</Cta>
     </section>
-
-    <footer className="about-foot">
-      <div className="about-wrap about-foot__grid">
-        <div className="about-foot__brand">
-          <img className="about-foot__logo" src={`${IMG}/logo-footer.png`} alt="Mélange Digital" width="220" height="40" />
-          <p>India is choosing. Be the choice.</p>
-          <div className="about-foot__social">
-            <a href="https://www.linkedin.com/company/melangedigital" target="_blank" rel="noopener noreferrer" aria-label="Melange Digital on LinkedIn">
-              <img src={`${IMG}/si-linkedin.svg`} alt="" />
-            </a>
-            <a href="https://www.instagram.com/melangedigital.co" target="_blank" rel="noopener noreferrer" aria-label="Melange Digital on Instagram">
-              <img src={`${IMG}/si-insta.svg`} alt="" />
-            </a>
-          </div>
-          <Cta to="/contact">Book a Strategy Call</Cta>
-        </div>
-        <div>
-          <h3>Our Services</h3>
-          <ul>
-            <li><Link to="/services/influencer-marketing">Influencer &amp; Celebrity Marketing</Link></li>
-            <li><Link to="/services/pr-and-outreach">Branded Content &amp; IP</Link></li>
-            <li><Link to="/services/immersive-brand-storytelling">Experiential Marketing</Link></li>
-            <li><Link to="/services/pr-and-outreach">FAM Trips + PR</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Company</h3>
-          <ul>
-            <li><Link to="/about">About Us</Link></li>
-            <li><Link to="/work">Our Work</Link></li>
-            <li><Link to="/indian-outbound-tourism-report">Travel Reports</Link></li>
-            <li><Link to="/careers">Careers</Link></li>
-          </ul>
-        </div>
-        <div>
-          <h3>Global Presence</h3>
-          <ul>
-            {FOOTER_OFFICES.map((office) => (
-              <li key={office.label}>
-                <a href={office.href} target="_blank" rel="noopener noreferrer">
-                  {office.label === "United Arab Emirates" ? "UAE" : office.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3>Contact</h3>
-          <ul>
-            <li><a href="mailto:hello@melangedigital.co">hello@melangedigital.co</a></li>
-            <li><a href="tel:+919372567722">+91 93725 67722</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className="about-wrap about-foot__legal">
-        <span>&copy; 2026 Melange Digital. All rights reserved.</span>
-        <div className="about-foot__legal-links">
-          <a href="https://www.melangedigital.co/terms-of-service" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-          <a href="https://www.melangedigital.co/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-          <a href="https://www.melangedigital.co/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
-        </div>
-      </div>
-    </footer>
   </div>
 );
 

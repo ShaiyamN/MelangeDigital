@@ -11,7 +11,9 @@ const src = fs.readFileSync(
 const m = src.match(/<body[^>]*>([\s\S]*)<\/body>/i);
 if (!m) throw new Error("no body");
 
-let body = m[1].replace(/<script\b[\s\S]*?<\/script>/gi, "");
+let body = m[1]
+  .replace(/<script\b[\s\S]*?<\/script>/gi, "")
+  .replace(/<footer\b[\s\S]*?<\/footer>/i, "");
 const BASE = "/destination-marketing-agency/";
 
 body = body.replace(

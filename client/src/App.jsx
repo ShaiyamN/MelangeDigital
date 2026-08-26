@@ -219,7 +219,12 @@ function App() {
           <Route exact path="/work/proportunity" Component={Proportunity} />
           <Route exact path="/work/dhruvak" Component={Dhruvak} />
           <Route exact path="/work/travel-stop" Component={TravelStop} />
-          <Route exact path="/work/GenVR" Component={GenVR} />
+          <Route
+            exact
+            path="/work/GenVR"
+            element={<Navigate to="/work/genvr" replace />}
+          />
+          <Route exact path="/work/genvr" Component={GenVR} />
           <Route exact path="/work/rock-highland" Component={RockHighland} />
           <Route exact path="/work/aartech-solonics" Component={Aartech} />
           <Route exact path="/work/enerqual" Component={Enerqual} />
@@ -232,8 +237,18 @@ function App() {
           />
           <Route exact path="/work/healthy-mithai" Component={HealthyMithai} />
           <Route exact path="/work/jewel-houze" Component={JewelHouze} />
-          <Route exact path="/work/neoTraders" Component={NeoTraders} />
-          <Route exact path="/work/devBoost" Component={devBoost} />
+          <Route
+            exact
+            path="/work/neoTraders"
+            element={<Navigate to="/work/neotraders" replace />}
+          />
+          <Route exact path="/work/neotraders" Component={NeoTraders} />
+          <Route
+            exact
+            path="/work/devBoost"
+            element={<Navigate to="/work/devboost" replace />}
+          />
+          <Route exact path="/work/devboost" Component={devBoost} />
           <Route
             exact
             path="/work/singapore-tourism-board"
@@ -243,7 +258,7 @@ function App() {
           <Route
             exact
             path="/work/singapore-tourism-board-stb"
-            Component={SingaporeTBoard}
+            element={<Navigate to="/work/singapore-tourism-board" replace />}
           />
           <Route
             exact
@@ -460,10 +475,6 @@ function App() {
             exact
             path="/services/ecommerce/marketplace-management"
             Component={MarketPlace}
-          />
-          <Route
-            exact
-            Component={ZambiaTourism}
           />
           <Route
             exact

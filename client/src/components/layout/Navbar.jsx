@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { logo } from "../../assets/images";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 // FlagImg: renders a proper flag image from flagcdn.com — works on all OS including Windows
 const FlagImg = ({ code, size = 20 }) => (
@@ -87,16 +87,12 @@ const mobileNavLinksBase = [
   { to: "/about", label: "About Us" },
 ];
 
+const mobileNavLinks = [
+  ...mobileNavLinksBase,
+  { to: "/contact", label: "Book a Strategy Call" },
+];
+
 const Navbar = () => {
-  const { pathname } = useLocation();
-  const onHome = pathname === "/" || pathname === "/destination-marketing-agency";
-  const strategyHref = onHome ? "#lead-form" : "/contact";
-  const mobileNavLinks = [
-    ...mobileNavLinksBase,
-    onHome
-      ? { href: "#lead-form", label: "Book a Strategy Call" }
-      : { to: "/contact", label: "Book a Strategy Call" },
-  ];
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isGlobalOpen, setGlobalOpen] = useState(false);
   const [hoveredCountry, setHoveredCountry] = useState(null);
@@ -601,19 +597,11 @@ const Navbar = () => {
                   </div>
                 ))}
 
-                {onHome ? (
-                  <a href={strategyHref}>
-                    <div className="contact-btn h-[56px] px-6 flex items-center justify-center rounded-full cursor-pointer bg-[#1A1A1A] font-medium text-[17px] whitespace-nowrap">
-                      <span>Book a Strategy Call</span>
-                    </div>
-                  </a>
-                ) : (
-                  <Link to="/contact">
-                    <div className="contact-btn h-[56px] px-6 flex items-center justify-center rounded-full cursor-pointer bg-[#1A1A1A] font-medium text-[17px] whitespace-nowrap">
-                      <span>Book a Strategy Call</span>
-                    </div>
-                  </Link>
-                )}
+                <Link to="/contact">
+                  <div className="contact-btn h-[56px] px-6 flex items-center justify-center rounded-full cursor-pointer bg-[#1A1A1A] font-medium text-[17px] whitespace-nowrap">
+                    <span>Book a Strategy Call</span>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

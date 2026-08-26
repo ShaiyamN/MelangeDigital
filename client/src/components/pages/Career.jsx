@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  CareersFooter as Footer,
+  Footer,
   BreadCrumbs,
   ContactButton,
   Navbar,
@@ -22,7 +22,10 @@ import {
   mCareer3,
   mCareer4,
 } from "../../assets/images";
-import CFormExtra from "../layout/CFormExtra";
+import CareerBenefits from "./CareerBenefits";
+import CareerBehindTheScenes from "./CareerBehindTheScenes";
+import CareerInterview from "./CareerInterview";
+import "./career-clay.css";
 
 const Career = () => {
   const breadcrumbs = [
@@ -57,6 +60,10 @@ const Career = () => {
 
   const scrollToForm = () => {
     formRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToOpenings = () => {
+    document.getElementById("open-positions")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -227,6 +234,9 @@ const Career = () => {
             </div>
           </div>
         </div>
+        <CareerBenefits />
+        <CareerBehindTheScenes />
+        <CareerInterview onSeeJobs={scrollToOpenings} />
         <OpeningPositions scrollToForm={scrollToForm} onApply={setSelectedPosition} />
         <CareerForm ref={formRef} selectedPosition={selectedPosition} />
       </div>

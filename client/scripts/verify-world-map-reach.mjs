@@ -11,55 +11,28 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // The page sets <base href="/destination-marketing-agency/">, so assets only resolve over HTTP.
 const WEB_ROOT = path.join(__dirname, "../public");
 const PAGE = "/destination-marketing-agency/index.html";
-const ASSET = path.join(__dirname, "../tourism-landing-staging/images/global/world-map-reach.svg");
-const CACHE = "20260821c";
-const EXPECT_W = 1002;
-const EXPECT_H = 392;
-const MAX_RENDER_W = 1130;
+const ASSET = path.join(__dirname, "../tourism-landing-staging/images/global/world-map-reach.png");
+const CACHE = "20260826i";
+const EXPECT_W = 2800;
+const EXPECT_H = 958;
+const MAX_RENDER_W = 1400;
 
-// The map is vector so it stays sharp however large it renders. Guard the pieces the build script
-// reconstructs: lose one and the section silently drops a market.
-const svg = readFileSync(ASSET, "utf8");
-const expected = [
-  [svg.includes(`viewBox="0 0 ${EXPECT_W} ${EXPECT_H}"`), "viewBox"],
-  [(svg.match(/<path d="M/g) ?? []).length === 5, "5 route paths"],
-  [(svg.match(/<use href="#pin"/g) ?? []).length === 5, "5 pins"],
-  [(svg.match(/<text /g) ?? []).length === 6, "6 label lines"],
-  [svg.includes('id="land"'), "land layer"],
-  [svg.includes('id="india"'), "india layer"],
-];
-for (const [ok, what] of expected) {
-  if (!ok) {
-    console.error(`map asset is missing ${what}; rebuild with scripts/prepare-world-map.py`);
-    process.exit(1);
-  }
-}
-
-// India came off the original trace as one blob fused to a piece of south-east Asia and ringed by
-// 26 single-pixel specks, which read as stray dabs of purple in the sea around it.
-const specks = (svg.match(/id="india"[^>]*\sd="([^"]+)"/)?.[1] ?? "")
-  .split("M")
-  .filter((sub) => sub.trim())
-  .filter((sub) => {
-    const n = sub.match(/-?\d+\.?\d*/g).map(Number);
-    const xs = n.filter((_, i) => i % 2 === 0);
-    const ys = n.filter((_, i) => i % 2);
-    return Math.max(...xs) - Math.min(...xs) < 4 && Math.max(...ys) - Math.min(...ys) < 4;
-  });
-if (specks.length) {
-  console.error(`india outline has ${specks.length} stray specks; rebuild with scripts/restyle-world-map.py`);
+if (!existsSync(ASSET)) {
+  console.error(`map asset missing: ${ASSET}`);
   process.exit(1);
 }
 
-// The arcs fitted from the original export bowed so high that two of them ran off the top of the
-// canvas. A cubic stays inside its control polygon, so checking the control points is enough.
-for (const [, d] of svg.matchAll(/<path d="(M[-\d.]+ [-\d.]+ C[^"]+)"/g)) {
-  const n = d.match(/-?\d+\.?\d*/g).map(Number);
-  const outside = n.some((v, i) => (i % 2 ? v < 0 || v > EXPECT_H : v < 0 || v > EXPECT_W));
-  if (outside) {
-    console.error(`route path leaves the canvas, so it will be clipped: ${d}`);
-    process.exit(1);
-  }
+const png = readFileSync(ASSET);
+const sig = png.subarray(0, 8).toString("hex");
+if (sig !== "89504e470d0a1a0a") {
+  console.error("world-map-reach.png is not a valid PNG");
+  process.exit(1);
+}
+const actualW = png.readUInt32BE(16);
+const actualH = png.readUInt32BE(20);
+if (actualW !== EXPECT_W || actualH !== EXPECT_H) {
+  console.error(`map PNG is ${actualW}x${actualH}, expected ${EXPECT_W}x${EXPECT_H}`);
+  process.exit(1);
 }
 
 const MIME = {
@@ -127,7 +100,7 @@ console.log(JSON.stringify({ desktop, wide }, null, 2));
 let fail = false;
 for (const r of [desktop, wide]) {
   if (!r.cacheOk) fail = true;
-  if (!/world-map-reach\.svg/.test(r.src)) fail = true;
+  if (!/world-map-reach\.png/.test(r.src)) fail = true;
   if (r.natural?.w !== EXPECT_W || r.natural?.h !== EXPECT_H) {
     console.error("map image did not load at viewport", r.viewportWidth, r.natural);
     fail = true;

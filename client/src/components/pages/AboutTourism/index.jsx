@@ -9,7 +9,7 @@ import markup from "./markup.html?raw";
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260824az`,
+  `${ASSET}/css/melange.css?v=20260826a`,
 ];
 const SCRIPT_BASES = [
   "/about/network-sphere.js",
@@ -38,7 +38,7 @@ const ABOUT_PAGE = {
     "@type": "LocalBusiness",
     name: "Mélange Digital",
     url: "https://melangedigital.co",
-    logo: "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+    logo: "https://melangedigital.co/logo.png",
     foundingDate: "2021",
     description:
       "Mélange Digital is a data-driven digital marketing agency that crafts emotionally resonant campaigns using AI-powered insights, cultural understanding, and performance strategies.",

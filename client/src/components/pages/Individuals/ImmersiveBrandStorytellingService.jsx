@@ -179,7 +179,7 @@ const ImmersiveBrandStorytellingService = () => {
         <title>Immersive Brand Storytelling Services | Mélange Digital</title>
         <meta
           name="description"
-          content="Amplify your brand with Mélange Digital's AEO and SEO services. Be cited by AI assistants, rank in search, and build authority across modern answer engines."
+          content="Immersive brand storytelling for travel and tourism. Experiential narratives and branded content from Mélange Digital."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -202,11 +202,11 @@ const ImmersiveBrandStorytellingService = () => {
       {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "@id": "https://melangedigital.co/services/aeo-seo#breadcrumb",
+        "@id": "https://melangedigital.co/services/immersive-brand-storytelling#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://melangedigital.co" },
           { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://melangedigital.co/services" },
-          { "@type": "ListItem", "position": 3, "name": "AEO & SEO", "item": "https://melangedigital.co/services/aeo-seo" }
+          { "@type": "ListItem", "position": 3, "name": "Immersive Brand Storytelling", "item": "https://melangedigital.co/services/immersive-brand-storytelling" }
         ]
       }
     `}
@@ -217,12 +217,12 @@ const ImmersiveBrandStorytellingService = () => {
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "@id": "https://melangedigital.co/services/aeo-seo#webpage",
-        "url": "https://melangedigital.co/services/aeo-seo",
-        "name": "AEO & SEO Services | Mélange Digital",
-        "description": "Be found in search and be cited in AI answers with Mélange Digital's AEO and SEO services.",
+        "@id": "https://melangedigital.co/services/immersive-brand-storytelling#webpage",
+        "url": "https://melangedigital.co/services/immersive-brand-storytelling",
+        "name": "Immersive Brand Storytelling Services | Mélange Digital",
+        "description": "Immersive brand storytelling for travel and tourism from Mélange Digital.",
         "isPartOf": { "@type": "WebSite", "@id": "https://melangedigital.co/#website" },
-        "breadcrumb": { "@id": "https://melangedigital.co/services/aeo-seo#breadcrumb" },
+        "breadcrumb": { "@id": "https://melangedigital.co/services/immersive-brand-storytelling#breadcrumb" },
         "inLanguage": "en-US"
       }
     `}
@@ -233,15 +233,15 @@ const ImmersiveBrandStorytellingService = () => {
       {
         "@context": "https://schema.org",
         "@type": "Service",
-        "@id": "https://melangedigital.co/services/aeo-seo#service",
-        "name": "AEO & SEO Services",
-        "url": "https://melangedigital.co/services/aeo-seo",
-        "description": "Mélange Digital helps brands improve visibility across traditional search engines and AI answer platforms like ChatGPT, Google AI Overviews, Perplexity, and Bing Copilot.",
+        "@id": "https://melangedigital.co/services/immersive-brand-storytelling#service",
+        "name": "Immersive Brand Storytelling Services",
+        "url": "https://melangedigital.co/services/immersive-brand-storytelling",
+        "description": "Mélange Digital creates experiential brand stories for tourism boards and travel brands.",
         "provider": {
           "@type": "Organization",
           "name": "Mélange Digital",
           "url": "https://melangedigital.co",
-          "logo": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+          "logo": "https://melangedigital.co/logo.png",
           "telephone": "+919372567722",
           "email": "hello@melangedigital.co",
           "address": {
@@ -262,12 +262,10 @@ const ImmersiveBrandStorytellingService = () => {
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
-          "name": "AEO & SEO Services",
+          "name": "Immersive Brand Storytelling Services",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Visibility Audit & Strategy", "description": "Understand your brand's visibility across AI assistants and answer engines with a detailed strategic roadmap." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answer-Optimized Content Creation", "description": "Build content designed to earn citations, featured snippets, and AI-driven answer visibility." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical AEO Implementation", "description": "Deploy structured data, AI-friendly content architecture, and technical optimization to improve discoverability." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Continuous AI Performance Tracking", "description": "Track your brand's presence across AI systems and refine your visibility strategy continuously." } }
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Storytelling", "description": "Narrative systems and branded content for destinations and travel companies." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Experiential Campaigns", "description": "Immersive activations that turn destination stories into demand." } }
           ]
         }
       }

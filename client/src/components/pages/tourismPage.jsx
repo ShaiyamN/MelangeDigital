@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Navbar } from "../layout";
+import { Navbar, Footer } from "../layout";
 
 // Shared plumbing for the Figma-built static pages (About, Services) that are
 // mounted inside React from extracted markup. Everything is namespaced by
@@ -158,6 +158,7 @@ export function TourismShell({ slug, cssReady, markup }) {
         className={`${slug}-react-root${cssReady ? ` ${slug}-css-ready` : ""}`}
         dangerouslySetInnerHTML={{ __html: markup }}
       />
+      <Footer />
     </>
   );
 }

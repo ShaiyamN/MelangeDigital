@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Footer2, Navbar, Navbar2 } from "../layout";
+import { Footer, Navbar, Navbar2 } from "../layout";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
@@ -79,7 +79,7 @@ const ItbTourism = () => {
       <Media />
       <MapSection />
       <ClientLogo />
-      <Footer2 />
+      <Footer />
     </div>
   );
 };

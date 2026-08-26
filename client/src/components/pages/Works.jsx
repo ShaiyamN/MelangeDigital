@@ -125,7 +125,7 @@ const Works = () => {
                   "item": {
                     "@type": "CreativeWork",
                     "name": "Is This Even Singapore? - Singapore Tourism Board",
-                    "url": "https://melangedigital.co/work/singapore-tourism-board-stb",
+                    "url": "https://melangedigital.co/work/singapore-tourism-board",
                     "image": "https://melangedigital.co/assets/stb-a67878ee.png",
                     "description": "Influencer Marketing, Content Creation, Storytelling",
                     "creator": { "@type": "Organization", "name": "Mélange Digital" }
@@ -185,7 +185,7 @@ const Works = () => {
                   "item": {
                     "@type": "CreativeWork",
                     "name": "NeoTrader",
-                    "url": "https://melangedigital.co/work/neoTraders",
+                    "url": "https://melangedigital.co/work/neotraders",
                     "image": "https://melangedigital.co/assets/neoWork-e3a12e50.png",
                     "description": "Design, Brand Strategy, Website Development",
                     "creator": { "@type": "Organization", "name": "Mélange Digital" }
@@ -197,7 +197,7 @@ const Works = () => {
                   "item": {
                     "@type": "CreativeWork",
                     "name": "DevBoost",
-                    "url": "https://melangedigital.co/work/devBoost",
+                    "url": "https://melangedigital.co/work/devboost",
                     "image": "https://melangedigital.co/assets/devBoostWork-6abad868.png",
                     "description": "Design, Brand Strategy, Website Development",
                     "creator": { "@type": "Organization", "name": "Mélange Digital" }
@@ -305,7 +305,7 @@ const Works = () => {
                   "item": {
                     "@type": "CreativeWork",
                     "name": "GenVR",
-                    "url": "https://melangedigital.co/work/GenVR",
+                    "url": "https://melangedigital.co/work/genvr",
                     "image": "https://melangedigital.co/assets/GenVRwork-748d1695.svg",
                     "description": "Website Development",
                     "creator": { "@type": "Organization", "name": "Mélange Digital" }

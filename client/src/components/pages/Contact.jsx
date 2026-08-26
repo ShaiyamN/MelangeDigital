@@ -1,27 +1,28 @@
-import React from "react";
-import { Navbar, ContactForm, BreadCrumbs, Footer } from "../layout";
+import { useEffect } from "react";
+import { Navbar, Footer } from "../layout";
 import { Helmet } from "react-helmet-async";
+import ContactBody from "./Contact/ContactBody";
 
 const Contact = () => {
-  const breadcrumbs = [
-    { displayName: "Home", url: "/" },
-    { displayName: "Contact Us", url: "/contact" },
-  ];
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div>
       <Helmet>
-        {/* Meta Tags */}
-        <meta
-          name="title"
-          content="Contact Us & Let's Work Together | Mélange Digital"
-          data-react-helmet="true"
-        />
+        <title>Contact Us & Let's Work Together | Mélange Digital</title>
         <meta
           name="description"
           content="Get in touch with Mélange Digital today. Our team is ready to craft the perfect digital marketing strategy to grow your brand globally"
         />
         <link rel="canonical" href="https://melangedigital.co/contact" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:ital@1&family=Lato:wght@400;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          rel="stylesheet"
+        />
         {/* End of Meta Tags */}
 
         {/* Schema Markup */}
@@ -53,7 +54,7 @@ const Contact = () => {
     "@type": "MarketingAgency",
     "name": "Mélange Digital",
     "url": "https://melangedigital.co",
-    "logo": { "@type": "ImageObject", "url": "https://melangedigital.co/assets/mainLogo-8756aff9.png" },
+    "logo": { "@type": "ImageObject", "url": "https://melangedigital.co/logo.png" },
     "email": "hello@melangedigital.co",
     "telephone": "+919372567722",
     "contactPoint": [
@@ -95,7 +96,7 @@ const Contact = () => {
   "@type": "LocalBusiness",
   "name": "Mélange Digital",
   "url": "https://melangedigital.co/contact",
-  "image": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+  "image": "https://melangedigital.co/logo.png",
   "email": "hello@melangedigital.co",
   "telephone": "+919372567722",
   "priceRange": "$$",
@@ -147,12 +148,9 @@ const Contact = () => {
       </Helmet>
 
       <Navbar />
-      <div className="font-nunito text-[16px] lg:text-[18px] lg:px-20 px-5 pt-28 mb-6 lg:mb-0 lg:pt-32 lg:pb-16 pb-8 max-container">
-        <BreadCrumbs breadcrumbs={breadcrumbs} />
-      </div>
-      <div className="max-container">
-        <ContactForm />
-      </div>
+      <main id="main-content" className="pt-24 sm:pt-[6.75rem]">
+        <ContactBody />
+      </main>
       <Footer />
     </div>
   );

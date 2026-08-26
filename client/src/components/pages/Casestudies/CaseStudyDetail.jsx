@@ -11,6 +11,17 @@ import {
 import { Helmet } from "react-helmet-async";
 import ReactPlayer from "react-player";
 
+const SLUG_ALIASES = {
+  "singapore-tourism-board": ["singapore-tourism-board-stb"],
+  "singapore-tourism-board-stb": ["singapore-tourism-board"],
+};
+const CANONICAL_SLUG = {
+  genvr: "genvr",
+  neotraders: "neotraders",
+  devboost: "devboost",
+  "singapore-tourism-board-stb": "singapore-tourism-board",
+};
+
 const CaseStudyDetail = () => {
   const { slug: paramSlug } = useParams();
   const location = useLocation();
@@ -25,14 +36,28 @@ const CaseStudyDetail = () => {
     const fetchCaseStudy = async () => {
       setLoading(true);
       try {
-        const q = query(collection(db, "casestudies"), where("slug", "==", slug));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-          setCs(querySnapshot.docs[0].data());
-        } else {
-          // If not found, try to redirect back to work or show a placeholder
-          setCs(null);
+        const trySlug = async (s) => {
+          const q = query(collection(db, "casestudies"), where("slug", "==", s));
+          const snap = await getDocs(q);
+          return snap.empty ? null : snap.docs[0].data();
+        };
+        let data = await trySlug(slug);
+        if (!data) {
+          for (const alt of SLUG_ALIASES[slug] || []) {
+            data = await trySlug(alt);
+            if (data) break;
+          }
         }
+        if (!data) {
+          // ponytail: case-insensitive scan, ~30 docs; query by lowercased slug if this collection grows
+          const all = await getDocs(collection(db, "casestudies"));
+          const lower = slug.toLowerCase();
+          const hit = all.docs.find(
+            (d) => (d.data().slug || "").toLowerCase() === lower,
+          );
+          data = hit ? hit.data() : null;
+        }
+        setCs(data);
       } catch (err) {
         console.error("Error fetching case study:", err);
       } finally {
@@ -134,7 +159,7 @@ const CaseStudyDetail = () => {
         <meta property="og:image" content={cs.bannerImage || ""} />
         <meta property="og:title" content={`${cs.title} | Mélange Digital's Work`} />
         <meta property="og:description" content={cs.intro?.substring(0, 160)} />
-        <link rel="canonical" href={`https://melangedigital.co/work/${cs.slug}`} />
+        <link rel="canonical" href={`https://melangedigital.co/work/${CANONICAL_SLUG[slug.toLowerCase()] || cs.slug}`} />
       </Helmet>
 
       <Navbar />

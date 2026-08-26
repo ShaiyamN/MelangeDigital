@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Navbar } from "../layout";
+import { Navbar, Footer } from "../layout";
 import { Helmet } from "react-helmet-async";
 import AboutBody from "./About/AboutBody";
 import "./About/about.css";
@@ -18,7 +18,7 @@ const About = () => {
   <meta property="og:type" content="website" />
   <meta property="og:title" content="About Mélange Digital: Our Story, Mission & Vision" />
   <meta property="og:description" content="Meet the team behind Mélange Digital. Passionate global agency driven by strategy, creativity & a mission to grow brands that matter. Discover our story" />
-  <meta property="og:image" content="https://melangedigital.co/assets/mainLogo-8756aff9.png" />
+  <meta property="og:image" content="https://melangedigital.co/logo.png" />
   <meta property="og:url" content="https://melangedigital.co/about" />
   <link rel="canonical" href="https://melangedigital.co/about" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -66,7 +66,7 @@ const About = () => {
     "@type": "LocalBusiness",
     "name": "Mélange Digital",
     "url": "https://melangedigital.co",
-    "logo": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+    "logo": "https://melangedigital.co/logo.png",
     "foundingDate": "2021",
     "description": "Mélange Digital is a data-driven digital marketing agency that crafts emotionally resonant campaigns using AI-powered insights, cultural understanding, and performance strategies.",
     "mission": "To fuel digital transformation through creativity and innovation, helping brands and startups seize new opportunities and drive growth.",
@@ -320,7 +320,7 @@ const About = () => {
     "endDate": "2021-01-01",
     "eventStatus": "https://schema.org/EventScheduled",
     "description": "Mélange Digital was founded with a vision to unite strategy, creativity, and performance into meaningful campaigns.",
-    "image": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+    "image": "https://melangedigital.co/logo.png",
     "location": { "@type": "Place", "name": "Goa, India", "address": { "@type": "PostalAddress", "streetAddress": "B12, 7th Floor, Silvio Heights, St. Inez Road, Santa Inez", "addressLocality": "Panaji", "addressRegion": "Goa", "postalCode": "403001", "addressCountry": "IN" } },
     "organizer": { "@type": "Organization", "name": "Mélange Digital", "url": "https://melangedigital.co" },
     "performer": { "@type": "Person", "name": "Sanket Bolinjkar", "jobTitle": "Founder & CEO" },
@@ -337,7 +337,7 @@ const About = () => {
     "endDate": "2022-01-01",
     "eventStatus": "https://schema.org/EventScheduled",
     "description": "Mélange Digital established its first international presence in Singapore, growing to a team of 15 and expanding into the APAC region.",
-    "image": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+    "image": "https://melangedigital.co/logo.png",
     "location": { "@type": "Place", "name": "International Plaza, Singapore", "address": { "@type": "PostalAddress", "streetAddress": "10 Anson Road, #22-02A International Plaza", "addressLocality": "Singapore", "postalCode": "079903", "addressCountry": "SG" } },
     "organizer": { "@type": "Organization", "name": "Mélange Digital", "url": "https://melangedigital.co" },
     "performer": { "@type": "Person", "name": "Sanket Bolinjkar", "jobTitle": "Founder & CEO" },
@@ -354,7 +354,7 @@ const About = () => {
     "endDate": "2023-01-01",
     "eventStatus": "https://schema.org/EventScheduled",
     "description": "Mélange Digital expanded into the UAE market with a team of 20, delivering bold campaigns for the Middle Eastern market.",
-    "image": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+    "image": "https://melangedigital.co/logo.png",
     "location": { "@type": "Place", "name": "Sharjah Publishing City Free Zone, UAE", "address": { "@type": "PostalAddress", "streetAddress": "Business Centre, Sharjah Publishing City Free Zone", "addressLocality": "Sharjah", "addressCountry": "AE" } },
     "organizer": { "@type": "Organization", "name": "Mélange Digital", "url": "https://melangedigital.co" },
     "performer": { "@type": "Person", "name": "Julien R.R. Cordon", "jobTitle": "Regional Director GCC" },
@@ -371,7 +371,7 @@ const About = () => {
     "endDate": "2024-01-01",
     "eventStatus": "https://schema.org/EventScheduled",
     "description": "Mélange Digital launched its European operations in London with a team of 30, building creative systems for UK brands.",
-    "image": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+    "image": "https://melangedigital.co/logo.png",
     "location": { "@type": "Place", "name": "London, United Kingdom", "address": { "@type": "PostalAddress", "streetAddress": "22-6 Millennium Drive", "addressLocality": "London", "postalCode": "E14 3GF", "addressRegion": "England", "addressCountry": "GB" } },
     "organizer": { "@type": "Organization", "name": "Mélange Digital", "url": "https://melangedigital.co" },
     "performer": { "@type": "Person", "name": "Mihir Shah", "jobTitle": "Regional Director UK & EU" },
@@ -388,7 +388,7 @@ const About = () => {
     "endDate": "2025-01-01",
     "eventStatus": "https://schema.org/EventScheduled",
     "description": "Mélange Digital expanded into the African market, bringing global digital marketing expertise to Zambia.",
-    "image": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+    "image": "https://melangedigital.co/logo.png",
     "location": { "@type": "Place", "name": "Lusaka, Zambia", "address": { "@type": "PostalAddress", "streetAddress": "6078A, Great East Road, Northmead", "addressLocality": "Lusaka", "addressRegion": "Lusaka Province", "postalCode": "10101", "addressCountry": "ZM" } },
     "organizer": { "@type": "Organization", "name": "Mélange Digital", "url": "https://melangedigital.co" },
     "performer": { "@type": "Person", "name": "Maria Masiri", "jobTitle": "Regional Director Africa" },
@@ -407,6 +407,7 @@ const About = () => {
       <main id="main-content" className="pt-24 sm:pt-[6.75rem]">
         <AboutBody />
       </main>
+      <Footer />
     </div>
   );
 };

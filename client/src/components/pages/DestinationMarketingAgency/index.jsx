@@ -1,13 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Navbar } from "../../layout";
+import { Navbar, Footer } from "../../layout";
 import markup from "./markup.html?raw";
 
 const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260821x`,
+  `${ASSET}/css/melange.css?v=20260826a`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
@@ -208,6 +208,7 @@ const DestinationMarketingAgency = () => {
         // ponytail: extracted HTML shell; full JSX port after home is stable
         dangerouslySetInnerHTML={{ __html: markup }}
       />
+      <Footer />
     </>
   );
 };

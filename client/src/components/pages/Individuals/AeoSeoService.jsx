@@ -259,7 +259,7 @@ const AeoSeoService = () => {
           "@type": "Organization",
           "name": "Mélange Digital",
           "url": "https://melangedigital.co",
-          "logo": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+          "logo": "https://melangedigital.co/logo.png",
           "telephone": "+919372567722",
           "email": "hello@melangedigital.co",
           "address": {

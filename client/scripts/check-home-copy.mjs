@@ -49,7 +49,7 @@ const asserts = [
   [m.includes("Local Agency"), "global reach heading"],
   [m.includes("India outbound travel marketing"), "global reach subcopy"],
   [m.includes("across five markets"), "global reach markets line"],
-  [m.includes("world-map-reach.svg"), "global reach map asset"],
+  [m.includes("world-map-reach.png"), "global reach map asset"],
   [m.includes("global-reach-stack"), "global reach stacked layout"],
   [m.includes("More About Us"), "global reach cta"],
   [m.includes("home-report-promo-section"), "report promo section"],
@@ -70,12 +70,7 @@ const asserts = [
   [!m.includes("home-infra-section"), "infra removed"],
   [!m.includes('id="team"'), "team section removed"],
   [!m.includes('id="pricing"'), "detailed report grid removed"],
-  [m.includes("Influencer &amp; Celebrity Marketing"), "footer wireframe services"],
-  [m.includes("FAM Trips + PR"), "footer fam trips"],
-  [!m.includes("AEO and SEO"), "footer aeo seo removed"],
-  [m.includes("Travel Reports"), "footer travel reports"],
-  [m.includes(">Our Work<"), "footer our work"],
-  [m.includes(">UAE<"), "footer uae label"],
+  [!m.includes('class="footer"'), "html footer removed (react Footer)"],
   [orderOk, "wireframe section order"],
 ];
 

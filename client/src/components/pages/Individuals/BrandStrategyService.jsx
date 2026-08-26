@@ -179,7 +179,7 @@ const BrandStrategyService = () => {
         <title>Brand Strategy Services | Mélange Digital</title>
         <meta
           name="description"
-          content="Amplify your brand with Mélange Digital's AEO and SEO services. Be cited by AI assistants, rank in search, and build authority across modern answer engines."
+          content="Brand strategy for travel and tourism. Positioning, messaging, and go-to-market planning for tourism boards, hospitality, and travel brands."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

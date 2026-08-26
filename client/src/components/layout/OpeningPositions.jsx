@@ -33,7 +33,7 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
   };
 
   return (
-    <div className="lg:px-28 px-5 lg:py-[60px] py-10 bg-[#F3F3F3]">
+    <div id="open-positions" className="lg:px-28 px-5 lg:py-[60px] py-10 bg-[#F3F3F3]">
       <div className="max-w-[1440px] mx-auto">
         <h2 className="md:text-[40px] text-[24px] lg:leading-[48px] font-semibold">Open Positions</h2>
         {jobs.length ? jobs.map((job) => (

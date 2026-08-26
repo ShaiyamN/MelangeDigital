@@ -170,7 +170,7 @@ const works = [
   //   tag3: "Website Development",
   //   title: "NeoTrader",
   //   description: "",
-  //   path: "/work/neoTraders",
+  //   path: "/work/neotraders",
   // },
 
   {
@@ -192,7 +192,7 @@ const works = [
   //   tag3: "Website Development",
   //   title: "DevBoost",
   //   description: "",
-  //   path: "/work/devBoost",
+  //   path: "/work/devboost",
   // },
   {
     icon: saudi,
@@ -797,7 +797,7 @@ const workpage = [
     title: "Is This Even Singapore?",
     description:
       "Redefining Singapore Tourism Through Creators Lens & driving 135M+ Views in 1st Phase",
-    path: "/work/singapore-tourism-board-stb",
+    path: "/work/singapore-tourism-board",
     filter: ["all", "filter2", "filter5"],
   },
 
@@ -851,7 +851,7 @@ const workpage = [
     tag3: "Website Development",
     title: "NeoTrader",
     description: "",
-    path: "/work/neoTraders",
+    path: "/work/neotraders",
     filter: ["all", "filter1", "filter3", "filter4"],
   },
   {
@@ -861,7 +861,7 @@ const workpage = [
     tag3: "Website Development",
     title: "DevBoost",
     description: "",
-    path: "/work/devBoost",
+    path: "/work/devboost",
     filter: ["all", "filter1", "filter3", "filter4"],
   },
 
@@ -992,7 +992,7 @@ const workpage = [
     title: "GenVR",
     description:
       "GenVR harnessed the power of 3D technology and AI enhancement for their new web application, elevating and expanding their platform's capabilities.",
-    path: "/work/GenVR",
+    path: "/work/genvr",
     filter: ["all", "filter3", "filter4"],
   },
 
@@ -1279,7 +1279,7 @@ const designCaseStudy = [
     icon: genWork,
     tag1: "Website Development",
     title: "GenVR",
-    path: "/work/GenVR",
+    path: "/work/genvr",
   },
 
   {
@@ -1314,7 +1314,7 @@ const contentCaseStudy = [
     icon: genWork,
     tag1: "Website Development",
     title: "GenVR",
-    path: "/work/GenVR",
+    path: "/work/genvr",
   },
 
   {
@@ -1412,7 +1412,7 @@ const influencerMarketingServiceCaseStudy = [
     title: "Is This Even Singapore?",
     description:
       "Redefining Singapore Tourism Through Creators Lens & driving 135M+ Views in 1st Phase",
-    path: "/work/singapore-tourism-board-stb",
+    path: "/work/singapore-tourism-board",
     filter: ["all", "filter2", "filter5"],
   },
   {
@@ -1548,7 +1548,7 @@ const contentStrategyServiceCaseStudy = [
     title: "GenVR",
     description:
       "GenVR harnessed the power of 3D technology and AI enhancement for their new web application, elevating and expanding their platform's capabilities.",
-    path: "/work/GenVR",
+    path: "/work/genvr",
     filter: ["all", "filter3", "filter4"],
   },
   {
@@ -1685,7 +1685,7 @@ const immersiveBrandStoryServiceCaseStudy= [
     title: "Is This Even Singapore?",
     description:
       "Redefining Singapore Tourism Through Creators Lens & driving 135M+ Views in 1st Phase",
-    path: "/work/singapore-tourism-board-stb",
+    path: "/work/singapore-tourism-board",
     filter: ["all", "filter2", "filter5"],
   },
   {
@@ -1811,7 +1811,7 @@ const designDevelopmentServiceCaseStudy = [
     title: "GenVR",
     description:
       "GenVR harnessed the power of 3D technology and AI enhancement for their new web application, elevating and expanding their platform's capabilities.",
-    path: "/work/GenVR",
+    path: "/work/genvr",
     filter: ["all", "filter3", "filter4"],
   },{
     icon: duvon,
@@ -1860,7 +1860,7 @@ const designDevelopmentServiceCaseStudy = [
     tag3: "Website Development",
     title: "NeoTrader",
     description: "",
-    path: "/work/neoTraders",
+    path: "/work/neotraders",
   },
   {
     icon: dhruvak,

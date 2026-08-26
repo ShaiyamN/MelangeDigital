@@ -177,7 +177,7 @@ const ContentStrategyService = () => {
         <title>Content Strategy & Production Services | Mélange Digital</title>
         <meta
           name="description"
-          content="Amplify your brand with Mélange Digital's AEO and SEO services. Be cited by AI assistants, rank in search, and build authority across modern answer engines."
+          content="Content strategy and production for travel and tourism brands. From destination stories to campaign assets, Mélange Digital plans and produces work that converts."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -200,11 +200,11 @@ const ContentStrategyService = () => {
       {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
-        "@id": "https://melangedigital.co/services/aeo-seo#breadcrumb",
+        "@id": "https://melangedigital.co/services/content-strategy-and-production#breadcrumb",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://melangedigital.co" },
           { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://melangedigital.co/services" },
-          { "@type": "ListItem", "position": 3, "name": "AEO & SEO", "item": "https://melangedigital.co/services/aeo-seo" }
+          { "@type": "ListItem", "position": 3, "name": "Content Strategy & Production", "item": "https://melangedigital.co/services/content-strategy-and-production" }
         ]
       }
     `}
@@ -215,12 +215,12 @@ const ContentStrategyService = () => {
       {
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "@id": "https://melangedigital.co/services/aeo-seo#webpage",
-        "url": "https://melangedigital.co/services/aeo-seo",
-        "name": "AEO & SEO Services | Mélange Digital",
-        "description": "Be found in search and be cited in AI answers with Mélange Digital's AEO and SEO services.",
+        "@id": "https://melangedigital.co/services/content-strategy-and-production#webpage",
+        "url": "https://melangedigital.co/services/content-strategy-and-production",
+        "name": "Content Strategy & Production Services | Mélange Digital",
+        "description": "Content strategy and production for travel and tourism brands from Mélange Digital.",
         "isPartOf": { "@type": "WebSite", "@id": "https://melangedigital.co/#website" },
-        "breadcrumb": { "@id": "https://melangedigital.co/services/aeo-seo#breadcrumb" },
+        "breadcrumb": { "@id": "https://melangedigital.co/services/content-strategy-and-production#breadcrumb" },
         "inLanguage": "en-US"
       }
     `}
@@ -231,15 +231,15 @@ const ContentStrategyService = () => {
       {
         "@context": "https://schema.org",
         "@type": "Service",
-        "@id": "https://melangedigital.co/services/aeo-seo#service",
-        "name": "AEO & SEO Services",
-        "url": "https://melangedigital.co/services/aeo-seo",
-        "description": "Mélange Digital helps brands improve visibility across traditional search engines and AI answer platforms like ChatGPT, Google AI Overviews, Perplexity, and Bing Copilot.",
+        "@id": "https://melangedigital.co/services/content-strategy-and-production#service",
+        "name": "Content Strategy & Production Services",
+        "url": "https://melangedigital.co/services/content-strategy-and-production",
+        "description": "Mélange Digital plans and produces content for tourism boards, hospitality, and travel brands.",
         "provider": {
           "@type": "Organization",
           "name": "Mélange Digital",
           "url": "https://melangedigital.co",
-          "logo": "https://melangedigital.co/assets/mainLogo-8756aff9.png",
+          "logo": "https://melangedigital.co/logo.png",
           "telephone": "+919372567722",
           "email": "hello@melangedigital.co",
           "address": {
@@ -260,12 +260,10 @@ const ContentStrategyService = () => {
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
-          "name": "AEO & SEO Services",
+          "name": "Content Strategy & Production Services",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Visibility Audit & Strategy", "description": "Understand your brand's visibility across AI assistants and answer engines with a detailed strategic roadmap." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Answer-Optimized Content Creation", "description": "Build content designed to earn citations, featured snippets, and AI-driven answer visibility." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technical AEO Implementation", "description": "Deploy structured data, AI-friendly content architecture, and technical optimization to improve discoverability." } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Continuous AI Performance Tracking", "description": "Track your brand's presence across AI systems and refine your visibility strategy continuously." } }
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Content Strategy", "description": "Editorial and campaign content planning for travel and tourism brands." } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Content Production", "description": "Photo, video, and written production for destinations and travel campaigns." } }
           ]
         }
       }

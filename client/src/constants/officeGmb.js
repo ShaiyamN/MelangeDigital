@@ -1,4 +1,9 @@
 /** Google Business Profile links for each Melange office. */
+export const INDIA_OFFICE = {
+  label: "India",
+  href: "https://maps.app.goo.gl/FSfiMEP7C4n4CMQTA",
+};
+
 export const FOOTER_OFFICES = [
   {
     label: "United Kingdom",
@@ -17,3 +22,10 @@ export const FOOTER_OFFICES = [
     href: "https://www.google.com/search?q=Melange+Digital+Zambia+Limited&stick=H4sIAAAAAAAA_-NgU1I1qDC0NDGwSDIwS05MtDRKNTK1MqhIMjG1MDC3SLIwSjU3T0uyXMQq55uak5iXnqrgkpmeWZKYoxCVmJuUmajgk5mbWZKaAgCUzw7SSgAAAA&hl=en&mat=CeJKO4PjPRYaElcBTVDHnogff8Oyop7N7KV1GM92mWWy1e-aIi2Z0CA2V1utDtSB5vWI8V1wtcWjNvPtOkdio8SrXvAXWfrRA85ur7QHqFcnT-JRdavnGMcCgiN8XvvSqLA&authuser=0",
   },
 ];
+
+/** India + footer Global Presence offices (contact glass box). */
+export const CONTACT_OFFICES = [INDIA_OFFICE, ...FOOTER_OFFICES];
+
+export function officeShortLabel(label) {
+  return label === "United Arab Emirates" ? "UAE" : label;
+}
