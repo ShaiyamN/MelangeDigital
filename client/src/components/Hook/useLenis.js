@@ -15,6 +15,7 @@ const useLenis = () => {
       gestureDirection: "vertical",
       smoothTouch: true,
       touchMultiplier: 2,
+      prevent: (node) => node.closest?.("[data-lenis-prevent]"),
     });
 
     // Keep GSAP pin/scrub in sync with Lenis (fixes layout that only "snaps" right after reload)

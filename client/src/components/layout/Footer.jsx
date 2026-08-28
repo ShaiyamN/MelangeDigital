@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FOOTER_OFFICES, officeShortLabel } from "../../constants/officeGmb";
+import { FOOTER_OFFICES } from "../../constants/officeGmb";
 import { openEmail, openPhone } from "../../utils/openContactLink";
 import "./footer.css";
 
@@ -22,7 +22,7 @@ const Footer = () => (
             href="https://www.linkedin.com/company/melangedigital"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Melange Digital on LinkedIn"
+            aria-label="LinkedIn"
           >
             <img src={`${IMG}/si-linkedin.svg`} alt="" />
           </a>
@@ -30,7 +30,7 @@ const Footer = () => (
             href="https://www.instagram.com/melangedigital.co"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Melange Digital on Instagram"
+            aria-label="Instagram @melangedigital.co"
           >
             <img src={`${IMG}/si-insta.svg`} alt="" />
           </a>
@@ -76,7 +76,7 @@ const Footer = () => (
           {FOOTER_OFFICES.map((office) => (
             <li key={office.label}>
               <a href={office.href} target="_blank" rel="noopener noreferrer">
-                {officeShortLabel(office.label)}
+                {office.label}
               </a>
             </li>
           ))}
@@ -100,13 +100,13 @@ const Footer = () => (
           </li>
           <li>
             <a
-              href="tel:+919372567722"
+              href="tel:+917700974123"
               onClick={(e) => {
                 e.preventDefault();
-                openPhone("+919372567722");
+                openPhone("+917700974123");
               }}
             >
-              +91 93725 67722
+              +91 7700974123
             </a>
           </li>
         </ul>

@@ -9,7 +9,7 @@ import markup from "./markup.html?raw";
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260826a`,
+  `${ASSET}/css/melange.css?v=20260828h`,
 ];
 const SCRIPT_BASES = [
   "/about/network-sphere.js",
@@ -28,10 +28,10 @@ const BREADCRUMB = {
 const ABOUT_PAGE = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  name: "About Mélange Digital: Our Story, Mission & Vision",
+  name: "Best DMO Marketing Agency | About Melange Digital",
   url: "https://melangedigital.co/about",
   description:
-    "Meet the team behind Mélange Digital. Passionate global agency driven by strategy, creativity & a mission to grow brands that matter. Discover our story",
+    "Melange Digital is a DMO marketing agency and destination marketing specialist, built by people who've worked inside tourism boards. Meet the team.",
   inLanguage: "en",
   isPartOf: { "@type": "WebSite", name: "Mélange Digital", url: "https://melangedigital.co" },
   about: {
@@ -58,8 +58,8 @@ const ABOUT_PAGE = {
 };
 
 const LEADERS = [
-  { name: "Sanket Bolinjkar", jobTitle: "Founder & CEO" },
-  { name: "Ekaterina Bolinjkar", jobTitle: "Head of HR & Finance" },
+  { name: "Sanket Bolinjkar", jobTitle: "Founder and Chief Executive Officer" },
+  { name: "Ekaterina Bolinjkar", jobTitle: "Co-Founder, Finance and People" },
   { name: "Jason Dias", jobTitle: "Director of Growth & Strategy" },
   { name: "Kaustubh Shetye", jobTitle: "Director Creative Strategy & Operations" },
   { name: "Julien Cordon", jobTitle: "Regional Director, GCC" },
@@ -90,24 +90,24 @@ const AboutTourism = () => {
   return (
     <>
       <Helmet>
-        <title>About Mélange Digital: Our Story, Mission & Vision</title>
+        <title>Best DMO Marketing Agency | About Melange Digital</title>
         <meta
           name="description"
-          content="Meet the team behind Mélange Digital. Passionate global agency driven by strategy, creativity & a mission to grow brands that matter. Discover our story"
+          content="Melange Digital is a DMO marketing agency and destination marketing specialist, built by people who've worked inside tourism boards. Meet the team."
         />
         <link rel="canonical" href="https://melangedigital.co/about" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:ital@1&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
           rel="stylesheet"
         />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/about" />
-        <meta property="og:title" content="About Mélange Digital: Our Story, Mission & Vision" />
+        <meta property="og:title" content="Best DMO Marketing Agency | About Melange Digital" />
         <meta
           property="og:description"
-          content="Meet the team behind Mélange Digital. Passionate global agency driven by strategy, creativity & a mission to grow brands that matter. Discover our story"
+          content="Melange Digital is a DMO marketing agency and destination marketing specialist, built by people who've worked inside tourism boards. Meet the team."
         />
         <script type="application/ld+json">{JSON.stringify(BREADCRUMB)}</script>
         <script type="application/ld+json">{JSON.stringify(ABOUT_PAGE)}</script>

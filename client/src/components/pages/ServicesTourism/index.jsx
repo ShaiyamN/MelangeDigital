@@ -9,7 +9,7 @@ import markup from "./markup.html?raw";
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260828a`,
+  `${ASSET}/css/melange.css?v=20260828h`,
 ];
 const SCRIPT_BASES = [`${ASSET}/js/services.js?v=20260824w`];
 
@@ -19,50 +19,34 @@ const FAQ_SCHEMA = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "What does Melange Digital specialise in?",
+      name: "What does digital marketing for travel and tourism include?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Melange is a travel and tourism marketing agency. We decode the culture, narrate the story, match the creator, and convert emotion into a booking. Success is measured in arrivals, not impressions.",
+        text: "Digital marketing for travel and tourism includes influencer and celebrity marketing, branded content and IP integration, experiential activations, FAM trips and PR, all built specifically for destinations, DMOs, NTOs and travel brands, not adapted from retail or FMCG playbooks.",
       },
     },
     {
       "@type": "Question",
-      name: "How do you choose creators for a destination campaign?",
+      name: "What is digital marketing for DMOs?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We cast for credibility inside a subculture, not follower count. Every creator is pressure-tested against audience data before a contract is signed, and casting, negotiation, content and reporting run under one roof.",
+        text: "Digital marketing for DMOs is the full stack of services we offer specifically for destination marketing organisations. We build campaigns that survive government-level approval chains, prove arrivals rather than impressions, and understand procurement realities a typical ad agency has never worked inside.",
       },
     },
     {
       "@type": "Question",
-      name: "Can a destination live inside film or music IP?",
+      name: "Does Melange handle influencer marketing in travel and tourism, or only celebrity campaigns?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. We land the production or the track, not just a placement. The destination lives inside the narrative, and our film and music network gets a destination cast, not just pitched.",
+        text: "Both. Melange's influencer marketing in travel and tourism spans everything from mega-follower celebrities to regional-language creators on platforms like ShareChat and Moj, cast by subculture fit rather than follower count alone.",
       },
     },
     {
       "@type": "Question",
-      name: "What does an experiential activation actually deliver?",
+      name: "Is marketing for NTOs different from marketing other travel brands?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We turn a booth, mall or trade-show floor into the highest-performing square foot in travel. Activations are designed, fabricated and staffed end to end, and engineered to capture a qualified enquiry, not just a photo.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How are FAM trips and PR different from a media buy?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "A cover story lands harder than a media buy. We host, negotiate and staff trips and stalls in person, and our publisher and journalist network is built over years, not rented per campaign.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How do you measure a campaign?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "By arrivals, enquiries, earned media and follow-on production. Every campaign is built around a specific, trackable outcome agreed before work begins.",
+        text: "Yes. NTO marketing means working within a national tourism organisation's mandate, budget cycles and ministerial reporting lines: categorically different from marketing a private travel brand, and a large part of what Melange specialises in.",
       },
     },
   ],
@@ -74,24 +58,24 @@ const ServicesTourism = () => {
   return (
     <>
       <Helmet>
-        <title>Travel & Tourism Marketing Services | Melange Digital</title>
+        <title>Digital Marketing for Travel and Tourism | Melange</title>
         <meta
           name="description"
-          content="Influencer and celebrity marketing, branded content and IP, experiential activations, and FAM trips plus PR for tourism boards. How Melange engineers desire to arrivals."
+          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branded content, built for destinations, DMOs and NTOs."
         />
         <link rel="canonical" href="https://melangedigital.co/services" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:ital@1&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
           rel="stylesheet"
         />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/services" />
-        <meta property="og:title" content="Travel & Tourism Marketing Services | Melange Digital" />
+        <meta property="og:title" content="Digital Marketing for Travel and Tourism | Melange" />
         <meta
           property="og:description"
-          content="Influencer and celebrity marketing, branded content and IP, experiential activations, and FAM trips plus PR for tourism boards."
+          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branded content, built for destinations, DMOs and NTOs."
         />
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
         <script type="application/ld+json">

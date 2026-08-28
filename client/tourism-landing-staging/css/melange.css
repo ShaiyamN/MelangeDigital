@@ -3070,6 +3070,7 @@ box-sizing:border-box;
   --melange-lilac: #ffffff;
   --melange-display: "Alan Sans", sans-serif;
   --melange-body: "Poppins", sans-serif;
+  --melange-serif: "Libre Baskerville", "Baskervville", serif;
   --melange-italic: "Alan Sans", sans-serif;
   --violet-100: #6E1EEE;
   --violet-20: #6E1EEE33;
@@ -8263,8 +8264,7 @@ a.svc-project:focus-visible .svc-project__media img {
   font-family: var(--melange-display) !important;
   font-weight: 600;
   font-size: 55px;
-  line-height: 45px;
-  text-transform: uppercase;
+  line-height: 1.1;
   color: #000;
   margin: 0;
   max-width: 1119px;
@@ -8396,7 +8396,6 @@ a.svc-project:focus-visible .svc-project__media img {
   .svc-wander__title {
     font-size: 28px;
     line-height: 1.2;
-    text-transform: uppercase;
   }
   .svc-faq__title {
     margin-bottom: 24px;
@@ -8438,7 +8437,8 @@ a.svc-project:focus-visible .svc-project__media img {
   outline-offset: 3px;
 }
 
-.abt-page {
+.abt-page,
+.wrk-page {
   --melange-ink: #0f0330;
   --melange-highlight: #c671f9;
   --melange-accent: #6e1eee;
@@ -8460,7 +8460,9 @@ a.svc-project:focus-visible .svc-project__media img {
 .main.abt-page::before,
 .main.abt-page::after,
 .main.svc-page::before,
-.main.svc-page::after {
+.main.svc-page::after,
+.main.wrk-page::before,
+.main.wrk-page::after {
   content: none !important;
 }
 
@@ -8561,7 +8563,8 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 
 @media (max-width: 991px) {
-  .abt-page {
+  .abt-page,
+  .wrk-page {
     --about-pad: 24px;
     --about-section: 64px;
   }
@@ -8574,7 +8577,8 @@ a.svc-project:focus-visible .svc-project__media img {
   }
 }
 @media (max-width: 767px) {
-  .abt-page {
+  .abt-page,
+  .wrk-page {
     --about-pad: 20px;
     --about-section: 48px;
   }
@@ -9438,6 +9442,10 @@ a.svc-project:focus-visible .svc-project__media img {
   width: 20px;
   height: 20px;
 }
+.about-hero__eyebrow a {
+  color: inherit;
+  text-decoration: underline;
+}
 
 @media (min-width: 768px) {
   .about-lead__grid {
@@ -9476,9 +9484,16 @@ a.svc-project:focus-visible .svc-project__media img {
   opacity: 0.55;
 }
 .about-wander .about-h2 {
-  text-transform: uppercase;
   margin: 0 auto 28px;
-  max-width: 18em;
+  max-width: 22em;
+}
+.about-wander .about-accent,
+.svc-wander__title .svc-accent {
+  font-family: var(--melange-serif) !important;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: inherit;
 }
 
 @media (max-width: 479px) {
@@ -9517,7 +9532,9 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 
 .abt-page .about-hero .hero-btn-icon,
-.abt-page .about-wander .hero-btn-icon {
+.abt-page .about-wander .hero-btn-icon,
+.wrk-page .wrk-hero .hero-btn-icon,
+.wrk-page .about-wander .hero-btn-icon {
   background: transparent !important;
   width: 36px !important;
   height: 34px !important;
@@ -9525,13 +9542,16 @@ a.svc-project:focus-visible .svc-project__media img {
   overflow: hidden;
 }
 .abt-page .about-hero .hero-btn-icon img,
-.abt-page .about-wander .hero-btn-icon img {
+.abt-page .about-wander .hero-btn-icon img,
+.wrk-page .wrk-hero .hero-btn-icon img,
+.wrk-page .about-wander .hero-btn-icon img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
 }
-.abt-page .button.hero-download-btn .text-block-6 {
+.abt-page .button.hero-download-btn .text-block-6,
+.wrk-page .button.hero-download-btn .text-block-6 {
   font-family: "Lato", var(--melange-body);
   font-weight: 500;
   font-size: 16px;
@@ -9560,6 +9580,117 @@ a.svc-project:focus-visible .svc-project__media img {
 @media (max-width: 640px) {
   .abt-page .report-promo-heading .about-accent {
     white-space: normal;
+  }
+}
+
+/* ==========================================================================
+   Work page (Figma 214:560) — scoped to .wrk-page
+   ========================================================================== */
+.wrk-page a:focus-visible,
+.wrk-page button:focus-visible {
+  outline: 2px solid var(--melange-accent);
+  outline-offset: 3px;
+}
+.wrk-hero {
+  padding: 28px 0 48px;
+}
+.wrk-hero__title {
+  font-family: var(--melange-display) !important;
+  font-weight: 600;
+  font-size: clamp(36px, 4.6vw, 65px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: #2b2b2b;
+  margin: 0 0 16px;
+  max-width: 12em;
+}
+.wrk-hero .svc-accent,
+.wrk-page .about-report .about-accent {
+  font-family: var(--melange-serif) !important;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--melange-highlight);
+}
+.wrk-hero__body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.35;
+  color: #0f052f;
+  max-width: 585px;
+  margin: 0 0 36px;
+}
+.wrk-grid-section {
+  padding: 0 0 72px;
+}
+.wrk-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px 32px;
+}
+.wrk-card {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.wrk-card__media {
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(15, 3, 48, 0.14);
+  aspect-ratio: 16 / 10;
+}
+.wrk-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.wrk-card__media img.wrk-media--stb {
+  object-position: 50% 18%;
+}
+.wrk-card__media img.wrk-media--rws {
+  object-position: 50% 40%;
+}
+a.wrk-card:hover .wrk-card__media img,
+a.wrk-card:focus-visible .wrk-card__media img {
+  transform: scale(1.03);
+}
+.wrk-card__title {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.35;
+  color: #39107b;
+  margin: 16px 0 8px;
+}
+.wrk-card__caption {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(15, 5, 47, 0.72);
+  margin: 0;
+}
+.wrk-page .about-report .report-promo-desc + .report-promo-desc {
+  margin-top: 12px;
+}
+.wrk-page .about-wander .about-h2 {
+  max-width: 18em;
+}
+
+@media (min-width: 768px) {
+  .wrk-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 56px 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.wrk-card:hover .wrk-card__media img,
+  a.wrk-card:focus-visible .wrk-card__media img {
+    transform: none;
   }
 }
 

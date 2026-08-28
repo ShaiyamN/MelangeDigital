@@ -18,7 +18,7 @@ const STALE_DIRS = [
   path.join(CLIENT_ROOT, 'public', 'indian-outbound-tourism-report'),
 ];
 
-const COPY_ENTRIES = ['index.html', '404.html', 'services.html', 'about.html', 'css', 'js', 'images', 'videos'];
+const COPY_ENTRIES = ['index.html', '404.html', 'services.html', 'about.html', 'work.html', 'css', 'js', 'images', 'videos'];
 
 // A running dev server holds handles under DEST, so Windows throws EBUSY/EPERM
 // mid-delete. rmSync's own retry loop is what covers that.

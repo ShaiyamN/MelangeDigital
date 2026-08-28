@@ -18,7 +18,7 @@ const LEADERS = [
   {
     name: "Ekaterina Bolinjkar",
     title: "Head of HR & Finance",
-    img: `${TEAM}/ekaterina-bolinjkar-framed.webp?v=20260826d`,
+    img: `${TEAM}/ekaterina-bolinjkar-framed.webp?v=20260828b`,
     linkedin: "https://www.linkedin.com/in/ekaterina-bolinjkar-8bb33720/",
   },
   {

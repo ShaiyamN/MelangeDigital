@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Navbar, WorkPage, CTAButton, Footer, BreadCrumbs } from "../layout";
 import { Helmet } from "react-helmet-async";
+import "./career.css";
+
+const ARROW = "/about/arrow-top-right-purple.svg";
 
 const Works = () => {
   const breadcrumbs = [
@@ -15,16 +19,22 @@ const Works = () => {
   return (
     <div>
       <Helmet>
-        <title>Our Work & Case Study Portfolio | Mélange Digital</title>
+        <title>Our Work | Case Studies | Melange Digital</title>
         <meta
           name="description"
-          content="Explore Mélange Digital's portfolio of award-winning campaigns, brand transformations & digital marketing success stories from clients around the globe."
+          content="See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."
         />
         <link rel="canonical" href="https://melangedigital.co/work" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:ital@1&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          rel="stylesheet"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://melangedigital.co/work" />
-        <meta property="og:title" content="Our Work & Case Study Portfolio | Mélange Digital" />
-        <meta property="og:description" content="Explore Mélange Digital's portfolio of award-winning campaigns, brand transformations & digital marketing success stories from clients around the globe." />
+        <meta property="og:title" content="Our Work | Case Studies | Melange Digital" />
+        <meta property="og:description" content="See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike." />
         <meta property="og:image" content="https://melangedigital.co/og-work.jpg" />
 
         {/* Schema Markup - BreadcrumbList */}
@@ -420,6 +430,29 @@ const Works = () => {
           <BreadCrumbs breadcrumbs={breadcrumbs} />
         </div>
         <WorkPage />
+        <div className="career-page">
+          <section className="career-wander">
+            <img
+              className="career-wander__bg"
+              src="/about/wanderlust.jpg"
+              alt=""
+              width="1437"
+              height="290"
+              loading="lazy"
+            />
+            <h2 className="career-h2">
+              Want Your Campaign
+              <br />
+              on This Page Next?
+            </h2>
+            <Link to="/contact" className="career-cta">
+              <span>Get In Touch</span>
+              <span className="career-cta__icon" aria-hidden="true">
+                <img src={ARROW} width="12" height="12" alt="" />
+              </span>
+            </Link>
+          </section>
+        </div>
         <Footer />
       </div>
     </div>

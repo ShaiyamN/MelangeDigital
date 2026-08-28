@@ -95,14 +95,8 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
             currentIframe.src.indexOf(zf_perma) > 0
           ) {
             const prevHeight = currentIframe.style.height;
-            const shouldScroll = parts.length === 3;
             if (prevHeight !== newHeight) {
-              if (shouldScroll) {
-                currentIframe.scrollIntoView();
-                setTimeout(() => { currentIframe.style.height = newHeight; }, 500);
-              } else {
-                currentIframe.style.height = newHeight;
-              }
+              currentIframe.style.height = newHeight;
             }
           }
         }
@@ -119,7 +113,7 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
   }, [selectedPosition]);
 
   return (
-    <div ref={ref} className="max-w-[1440px] mx-auto">
+    <div ref={ref} className="max-w-[1440px] mx-auto" data-lenis-prevent="true">
 
       {/* "Applying for" banner — shown only when a position is pre-selected */}
       {selectedPosition && (

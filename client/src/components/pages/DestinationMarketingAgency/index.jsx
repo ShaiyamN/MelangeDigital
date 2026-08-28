@@ -7,7 +7,7 @@ const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260826a`,
+  `${ASSET}/css/melange.css?v=20260828h`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
@@ -144,7 +144,7 @@ const DestinationMarketingAgency = () => {
         <title>Global Travel & Tourism Marketing Agency | Melange Digital</title>
         <meta
           name="description"
-          content="Melange is a travel and tourism marketing agency turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a strategy call."
+          content="Melange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
         />
         <link rel="canonical" href="https://melangedigital.co/" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -158,7 +158,7 @@ const DestinationMarketingAgency = () => {
         <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Melange Digital" />
         <meta
           property="og:description"
-          content="Melange is a travel and tourism marketing agency turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a strategy call."
+          content="Melange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
         />
         <style type="text/css">{`
           /* Safety: hide leftover Webflow nav if cached markup still has it */

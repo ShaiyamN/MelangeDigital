@@ -6,6 +6,7 @@
   --melange-cta-mid: #9a30b9;
   --melange-cta-border: #e797ff;
   --melange-display: "Alan Sans", sans-serif;
+  --melange-serif: "Libre Baskerville", "Baskervville", serif;
   --melange-body: "Poppins", sans-serif;
   --type-body: 16px;
   --type-title: 22px;
@@ -138,7 +139,7 @@
   color: #39107b;
 }
 .contact-h1 em {
-  font-family: "Libre Baskerville", "Baskerville", serif;
+  font-family: var(--melange-serif);
   font-style: italic;
   font-weight: 400;
   font-size: inherit;

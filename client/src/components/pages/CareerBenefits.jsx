@@ -3,10 +3,6 @@ const CARDS = [
   { src: "e8239f379b89", title: "Health insurance", body: "Fully funded, high quality health, dental & vision coverage options for NYC teammates. Insurance options for remote teammates may vary by location." },
   { src: "032d2e46c063", title: "Visa and green card sponsorship", body: "We know it can be an arduous process, but we're here to help you succeed." },
   { src: "de9f19fa017e", title: "Flexible schedules & paid time off", body: "Work-life balance matters. We expect everyone to take their vacation weeks off." },
-  { src: "bc054e41616f", title: "Socials & retreats", body: "We love hanging out: from DJ Fridays to daily team lunches to soccer. We also gather in-person at a special retreat each year." },
-  { src: "2ffc799da2fa", title: "Personal comfort", body: "Order whatever equipment you think will help you work more enjoyably. Lunch and dinner are provided in office every day." },
-  { src: "d4039ce56f47", title: "Flexible in-person culture", body: "We love the energy of in-person collaboration while also offering the flexibility to work from home when needed." },
-  { src: "19c657379131", title: "Parental and family benefits", body: "We support current and future parents with IVF fertility benefits, egg freezing, and 4 months of paid parental leave." },
 ];
 
 export default function CareerBenefits() {

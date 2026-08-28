@@ -26,6 +26,7 @@
   --melange-cta-mid: #9a30b9;
   --melange-cta-border: #e797ff;
   --melange-display: "Alan Sans", sans-serif;
+  --melange-serif: "Libre Baskerville", "Baskervville", serif;
   --melange-body: "Poppins", sans-serif;
   /* Same column + rhythm as Home `.container-4` / `--section-pad-y` */
   --about-pad: 40px;
@@ -998,9 +999,15 @@
   opacity: 0.38;
 }
 .about-wander .about-h2 {
-  text-transform: uppercase;
   margin: 0 auto 28px;
   max-width: 18em;
+}
+.about-wander .about-accent {
+  font-family: var(--melange-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: inherit;
 }
 
 @media (max-width: 479px) {

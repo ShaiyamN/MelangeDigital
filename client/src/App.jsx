@@ -18,7 +18,7 @@ import Error from "./components/pages/Error";
 
 // Everything else: load on navigation
 const Services = lazy(() => import("./components/pages/ServicesTourism"));
-const Works = lazy(() => import("./components/pages/Works"));
+const Works = lazy(() => import("./components/pages/WorkTourism"));
 const About = lazy(() => import("./components/pages/AboutTourism"));
 const Contact = lazy(() => import("./components/pages/Contact"));
 const Blogs = lazy(() => import("./components/pages/Blogs"));
