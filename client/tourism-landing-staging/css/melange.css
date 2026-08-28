@@ -9503,13 +9503,46 @@ a.svc-project:focus-visible .svc-project__media img {
   max-width: 720px;
   margin: 0 auto 40px;
 }
+.abt-page .copy-band .innovation-grid,
 .abt-page .copy-band__grid {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  justify-content: stretch !important;
   text-align: left;
-  margin-top: 0;
+}
+.abt-page .copy-band__note {
+  margin: 36px auto 0;
+  max-width: 640px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: center;
+}
+.abt-page .copy-band__note .heading-25 {
+  margin-bottom: 8px;
+  font-family: var(--melange-display) !important;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.3;
+}
+.abt-page .copy-band__note .builtfor-descp {
+  font-size: 16px;
+  line-height: 1.65;
+  opacity: 0.8;
+}
+@media (max-width: 991px) {
+  .abt-page .copy-band .innovation-grid,
+  .abt-page .copy-band__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
 }
 @media (max-width: 767px) {
-  .copy-band__note {
-    padding: 18px 16px;
+  .abt-page .copy-band .innovation-grid,
+  .abt-page .copy-band__grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
