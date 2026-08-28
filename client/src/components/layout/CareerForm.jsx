@@ -76,7 +76,7 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
     iframe.style.width = "90%";
     iframe.style.height = "1354px";
     iframe.style.transition = "all 0.5s ease";
-    iframe.setAttribute("aria-label", "Apply Now and Become a Part of Our Team!");
+    iframe.setAttribute("aria-label", "Apply Now and Join the Team!");
     iframeRef.current = iframe;
     mount.appendChild(iframe);
 

@@ -12,6 +12,7 @@
   --type-title: 22px;
   --contact-pad: 40px;
   --contact-max: 1400px;
+  --section-pad-y: 55px;
   color: var(--melange-ink);
   background: #fff;
   font-family: var(--melange-body);
@@ -32,7 +33,7 @@
 }
 
 .contact-stage {
-  padding-bottom: 48px;
+  padding-bottom: var(--section-pad-y);
 }
 
 .contact-cta {
@@ -691,6 +692,7 @@
 @media (max-width: 767px) {
   .contact-page {
     --contact-pad: 16px;
+    --section-pad-y: 40px;
   }
   .contact-hero {
     overflow: visible;

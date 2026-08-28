@@ -52,7 +52,7 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
           </div>
         )) : <p className="mt-6 text-[#555]">There are no open positions at the moment.</p>}
       </div>
-      <p className="md:text-[20px] text-[18px] md:leading-[26px] leading-[24px] font-bricolage pt-10 font-bold text-center">The role you want doesn't exist yet? Form's waiting below. Tell us what you have got.</p>
+      <p className="md:text-[20px] text-[18px] md:leading-[26px] leading-[24px] font-bricolage pt-10 font-bold text-center">Don't see the right role? The form below is still open. Tell us what you've got.</p>
       {selectedJob && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center lg:px-28 font-bricolage z-[1000]">
           <div data-lenis-prevent="true" className="bg-white lg:px-6 lg:py-6 px-5 py-6 w-full max-h-[80vh] mt-10 overflow-y-auto relative z-[1001] custom-scrollbar">

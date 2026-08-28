@@ -7,6 +7,7 @@
 }
 
 .career-clay {
+  padding: var(--section-pad-y, 55px) 0;
   --cc-fg: rgb(0, 0, 0);
   --cc-bg: rgb(255, 255, 255);
   --cc-primary: rgb(250, 105, 0);
@@ -36,13 +37,13 @@
 }
 
 .career-clay .cc-wrap {
-  width: min(75rem, calc(100% - 2.5rem));
+  box-sizing: border-box;
+  width: min(var(--career-max, 1400px), 100%);
   margin-inline: auto;
+  padding-inline: var(--career-pad, 40px);
 }
-@media (min-width: 1025px) {
-  .career-clay .cc-wrap {
-    width: min(75rem, calc(100% - 8rem));
-  }
+.career-clay__head {
+  margin-bottom: 40px;
 }
 
 .career-clay .cc-pill {

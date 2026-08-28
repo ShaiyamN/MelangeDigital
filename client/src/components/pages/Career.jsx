@@ -11,22 +11,36 @@ import "./career.css";
 const IMG = "/careers";
 const ARROW = "/about/arrow-top-right-purple.svg";
 
-function WhyCard({ n, title, cls }) {
+function WhyCard({ n, title, body, cls }) {
   return (
     <article className={`career-why__card ${cls}`}>
       <p className="career-why__n">{n}</p>
       <p className="career-why__t">{title}</p>
+      <p className="career-why__b">{body}</p>
     </article>
   );
 }
 
-function Cta({ to, children, className = "" }) {
-  return (
-    <Link to={to} className={`career-cta ${className}`.trim()}>
+function Cta({ to, onClick, children, className = "" }) {
+  const inner = (
+    <>
       <span>{children}</span>
       <span className="career-cta__icon" aria-hidden="true">
         <img src={ARROW} width="12" height="12" alt="" />
       </span>
+    </>
+  );
+  const cls = `career-cta ${className}`.trim();
+  if (onClick) {
+    return (
+      <button type="button" className={cls} onClick={onClick}>
+        {inner}
+      </button>
+    );
+  }
+  return (
+    <Link to={to} className={cls}>
+      {inner}
     </Link>
   );
 }
@@ -115,23 +129,43 @@ const Career = () => {
                 <div className="career-why__photo">
                   <img src={`${IMG}/why-01.png`} alt="" width="321" height="246" />
                 </div>
-                <WhyCard n="01" title="Learning and Development" cls="career-why__card--1" />
+                <WhyCard
+                  n="01"
+                  title="Learning and Development"
+                  body="You'll work across tourism boards, cruise lines and global travel brands, not one account. Every project builds a different skill, with senior support close by."
+                  cls="career-why__card--1"
+                />
               </div>
             </div>
             <div className="career-why__row career-why__row--2">
               <div className="career-why__pair career-why__pair--rtl">
-                <WhyCard n="02" title="Innovative Work Environment" cls="career-why__card--2" />
+                <WhyCard
+                  n="02"
+                  title="Innovative Work Environment"
+                  body="We've worked with Bollywood directors, hip-hop artists and tourism boards, often in the same month. Unusual ideas get tried here, not shelved."
+                  cls="career-why__card--2"
+                />
                 <div className="career-why__photo">
                   <img src={`${IMG}/why-02.jpg`} alt="" width="341" height="246" />
                 </div>
               </div>
             </div>
             <div className="career-why__row career-why__row--3">
-              <WhyCard n="03" title="Impactful Work" cls="career-why__card--3" />
+              <WhyCard
+                n="03"
+                title="Impactful Work"
+                body="Our work has moved arrival numbers for tourism boards and filled cabins on cruise launches. What you make here is measurable, not just portfolio filler."
+                cls="career-why__card--3"
+              />
               <div className="career-why__photo career-why__photo--solo">
                 <img src={`${IMG}/why-03.jpg`} alt="" width="380" height="246" />
               </div>
-              <WhyCard n="04" title="Work- Life Balance" cls="career-why__card--4" />
+              <WhyCard
+                n="04"
+                title="Work-Life Balance"
+                body="We run lean teams on purpose, so no one's stuck covering someone else's backlog for months. Take your time off. We mean it."
+                cls="career-why__card--4"
+              />
             </div>
           </div>
         </section>
@@ -152,9 +186,11 @@ const Career = () => {
             loading="lazy"
           />
           <h2 className="career-h2">
-            Let's create <span className="career-italic">wanderlust</span> together
+            Your Next Role
+            <br />
+            <span className="career-italic">Starts Here.</span>
           </h2>
-          <Cta to="/contact">Book a strategy call</Cta>
+          <Cta onClick={scrollToOpenings}>View Open Positions</Cta>
         </section>
       </main>
       <Footer />

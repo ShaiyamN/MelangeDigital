@@ -12,6 +12,9 @@
   --melange-body: "Poppins", sans-serif;
   --career-pad: 40px;
   --career-max: 1400px;
+  --section-pad-y: 55px;
+  --section-pad-y-sm: 48px;
+  --section-pad-y-xs: 40px;
   color: var(--melange-heading);
   background: #fff;
   font-family: var(--melange-body);
@@ -136,14 +139,14 @@
   max-width: 18ch;
 }
 .career-split .career-lede {
-  text-align: right;
+  text-align: left;
   max-width: 32rem;
 }
 
 /* —— Why build a career —— */
 .career-why {
   --why-h: 190px;
-  padding: 8px 0 48px;
+  padding: 8px 0 var(--section-pad-y);
   overflow-x: hidden;
 }
 .career-why__row {
@@ -170,7 +173,8 @@
 }
 .career-why__pair {
   display: flex;
-  height: var(--why-h);
+  min-height: var(--why-h);
+  align-items: stretch;
   flex: 0 1 auto;
   max-width: 100%;
   min-width: 0;
@@ -207,7 +211,7 @@
 }
 .career-why__row--3 .career-why__card,
 .career-why__row--3 .career-why__photo--solo {
-  height: var(--why-h);
+  min-height: var(--why-h);
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -219,7 +223,12 @@
 .career-why__row--3 .career-why__card--4 {
   border-radius: 0 10px 10px 0;
 }
+.career-why__photo {
+  position: relative;
+}
 .career-why__photo img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -228,10 +237,9 @@
 .career-why__card {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: 18px 20px;
   box-sizing: border-box;
-  overflow: hidden;
 }
 .career-why__n {
   margin: 0;
@@ -246,6 +254,12 @@
   font-weight: 400;
   font-size: 20px;
   line-height: 1.25;
+}
+.career-why__b {
+  margin: 8px 0 0;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
 }
 .career-why__card--1 {
   background: #dea8ff;
@@ -263,7 +277,7 @@
 
 /* —— Behind the scenes —— */
 .career-bts {
-  padding: 48px 0 80px;
+  padding: var(--section-pad-y) 0;
   overflow-x: hidden;
 }
 .career-bts .life-gallery {
@@ -327,7 +341,7 @@
 
 /* —— Interview —— */
 .career-iv {
-  padding: 24px 0 80px;
+  padding: var(--section-pad-y) 0;
 }
 .career-iv__grid {
   display: grid;
@@ -392,7 +406,7 @@
   position: relative;
   isolation: isolate;
   min-height: 280px;
-  padding: 80px var(--career-pad);
+  padding: var(--section-pad-y) var(--career-pad);
   text-align: center;
   overflow: hidden;
   display: flex;
@@ -424,6 +438,7 @@
 @media (max-width: 991px) {
   .career-page {
     --career-pad: 24px;
+    --section-pad-y: var(--section-pad-y-sm);
   }
   .career-why__row,
   .career-why__row--1,
@@ -442,7 +457,8 @@
   .career-why__pair,
   .career-why__pair--rtl {
     width: 100%;
-    height: 180px;
+    height: auto;
+    min-height: 180px;
   }
   .career-why__pair .career-why__photo,
   .career-why__pair--rtl .career-why__photo {
@@ -455,7 +471,8 @@
   }
   .career-why__row--3 .career-why__card,
   .career-why__row--3 .career-why__photo--solo {
-    height: 180px;
+    min-height: 180px;
+    height: auto;
     flex: none;
   }
   .career-iv__grid {
@@ -468,6 +485,7 @@
 @media (max-width: 767px) {
   .career-page {
     --career-pad: 20px;
+    --section-pad-y: var(--section-pad-y-xs);
   }
   .career-iv__grid {
     grid-template-columns: 1fr;

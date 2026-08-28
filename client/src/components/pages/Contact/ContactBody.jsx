@@ -367,7 +367,7 @@ const ContactBody = () => {
                   }}
                 >
                   <img src={phone} alt="" width="17" height="17" />
-                  +91 9372567722
+                  +91 93725 67722
                 </a>
                 <a
                   href="https://mail.google.com/mail/?view=cm&fs=1&to=hello@melangedigital.co"

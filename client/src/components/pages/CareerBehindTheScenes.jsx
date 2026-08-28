@@ -141,7 +141,7 @@ export default function CareerBehindTheScenes() {
             Behind the Scenes at <span className="career-italic">Melange Digital</span>
           </h2>
           <p className="career-lede">
-            Every brand has its unique story, and we're here to help tell it in a way that clicks with your audience. We mix creativity with data-driven strategies to build meaningful connections and stay ahead of trends, delivering results that matter.
+            The work on our site starts with a team that likes being around each other, on set, at trade shows, and sometimes after a shoot wraps. We tell other people's stories for a living. Here's a little of&nbsp;ours.
           </p>
         </div>
       </div>

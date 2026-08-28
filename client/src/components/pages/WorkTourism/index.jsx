@@ -9,7 +9,7 @@ import markup from "./markup.html?raw";
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260828h`,
+  `${ASSET}/css/melange.css?v=20260828u`,
 ];
 const SCRIPT_BASES = [`${ASSET}/js/about.js?v=20260824ap`];
 

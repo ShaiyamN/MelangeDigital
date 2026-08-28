@@ -100,13 +100,13 @@ const Footer = () => (
           </li>
           <li>
             <a
-              href="tel:+917700974123"
+              href="tel:+919372567722"
               onClick={(e) => {
                 e.preventDefault();
-                openPhone("+917700974123");
+                openPhone("+919372567722");
               }}
             >
-              +91 7700974123
+              +91 93725 67722
             </a>
           </li>
         </ul>

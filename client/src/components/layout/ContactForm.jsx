@@ -25,7 +25,7 @@ const ContactForm = () => {
           <p className="flex items-center my-4 md:my-2">
             <img src={phone} alt="phone" className="w-6 h-6" />
             <span className="ml-3 font-semibold">
-              <a href="tel:+919372567722">+91 9372567722</a>
+              <a href="tel:+919372567722">+91 93725 67722</a>
             </span>
           </p>
           <p className="flex items-center">
