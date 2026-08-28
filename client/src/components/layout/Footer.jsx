@@ -4,7 +4,6 @@ import { openEmail, openPhone } from "../../utils/openContactLink";
 import "./footer.css";
 
 const IMG = "/about";
-const ARROW = `${IMG}/arrow-top-right-purple.svg`;
 
 const Footer = () => (
   <footer className="site-foot">
@@ -36,12 +35,6 @@ const Footer = () => (
             <img src={`${IMG}/si-insta.svg`} alt="" />
           </a>
         </div>
-        <Link to="/contact" className="site-foot-cta">
-          <span>Book a Strategy Call</span>
-          <span className="site-foot-cta__icon" aria-hidden="true">
-            <img src={ARROW} width="12" height="12" alt="" />
-          </span>
-        </Link>
       </div>
       <div>
         <h3>Our Services</h3>

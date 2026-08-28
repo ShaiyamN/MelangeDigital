@@ -8119,7 +8119,7 @@ a.svc-project:focus-visible .svc-project__media img {
   padding: 22px 24px 20px;
   background: linear-gradient(90deg, #8200cf, #44006d);
   border: 2px solid rgba(248, 248, 248, 0.34);
-  border-radius: 20px;
+  border-radius: 0 0 20px 20px;
   box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.62);
 }
 .svc-project__title {
