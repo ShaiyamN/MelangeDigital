@@ -43,35 +43,26 @@ Images and videos are stored in Git (not LFS) so Hostinger can build without `gi
 
 ## Hostinger (frontend only)
 
-Use a **Node.js Web App** (not static hosting). Two valid layouts:
-
-### Option A — repo root (recommended)
-
-| Setting | Value |
-| --- | --- |
-| Branch | `staging` |
-| Application root | *(empty — repo root)* |
-| Node.js version | **20.x** (not 22 — safer for this stack) |
-| Build command | `npm run build` |
-| Start command | `npm start` |
-| Entry file | `client/server.cjs` |
-| Output directory | `client/dist` *(if the panel requires one)* |
-
-Root `package.json` runs `node scripts/hostinger-build.cjs`, which installs **with devDependencies** (`vite`, etc.) even when Hostinger sets `NODE_ENV=production`.
-
-### Option B — `client/` as app root
+Use a **Node.js Web App** (not static hosting). Application root must be **`client`**.
 
 | Setting | Value |
 | --- | --- |
 | Branch | `staging` |
 | Application root | `client` |
+| Framework | **Other** (not the Vite static preset) |
 | Node.js version | **20.x** |
-| Build command | `npm install --include=dev && npm run build` |
+| Build command | `npm run build` |
 | Start command | `npm start` |
-| Entry | `server.cjs` |
-| Output directory | `dist` *(if required)* |
+| Entry file | `server.cjs` |
+| Output directory | `dist` *(if the panel requires one)* |
 
-Do **not** set Application root to a path that has no `package.json` — Hostinger’s auto-diagnosis will show null project/build logs.
+Build tools (`vite`, `tailwindcss`, etc.) live in `dependencies` so Hostinger’s production install still has them when `NODE_ENV=production`.
+
+Before every deploy, run from `client/`:
+
+```bash
+npm run verify:hostinger
+```
 
 If PNGs/JPGs return **422** from `hcdn` while SVG/admin images work, redeploy after a clean build (broken LFS pointers). If still 422, disable Hostinger **CDN** for staging.
 
