@@ -75,10 +75,21 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
     iframe.style.border = "none";
     iframe.style.width = "90%";
     iframe.style.height = "1354px";
-    iframe.style.transition = "all 0.5s ease";
+    iframe.style.pointerEvents = "none";
     iframe.setAttribute("aria-label", "Apply Now and Join the Team!");
     iframeRef.current = iframe;
     mount.appendChild(iframe);
+
+    // ponytail: Zoho iframe swallows wheel; click-to-enable like maps. Drop if the form is native.
+    const enable = () => {
+      iframe.style.pointerEvents = "auto";
+    };
+    const disable = () => {
+      iframe.style.pointerEvents = "none";
+    };
+    mount.addEventListener("mousedown", enable);
+    mount.addEventListener("touchstart", enable, { passive: true });
+    mount.addEventListener("mouseleave", disable);
 
     // Handle dynamic height messages from Zoho
     const onMessage = (event) => {
@@ -106,6 +117,9 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
     window.addEventListener("message", onMessage, false);
     return () => {
       window.removeEventListener("message", onMessage, false);
+      mount.removeEventListener("mousedown", enable);
+      mount.removeEventListener("touchstart", enable);
+      mount.removeEventListener("mouseleave", disable);
       if (mount && iframe && mount.contains(iframe)) {
         mount.removeChild(iframe);
       }
@@ -113,7 +127,7 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
   }, [selectedPosition]);
 
   return (
-    <div ref={ref} className="max-w-[1440px] mx-auto" data-lenis-prevent="true">
+    <div ref={ref} className="max-w-[1440px] mx-auto">
 
       {/* "Applying for" banner — shown only when a position is pre-selected */}
       {selectedPosition && (

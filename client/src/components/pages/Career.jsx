@@ -53,13 +53,15 @@ const Career = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollTo = (el) => {
+    if (!el) return;
+    if (window.__melangeLenis) window.__melangeLenis.scrollTo(el, { offset: -80 });
+    else el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollToOpenings = () => {
-    document.getElementById("open-positions")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToForm = () => scrollTo(formRef.current);
+
+  const scrollToOpenings = () => scrollTo(document.getElementById("open-positions"));
 
   return (
     <div>
@@ -186,9 +188,7 @@ const Career = () => {
             loading="lazy"
           />
           <h2 className="career-h2">
-            Your Next Role
-            <br />
-            <span className="career-italic">Starts Here.</span>
+            Your Next Role <span className="career-italic">Starts Here.</span>
           </h2>
           <Cta onClick={scrollToOpenings}>View Open Positions</Cta>
         </section>

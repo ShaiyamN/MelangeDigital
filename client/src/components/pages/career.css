@@ -426,7 +426,8 @@
 }
 .career-wander .career-h2 {
   margin: 0 auto 28px;
-  max-width: 18em;
+  max-width: none;
+  white-space: nowrap;
   color: #000;
   font-size: clamp(32px, 4vw, 55px);
   line-height: 1.1;
@@ -439,6 +440,9 @@
   .career-page {
     --career-pad: 24px;
     --section-pad-y: var(--section-pad-y-sm);
+  }
+  .career-wander .career-h2 {
+    white-space: normal;
   }
   .career-why__row,
   .career-why__row--1,

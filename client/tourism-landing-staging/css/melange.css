@@ -7850,6 +7850,11 @@ a.leadform-contact-item:hover {
   font-size: clamp(30px, 3.8vw, 42px) !important;
   line-height: 1.12 !important;
 }
+.home-prefooter-heading .span-txt {
+  font-family: var(--melange-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+}
 .home-prefooter-btn {
   margin-top: 4px !important;
 }
@@ -9775,6 +9780,12 @@ a.svc-project:focus-visible .svc-project__media img {
   margin-bottom: 28px;
 }
 .wrk-page .about-wander .about-h2 {
-  max-width: 18em;
+  max-width: none;
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .wrk-page .about-wander .about-h2 {
+    white-space: normal;
+  }
 }
 

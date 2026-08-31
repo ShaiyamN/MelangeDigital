@@ -7,7 +7,7 @@ const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260828x`,
+  `${ASSET}/css/melange.css?v=20260831a`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
