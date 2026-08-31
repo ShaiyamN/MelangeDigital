@@ -2939,7 +2939,7 @@ box-sizing:border-box;
 }
 
 .home-awards-section .award-card h3{
-    font-family:var(--melange-display);
+    font-family:"Lato",sans-serif;
     font-size: var(--type-title, 22px);
     line-height:1.32;
     margin:0;
@@ -2991,7 +2991,7 @@ box-sizing:border-box;
 }
 
 .award-card h3{
-    font-family: var(--melange-display);;
+    font-family: "Lato", sans-serif;
     font-size: var(--type-title, 22px);
     line-height:1.3;
     margin:0 0 18px;
@@ -3072,7 +3072,7 @@ box-sizing:border-box;
   --melange-lilac: #ffffff;
   --melange-display: "Alan Sans", sans-serif;
   --melange-body: "Poppins", sans-serif;
-  --melange-serif: "Libre Baskerville", "Baskervville", serif;
+  --melange-serif: "Baskervville", "Libre Baskerville", serif;
   --melange-italic: "Alan Sans", sans-serif;
   --violet-100: #6E1EEE;
   --violet-20: #6E1EEE33;
@@ -3141,7 +3141,6 @@ body {
 .network-stat-label,
 .network-geo,
 .data-filter-title,
-.text-block-30,
 .text-block-34,
 .text-block-35,
 .text-block-36,
@@ -3524,7 +3523,7 @@ input.zf-submitColor,
 /* —— Hero (Figma: left copy + right destination visual) —— */
 #home {
   padding: var(--hero-pad-top) 0 var(--hero-pad-bottom) !important;
-  overflow: hidden;
+  overflow: visible;
 }
 
 #home .container-main {
@@ -3542,7 +3541,8 @@ input.zf-submitColor,
 .hero-figma {
   display: block;
   position: relative;
-  min-height: clamp(500px, 50vw, 700px);
+  min-height: clamp(480px, 38vw, 580px);
+  padding-bottom: clamp(56px, 7vw, 88px);
   width: 100%;
   text-align: left;
 }
@@ -3550,7 +3550,7 @@ input.zf-submitColor,
 .hero-figma__content {
   position: relative;
   text-align: left;
-  max-width: min(900px, 64%);
+  max-width: min(560px, 44%);
   padding-top: clamp(18px, 3vw, 46px);
   z-index: 3;
 }
@@ -3573,13 +3573,9 @@ input.zf-submitColor,
 }
 
 #home .hero-heading-h1 {
-  /* FIX: Figma wraps the headline to 4 lines ("India doesn't book /
-     destinations. / It books the people / it trusts."). Sized so each sentence
-     breaks into two lines like the design, and constrained so the text span
-     (~620px) matches the Figma headline width. */
   font-size: clamp(40px, 4.8vw, 66px) !important;
-  line-height: 1.1 !important;
-  max-width: 600px;
+  line-height: 1.08 !important;
+  max-width: 560px;
   color: var(--melange-ink) !important;
   margin: 0 0 22px !important;
   text-align: left !important;
@@ -3597,18 +3593,18 @@ input.zf-submitColor,
 }
 
 #home .hero-heading-h1 .hero-accent {
-  font-family: var(--melange-display) !important;
-  font-style: normal !important;
-  font-weight: 600 !important;
+  font-family: var(--melange-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
   color: var(--melange-highlight) !important;
   -webkit-text-fill-color: var(--melange-highlight) !important;
   white-space: nowrap;
 }
 
 #home .para-txt {
-  max-width: 430px;
+  max-width: 460px;
   font-size: 15px !important;
-  line-height: 1.5 !important;
+  line-height: 1.55 !important;
   color: var(--melange-ink) !important;
   margin: 0 0 30px 0 !important;
   margin-left: 0 !important;
@@ -3734,22 +3730,17 @@ input.zf-submitColor,
   margin: 0 !important;
 }
 
-/* FIX: image is now the Figma overlay — absolute, filling the hero height with a
-   small top/bottom bleed and running off the right edge (Figma image bleeds
-   ~14% past the right). Left edge ~12% so the faded portion sits under the copy. */
+/* Right-side globe/skyline: Figma 334:1076 — IMG at left 36%, ~69% width, full hero height, bleed right. */
 .hero-figma__visual {
   position: absolute;
-  top: -24px;
-  bottom: 0; /* was -34px — pull up so less of the image bottom shows */
-  right: -6%;
-  width: 90%;
-  border-radius: 0;
+  top: 0;
+  bottom: 0;
+  left: 36%;
+  right: calc(50% - 50vw);
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
 }
-
-/* Hero photo: soft left fade for headline; light right-edge feather only */
 .hero-figma__visual img {
   position: absolute;
   inset: 0;
@@ -3757,18 +3748,31 @@ input.zf-submitColor,
   height: 100%;
   max-width: none;
   object-fit: cover;
-  /* Bias up so the bottom of the photo is cropped a bit more */
-  object-position: 62% 32%;
-  transform: none;
-  transform-origin: center center;
-  -webkit-mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 18%, #000 42%, #000 94%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 18%, #000 78%, transparent 100%);
-  mask-image:
-    linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.35) 18%, #000 42%, #000 94%, transparent 100%),
-    linear-gradient(180deg, transparent 0%, #000 18%, #000 78%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
+  object-position: right bottom;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 10%,
+    rgba(0, 0, 0, 0.65) 22%,
+    #000 36%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 10%,
+    rgba(0, 0, 0, 0.65) 22%,
+    #000 36%,
+    #000 100%
+  );
+}
+.hero-figma__visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #fff 0%, rgba(255, 255, 255, 0.85) 6%, transparent 18%);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .hero-figma__glow {
@@ -3786,12 +3790,16 @@ br.hero-br-desktop {
 }
 
 @media (max-width: 991px) {
+  #home {
+    overflow: hidden;
+  }
   /* FIX: overlay only works with room to bleed — on tablet/mobile revert to a
      simple stacked layout (image above copy, no absolute positioning). */
   .hero-figma {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    padding-bottom: 0;
     text-align: center;
   }
   .hero-figma__content {
@@ -3855,12 +3863,13 @@ br.hero-br-desktop {
   .hero-figma__visual {
     position: relative;
     order: 1;
+    inset: auto;
     top: 0;
-    bottom: 0;
+    left: 0;
     right: 0;
     width: 100%;
-    min-height: 280px;
-    aspect-ratio: 16 / 10;
+    min-height: 0;
+    aspect-ratio: 1024 / 576;
     border-radius: 20px;
     overflow: hidden;
     margin-bottom: 24px;
@@ -3869,8 +3878,12 @@ br.hero-br-desktop {
     mask-image: none;
     -webkit-mask-image: none;
     border-radius: 20px;
-    object-position: 60% 40%;
+    object-fit: cover;
+    object-position: 62% 55%;
     transform: none;
+  }
+  .hero-figma__visual::after {
+    display: none;
   }
   #home {
     padding: calc(var(--nav-sticky-offset, 56px) + 16px) 0 40px !important;
@@ -4407,7 +4420,7 @@ br.hero-br-desktop {
 
 .caas-step h3 {
   color: var(--melange-ink) !important;
-  font-family: var(--melange-display) !important;
+  font-family: "Lato", sans-serif !important;
   font-size: var(--type-title, 22px) !important;
   letter-spacing: 0.08em;
   text-transform: none;
@@ -4449,7 +4462,7 @@ br.hero-br-desktop {
 }
 
 .heading-25 {
-  font-family: var(--melange-display) !important;
+  font-family: "Lato", sans-serif !important;
   color: var(--melange-ink) !important;
   white-space: nowrap;
 }
@@ -4619,7 +4632,7 @@ br.hero-br-desktop {
 /* dark content panel below the image */
 .div-block-214 > .work-card-link .heading-7 {
   color: #fff !important;
-  font-family: var(--melange-display) !important;
+  font-family: "Lato", sans-serif !important;
   margin: 10px 22px 6px !important;
   font-size: var(--type-title, 22px) !important;
   line-height: 1.2 !important;
@@ -5013,7 +5026,7 @@ br.hero-br-desktop {
 }
 
 .home-awards-section .award-card h3 {
-  font-family: var(--melange-display) !important;
+  font-family: "Lato", sans-serif !important;
   font-size: var(--type-title, 22px) !important;
   line-height: 1.32 !important;
   color: var(--melange-ink) !important;
@@ -6561,7 +6574,6 @@ body {
 .navigation-link,
 .navigation-link.for-footer,
 .text-block-28,
-.text-block-30,
 .text-block-34,
 .text-block-35,
 .text-block-36,
@@ -7901,10 +7913,7 @@ a.leadform-contact-item:hover {
    Services page (Figma 226:1744) — scoped to .svc-page
    ========================================================================== */
 .svc-page {
-  background: #fff;
-  color: var(--melange-ink);
   overflow-x: clip;
-  --about-section: var(--section-pad-y);
 }
 .svc-wrap {
   max-width: 1160px;
@@ -7914,7 +7923,7 @@ a.leadform-contact-item:hover {
 .svc-accent {
   color: var(--melange-highlight);
 }
-.svc-hero .hero-btn-icon,
+.svc-page .about-hero .hero-btn-icon,
 .svc-cta-row .hero-btn-icon,
 .svc-wander .hero-btn-icon {
   background: transparent !important;
@@ -7923,7 +7932,7 @@ a.leadform-contact-item:hover {
   flex: 0 0 36px !important;
   overflow: hidden;
 }
-.svc-hero .hero-btn-icon img,
+.svc-page .about-hero .hero-btn-icon img,
 .svc-cta-row .hero-btn-icon img,
 .svc-wander .hero-btn-icon img {
   width: 100%;
@@ -7931,93 +7940,14 @@ a.leadform-contact-item:hover {
   object-fit: contain;
   display: block;
 }
-.svc-page .button.hero-download-btn .text-block-6 {
+.abt-page .button.hero-download-btn .text-block-6,
+.svc-page .button.hero-download-btn .text-block-6,
+.wrk-page .button.hero-download-btn .text-block-6 {
   font-family: "Lato", var(--melange-body);
   font-weight: 500;
   font-size: 16px;
   white-space: nowrap;
 }
-
-/* Hero */
-.svc-hero {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  box-sizing: border-box;
-  min-height: min(528px, calc(100dvh - var(--nav-sticky-offset, 85px)));
-  padding: 24px 0 36px;
-  overflow: hidden;
-  border-bottom: 1px solid rgba(15, 5, 47, 0.12);
-}
-.svc-hero__content {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  max-width: 1160px;
-  padding: 0 24px 0 0;
-}
-.svc-eyebrow {
-  font-family: "Lato", sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 30px;
-  color: #c671f9;
-  text-transform: capitalize;
-  margin: 0 0 12px;
-}
-.svc-hero__title {
-  font-family: var(--melange-display) !important;
-  font-weight: 600;
-  font-size: 65px;
-  line-height: 70px;
-  letter-spacing: -0.02em;
-  color: #2b2b2b;
-  margin: 0 0 16px;
-}
-.svc-hero__body {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 21px;
-  color: #0f052f;
-  max-width: 585px;
-  margin: 0 0 36px;
-}
-.svc-hero__visual {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
-}
-.svc-hero__photo {
-  position: absolute;
-  left: 42%;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: auto;
-  overflow: hidden;
-}
-.svc-hero__photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, #fff 0%, transparent 22%),
-    linear-gradient(to bottom, transparent 80%, #fff 100%);
-}
-.svc-hero__shot {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: right center;
-}
-/* Service blocks */
 .svc-block {
   padding: var(--about-section, var(--section-pad-y)) 0;
   scroll-margin-top: var(--nav-sticky-offset, 85px);
@@ -8223,7 +8153,7 @@ a.svc-project:focus-visible .svc-project__media img {
   display: none;
 }
 .svc-faq__q {
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Lato", sans-serif !important;
   font-weight: 500 !important;
   font-size: 16px;
   line-height: 1.3;
@@ -8309,10 +8239,6 @@ a.svc-project:focus-visible .svc-project__media img {
   .svc-tiles {
     gap: 20px;
   }
-  .svc-hero__title {
-    font-size: 48px;
-    line-height: 54px;
-  }
   .svc-block__title,
   .svc-faq__title {
     font-size: 40px;
@@ -8325,64 +8251,6 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 
 @media (max-width: 767px) {
-  .svc-hero {
-    min-height: 0;
-    padding: 24px 0 40px;
-    align-items: stretch;
-  }
-  .svc-hero__content {
-    max-width: none;
-    padding: 8px 24px 0;
-  }
-  .svc-hero__title {
-    font-size: 36px;
-    line-height: 42px;
-  }
-  .svc-hero__body {
-    font-size: 16px;
-    line-height: 22px;
-  }
-  .svc-br-desktop {
-    display: none;
-  }
-  .svc-hero__visual {
-    position: relative;
-    flex: none;
-    width: 100%;
-    min-height: 0;
-    height: auto;
-    margin: 24px 0 0;
-    overflow: hidden;
-  }
-  .svc-hero__photo {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: auto;
-    top: auto;
-    overflow: hidden;
-  }
-  .svc-hero__photo::after {
-    display: none;
-  }
-  .svc-hero__shot {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    object-position: center top;
-  }
-  .svc-hero {
-    display: flex;
-    flex-direction: column;
-  }
-  .svc-hero__content {
-    order: 0;
-  }
-  .svc-hero__visual {
-    order: 1;
-  }
   .svc-block__title,
   .svc-faq__title {
     font-size: 32px;
@@ -8460,6 +8328,7 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 
 .abt-page,
+.svc-page,
 .wrk-page {
   --melange-ink: #0f0330;
   --melange-highlight: #c671f9;
@@ -8493,7 +8362,9 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 
 .abt-page a:focus-visible,
-.abt-page button:focus-visible {
+.abt-page button:focus-visible,
+.svc-page a:focus-visible,
+.svc-page button:focus-visible {
   outline: 2px solid var(--melange-accent);
   outline-offset: 3px;
 }
@@ -8612,102 +8483,208 @@ a.svc-project:focus-visible .svc-project__media img {
   }
 }
 
-/* —— Hero: stacked until lg, then split with right-bleed collage —— */
+/* —— About hero: editorial type, no photograph —— */
 .about-hero {
   position: relative;
-  padding: 20px 0 var(--about-section);
+  padding: 40px 0 0;
   overflow: hidden;
+}
+.about-hero__backdrop {
+  display: none;
 }
 .about-hero__inner {
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding-top: 8px;
+  padding-bottom: 36px;
 }
 .about-hero__copy {
-  max-width: 40rem;
+  max-width: none;
+  min-width: 0;
 }
 .about-hero__eyebrow {
-  margin: 0 0 16px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--melange-highlight);
+  margin: 0 0 18px;
+  font-family: var(--melange-display);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--melange-accent);
+}
+.about-hero__title {
+  margin: 0;
+  font-family: var(--melange-display) !important;
+  font-size: clamp(40px, 8vw, 56px);
+  font-weight: 700 !important;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--melange-ink) !important;
+  text-wrap: unset;
+}
+.about-hero__rule {
+  display: block;
+  width: 72px;
+  height: 5px;
+  margin: 18px 0 22px;
+  background: var(--melange-accent);
+  border-radius: 2px;
 }
 .about-hero__lede {
-  margin: 20px 0 28px;
-  max-width: 36rem;
+  margin: 0 0 28px;
+  max-width: 28rem;
+  font-family: var(--melange-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(15, 3, 48, 0.62);
+}
+.about-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 28px;
+}
+.about-hero__work {
+  font-family: "Lato", var(--melange-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--melange-ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+.about-hero__work:hover {
+  color: var(--melange-accent);
+}
+.about-hero__mark {
+  display: none;
+  margin: 0;
+  font-family: var(--melange-display);
+  font-size: clamp(22px, 2vw, 32px);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--melange-ink);
+}
+.about-hero__mark span {
+  display: block;
+}
+.about-hero__mark-em {
+  color: var(--melange-accent);
 }
 .about-hero__stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px 24px;
-  margin: 0 0 28px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px 28px;
+  margin: 4px 0 0;
   padding: 0;
   list-style: none;
-  max-width: 28rem;
+  border: 0;
 }
 .about-hero__stats li {
-  text-align: left;
   min-width: 0;
+  flex: 0 1 auto;
+  max-width: 11rem;
 }
 .about-hero__stats strong {
   display: block;
   font-family: var(--melange-display);
-  font-size: clamp(28px, 3vw, 36px);
-  font-weight: 600;
-  line-height: 1.1;
+  font-size: clamp(36px, 6vw, 48px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--melange-accent);
   font-variant-numeric: tabular-nums;
 }
 .about-hero__stats span {
   display: block;
-  margin-top: 4px;
-  font-size: 13px;
+  margin-top: 8px;
+  font-family: var(--melange-display);
+  font-size: 11px;
+  font-weight: 700;
   line-height: 1.3;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--melange-ink);
 }
-.about-hero__visual {
-  margin-top: 12px;
-  height: min(58vw, 380px);
-}
-.about-hero__visual img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+
+@media (min-width: 768px) {
+  .about-hero {
+    padding-top: 48px;
+  }
+  .about-hero__title {
+    font-size: clamp(52px, 7vw, 72px);
+  }
+  .about-hero__stats {
+    gap: 12px 32px;
+    margin-top: 8px;
+  }
 }
 
 @media (min-width: 1024px) {
-  .about-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-    align-items: start;
-    min-height: clamp(520px, 50vw, 640px);
-    padding: 24px 0 var(--about-section);
+  .about-hero__backdrop {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    position: absolute;
+    top: 4%;
+    right: calc((100% - min(var(--about-max, 1400px), 100%)) / 2);
+    width: calc(min(var(--about-max, 1400px), 100%) * 0.52);
+    height: 85%;
+    padding-right: var(--about-pad, 40px);
+    box-sizing: border-box;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    font-family: var(--melange-display);
+    font-size: clamp(160px, 18vw, 280px);
+    font-weight: 800;
+    line-height: 0.78;
+    letter-spacing: -0.05em;
+    text-align: right;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: rgba(15, 3, 48, 0.028);
+    user-select: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 22%, #000 100%);
+  }
+  .about-hero__backdrop span {
+    display: block;
   }
   .about-hero__inner {
-    width: auto;
+    padding-top: 16px;
+    padding-bottom: 40px;
+  }
+  .about-hero__copy {
     max-width: none;
+  }
+  .about-hero__title {
+    font-size: clamp(64px, 6.4vw, 84px);
+  }
+  .about-hero__mark {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    right: calc((100% - min(var(--about-max, 1400px), 100%)) / 2 + var(--about-pad, 40px));
+    bottom: 22%;
     margin: 0;
-    padding-left: max(var(--about-pad), calc((100% - var(--about-max)) / 2 + var(--about-pad)));
-    padding-right: 16px;
+    text-align: right;
   }
-  .about-hero__stats {
-    grid-template-columns: repeat(3, minmax(0, max-content));
-    gap: 8px 32px;
-  }
-  .about-hero__stats span {
-    min-height: 0;
-  }
-  .about-hero__visual {
-    margin-top: 0;
-    height: 100%;
-    min-height: clamp(520px, 48vw, 620px);
-    pointer-events: none;
-  }
-  .about-hero__visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: right center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero__work {
+    transition: none;
   }
 }
 
@@ -9446,7 +9423,7 @@ a.svc-project:focus-visible .svc-project__media img {
 .abt-page .about-lead__card h3 {
   display: block;
   margin-top: 16px;
-  font-family: var(--melange-display);
+  font-family: "Lato", sans-serif;
   font-size: 22px;
   font-weight: 500;
   line-height: 1.3;
@@ -9530,7 +9507,7 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 .abt-page .copy-band__note .heading-25 {
   margin-bottom: 8px;
-  font-family: var(--melange-display) !important;
+  font-family: "Lato", sans-serif !important;
   font-weight: 600;
   font-size: 22px;
   line-height: 1.3;
@@ -9551,11 +9528,6 @@ a.svc-project:focus-visible .svc-project__media img {
   .abt-page .copy-band__grid {
     grid-template-columns: 1fr !important;
   }
-}
-
-.about-hero__eyebrow a {
-  color: inherit;
-  text-decoration: underline;
 }
 
 @media (min-width: 768px) {
@@ -9643,8 +9615,9 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 
 .abt-page .about-hero .hero-btn-icon,
+.svc-page .about-hero .hero-btn-icon,
 .abt-page .about-wander .hero-btn-icon,
-.wrk-page .wrk-hero .hero-btn-icon,
+.wrk-page .about-hero .hero-btn-icon,
 .wrk-page .about-wander .hero-btn-icon {
   background: transparent !important;
   width: 36px !important;
@@ -9653,23 +9626,18 @@ a.svc-project:focus-visible .svc-project__media img {
   overflow: hidden;
 }
 .abt-page .about-hero .hero-btn-icon img,
+.svc-page .about-hero .hero-btn-icon img,
 .abt-page .about-wander .hero-btn-icon img,
-.wrk-page .wrk-hero .hero-btn-icon img,
+.wrk-page .about-hero .hero-btn-icon img,
 .wrk-page .about-wander .hero-btn-icon img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
 }
-.abt-page .button.hero-download-btn .text-block-6,
-.wrk-page .button.hero-download-btn .text-block-6 {
-  font-family: "Lato", var(--melange-body);
-  font-weight: 500;
-  font-size: 16px;
-  white-space: nowrap;
-}
+
 .abt-page .about-lead__card h3 {
-  font-family: var(--melange-display) !important;
+  font-family: "Lato", sans-serif !important;
   font-weight: 500;
 }
 .abt-page .report-promo-heading {
@@ -9701,35 +9669,6 @@ a.svc-project:focus-visible .svc-project__media img {
 .wrk-page button:focus-visible {
   outline: 2px solid var(--melange-accent);
   outline-offset: 3px;
-}
-.wrk-hero {
-  padding: var(--about-section) 0;
-}
-.wrk-hero__title {
-  font-family: var(--melange-display) !important;
-  font-weight: 600;
-  font-size: clamp(36px, 4.6vw, 65px);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: #2b2b2b;
-  margin: 0 0 16px;
-  max-width: 12em;
-}
-.wrk-hero .svc-accent,
-.wrk-page .about-report .about-accent {
-  font-family: var(--melange-serif) !important;
-  font-style: italic;
-  font-weight: 400;
-  color: var(--melange-highlight);
-}
-.wrk-hero__body {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 1.35;
-  color: #0f052f;
-  max-width: 585px;
-  margin: 0 0 36px;
 }
 .wrk-grid-section {
   padding: 0 0 var(--about-section);
@@ -9789,5 +9728,28 @@ a.svc-project:focus-visible .svc-project__media img {
   .wrk-page .about-wander .about-h2 {
     white-space: normal;
   }
+}
+
+/* H1 Alan Sans + Baskervville italic accents. H3 Lato (wins over older display locks). */
+.hero-heading-h1 .hero-accent,
+#home .hero-heading-h1 .hero-accent,
+.about-hero__title .about-accent {
+  font-family: var(--melange-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+}
+h3,
+h3.heading-25,
+h3.heading-7,
+.caas-step h3,
+.award-card h3,
+.home-awards-section .award-card h3,
+h3.text-block-30,
+.text-block-30,
+.report-promo-card__title,
+.svc-faq__q,
+.abt-page .about-lead__card h3,
+.div-block-214 > .work-card-link .heading-7 {
+  font-family: "Lato", sans-serif !important;
 }
 
