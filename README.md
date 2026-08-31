@@ -51,12 +51,13 @@ Use a **Node.js Web App** (not static hosting). Two valid layouts:
 | --- | --- |
 | Branch | `staging` |
 | Application root | *(empty — repo root)* |
-| Node.js version | **20.x** |
+| Node.js version | **20.x** (not 22 — safer for this stack) |
 | Build command | `npm run build` |
 | Start command | `npm start` |
-| Output / entry | `client/server.cjs` serves `client/dist` |
+| Entry file | `client/server.cjs` |
+| Output directory | `client/dist` *(if the panel requires one)* |
 
-Root `package.json` runs `npm ci --prefix client && npm run build --prefix client`.
+Root `package.json` runs `node scripts/hostinger-build.cjs`, which installs **with devDependencies** (`vite`, etc.) even when Hostinger sets `NODE_ENV=production`.
 
 ### Option B — `client/` as app root
 
@@ -65,13 +66,12 @@ Root `package.json` runs `npm ci --prefix client && npm run build --prefix clien
 | Branch | `staging` |
 | Application root | `client` |
 | Node.js version | **20.x** |
-| Build command | `npm run build` |
+| Build command | `npm install --include=dev && npm run build` |
 | Start command | `npm start` |
 | Entry | `server.cjs` |
+| Output directory | `dist` *(if required)* |
 
 Do **not** set Application root to a path that has no `package.json` — Hostinger’s auto-diagnosis will show null project/build logs.
-
-Install-only deploys (no Build command): set env `HOSTINGER_INSTALL_ONLY=1` so `postinstall` builds `dist/`. When a Build command is configured, leave that unset (default) to avoid running Vite twice.
 
 If PNGs/JPGs return **422** from `hcdn` while SVG/admin images work, redeploy after a clean build (broken LFS pointers). If still 422, disable Hostinger **CDN** for staging.
 
