@@ -9673,9 +9673,6 @@ a.svc-project:focus-visible .svc-project__media img {
 .wrk-grid-section {
   padding: 0 0 var(--about-section);
 }
-.wrk-page .svc-project__media {
-  box-shadow: none;
-}
 .wrk-page .svc-project__media img {
   object-fit: cover;
   object-position: center;
@@ -9684,17 +9681,6 @@ a.svc-project:focus-visible .svc-project__media img {
 .wrk-page a.svc-project:hover .svc-project__media img,
 .wrk-page a.svc-project:focus-visible .svc-project__media img {
   transform: scale(1.14);
-}
-.wrk-page .svc-project__bar {
-  background: #fff;
-  border-color: rgba(15, 3, 48, 0.12);
-}
-.wrk-page .svc-project__title,
-.wrk-page .svc-project__caption {
-  color: #39107b;
-}
-.wrk-page .svc-project__caption {
-  color: rgba(15, 5, 47, 0.72);
 }
 .wrk-page .about-report {
   --report-header-gap: 40px;
