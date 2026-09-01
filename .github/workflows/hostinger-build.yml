@@ -1,0 +1,45 @@
+# Builds client/dist on GitHub (enough RAM) and publishes hostinger-dist for Hostinger.
+# Hostinger should deploy hostinger-dist with build command: node scripts/verify-dist.cjs
+name: Hostinger prebuild
+
+on:
+  push:
+    branches: [staging]
+    paths-ignore:
+      - "client/dist/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: client/.nvmrc
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - name: Install and build
+        run: npm ci --no-audit --no-fund --legacy-peer-deps && npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Publish hostinger-dist branch
+        working-directory: .
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B hostinger-dist
+          git add -A
+          git add -f client/dist
+          git commit -m "build: prebuilt dist for Hostinger (${GITHUB_SHA::7})" --allow-empty
+          git push origin hostinger-dist --force

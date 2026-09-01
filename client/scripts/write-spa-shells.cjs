@@ -27,3 +27,4 @@ for (const route of routes) {
 }
 
 console.log(`write-spa-shells: ${routes.length} admin shells`);
+console.log(`hostinger-build: ok (${index})`);
