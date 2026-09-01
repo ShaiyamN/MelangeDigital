@@ -36,9 +36,12 @@ if (!fs.existsSync(viteBin)) {
 }
 console.log("ok: vite present after production install");
 
-process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=3072"]
-  .filter(Boolean)
-  .join(" ");
+// Match run-vite-build.cjs — do not simulate a 3GB heap on shared hosting.
+if (!process.env.NODE_OPTIONS?.includes("max-old-space-size")) {
+  process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=768"]
+    .filter(Boolean)
+    .join(" ");
+}
 
 run("npm run build", { NODE_ENV: "production" });
 

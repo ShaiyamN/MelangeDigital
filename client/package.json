@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "node scripts/sync-tourism.mjs && vite",
-    "build": "node scripts/hostinger-preflight.cjs && node scripts/assert-real-assets.cjs && node scripts/check-imports.cjs && node scripts/sync-tourism.mjs && node scripts/generate-sitemap.mjs && vite build && node scripts/write-spa-shells.cjs",
+    "build": "node scripts/hostinger-preflight.cjs && node scripts/assert-real-assets.cjs && node scripts/check-imports.cjs && node scripts/sync-tourism.mjs && node scripts/generate-sitemap.mjs && node scripts/run-vite-build.cjs && node scripts/write-spa-shells.cjs",
     "build:prerender": "npm run build && npm run prerender",
     "verify:hostinger": "node scripts/verify-hostinger-build.cjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
@@ -57,9 +57,7 @@
     "eslint-plugin-react-refresh": "^0.3.4",
     "serve": "^14.2.5",
     "topojson-client": "^3.1.0",
-    "world-atlas": "^2.0.2"
-  },
-  "optionalDependencies": {
+    "world-atlas": "^2.0.2",
     "puppeteer": "^24.37.5"
   },
   "overrides": {

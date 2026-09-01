@@ -116,5 +116,10 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    // ponytail: Hostinger shared builds OOM above ~512MB heap; skip gzip size pass
+    reportCompressedSize: false,
+    rollupOptions: {
+      maxParallelFileOps: 2,
+    },
   },
 });

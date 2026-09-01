@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const os = require("os");
 
 const root = path.join(__dirname, "..");
 let fail = 0;
@@ -12,8 +13,14 @@ function bad(msg) {
   fail++;
 }
 
+const freeMb = Math.round(os.freemem() / (1024 * 1024));
+const totalMb = Math.round(os.totalmem() / (1024 * 1024));
 ok(`node ${process.version}`);
 ok(`cwd ${process.cwd()}`);
+ok(`mem ${freeMb}MB free / ${totalMb}MB total`);
+if (totalMb < 1024) {
+  console.warn(`WARN: low RAM (${totalMb}MB) — Vite needs ~768MB heap; may OOM on shared hosting`);
+}
 
 for (const rel of [
   "package.json",

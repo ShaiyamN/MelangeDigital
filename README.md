@@ -49,14 +49,16 @@ Use a **Node.js Web App** (not static hosting). Application root must be **`clie
 | --- | --- |
 | Branch | `staging` |
 | Application root | `client` |
-| Framework | **Other** (not the Vite static preset) |
+| Framework | **Express** or **Other** (not the Vite static preset) |
 | Node.js version | **20.x** |
-| Build command | `npm run build` |
+| Build command | `npm run build` *(Hostinger already runs `npm install` — do not add a second install here)* |
 | Start command | `npm start` |
 | Entry file | `server.cjs` |
-| Output directory | `dist` *(if the panel requires one)* |
+| Output directory | `dist` *(not `client/dist` — app root is already `client`)* |
 
-Build tools (`vite`, `tailwindcss`, etc.) live in `dependencies` so Hostinger’s production install still has them when `NODE_ENV=production`.
+Build tools (`vite`, `tailwindcss`, etc.) live in `dependencies` so Hostinger’s production install still has them when `NODE_ENV=production`. Vite is capped at **768MB heap** during build (`scripts/run-vite-build.cjs`) — shared plans under 1GB RAM may still OOM; use Business/Cloud (2GB+) or build locally and redeploy.
+
+**If deploy fails with no useful log:** Deployments → failed build → **Build logs**. Look for the last `ok:` / `FAIL:` / `run-vite-build:` line. Common misconfigurations: wrong app root, build command includes `npm install`, output directory set to `client/dist`, or Framework preset set to Vite static (skips `server.cjs`).
 
 Before every deploy, run from `client/`:
 

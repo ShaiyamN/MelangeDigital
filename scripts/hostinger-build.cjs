@@ -20,7 +20,7 @@ if (!fs.existsSync(path.join(client, "package.json"))) {
   process.exit(1);
 }
 
-process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=3072"]
+process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=768"]
   .filter(Boolean)
   .join(" ");
 
