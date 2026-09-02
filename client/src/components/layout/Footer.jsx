@@ -40,10 +40,10 @@ const Footer = () => (
         <h3>Our Services</h3>
         <ul>
           <li>
-            <Link to="/services/influencer-marketing">Influencer &amp; Celebrity Marketing</Link>
+            <Link to="/services/influencer-marketing">Influencer Marketing</Link>
           </li>
           <li>
-            <Link to="/services/pr-and-outreach">Branded Content &amp; IP</Link>
+            <Link to="/services/pr-and-outreach">Branded Content &amp; IPs</Link>
           </li>
           <li>
             <Link to="/services/immersive-brand-storytelling">Experiential Marketing</Link>

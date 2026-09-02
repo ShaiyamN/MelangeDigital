@@ -32,13 +32,13 @@ for (const rel of [
   else bad(`missing ${rel}`);
 }
 
-const hero = path.join(root, "public/destination-marketing-agency/images/figma/hero_banner.jpg");
+const hero = path.join(root, "public/destination-marketing-agency/images/figma/home-page.png");
 if (fs.existsSync(hero)) {
   const mb = fs.statSync(hero).size / (1024 * 1024);
-  ok(`hero_banner.jpg ${mb.toFixed(2)} MB`);
-  if (mb > 5) bad(`hero_banner.jpg too large for deploy (${mb.toFixed(1)} MB)`);
+  ok(`home-page.png ${mb.toFixed(2)} MB`);
+  if (mb > 5) bad(`home-page.png too large for deploy (${mb.toFixed(1)} MB)`);
 } else {
-  bad("missing public/destination-marketing-agency/images/figma/hero_banner.jpg");
+  bad("missing public/destination-marketing-agency/images/figma/home-page.png");
 }
 
 for (const rel of [

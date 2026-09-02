@@ -96,7 +96,7 @@ const Services = () => {
               name: "Tourism marketing services",
               itemListElement: [
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "Influencer & Celebrity Marketing" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Branded Content & IP" } },
+                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Branded Content & IPs" } },
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "Experiential Marketing" } },
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "FAM Trips + PR" } },
               ],
