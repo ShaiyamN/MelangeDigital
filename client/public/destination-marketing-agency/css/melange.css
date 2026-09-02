@@ -7835,6 +7835,37 @@ a.leadform-contact-item:hover {
 
 
 /* —— Wireframe: Pre-footer CTA —— */
+/* Report access: stretch white form card to full lavender shell height */
+@media (min-width: 900px) {
+  .home-report-access-section .report-access-shell {
+    align-items: stretch !important;
+  }
+  .home-report-access-section .report-access-form,
+  .home-report-access-section .report-leadform-root,
+  .home-report-access-section .report-leadform-card,
+  .home-report-access-section .report-leadform-card .contact_form,
+  .home-report-access-section .report-leadform-card .w-form,
+  .home-report-access-section .report-leadform-card .zf-backgroundBg,
+  .home-report-access-section .report-leadform-card .zf-templateWidth,
+  .home-report-access-section .report-leadform-card #report-lead-form,
+  .home-report-access-section .report-leadform-card .zf-templateWrapper {
+    height: 100% !important;
+    min-height: 100% !important;
+    align-self: stretch !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+  }
+  .home-report-access-section .report-leadform-card .zf-templateWrapper > ul:last-child,
+  .home-report-access-section .report-leadform-card .zf-fmFooter {
+    margin-top: auto !important;
+  }
+  .home-report-access-section .report-leadform-fields {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* —— Wireframe: Pre-footer CTA —— */
 .home-prefooter-cta {
   padding: clamp(32px, 4vw, 48px) 0 clamp(40px, 5vw, 56px);
   text-align: center;

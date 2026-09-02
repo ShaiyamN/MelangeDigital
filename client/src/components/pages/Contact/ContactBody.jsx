@@ -97,7 +97,9 @@ function wrapZohoSubmit() {
   const wrapped = function zf_ValidateAndSubmitContact() {
     const ok = orig();
     if (!ok) return false;
-    const redirect = document.querySelector('input[name="zf_redirect_url"]');
+    const redirect = document.querySelector(
+      '.contact-page input[name="zf_redirect_url"]',
+    );
     if (redirect) {
       redirect.value = window.location.origin + "/contact#thanks";
     }

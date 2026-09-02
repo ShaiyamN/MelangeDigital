@@ -1,108 +1,89 @@
 import { useEffect, useRef } from "react";
-import { REPORT_FORM_IFRAME_SRC, REPORT_FORM_PERMA } from "../../constants/reportLead";
+import { REPORT_DOWNLOAD_PATH } from "../../constants/reportLead";
+import formMarkup from "./report-zoho-form.html?raw";
 
-const appendUtmParams = (src) => {
-  try {
-    if (typeof window.ZFAdvLead !== "undefined" && typeof window.zfutm_zfAdvLead !== "undefined") {
-      for (let i = 0; i < window.ZFAdvLead.utmPNameArr.length; i++) {
-        let utmPm = window.ZFAdvLead.utmPNameArr[i];
-        utmPm =
-          window.ZFAdvLead.isSameDomian &&
-          window.ZFAdvLead.utmcustPNameArr.indexOf(utmPm) === -1
-            ? "zf_" + utmPm
-            : utmPm;
-        const utmVal = window.zfutm_zfAdvLead.zfautm_gC_enc(window.ZFAdvLead.utmPNameArr[i]);
-        if (typeof utmVal !== "undefined" && utmVal !== "") {
-          src += "&" + utmPm + "=" + utmVal;
-        }
-      }
-    }
-    if (typeof window.ZFLead !== "undefined" && typeof window.zfutm_zfLead !== "undefined") {
-      for (let i = 0; i < window.ZFLead.utmPNameArr.length; i++) {
-        const utmPm = window.ZFLead.utmPNameArr[i];
-        const utmVal = window.zfutm_zfLead.zfutm_gC_enc(window.ZFLead.utmPNameArr[i]);
-        if (typeof utmVal !== "undefined" && utmVal !== "") {
-          src += "&" + utmPm + "=" + utmVal;
-        }
-      }
-    }
-  } catch {
-    /* fail silently */
-  }
-  return src;
-};
+const VALIDATION_SRC = "/destination-marketing-agency/js/validation.js";
 
-const buildZohoSrc = () => {
-  let src = REPORT_FORM_IFRAME_SRC;
-  try {
-    if (document.referrer) {
-      src += "&referrer=" + encodeURIComponent(document.referrer);
-    }
-  } catch {
-    /* ignore */
+function loadScript(src) {
+  const existing = document.querySelector(`script[data-report-zf="${src}"]`);
+  if (existing) {
+    return existing.dataset.loaded === "1"
+      ? Promise.resolve()
+      : new Promise((resolve) => {
+          existing.addEventListener("load", () => resolve(), { once: true });
+          existing.addEventListener("error", () => resolve(), { once: true });
+        });
   }
-  return appendUtmParams(src);
-};
+  return new Promise((resolve) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = false;
+    s.setAttribute("data-report-zf", src);
+    s.onload = () => {
+      s.dataset.loaded = "1";
+      resolve();
+    };
+    s.onerror = () => resolve();
+    document.body.appendChild(s);
+  });
+}
+
+function setReportZohoGlobals() {
+  const setFmt = window.zf_SetDateAndMonthRegexBasedOnDateFormate;
+  if (typeof setFmt === "function") {
+    const pair = setFmt("dd-MMM-yyyy");
+    window.zf_DateRegex = new RegExp(pair[0]);
+    window.zf_MonthYearRegex = new RegExp(pair[1]);
+  }
+  window.zf_MandArray = ["SingleLine", "SingleLine1", "Email"];
+  window.zf_FieldArray = ["SingleLine", "SingleLine1", "Email", "PhoneNumber_countrycode"];
+  window.isSalesIQIntegrationEnabled = false;
+  window.salesIQFieldsArray = [];
+}
+
+function wrapZohoSubmit() {
+  const orig = window.zf_ValidateAndSubmit;
+  if (typeof orig !== "function" || orig.__reportWrapped) return;
+  const wrapped = function zf_ValidateAndSubmitReport() {
+    const ok = orig();
+    if (!ok) return false;
+    const redirect = document.querySelector(
+      '#report-form-mount input[name="zf_redirect_url"]',
+    );
+    if (redirect) {
+      redirect.value = window.location.origin + REPORT_DOWNLOAD_PATH;
+    }
+    return true;
+  };
+  wrapped.__reportWrapped = true;
+  window.zf_ValidateAndSubmit = wrapped;
+}
 
 export default function ReportLeadForm() {
-  const mountRef = useRef(null);
+  const rootRef = useRef(null);
 
   useEffect(() => {
-    const mount = mountRef.current;
-    if (!mount) return;
+    const root = rootRef.current;
+    if (!root) return;
+    let cancelled = false;
 
-    mount.replaceChildren();
+    (async () => {
+      await loadScript(VALIDATION_SRC);
+      if (cancelled) return;
+      setReportZohoGlobals();
+      wrapZohoSubmit();
+    })();
 
-    const iframe = document.createElement("iframe");
-    iframe.src = buildZohoSrc();
-    iframe.style.border = "none";
-    iframe.style.width = "100%";
-    iframe.style.height = "360px";
-    iframe.style.pointerEvents = "none";
-    iframe.setAttribute("aria-label", "Download the report");
-    mount.appendChild(iframe);
-
-    const enable = () => {
-      iframe.style.pointerEvents = "auto";
-    };
-    const disable = () => {
-      iframe.style.pointerEvents = "none";
-    };
-    mount.addEventListener("mousedown", enable);
-    mount.addEventListener("touchstart", enable, { passive: true });
-    mount.addEventListener("mouseleave", disable);
-
-    const onMessage = (event) => {
-      const evntData = event?.data;
-      if (evntData && evntData.constructor === String) {
-        const parts = evntData.split("|");
-        if (parts.length === 2 || parts.length === 3) {
-          const zfPerma = parts[0];
-          const newHeight = parseInt(parts[1], 10) + 8 + "px";
-          const currentIframe = mount.getElementsByTagName("iframe")[0];
-          if (
-            currentIframe &&
-            (currentIframe.src.indexOf("form-embed") !== -1 ||
-              (currentIframe.src.indexOf("formperma") > 0 &&
-                currentIframe.src.indexOf(zfPerma) > 0))
-          ) {
-            if (currentIframe.style.height !== newHeight) {
-              currentIframe.style.height = newHeight;
-            }
-          }
-        }
-      }
-    };
-
-    window.addEventListener("message", onMessage, false);
     return () => {
-      window.removeEventListener("message", onMessage, false);
-      mount.removeEventListener("mousedown", enable);
-      mount.removeEventListener("touchstart", enable);
-      mount.removeEventListener("mouseleave", disable);
-      mount.replaceChildren();
+      cancelled = true;
     };
   }, []);
 
-  return <div ref={mountRef} className="report-form-iframe-mount" data-zf-perma={REPORT_FORM_PERMA} />;
+  return (
+    <div
+      ref={rootRef}
+      className="report-leadform-root"
+      dangerouslySetInnerHTML={{ __html: formMarkup }}
+    />
+  );
 }

@@ -1,6 +1,5 @@
 import registry from "./report-registry.json";
 
-export const REPORT_FORM_IFRAME_SRC = registry.reportFormIframeSrc;
 export const REPORT_FORM_PERMA = registry.reportFormPerma;
 export const REPORT_ACCESS_ID = registry.reportAccessId;
 export const PENDING_REPORT_KEY = registry.pendingReportKey;

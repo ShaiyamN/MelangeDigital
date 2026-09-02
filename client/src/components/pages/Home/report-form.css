@@ -1,4 +1,4 @@
-/* Report access — copy block + form; matches report-promo card rhythm */
+/* Report access — copy block + HTML Zoho form (native zf_redirect_url) */
 
 .home-report-access-section {
   scroll-margin-top: calc(var(--nav-sticky-offset, 69px) + 12px);
@@ -63,32 +63,265 @@
 .report-access-form {
   width: 100%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  height: 100%;
+  min-height: 100%;
+}
+
+.report-access-form .report-leadform-root,
+.report-access-form .report-leadform-card {
+  width: 100%;
+  height: 100% !important;
+  min-height: 100% !important;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch !important;
+}
+
+.report-access-form .report-leadform-card {
+  background: #fff !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(57, 16, 123, 0.1);
+  box-shadow: 0 12px 36px rgba(57, 16, 123, 0.1);
+  padding: 4px;
   overflow: hidden;
-  border-radius: 20px;
 }
 
-.report-access-form .report-form-iframe-mount {
-  width: 100%;
-  line-height: 0;
+.report-access-form .contact_form,
+.report-access-form .contact_form.w-form,
+.report-access-form .report-leadform-card .w-form,
+.report-access-form .zf-backgroundBg,
+.report-access-form .zf-templateWidth,
+.report-access-form #report-lead-form,
+.report-access-form .zf-templateWrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  align-self: stretch !important;
 }
 
-.report-access-form iframe {
-  display: block;
-  width: 100%;
-  min-height: 0;
-  height: 360px;
-  border: none;
+.report-access-form .zf-subContWrap {
+  flex: 1 1 auto !important;
+}
+
+.report-access-form .zf-backgroundBg,
+.report-access-form .zf-templateWidth,
+.report-access-form .zf-templateWrapper,
+.report-access-form .contact_form,
+.report-access-form form,
+.report-access-form .zf-subContWrap,
+.report-access-form .zf-subContWrap > ul {
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.report-access-form .zf-templateWidth {
+  padding: 16px 16px 14px !important;
+}
+
+.report-access-form .zf-templateWrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.report-access-form .report-leadform-fields {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 0 0 12px;
+  width: 100% !important;
+}
+
+.report-access-form .report-leadform-fields .zf-tempFrmWrapper {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  float: none !important;
+  position: relative;
+}
+
+/* Placeholders only — match contact / Melange leadform */
+.report-access-form .report-leadform-fields .zf-labelName {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.report-access-form .zf-tempContDiv,
+.report-access-form .zf-tempContDiv > span {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.report-access-form .zf-tempContDiv input,
+.report-access-form .zf-tempContDiv input[type="text"],
+.report-access-form .zf-large .zf-tempContDiv input[type="text"],
+.report-access-form .zf-medium .zf-tempContDiv input[type="text"] {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(15, 3, 48, 0.14) !important;
+  padding: 12px 14px !important;
+  font-family: var(--melange-body, "Lato", sans-serif) !important;
+  font-size: 15px !important;
+  background: #fff !important;
+}
+
+.report-access-form .zf-phwrapper,
+.report-access-form .zf-medium .zf-phwrapper,
+.report-access-form .zf-large .zf-phwrapper,
+.report-access-form .zf-phNumber,
+.report-access-form .zf-phonefld {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.report-access-form .zf-phwrapper label {
+  display: none !important;
+}
+
+.report-access-form .zf-frmTitle,
+.report-access-form .zf-frmTitle em {
+  text-align: center !important;
+  font-style: normal !important;
+  margin: 0 0 12px !important;
+  font-family: var(--melange-display, "Alan Sans", sans-serif) !important;
+  color: var(--melange-ink, #0f0330) !important;
+}
+
+.report-access-form .zf-tempHeadBdr,
+.report-access-form .zf-tempHeadContBdr {
+  border: none !important;
+  background: transparent !important;
+  padding: 0 0 8px !important;
+  margin: 0 !important;
+}
+
+.report-access-form .zf-fmFooter,
+.report-access-form .zf-fmFooter li {
+  display: block !important;
+  width: 100% !important;
+  padding: 4px 0 0 !important;
+  list-style: none !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+
+.report-access-form .zf-templateWrapper > ul:last-child,
+.report-access-form .zf-fmFooter {
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.report-access-form .zf-submitColor,
+.report-access-form button.zf-submitColor {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 14px 24px !important;
+  background: var(--melange-highlight, #6e1eee) !important;
+  color: #fff !important;
+  font-family: var(--melange-body, "Lato", sans-serif) !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+}
+
+/* Kill Temp Mail / autofill extension chrome (same idea as contact form) */
+.report-access-form .leadform-email-wrap {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate;
+}
+
+.report-access-form input[name="Email"] {
+  position: relative;
+  z-index: 2;
+  background: #fff !important;
+  background-color: #fff !important;
+  background-image: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+.home-report-access-section [class*="tempmail" i],
+.home-report-access-section [class*="temp-mail" i],
+.home-report-access-section [class*="tempy" i],
+.home-report-access-section [id*="tempmail" i],
+.home-report-access-section [id*="temp-mail" i],
+.home-report-access-section [aria-label*="temp mail" i],
+.home-report-access-section [title*="temp mail" i],
+.home-report-access-section img[src*="tempmail" i],
+.home-report-access-section img[alt*="temp mail" i],
+.home-report-access-section img[alt*="TEMP MAIL" i],
+.report-access-form [class*="tempmail" i],
+.report-access-form [class*="temp-mail" i],
+.report-access-form [class*="tempy" i],
+.report-access-form [id*="tempmail" i],
+.report-access-form [id*="temp-mail" i],
+.report-access-form img[src*="tempmail" i],
+.report-access-form img[alt*="TEMP MAIL" i] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+.report-access-form input[name="Email"]::-webkit-credentials-auto-fill-button,
+.report-access-form input[name="Email"]::-webkit-contacts-auto-fill-button {
+  visibility: hidden !important;
+  display: none !important;
+  pointer-events: none !important;
 }
 
 @media (min-width: 900px) {
   .report-access-shell {
     grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
-    align-items: start;
+    align-items: stretch;
     gap: clamp(24px, 4vw, 40px);
   }
 
+  .report-access-copy {
+    height: 100%;
+  }
+
   .report-access-form {
-    margin-top: 0;
+    height: 100%;
   }
 }
 
