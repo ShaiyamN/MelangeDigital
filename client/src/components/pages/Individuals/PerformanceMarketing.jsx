@@ -111,9 +111,9 @@ const PerformanceMarketing = () => {
       >
         <div className="">
           <div className="">
-            <h1 className="text-3xl md:text-4xl w-auto  font-semibold">
+            <h2 className="text-hero font-display w-auto font-semibold">
               Ignite Your Success with Performance Marketing
-            </h1>
+            </h2>
             {/* <p className="font-bold multiverse-text text-lg md:text-2xl w-full  mt-1">
               Achieving ROI targets through precision targeting.
             </p> */}

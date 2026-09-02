@@ -113,9 +113,9 @@ const WebDev = () => {
       >
         <div className="">
           <div className="">
-            <h1 className="text-3xl md:text-4xl w-auto   font-semibold">
+            <h2 className="text-hero font-display w-auto font-semibold">
               Crafting Digital Excellence: Website Development & SEO
-            </h1>
+            </h2>
             {/* <p className="font-bold multiverse-text text-lg md:text-2xl w-auto mt-1">
               Crafting digital spaces for seamless customer connections.
             </p> */}

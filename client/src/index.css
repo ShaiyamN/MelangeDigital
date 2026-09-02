@@ -1,23 +1,164 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
-
-h3 {
-  font-family: "Lato", sans-serif !important;
-}
+@import "./styles/melange-tokens.css";
+@import "./styles/melange-cta.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* h1 — hero eyebrow only (Alan Sans, label size) */
+  h1 {
+    font-family: var(--font-display);
+    font-size: var(--type-body);
+    line-height: var(--lh-eyebrow);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    margin-block: 0;
+  }
+
+  /* h2 — hero headline + section titles (Alan Sans) */
+  h2 {
+    font-family: var(--font-display);
+    font-size: var(--type-display);
+    line-height: var(--lh-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-block: 0;
+  }
+
+  /* Hero context: largest h2 */
+  .hero h2,
+  #home h2,
+  h2.text-hero,
+  h2.hero-heading-h1,
+  h2.about-hero__title {
+    font-size: var(--type-hero);
+    line-height: var(--lh-hero);
+  }
+
+  /* h2 highlighted phrases — Baskerville italic */
+  h2 em,
+  h2 .multiverse-text,
+  h2 .text-accent,
+  h2 .span-txt,
+  h2 .hero-accent,
+  h2 .about-accent,
+  h2 .svc-accent {
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: var(--melange-highlight) !important;
+    color: var(--melange-highlight) !important;
+  }
+
+  /* h3 and all other copy — Lato */
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  li,
+  label,
+  figcaption,
+  blockquote {
+    font-family: var(--font-body);
+    margin-block: 0;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: var(--type-title);
+    line-height: var(--lh-title);
+    font-weight: 600;
+  }
+
+  p,
+  li {
+    font-size: var(--type-body);
+    line-height: var(--lh-body);
+  }
+}
+
+@layer components {
+  .hero-eyebrow,
+  .about-hero__eyebrow {
+    font-family: var(--font-display);
+    font-size: var(--type-body);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    line-height: var(--lh-eyebrow);
+    color: var(--melange-highlight);
+    text-transform: none;
+  }
+
+  .section-y {
+    padding-block: var(--section-pad-y);
+  }
+  .section-y-sm {
+    padding-block: var(--section-pad-y-sm);
+  }
+  .section-y-xs {
+    padding-block: var(--section-pad-y-xs);
+  }
+  .section-header-gap {
+    margin-bottom: var(--section-header-gap);
+  }
+  .section-title-gap {
+    margin-bottom: var(--section-title-gap);
+  }
+}
+
 /* ─── Rich Text — rendered content on PUBLIC frontend ─────────────────────── */
 .cs-rendered-content {
   white-space: normal !important;
 }
-.cs-rendered-content h1 { font-size: 1.75em; font-weight: 700; margin-bottom: 0.5em; }
-.cs-rendered-content h2 { font-size: 1.4em;  font-weight: 700; margin-bottom: 0.5em; }
-.cs-rendered-content h3 { font-size: 1.2em;  font-weight: 700; margin-bottom: 0.5em; }
-.cs-rendered-content p  { margin-bottom: 0.75em; }
+.cs-rendered-content h1 {
+  font-family: var(--font-display);
+  font-size: var(--type-body);
+  line-height: var(--lh-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--section-title-gap);
+}
+.cs-rendered-content h2 {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  line-height: var(--lh-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--section-title-gap);
+}
+.cs-rendered-content h2 em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--melange-highlight);
+}
+.cs-rendered-content h3,
+.cs-rendered-content h4,
+.cs-rendered-content h5,
+.cs-rendered-content h6 {
+  font-family: var(--font-body);
+  font-size: var(--type-title);
+  line-height: var(--lh-title);
+  font-weight: 600;
+  margin-bottom: var(--section-title-gap);
+}
+.cs-rendered-content p {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--lh-body);
+  margin-bottom: 0.75em;
+}
 .cs-rendered-content p:last-child { margin-bottom: 0; }
 .cs-rendered-content blockquote {
   border-left: 4px solid #a78bfa;
@@ -2691,7 +2832,41 @@ body {
 .blog-content h6 {
   font-weight: 700 !important;
   margin-top: 1.5rem !important;
-  margin-bottom: 0.5rem !important;
+  margin-bottom: var(--section-title-gap) !important;
+}
+
+.blog-content h1 {
+  font-family: var(--font-display);
+  font-size: var(--type-body);
+  line-height: var(--lh-eyebrow);
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+.blog-content h2 {
+  font-family: var(--font-display);
+  font-size: var(--type-display);
+  line-height: var(--lh-display);
+  letter-spacing: -0.02em;
+}
+.blog-content h2 em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--melange-highlight);
+}
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  font-family: var(--font-body);
+  font-size: var(--type-title);
+  line-height: var(--lh-title);
+}
+.blog-content p,
+.blog-content li {
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  line-height: var(--lh-body);
 }
 
 /* About HTML Content Typography Fixes */
@@ -2728,20 +2903,18 @@ body {
   margin-bottom: 0.5rem !important;
 }
 
-/* Blog Content Typography */
-.blog-content h3, .cs-quill-editor h3 {
-  font-size: 22px;
+/* Blog Content Typography — cs-quill-editor admin preview */
+.cs-quill-editor h3 {
+  font-size: var(--type-title);
+  line-height: var(--lh-title);
   font-weight: 700;
   margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: var(--section-title-gap);
 }
-.blog-content h4, .cs-quill-editor h4 {
-  font-size: 20px;
+.cs-quill-editor h4 {
+  font-size: var(--type-title);
+  line-height: var(--lh-title);
   font-weight: 700;
   margin-top: 1.25rem;
   margin-bottom: 0.75rem;
-}
-@media (max-width: 768px) {
-  .blog-content h3, .cs-quill-editor h3 { font-size: 20px; }
-  .blog-content h4, .cs-quill-editor h4 { font-size: 18px; }
 }

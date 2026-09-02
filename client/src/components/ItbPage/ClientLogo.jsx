@@ -33,7 +33,7 @@ const ClientLogo = () => {
       ref={sectionRef}
       className="w-full lg:px-20 px-5 lg:py-12 py-8 md:pt-20 font-bricolage max-container"
     >
-      <h2 className="text-[#791FF0] lg:text-[50px] text-[30px] leading-[60px]">CLIENT WALL</h2>
+      <h2 className="text-[#791FF0] text-display">CLIENT WALL</h2>
 
       <div className="grid lg:grid-cols-4 grid-cols-2 gap-10 mt-10">
         {clientImg.map((img, index) => (

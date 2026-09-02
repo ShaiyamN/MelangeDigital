@@ -12,7 +12,7 @@ const Header = () => {
       initial={{ opacity: 0, y: 50, scale: 0.9 }}
       animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="lg:flex items-start lg:px-20 px-5 font-bricolage lg:pt-[150px] pt-[120px] gap-x-20 max-container lg:pb-20 pb-10"
+      className="lg:flex items-start lg:px-20 px-5 font-bricolage lg:pt-section-y pt-[120px] gap-x-20 max-container lg:pb-20 pb-10"
     >
       {/* Image Section */}
       <div className="lg:w-[40%] flex lg:-space-x-48 -space-x-28 mb-10 lg:mb-0">

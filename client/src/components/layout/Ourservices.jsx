@@ -5,9 +5,9 @@ const Ourservices = () => {
     <div className="pt-[50px] pb-20 lg:pb-0 max-container">
       <div className="px-5 lg:px-20 lg:flex ">
         <div className="w-auto  lg:px-0 lg:w-[50%]">
-          <h1 className="text-[44px] leading-[52px] md:text-[68px] font-bold lg:leading-[76px] multiverse-text">
+          <h2 className="text-hero font-display font-bold">
             Merging Tech <br /> & Talent to Shape Brands
-          </h1>
+          </h2>
         </div>
         <div className="w-auto  lg:px-4 lg:w-[50%] lg:mt-0 mt-6">
           <p className="text-[19px] leading-[26px] md:text-[20px] lg:leading-[30px] ">

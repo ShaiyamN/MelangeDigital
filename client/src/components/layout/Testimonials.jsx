@@ -124,11 +124,11 @@ const Testimonials = () => {
   };
 
   return (
-    <div ref={testimonialsRef} className="px-0 py-[90px] relative bg-white font-bricolage">
+    <div ref={testimonialsRef} className="px-0 section-y relative bg-white font-bricolage">
       <div className="max-container lg:px-20 px-5 flex items-center justify-between">
         {" "}
         {/* Apply max-container */}
-        <h2 className="font-bold font-bricolage lg:text-[48px] text-[40px] pb-10 leading-[48px]">
+        <h2 className="font-bold font-bricolage text-display pb-10">
           Hear from Our <span className="multiverse-text"> Clients</span>
         </h2>
         {/* Navigation Buttons */}
@@ -192,14 +192,14 @@ const InViewReview = ({ review, marginLeft }) => {
           className="lg:w-10 lg:h-8 w-[31px] "
         />
         <div>
-          <p className="lg:mt-4 mt-3 text-[#1A1A1A] lg:text-[19px] text-[11px] pb-3">
+          <p className="lg:mt-4 mt-3 text-[#1A1A1A] text-body pb-3">
             {review.review}
           </p>
           <Link
             to={review.link}
             className="flex items-center space-x-2 cursor-pointer"
           >
-            <p className="text-[#1A1A1A] lg:text-[19px] text-[11px] font-bold hover:text-blue-600">
+            <p className="text-[#1A1A1A] text-body font-bold hover:text-blue-600">
               Case Study
             </p>
             <img src={arrowblack} alt="" />
@@ -212,8 +212,8 @@ const InViewReview = ({ review, marginLeft }) => {
           <img src={review.icon} alt="logo" />
         </div>
         <div className="">
-          <h3 className="font-bold lg:text-22px] text-[13px]">{review.name}</h3>
-          <p className=" lg:text-[19px] text-[11px]">{review.title}</p>
+          <h3 className="font-bold text-title">{review.name}</h3>
+          <p className="text-body">{review.title}</p>
         </div>
       </div>
     </motion.div>

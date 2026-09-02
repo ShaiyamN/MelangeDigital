@@ -7,15 +7,15 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "node scripts/sync-tourism.mjs && vite",
-    "build": "node scripts/hostinger-preflight.cjs && node scripts/assert-real-assets.cjs && node scripts/check-imports.cjs && node scripts/sync-tourism.mjs && node scripts/generate-sitemap.mjs && node scripts/run-vite-build.cjs && node scripts/write-spa-shells.cjs",
+    "dev": "vite",
+    "build": "node scripts/hostinger-preflight.cjs && node scripts/assert-real-assets.cjs && node scripts/check-imports.cjs && node scripts/generate-sitemap.mjs && node scripts/write-report-download.cjs && node scripts/run-vite-build.cjs && node scripts/write-spa-shells.cjs",
     "build:prerender": "npm run build && npm run prerender",
     "verify:hostinger": "node scripts/verify-hostinger-build.cjs",
     "verify:dist": "node scripts/verify-dist.cjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "check:imports": "node scripts/check-imports.cjs",
     "assert:assets": "node scripts/assert-real-assets.cjs",
-    "sync-tourism": "node scripts/sync-tourism.mjs",
+    "audit:assets": "node scripts/find-unused-assets.cjs",
     "prerender": "node prerender.js",
     "start": "node server.cjs",
     "preview": "vite preview"

@@ -16,7 +16,7 @@ const AboutHead = () => {
     <div className=" pb-12 md:pb-24 font-nunito">
       <div className=" px-6 md:px-16 lg:px-24">
         <div className="w-auto lg:w-[84%] lg:px-4">
-          <h1 className="text-2xl md:text-4xl font-bold">About Us</h1>
+          <h2 className="text-display font-display font-bold">About Us</h2>
           <p className="text-lg md:text-xl my-2 font-extrabold multiverse-text">
             Think of us as your in-house marketing team!
           </p>

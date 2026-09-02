@@ -75,7 +75,7 @@ const MakertingVerse = () => {
           <div className="flex" ref={marqueeRef}>
             {/* Duplicated text to create a seamless scroll effect */}
             <motion.h2
-              className="multiverse-text lg:text-[164px] text-[84px]"
+              className="multiverse-text text-hero"
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
@@ -83,7 +83,7 @@ const MakertingVerse = () => {
               Success Isn’t Just Talk It’s Our Track Record!&nbsp;
             </motion.h2>
             <motion.h2
-              className="multiverse-text lg:text-[164px] text-[84px]"
+              className="multiverse-text text-hero"
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1 }}
@@ -149,7 +149,7 @@ const MakertingVerse = () => {
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.5 }}
                 >
-                  <h2 className="font-bold lg:text-[58px] text-[48px] multiverse-text">
+                  <h2 className="font-bold text-display multiverse-text">
                     {item.prefix && <span>{item.prefix}</span>}
                     <CountingNumber
                       value={item.value}

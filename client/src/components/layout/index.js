@@ -23,6 +23,7 @@ export { default as AboutHead } from "./AboutHead";
 export { default as OurTeam } from "./OurTeam";
 export { default as Together } from "./Together";
 export { default as AboutFooter } from "./AboutFooter";
+export { default as MelangeCta } from "./MelangeCta";
 export { default as CTAButton } from "./CTAButton";
 export { default as BreadCrumbs } from "./BreadCrumbs";
 export { default as WorkPage } from "./WorkPage";

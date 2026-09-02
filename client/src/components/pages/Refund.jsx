@@ -9,9 +9,9 @@ const Refund = () => {
     <>
       <Navbar />
       <div className="container font-nunito mx-auto text-[#1a1a1a] xxl:px-[100px] bg-white pt-[100px] lg:pt-[120px] pb-[50px] lg:pb-[100px] px-4 lg:px-[80px]">
-        <h1 className="text-[28px] lg:text-[40px] whitespace-nowrap font-semibold mb-6 multiverse-text">
+        <h2 className="text-display font-display whitespace-nowrap font-semibold mb-6">
           Cancellation & Refund Policy
-        </h1>
+        </h2>
 
         <h2 className="text-xl font-bold mb-2 text-black">
           1. Cancellation Policy

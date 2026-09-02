@@ -72,10 +72,10 @@ const Ads = () => {
       </div>
       <div className="px-6 pb-3 md:px-16 md:pb-16 lg:px-28 lg:pb-4">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Your Digital Advertising Service
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[78%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[78%]">
             In a world flooded with information and content, effectively
             reaching your customers requires communicating what they want to
             hear at the right moment. By leveraging human & data-driven
@@ -92,7 +92,7 @@ const Ads = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10">
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ads1} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Social Ads
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -105,7 +105,7 @@ const Ads = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ads2} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Search Ads
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -117,7 +117,7 @@ const Ads = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ads3} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Display & Shopping Ads
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -129,7 +129,7 @@ const Ads = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ads4} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Retargeting and Remarketing
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">

@@ -149,6 +149,7 @@
 
   function initOne(root) {
     var wrap = root.closest(".network-sphere-wrap") || root.parentElement;
+    var isAbout = !!(wrap && wrap.closest && wrap.closest(".about-voices"));
     var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var images = buildImageList(UNIQUE_IMAGES, SPHERE_COUNT);
 
@@ -156,14 +157,16 @@
       dragSensitivity: 0.8,
       momentumDecay: 0.96,
       maxRotationSpeed: 6,
-      baseImageScale: 0.28,
+      baseImageScale: isAbout ? 0.33 : 0.28,
       hoverScale: 1.22,
       autoRotate: !reduceMotion,
       autoRotateSpeed: 0.32, /* keep gentle orbit so depth reads at rest */
+      fadeBack: isAbout ? 0.38 : 0.55,
+      liveOpacity: isAbout ? 0.1 : 0.03,
     };
 
-    /* Mild tilt — heavy X tilt was dumping the front faces into the bottom */
-    var rotation = { x: 8, y: -22, z: 0 };
+    /* About: face the viewer; Home: slight yaw for motion read */
+    var rotation = isAbout ? { x: 10, y: 18, z: 0 } : { x: 8, y: -22, z: 0 };
     var velocity = { x: 0, y: 0 };
     var isDragging = false;
     var dragDistance = 0;
@@ -223,16 +226,26 @@
     function dims() {
       var w = root.clientWidth || wrap.clientWidth || 0;
       var h = root.clientHeight || wrap.clientHeight || 0;
+      if ((!w || !h) && wrap && wrap.getBoundingClientRect) {
+        var rect = wrap.getBoundingClientRect();
+        if (!w) w = rect.width;
+        if (!h) h = rect.height;
+      }
       if (w < 120) w = Math.max(280, Math.min(window.innerWidth - 48, 640));
       if (h < 80) h = w;
       return { w: w, h: h, short: Math.min(w, h) };
+    }
+
+    function sphereRadiusFor(d) {
+      if (isAbout) return d.short * 0.5;
+      return d.short * (d.short < 420 ? 0.42 : 0.5);
     }
 
     function rebuildNodes() {
       stage.innerHTML = "";
       nodes = [];
       var d = dims();
-      var sphereRadius = d.short * (d.short < 420 ? 0.42 : 0.5);
+      var sphereRadius = sphereRadiusFor(d);
       spherical = generateSpherePositions(images.length, sphereRadius);
       /* If two sphere-neighbours share a src, swap with a distant slot */
       separateSpatialDuplicates(images, spherical);
@@ -266,7 +279,7 @@
     }
 
     function worldPositions(d) {
-      var sphereRadius = d.short * (d.short < 420 ? 0.42 : 0.5);
+      var sphereRadius = sphereRadiusFor(d);
       var baseImageSize = d.short * config.baseImageScale;
       var rotXRad = degToRad(rotation.x);
       var rotYRad = degToRad(rotation.y);
@@ -312,9 +325,9 @@
         centerNorm = centerNorm * centerNorm * (3 - 2 * centerNorm);
         var scale = 0.68 + centerNorm * 0.22 + depthNorm * 0.08;
 
-        /* Soft back fade — keep more of the ring readable (less top ghosting) */
+        /* Soft back fade — About hides rear hemisphere sooner for a cleaner read */
         var fadeZoneStart = sphereRadius * 0.02;
-        var fadeZoneEnd = -sphereRadius * 0.55;
+        var fadeZoneEnd = -sphereRadius * config.fadeBack;
         var fadeOpacity = 1;
         if (z <= fadeZoneStart) {
           var t = (z - fadeZoneEnd) / (fadeZoneStart - fadeZoneEnd);
@@ -351,7 +364,7 @@
         if (!position) return;
 
         var opacity = position.fadeOpacity;
-        var isLive = opacity > 0.03;
+        var isLive = opacity > config.liveOpacity;
         var isHovered = isLive && hoveredIndex === index;
         var scale = position.scale * (isHovered ? config.hoverScale : 1);
         var depth = position.depthNorm;

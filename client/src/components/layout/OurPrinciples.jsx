@@ -51,9 +51,9 @@ const OurPrinciples = () => {
   };
 
   return (
-    <div className="lg:py-[120px] py-20 px-6 md:px-16 lg:px-24 font-bricolage max-container">
+    <div className="section-y px-6 md:px-16 lg:px-24 font-bricolage max-container">
       <div className="">
-        <h2 className="lg:text-[48px] text-[40px] font-bold mb-0">
+        <h2 className="text-display font-bold mb-0">
           Our <span className="multiverse-text">Principles</span>
         </h2>
 
@@ -66,10 +66,10 @@ const OurPrinciples = () => {
             viewport={{ once: true, amount: 0.5 }}
           >
             <img src={pri1} alt="" className="w-16" />
-            <p className="font-semibold lg:text-[24px] text-[23px] leading-[28px]">
+            <p className="font-semibold text-title">
               Devil is in the Details
             </p>
-            <p className="lg:text-[19px] text-[16px] lg:leading-[30px] leading-[22px]">
+            <p className="text-body">
               Every detail matters; small touches create big impacts. We create
               strategies that drive impact.
             </p>
@@ -83,10 +83,10 @@ const OurPrinciples = () => {
             viewport={{ once: true, amount: 0.5 }}
           >
             <img src={pri2} alt="" className="w-16" />
-            <p className="font-semibold lg:text-[24px] text-[23px] leading-[28px]">
+            <p className="font-semibold text-title">
               Start From Scratch
             </p>
-            <p className="lg:text-[19px] text-[16px] lg:leading-[30px] leading-[22px]">
+            <p className="text-body">
               A creative environment is fostered where ideas flourish,
               transforming scribbles into groundbreaking campaigns.
             </p>
@@ -100,10 +100,10 @@ const OurPrinciples = () => {
             viewport={{ once: true, amount: 0.5 }}
           >
             <img src={pri3} alt="" className="w-16" />
-            <p className="font-semibold lg:text-[24px] text-[23px] leading-[28px]">
+            <p className="font-semibold text-title">
               Learning is the Only Constant
             </p>
-            <p className="lg:text-[19px] text-[16px] lg:leading-[30px] leading-[22px]">
+            <p className="text-body">
               Continuous learning drives our success. We welcome change, staying
               ahead of industry trends to refine our strategies.
             </p>
@@ -117,10 +117,10 @@ const OurPrinciples = () => {
             viewport={{ once: true, amount: 0.5 }}
           >
             <img src={pri4} alt="" className="w-16" />
-            <p className="font-semibold lg:text-[24px] text-[23px] leading-[28px]">
+            <p className="font-semibold text-title">
               Building Tomorrow, Today
             </p>
-            <p className="lg:text-[19px] text-[16px] lg:leading-[30px] leading-[22px]">
+            <p className="text-body">
               We design flexible strategies that anticipate tomorrow's
               challenges, ensuring you're a step ahead.
             </p>
@@ -134,10 +134,10 @@ const OurPrinciples = () => {
             viewport={{ once: true, amount: 0.5 }}
           >
             <img src={pri5} alt="" className="w-16" />
-            <p className="font-semibold lg:text-[24px] text-[23px] leading-[28px]">
+            <p className="font-semibold text-title">
               Numbers Teach Us Best
             </p>
-            <p className="lg:text-[19px] text-[16px] lg:leading-[30px] leading-[22px]">
+            <p className="text-body">
               We analyse metrics for our approach, ensuring every move is
               data-driven, leading to smart decisions.
             </p>
@@ -151,10 +151,10 @@ const OurPrinciples = () => {
             viewport={{ once: true, amount: 0.5 }}
           >
             <img src={pri6} alt="" className="w-16" />
-            <p className="font-semibold lg:text-[24px] text-[23px] leading-[28px]">
+            <p className="font-semibold text-title">
               Technology is the Future
             </p>
-            <p className="lg:text-[19px] text-[16px] lg:leading-[30px] leading-[22px]">
+            <p className="text-body">
               By integrating the latest advancements, we create solutions that
               resonate with modern consumers.
             </p>
@@ -163,7 +163,7 @@ const OurPrinciples = () => {
       </div>
 
       {/* Counting Section */}
-      <div className="lg:pt-[120px] pt-[40px]">
+      <div className="pt-section-y">
         <div className="font-bricolage max-container overflow-y-hidden">
           <div className="lg:grid flex lg:space-x-0 space-x-10 overflow-x-scroll overflow-y-hidden no-scrollbar lg:grid-cols-5 grid-cols-2 lg:gap-x-[30px]">
             {[
@@ -193,7 +193,7 @@ const OurPrinciples = () => {
                   whileInView="visible"
                   viewport={{ once: true, amount: 0.5 }}
                 >
-                  <h2 className="font-bold lg:text-[58px] text-[48px] multiverse-text">
+                  <h2 className="font-bold text-display multiverse-text">
                     {item.prefix && <span>{item.prefix}</span>}
                     <CountingNumber
                       value={item.value}
@@ -201,7 +201,7 @@ const OurPrinciples = () => {
                     />
                     {item.suffix && <span>{item.suffix}</span>}
                   </h2>
-                  <p className="font-bold lg:text-[22px] text-[17px] lg:leading-[30px] leading-[24px] text-center">
+                  <p className="font-bold text-title text-center">
                     {item.label.split(" ").map((text, i) => (
                       <span key={i}>
                         {text} <br />

@@ -90,7 +90,7 @@ const AwardsAndReco = () => {
       <div className="px-5 pt-20 lg:pb-20 pb-10 md:px-16 lg:px-24 max-container">
         <div>
           <motion.h2
-            className="font-bold lg:text-[48px] text-[40px] leading-[48px] text-[#ffffff]"
+            className="font-bold text-display leading-[48px] text-[#ffffff]"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}

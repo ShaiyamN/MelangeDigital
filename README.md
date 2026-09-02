@@ -7,6 +7,8 @@ Website (`client/`) + API (`server/`). Work on branch `staging` unless releasing
 | Path | Purpose |
 | --- | --- |
 | `client/` | Vite + React frontend (Hostinger static / Node web app) |
+| `client/public/destination-marketing-agency/` | Marketing site assets (css, js, images) — served at `/destination-marketing-agency/` |
+| `client/src/components/pages/{Home,About,Services,Work}/` | React shells + `markup.html` page bodies |
 | `server/` | Express API: careers email + Zoho CRM leads |
 | `client/server.cjs` | Hostinger Node entry (serves `client/dist`; CommonJS so it works with `"type": "module"`) |
 | `server.js` | Root static file server if app root is the repo (serves `client/dist`) |

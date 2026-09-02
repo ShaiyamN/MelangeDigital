@@ -1,12 +1,40 @@
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { CONTACT_OFFICES, officeShortLabel } from "../../../constants/officeGmb";
+import { CONTACT_OFFICES } from "../../../constants/officeGmb";
 import { mail, phone, location } from "../../../assets/images";
 import { openEmail, openPhone } from "../../../utils/openContactLink";
 import formMarkup from "./zoho-form.html?raw";
 import "./contact.css";
 
 const FORM_CLEAR_KEY = "zf_lead_form_clear";
+const CONTACT_THANKS_KEY = "contact-form-thanks";
+
+function showContactSuccess(root) {
+  const card = root.querySelector(".leadform-card");
+  const done = root.querySelector(".w-form-done");
+  const form = root.querySelector("#form");
+  if (!card || !done) return;
+  if (form) form.hidden = true;
+  done.classList.add("is-visible");
+  card.setAttribute("data-contact-success", "1");
+}
+
+function maybeShowThanks(root) {
+  let thanks = false;
+  try {
+    thanks =
+      window.location.hash === "#thanks" ||
+      sessionStorage.getItem(CONTACT_THANKS_KEY) === "1";
+    if (thanks) sessionStorage.removeItem(CONTACT_THANKS_KEY);
+  } catch {
+    thanks = window.location.hash === "#thanks";
+  }
+  if (!thanks) return;
+  showContactSuccess(root);
+  if (window.location.hash === "#thanks" && history.replaceState) {
+    history.replaceState(null, "", "/contact");
+  }
+}
 
 function loadScript(src) {
   const existing = document.querySelector(`script[data-contact-zf="${src}"]`);
@@ -71,15 +99,13 @@ function wrapZohoSubmit() {
     if (!ok) return false;
     const redirect = document.querySelector('input[name="zf_redirect_url"]');
     if (redirect) {
-      redirect.value = window.location.origin + "/indian-outbound-tourism-report";
+      redirect.value = window.location.origin + "/contact#thanks";
     }
     try {
-      sessionStorage.setItem(FORM_CLEAR_KEY, "1");
+      sessionStorage.setItem(CONTACT_THANKS_KEY, "1");
     } catch {
       /* ignore */
     }
-    const f = document.getElementById("form");
-    if (f) setTimeout(() => f.reset(), 0);
     return true;
   };
   wrapped.__contactWrapped = true;
@@ -304,7 +330,18 @@ const ContactBody = () => {
     let cancelled = false;
     const cleanups = [];
 
+    (async () => {
+      await loadScript("/destination-marketing-agency/js/validation.js");
+      if (cancelled) return;
+      setZohoGlobals();
+      wrapZohoSubmit();
+      maybeShowThanks(root);
+      cleanups.push(...initLeadformMultiselect(root));
+      cleanups.push(initLeadformCountryCode(root));
+    })();
+
     const onPageShow = () => {
+      maybeShowThanks(root);
       try {
         if (sessionStorage.getItem(FORM_CLEAR_KEY) !== "1") return;
         sessionStorage.removeItem(FORM_CLEAR_KEY);
@@ -314,15 +351,6 @@ const ContactBody = () => {
       const f = document.getElementById("form");
       if (f) f.reset();
     };
-
-    (async () => {
-      await loadScript("/destination-marketing-agency/js/validation.js");
-      if (cancelled) return;
-      setZohoGlobals();
-      wrapZohoSubmit();
-      cleanups.push(...initLeadformMultiselect(root));
-      cleanups.push(initLeadformCountryCode(root));
-    })();
 
     window.addEventListener("pageshow", onPageShow);
     return () => {
@@ -352,10 +380,10 @@ const ContactBody = () => {
                   <span aria-hidden="true"> &gt; </span>
                   <span>Contact Us</span>
                 </nav>
-                <h1 id="contact-heading" className="contact-h1">
+                <h2 id="contact-heading" className="contact-h1">
                   Let&apos;s Connect to Build Your{" "}
                   <em>Brand</em>
-                </h1>
+                </h2>
               </div>
               <div className="contact-glass">
                 <a
@@ -397,7 +425,7 @@ const ContactBody = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {officeShortLabel(office.label)}
+                          {office.label}
                         </a>
                       </span>
                     ))}

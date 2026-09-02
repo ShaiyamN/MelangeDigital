@@ -37,7 +37,7 @@ const Work = ({ icon, tag1, tag2, tag3, title, path, services }) => {
         </div>
       </Link>
 
-      <div className="flex flex-wrap py-1 text-[#1A1A1A] font-bold lg:text-[17px] text-[12px] lg:pt-3 pt-2 gap-x-3 gap-y-2">
+      <div className="flex flex-wrap py-1 text-[#1A1A1A] font-bold text-body lg:pt-3 pt-2 gap-x-3 gap-y-2">
         {services && services.length > 0 ? (
           services.slice(0, 3).map((service, idx) => (
             <p key={idx}>{service}</p>
@@ -53,7 +53,7 @@ const Work = ({ icon, tag1, tag2, tag3, title, path, services }) => {
 
       <Link to={path}>
         <motion.h2
-          className="font-bold lg:text-[28px] text-[22px] text-[#141F59] leading-[1.25] mt-1"
+          className="font-bold text-title text-[#141F59] mt-1"
           variants={raiseFromBottom}
           initial="hidden"
           whileInView="visible"
@@ -166,15 +166,15 @@ const WorkSummary = ({ worksData, ready = true }) => {
   }
 
   return (
-    <div className="lg:px-0 px-5 lg:pt-[100px] pt-10 pb-12 bg-white font-bricolage">
+    <div className="lg:px-0 px-5 lg:pt-section-y pt-10 pb-section-y bg-white font-bricolage">
       <div className="flex items-end justify-between pb-6 lg:px-20 max-container">
-        <h2 className="font-bold text-[#141F59] lg:text-[96px] text-[40px] lg:leading-[1.05] leading-[40px]">
+        <h2 className="font-bold text-display text-[#141F59]">
           Stories in <span className="multiverse-text">Action</span>
         </h2>
 
         <div className="hidden lg:block">
           <Link to="/work">
-            <div className="w-[162px] h-[55px] view-all text-[19px] font-bold border rounded-[40px] mb-2 flex items-center justify-center">
+            <div className="w-[162px] h-[55px] view-all text-body font-bold border rounded-[40px] mb-2 flex items-center justify-center">
               View All
             </div>
           </Link>
@@ -208,7 +208,7 @@ const WorkSummary = ({ worksData, ready = true }) => {
 
       <div className="lg:hidden block">
         <Link to="/work">
-          <div className="w-full h-[55px] view-all text-[19px] font-bold border rounded-[40px] mt-8 flex items-center justify-center">
+          <div className="w-full h-[55px] view-all text-body font-bold border rounded-[40px] mt-8 flex items-center justify-center">
             View All
           </div>
         </Link>

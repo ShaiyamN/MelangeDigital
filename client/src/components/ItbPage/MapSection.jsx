@@ -113,7 +113,7 @@ const MapSection = () => {
   }, []);
   return (
     <section className="w-full lg:px-20 lg:py-12 py-8 md:pt-20 font-bricolage max-container">
-      <h2 className="text-[#791FF0] lg:text-[50px] text-[30px] lg:px-0 px-5 lg:leading-[60px] leading-[40px] lg:mb-0 mb-20">
+      <h2 className="text-[#791FF0] text-display lg:px-0 px-5 lg:mb-0 mb-20">
         OUR GLOBAL <br />
         FOOTPRINT
       </h2>
@@ -122,7 +122,7 @@ const MapSection = () => {
         <img src={map} alt="" />
 
         <div ref={ref} className="absolute lg:-top-[35%] -top-[55%] left-[45%]">
-          <p className="lg:text-[16px] text-[12px]">London</p>
+          <p className="text-body">London</p>
           <motion.img
             src={mapPointer}
             alt=""
@@ -142,7 +142,7 @@ const MapSection = () => {
         </div>
 
         <div ref={ref} className="absolute lg:-top-[15%] -top-[25%] lg:left-[65%] left-[63%]">
-          <p className="lg:text-[16px] text-[12px]">Sharjah</p>
+          <p className="text-body">Sharjah</p>
           <motion.img
             src={mapPointer}
             alt=""
@@ -162,7 +162,7 @@ const MapSection = () => {
         </div>
 
         <div ref={ref} className="absolute -top-[10%] left-[70%]">
-          <p className="lg:text-[16px] text-[12px]">Goa, Mumbai & Delhi</p>
+          <p className="text-body">Goa, Mumbai & Delhi</p>
           <motion.img
             src={mapPointer}
             alt=""
@@ -182,7 +182,7 @@ const MapSection = () => {
         </div>
 
         <div ref={ref} className="absolute lg:top-[0%] top-[5%] lg:right-[12%] right-[2%]">
-          <p className="lg:text-[16px] text-[12px]">Singapore</p>
+          <p className="text-body">Singapore</p>
           <motion.img
             src={mapPointer}
             alt=""

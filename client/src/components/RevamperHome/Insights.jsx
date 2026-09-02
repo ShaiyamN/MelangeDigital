@@ -20,7 +20,7 @@ const Insights = ({ insightsData }) => {
   return (
     <div className="z-20 bg-slate-50 dark:bg-[#080812] py-16 lg:py-24 transition-colors">
       <div className="lg:px-20 px-5 max-container">
-        <h2 className="font-bricolage lg:text-[56px] text-[40px] font-bold lg:mb-[60px] mb-[40px] text-slate-900 dark:text-white">
+        <h2 className="font-bricolage text-display font-bold lg:mb-section-header mb-section-y text-slate-900 dark:text-white">
           Current <span className="multiverse-text">Insights</span>
         </h2>
 

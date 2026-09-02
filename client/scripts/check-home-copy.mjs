@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const m = fs.readFileSync(
-  path.join(root, "src/components/pages/DestinationMarketingAgency/markup.html"),
+  path.join(root, "src/components/pages/Home/markup.html"),
   "utf8",
 );
 
@@ -66,7 +66,7 @@ const asserts = [
   [m.includes("home-video-section"), "showreel kept"],
   [m.includes(">FAQ<"), "faq wireframe heading"],
   [m.includes("home-prefooter-cta"), "pre-footer cta"],
-  [m.includes('id="lead-form"'), "lead form kept"],
+  [m.includes('id="report-access"'), "report access form kept"],
   [!m.includes("home-infra-section"), "infra removed"],
   [!m.includes('id="team"'), "team section removed"],
   [!m.includes('id="pricing"'), "detailed report grid removed"],

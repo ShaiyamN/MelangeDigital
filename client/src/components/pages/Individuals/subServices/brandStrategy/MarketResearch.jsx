@@ -72,10 +72,10 @@ const MarketResearch = () => {
       </div>
       <div className="px-6 pb-3 md:px-16 md:pb-16  lg:px-28 lg:pb-6 ">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Best Market Research Service
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[78%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[78%]">
             We believe that understanding the world surrounding your brand is
             the key to unlocking its true potential. That's why we employ a
             three-pronged approach that takes us on a journey of discovery.
@@ -95,7 +95,7 @@ const MarketResearch = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Industry Research
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -112,7 +112,7 @@ const MarketResearch = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Category Research
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -129,7 +129,7 @@ const MarketResearch = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Product Research
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -147,7 +147,7 @@ const MarketResearch = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Customer Satisfaction Surveys
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">

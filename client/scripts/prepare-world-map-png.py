@@ -11,7 +11,6 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "public/destination-marketing-agency/images/world map final 2.png"
 OUTS = [
-    ROOT / "tourism-landing-staging/images/global/world-map-reach.png",
     ROOT / "public/destination-marketing-agency/images/global/world-map-reach.png",
 ]
 DISPLAY_MAX = 1400

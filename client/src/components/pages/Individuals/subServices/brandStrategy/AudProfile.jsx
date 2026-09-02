@@ -67,10 +67,10 @@ const AudProfile = () => {
       </div>
       <div className="px-6  pb-3 md:px-16 md:pb-16  lg:px-28 lg:pb-6">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Audience Development & Profiling Services
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[78%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[78%]">
             Your customers are the lifeline of your brand. By diving into their
             world and decoding their desires, we establish an unbreakable
             connection that transforms them from mere observers to passionate
@@ -87,7 +87,7 @@ const AudProfile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10">
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ap1} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Target Audience Analysis
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -99,7 +99,7 @@ const AudProfile = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ap2} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Segmentation
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -111,7 +111,7 @@ const AudProfile = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ap3} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Communication
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -123,7 +123,7 @@ const AudProfile = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ap4} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Purchase Journey Mapping
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">

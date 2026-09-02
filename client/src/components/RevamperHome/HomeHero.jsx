@@ -68,12 +68,12 @@ const HomeHero = () => {
   return (
     <div>
     <div className="w-full bg-black h-[100px] lg:hidden"></div>
-      <div className="w-[100%] lg:px-20 px-5 lg:pt-[220px] pt-[70px] pb-[80px] heroBG z-50">
+      <div className="w-[100%] lg:px-20 px-5 lg:pt-hero-top pt-[70px] pb-section-y heroBG z-50">
         <div className="max-container flex items-center">
           <div className="lg:w-[60%] text-[#F8ECFF] font-bricolage">
             {/* Hero Text with Framer Motion animation */}
             <motion.h1
-              className="lg:text-[84px] text-[64px] font-bold lg:leading-[84px] leading-[64px] lg:mt-12"
+              className="text-hero font-bold lg:mt-12"
               initial="hidden"
               animate="visible"
               variants={textVariant}

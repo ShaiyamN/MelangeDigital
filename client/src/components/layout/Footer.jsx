@@ -3,7 +3,7 @@ import { FOOTER_OFFICES } from "../../constants/officeGmb";
 import { openEmail, openPhone } from "../../utils/openContactLink";
 import "./footer.css";
 
-const IMG = "/about";
+const IMG = "/destination-marketing-agency/images/site";
 
 const Footer = () => (
   <footer className="site-foot">

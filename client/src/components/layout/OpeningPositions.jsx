@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { closeBtn } from "../../assets/images";
+import MelangeCta from "./MelangeCta";
 
 const OpeningPositions = ({ scrollToForm, onApply }) => {
   const [jobs, setJobs] = useState([]);
@@ -13,8 +14,8 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
         setJobs(
           snapshot.docs
             .map((doc) => ({ id: doc.id, ...doc.data() }))
-            .filter((job) => job.active !== false)
-        )
+            .filter((job) => job.active !== false),
+        ),
       )
       .catch((error) => console.error("Error loading jobs:", error));
   }, []);
@@ -32,96 +33,141 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
     document.body.style.overflow = "hidden";
   };
 
+  const applyFor = (title) => {
+    if (onApply) onApply(title);
+    scrollToForm();
+  };
+
   return (
-    <div id="open-positions" className="lg:px-28 px-5 lg:py-[60px] py-10 bg-[#F3F3F3]">
-      <div className="max-w-[1440px] mx-auto">
-        <h2 className="md:text-[40px] text-[24px] lg:leading-[48px] font-semibold">Open Positions</h2>
-        {jobs.length ? jobs.map((job) => (
-          <div key={job.id} className="lg:flex items-center justify-between mt-6 pb-7 border-b border-[#CBCBCB]">
-            <p className="font-bricolage lg:text-[24px] text-[20px] leading-[30px] text-[#1A1A1A]">{job.title}</p>
-            <div className="flex items-center lg:justify-normal justify-end space-x-5 lg:mt-0 mt-5">
-              <button className="multiColor underline font-semibold text-[16px]" onClick={() => openDetails(job)}>View Details</button>
-              <button
-                className="border border-[#D940FF] rounded-[30px] py-2 px-[12px] font-semibold text-[16px] applyBtn"
-                onClick={() => {
-                  if (onApply) onApply(job.title);
-                  scrollToForm();
-                }}
-              >Apply Now</button>
-            </div>
-          </div>
-        )) : <p className="mt-6 text-[#555]">There are no open positions at the moment.</p>}
+    <section id="open-positions" className="career-open">
+      <div className="career-wrap">
+        <h2 className="career-h2">Open Positions</h2>
+        {jobs.length ? (
+          <ul className="career-open__list">
+            {jobs.map((job) => (
+              <li key={job.id} className="career-open__row">
+                <p className="career-open__title">{job.title}</p>
+                <div className="career-open__actions">
+                  <button type="button" className="career-open__link" onClick={() => openDetails(job)}>
+                    View Details
+                  </button>
+                  <MelangeCta className="career-open__apply" onClick={() => applyFor(job.title)}>
+                    Apply Now
+                  </MelangeCta>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="career-open__empty">There are no open positions at the moment.</p>
+        )}
+        <p className="career-open__note">
+          Don&apos;t see the right role? The form below is still open. Tell us what you&apos;ve got.
+        </p>
       </div>
-      <p className="md:text-[20px] text-[18px] md:leading-[26px] leading-[24px] font-bricolage pt-10 font-bold text-center">Don't see the right role? The form below is still open. Tell us what you've got.</p>
+
       {selectedJob && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center lg:px-28 font-bricolage z-[1000]">
-          <div data-lenis-prevent="true" className="bg-white lg:px-6 lg:py-6 px-5 py-6 w-full max-h-[80vh] mt-10 overflow-y-auto relative z-[1001] custom-scrollbar">
-            <h3 className="text-2xl font-bold pr-10">{selectedJob.title}</h3>
-            
-            {/* Legacy description if it exists */}
+        <div className="career-open__modal" role="presentation" onClick={closeDetails}>
+          <div
+            className="career-open__dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="career-job-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 id="career-job-title" className="career-open__dialog-title">
+              {selectedJob.title}
+            </h3>
+
             {hasText(selectedJob.description) && (
-              <div className="mt-5 about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.description }} />
+              <div
+                className="career-open__dialog-body about-html-content cs-rendered-content"
+                dangerouslySetInnerHTML={{ __html: selectedJob.description }}
+              />
             )}
-            
-            {/* Legacy sections if they exist */}
+
             {selectedJob.sections?.map((section, index) => (
-              <div key={index} className="mt-5">
-                <h4 className="font-bold">{section.title}</h4>
-                <ul className="list-disc ml-5">
-                  {section.items?.map((item, itemIndex) => <li key={itemIndex}>{item}</li>)}
+              <div key={index} className="career-open__dialog-body">
+                <h4 className="career-open__dialog-h4">{section.title}</h4>
+                <ul className="career-open__dialog-list">
+                  {section.items?.map((item, itemIndex) => (
+                    <li key={itemIndex}>{item}</li>
+                  ))}
                 </ul>
               </div>
             ))}
-            
-            {/* New Admin Panel Fields */}
+
             {hasText(selectedJob.about) && (
-              <div className="mt-5 text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.about }} />
+              <div
+                className="career-open__dialog-body about-html-content cs-rendered-content"
+                dangerouslySetInnerHTML={{ __html: selectedJob.about }}
+              />
             )}
-            
-            {((Array.isArray(selectedJob.keyResponsibilities) && selectedJob.keyResponsibilities.some(Boolean)) || hasText(selectedJob.keyResponsibilities)) && (
-              <div className="mt-5">
-                <h4 className="font-bold mb-2 text-lg text-[#1A1A1A]">Key Responsibilities</h4>
+
+            {((Array.isArray(selectedJob.keyResponsibilities) && selectedJob.keyResponsibilities.some(Boolean)) ||
+              hasText(selectedJob.keyResponsibilities)) && (
+              <div className="career-open__dialog-body">
+                <h4 className="career-open__dialog-h4">Key Responsibilities</h4>
                 {Array.isArray(selectedJob.keyResponsibilities) ? (
-                  <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
-                    {selectedJob.keyResponsibilities.map((item, index) => <li key={index}>{item}</li>)}
+                  <ul className="career-open__dialog-list">
+                    {selectedJob.keyResponsibilities.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
                   </ul>
                 ) : (
-                  <div className="text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.keyResponsibilities }} />
+                  <div
+                    className="about-html-content cs-rendered-content"
+                    dangerouslySetInnerHTML={{ __html: selectedJob.keyResponsibilities }}
+                  />
                 )}
               </div>
             )}
-            
-            {((Array.isArray(selectedJob.qualifications) && selectedJob.qualifications.some(Boolean)) || hasText(selectedJob.qualifications)) && (
-              <div className="mt-5">
-                <h4 className="font-bold mb-2 text-lg text-[#1A1A1A]">Qualifications</h4>
+
+            {((Array.isArray(selectedJob.qualifications) && selectedJob.qualifications.some(Boolean)) ||
+              hasText(selectedJob.qualifications)) && (
+              <div className="career-open__dialog-body">
+                <h4 className="career-open__dialog-h4">Qualifications</h4>
                 {Array.isArray(selectedJob.qualifications) ? (
-                  <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
-                    {selectedJob.qualifications.map((item, index) => <li key={index}>{item}</li>)}
+                  <ul className="career-open__dialog-list">
+                    {selectedJob.qualifications.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
                   </ul>
                 ) : (
-                  <div className="text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.qualifications }} />
+                  <div
+                    className="about-html-content cs-rendered-content"
+                    dangerouslySetInnerHTML={{ __html: selectedJob.qualifications }}
+                  />
                 )}
               </div>
             )}
-            
-            {((Array.isArray(selectedJob.benefits) && selectedJob.benefits.some(Boolean)) || hasText(selectedJob.benefits)) && (
-              <div className="mt-5">
-                <h4 className="font-bold mb-2 text-lg text-[#1A1A1A]">Benefits</h4>
+
+            {((Array.isArray(selectedJob.benefits) && selectedJob.benefits.some(Boolean)) ||
+              hasText(selectedJob.benefits)) && (
+              <div className="career-open__dialog-body">
+                <h4 className="career-open__dialog-h4">Benefits</h4>
                 {Array.isArray(selectedJob.benefits) ? (
-                  <ul className="list-disc ml-5 text-[#1A1A1A] space-y-1">
-                    {selectedJob.benefits.map((item, index) => <li key={index}>{item}</li>)}
+                  <ul className="career-open__dialog-list">
+                    {selectedJob.benefits.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
                   </ul>
                 ) : (
-                  <div className="text-[#1A1A1A] leading-relaxed about-html-content cs-rendered-content" dangerouslySetInnerHTML={{ __html: selectedJob.benefits }} />
+                  <div
+                    className="about-html-content cs-rendered-content"
+                    dangerouslySetInnerHTML={{ __html: selectedJob.benefits }}
+                  />
                 )}
               </div>
             )}
-            
-            <img src={closeBtn} alt="Close" className="w-[24px] absolute top-5 right-5 cursor-pointer" onClick={closeDetails} />
+
+            <button type="button" className="career-open__close" aria-label="Close" onClick={closeDetails}>
+              <img src={closeBtn} alt="" width="24" height="24" />
+            </button>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

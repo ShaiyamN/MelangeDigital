@@ -195,7 +195,7 @@ const BlogDetail = () => {
 
       <Navbar />
 
-      <div className="lg:px-[80px] lg:pb-[80px] px-5 py-10 lg:pt-0 pt-6 max-container">
+      <div className="lg:px-[80px] lg:pb-section-y px-5 py-10 lg:pt-0 pt-6 max-container">
         {/* Breadcrumbs */}
         <div className="font-nunito lg:pt-32 pt-20 text-[16px] lg:text-[18px] ml-0 lg:ml-0 mb-6 lg:mb-10">
           <BreadCrumbs breadcrumbs={breadcrumbs} />
@@ -209,9 +209,9 @@ const BlogDetail = () => {
         </div>
 
         {/* Title */}
-        <h1 className="multiverse-text my-[16px] lg:text-[40px] text-2xl lg:font-semibold font-bold lg:leading-[48px] leading-[31.20px] font-nunito mt-4 lg:mt-4">
+        <h2 className="text-display font-display my-[16px] lg:font-semibold font-bold font-nunito mt-4 lg:mt-4">
           {blog.title}
-        </h1>
+        </h2>
 
         {/* Banner image */}
         {blog.image && (() => {

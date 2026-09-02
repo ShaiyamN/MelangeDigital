@@ -68,10 +68,10 @@ const MarketPlace = () => {
       </div>
       <div className="px-6 pb-3 md:px-16 md:pb-16 lg:px-28 lg:pb-6">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Marketplace Management Service in India
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[80%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[80%]">
             Marketplace management plays a crucial role in the ecommerce digital
             marketing. From optimizing product listings and pricing to expertly
             managing customer reviews, we take care of every aspect for you.
@@ -88,7 +88,7 @@ const MarketPlace = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10">
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mp1} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Listing
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -101,7 +101,7 @@ const MarketPlace = () => {
 
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mp2} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Product Content Creation
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -114,7 +114,7 @@ const MarketPlace = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mp3} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 SaaS Integration
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -127,7 +127,7 @@ const MarketPlace = () => {
 
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mp4} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Brand Store Development
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">

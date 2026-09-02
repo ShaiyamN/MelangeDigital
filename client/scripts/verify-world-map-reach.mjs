@@ -10,8 +10,12 @@ const puppeteer = require("puppeteer-core");
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // The page sets <base href="/destination-marketing-agency/">, so assets only resolve over HTTP.
 const WEB_ROOT = path.join(__dirname, "../public");
-const PAGE = "/destination-marketing-agency/index.html";
-const ASSET = path.join(__dirname, "../tourism-landing-staging/images/global/world-map-reach.png");
+const HOME_MARKUP = readFileSync(
+  path.join(__dirname, "../src/components/pages/Home/markup.html"),
+  "utf8",
+);
+const PAGE = "/test.html";
+const ASSET = path.join(__dirname, "../public/destination-marketing-agency/images/global/world-map-reach.png");
 const CACHE = "20260826i";
 const EXPECT_W = 2800;
 const EXPECT_H = 958;
@@ -50,6 +54,13 @@ const MIME = {
 
 const server = http.createServer((req, res) => {
   const rel = decodeURIComponent(new URL(req.url, "http://x").pathname);
+  if (rel === PAGE) {
+    res.writeHead(200, { "content-type": "text/html" });
+    res.end(
+      `<!DOCTYPE html><html><head><base href="/destination-marketing-agency/"></head><body>${HOME_MARKUP}</body></html>`,
+    );
+    return;
+  }
   const file = path.join(WEB_ROOT, rel);
   if (!file.startsWith(WEB_ROOT) || !existsSync(file) || !statSync(file).isFile()) {
     res.writeHead(404).end();

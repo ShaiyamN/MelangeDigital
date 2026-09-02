@@ -17,7 +17,7 @@ const Part4 = () => {
           <div className="lg:px-20 px-5 lg:space-y-[30px] space-y-5 lg:pt-14 pt-10 lg:w-auto w-[250px] ">
             <div className="lg:flex items-center lg:space-x-[13rem] lg:space-y-0 space-y-5 ">
               <div className="flex space-x-5 items-center relative">
-                <p className="text-[60px] leading-[100px] min-w-[33px]">1</p>
+                <p className="text-display leading-[100px] min-w-[33px]">1</p>
                 <div className="">
                   <p className="text-[16px] leading-[21px] mb-2 font-bold">
                     Clarifying Your Value & Messaging
@@ -37,7 +37,7 @@ const Part4 = () => {
               </div>
 
               <div className="flex space-x-5 items-center relative">
-                <p className="text-[60px] leading-[100px] min-w-[33px]">2</p>
+                <p className="text-display leading-[100px] min-w-[33px]">2</p>
                 <div className="">
                   <p className="text-[16px] leading-[21px] mb-2 font-bold">
                     Building the Right Infrastructure
@@ -59,7 +59,7 @@ const Part4 = () => {
 
             <div className=" lg:flex items-center lg:space-x-[9rem] lg:pl-32 lg:space-y-0 space-y-5">
               <div className="flex space-x-5 items-center relative">
-                <p className="text-[60px] leading-[100px] min-w-[33px]">3</p>
+                <p className="text-display leading-[100px] min-w-[33px]">3</p>
                 <div className="">
                   <p className="text-[16px] leading-[21px] mb-2 font-bold">
                     Launching & Scaling Profitably
@@ -79,7 +79,7 @@ const Part4 = () => {
               </div>
 
               <div className="flex space-x-5 items-center relative">
-                <p className="text-[60px] leading-[100px] min-w-[33px]">4</p>
+                <p className="text-display leading-[100px] min-w-[33px]">4</p>
                 <div className="">
                   <p className="text-[16px] leading-[21px] mb-2 font-bold">
                     Full Ownership & Strategic Control

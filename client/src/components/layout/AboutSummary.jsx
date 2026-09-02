@@ -91,10 +91,10 @@ const AboutSummary = () => {
               <span className="multiverse-text font-bold">{currentWord}</span>{" "}
               <br /> Marketing, SEO, and More!
             </h1>*/}
-            <h1 className=" text-2xl md:text-[41px] md:leading-[56px] mt-4 sm:mt-0  font-nunito font-bold">Powering Growth Through <br />
-            <span className="multiverse-text font-bold"> Creativity </span> & <span className="multiverse-text font-bold"> Strategy </span></h1>
+            <h2 className="text-hero font-display mt-4 sm:mt-0 font-nunito font-bold">Powering Growth Through <br />
+            <span className="multiverse-text font-bold"> Creativity </span> & <span className="multiverse-text font-bold"> Strategy </span></h2>
           </div>
-          <p className="pt-3  font-nunito font-normal  text-[16px] leading-[26px] text-[#0f0330]">
+          <p className="pt-3 font-nunito font-normal text-body text-[#0f0330]">
             Welcome to Melange Digital, India's leading Digital Marketing Agency
             specialising in Performance Marketing, SEO, Video Marketing,
             Influencer Marketing, and E-commerce solutions. Our expert team uses

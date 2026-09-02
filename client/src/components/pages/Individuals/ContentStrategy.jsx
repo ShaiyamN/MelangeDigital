@@ -202,9 +202,9 @@ const ContentStrategy = () => {
         className="px-5 md:px-16 lg:px-20 font-bricolage max-container"
       >
         <div className="lg:mt-[50px] mt-10">
-          <h1 className="text-[44px] leading-[52px] md:text-[48px] font-semibold">
+          <h2 className="text-hero font-display font-semibold">
             Strategies for Your Audience
-          </h1>
+          </h2>
         </div>
         <p className="text-lg md:text-xl w-auto lg:mt-[17px] mt-[16px]">
           Content should stop the scroll—and spark the click. Our approach
@@ -220,7 +220,7 @@ const ContentStrategy = () => {
         />
 
         <motion.div {...fadeInUp}>
-          <h2 className="text-[40px] text-[#000144] leading-[48px] font-bold mt-20">
+          <h2 className="text-display text-[#000144] font-bold mt-20">
             Amplify Your
             <span className="multiverse-text"> Brand's Voice </span>
           </h2>
@@ -237,7 +237,7 @@ const ContentStrategy = () => {
         </motion.div>
 
         <motion.div {...fadeInUp}>
-          <h2 className="mt-20 lg:mt-20  text-[#000144] lg:pb-0 text-[40px] font-bold ">
+          <h2 className="mt-20 lg:mt-20 text-[#000144] lg:pb-0 text-display font-bold">
             Our <span className="multiverse-text"> Approach </span>
           </h2>
           <div className="lg:my-10 my-5 w-full h-0.5 bg-gradient-to-r from-purple-400 via-blue-500 to-purple-600"></div>

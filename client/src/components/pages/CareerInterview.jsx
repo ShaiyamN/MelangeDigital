@@ -1,4 +1,4 @@
-const ARROW = "/about/arrow-top-right-purple.svg";
+import MelangeCta from "../layout/MelangeCta";
 
 const STEPS = [
   {
@@ -50,12 +50,13 @@ export default function CareerInterview({ onSeeJobs }) {
           <article className="career-iv__card career-iv__apply">
             <h3>Ready to Apply</h3>
             <p>Found a role that fits? The process moves fast, most candidates hear back within a week at each stage.</p>
-            <button type="button" className="career-cta career-cta--light" onClick={onSeeJobs}>
-              <span>See all job openings below</span>
-              <span className="career-cta__icon career-cta__icon--down" aria-hidden="true">
-                <img src={ARROW} width="12" height="12" alt="" />
-              </span>
-            </button>
+            <MelangeCta
+              className="career-cta--light"
+              iconClassName="melange-cta__icon--down"
+              onClick={onSeeJobs}
+            >
+              See all job openings below
+            </MelangeCta>
           </article>
         </div>
       </div>

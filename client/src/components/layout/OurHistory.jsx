@@ -80,7 +80,7 @@ const OurHistory = () => {
       
       <div className="max-container">
         <div className="px-6 py-16 md:px-16 lg:px-24">
-          <h2 className="font-semibold text-[52px] leading-[1.1] text-[#ffffff] mb-12 tracking-tight md:text-[52px]">
+          <h2 className="font-semibold text-display text-[#ffffff] mb-12 tracking-tight">
             Our History
           </h2>
           
@@ -160,7 +160,7 @@ const OurHistory = () => {
               <div className="flex flex-col justify-center">
                 <div className="mb-6">
                   {/* Year number - hidden on mobile */}
-                  <span className="font-bold text-[72px] md:text-[80px] leading-[0.9] block tracking-tight hidden md:block">
+                  <span className="font-bold text-display leading-[0.9] block tracking-tight hidden md:block">
                     {data.year.split('-')[0]}
                   </span>
                   {/* Subtitle text - visible on all screens */}

@@ -6,9 +6,9 @@ const PrivacyPolicy = () => {
     <>
       <Navbar />
       <div className="container font-nunito mx-auto text-[#1a1a1a] xxl:px-[100px] bg-white pt-[100px] lg:pt-[120px] pb-[50px] lg:pb-[100px] px-4 lg:px-[80px]">
-        <h1 className="text-[28px] lg:text-[40px] font-semibold mb-6 multiverse-text">
+        <h2 className="text-display font-display font-semibold mb-6">
           Privacy Policy
-        </h1>
+        </h2>
 
         <p className="mb-6 text-[18px] lg:text-[20px] w-auto lg:w-[1012px]">
           Welcome to Mélange Digital's Privacy Policy. We are committed to

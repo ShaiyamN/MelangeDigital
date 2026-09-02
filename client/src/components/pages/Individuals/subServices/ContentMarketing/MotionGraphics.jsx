@@ -64,15 +64,15 @@ const MotionGraphics = () => {
         />
       </Helmet>
       <Navbar />
-      <div className="font-nunito px-6 pt-24 md:pt-16 lg:px-28 text-base md:px-16 lg:pt-32 md:text-lg font-semibold mb-6">
+      <div className="font-nunito px-6 pt-24 md:pt-16 lg:px-28 text-body md:px-16 lg:pt-32 font-semibold mb-6">
         <BreadCrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="px-6  pb-3 md:px-16 md:pb-16  lg:px-28 lg:pb-4 ">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Captivate your Audience with Our Motion Graphic Service
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[78%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[78%]">
             Unleash the power of motion graphics for your brands - simplify
             complexity, captivate your audience, and leave a lasting impression.
             In today's digital realm, where attention is scarce and information
@@ -90,7 +90,7 @@ const MotionGraphics = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10">
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mg1} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Explainer Videos
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -102,7 +102,7 @@ const MotionGraphics = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mg2} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Emotive Videos
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -114,7 +114,7 @@ const MotionGraphics = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mg3} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Instructional Videos
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -126,7 +126,7 @@ const MotionGraphics = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={mg4} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Animated Ads
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">

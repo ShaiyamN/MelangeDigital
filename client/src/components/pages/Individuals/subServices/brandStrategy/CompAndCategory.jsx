@@ -67,10 +67,10 @@ const CompAndCategory = () => {
       </div>
       <div className="px-6  pb-3 md:px-16 md:pb-16  lg:px-28 lg:pb-6">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Outshine the Competition with Benchmarking Strategies
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[78%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[78%]">
             In today's fast-paced and ever-evolving business landscape, staying
             ahead of the competition is paramount. And we help you achieve this
             with deep understanding & strategic analysis of your category &
@@ -87,7 +87,7 @@ const CompAndCategory = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10">
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={cc1} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Category Benchmarking
               </h3>
               <p className="text-sm md:text-[18px] leading-6 w-[100%]">
@@ -100,7 +100,7 @@ const CompAndCategory = () => {
 
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={cc2} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Competition Analysis
               </h3>
               <p className="text-sm md:text-[18px] leading-6 w-[100%]">
@@ -114,7 +114,7 @@ const CompAndCategory = () => {
 
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={cc3} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Performance Metrics Comparison
               </h3>
               <p className="text-sm md:text-[18px] leading-6 w-[100%]">
@@ -128,7 +128,7 @@ const CompAndCategory = () => {
 
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={cc4} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Customer Experience Assessment
               </h3>
               <p className="text-sm md:text-[18px] leading-6 w-[100%]">

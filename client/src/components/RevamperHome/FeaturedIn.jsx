@@ -21,7 +21,7 @@ const FeaturedIn = ({ images }) => {
       {/* Partner Logos Section */}
       <div className="lg:pt-[90px] lg:pb-[90px] pt-20 pb-10 bg-white " ref={sectionRef}>
         <motion.h2
-          className="font-bricolage lg:text-[48px] text-[40px] font-bold lg:mb-8 lg:px-20 px-5 max-container"
+          className="font-bricolage text-display font-bold lg:mb-8 lg:px-20 px-5 max-container"
           variants={raiseFromBottom}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}

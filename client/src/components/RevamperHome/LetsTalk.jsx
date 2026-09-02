@@ -53,7 +53,7 @@ const LetsTalk = () => {
           {/* Text with GSAP character-by-character animation */}
           <p
             ref={textRef} // Reference to the text element
-            className="text-white text-[73px] md:text-[224px] font-normal leading-none"
+            className="text-white text-hero font-normal leading-none"
           >
             Let's Talk
           </p>

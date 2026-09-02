@@ -1,0 +1,14 @@
+{
+  "reportFormIframeSrc": "https://forms.zohopublic.in/melangedigital1/form/WebsiteReportLead/formperma/0MFx1tipZ5ciq9R3nAB04bRNOl8RlVD0XQ-U3lzhVhw?zf_rszfm=1",
+  "reportFormPerma": "0MFx1tipZ5ciq9R3nAB04bRNOl8RlVD0XQ-U3lzhVhw",
+  "reportAccessId": "report-access",
+  "pendingReportKey": "pending-report",
+  "reportDownloadPath": "/report-download",
+  "defaultReportSlug": "indian-outbound-2026",
+  "reports": {
+    "indian-outbound-2026": {
+      "title": "The Indian Outbound Inspiration Report 2026",
+      "path": "/indian-outbound-tourism-report"
+    }
+  }
+}

@@ -28,7 +28,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
-SVG = ROOT / "tourism-landing-staging/images/global/world-map-reach.svg"
+SVG = ROOT / "public/destination-marketing-agency/images/global/world-map-reach.svg"
 
 _spec = importlib.util.spec_from_file_location("pwm", Path(__file__).with_name("prepare-world-map.py"))
 pwm = importlib.util.module_from_spec(_spec)

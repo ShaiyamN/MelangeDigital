@@ -135,7 +135,7 @@ const NewServices = () => {
         animate={isLeftInView ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 2.8, ease: "easeOut" }}
       >
-        <div className="text-white font-extrabold text-[40px] space-y-[18px] text-center py-[90px]">
+        <div className="text-white font-extrabold text-display space-y-[18px] text-center section-y">
           <span className="text-[33px] font-bold text-[#DDDDDD]">
             What We Do
           </span>

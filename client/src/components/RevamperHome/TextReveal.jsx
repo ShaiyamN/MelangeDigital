@@ -87,7 +87,7 @@ const TextReveal = () => {
           <div className="flex justify-center items-center lg:py-[132px] py-[80px] lg:px-10 px-5 bg-white font-bricolage">
             <p
               ref={textRef}
-              className="font-bold lg:text-[60px] text-[32px] lg:leading-[67px] text-center text-[#141F59]"
+              className="font-bold text-display text-center text-[#141F59]"
             >
               {splitText("We do the heavy lifting of Cracking The")}
               <br className="lg:block hidden" />

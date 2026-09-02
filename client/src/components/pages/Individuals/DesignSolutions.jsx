@@ -103,7 +103,7 @@ const DesignSolutions = () => {
         />
       </Helmet>
       <Navbar />
-      <div className="pt-28 md:pt-32  font-nunito font-semibold text-[16px] lg:text-[18px] ml-7 lg:ml-28  mb-6">
+      <div className="pt-28 md:pt-32 font-nunito font-semibold text-body ml-7 lg:ml-28  mb-6">
         <BreadCrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div
@@ -113,9 +113,9 @@ const DesignSolutions = () => {
       >
         <div className="">
           <div>
-            <h1 className="text-3xl md:text-4xl w-auto font-semibold">
+            <h2 className="text-hero font-display w-auto font-semibold">
               Get your Design done with our Design Solutions
-            </h1>
+            </h2>
 
             <img
               src={servicesImage4}

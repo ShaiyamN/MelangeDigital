@@ -21,7 +21,7 @@ const Partnered = ({ images }) => {
       {/* Partner Logos Section */}
       <div className="pt-[90px] bg-white " ref={sectionRef}>
         <motion.h2
-          className="font-bricolage lg:text-[48px] text-[40px] font-bold mb-8 lg:px-20 px-5 max-container"
+          className="font-bricolage text-display font-bold mb-8 lg:px-20 px-5 max-container"
           variants={raiseFromBottom}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}

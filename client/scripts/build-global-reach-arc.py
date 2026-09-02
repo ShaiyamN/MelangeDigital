@@ -5,8 +5,8 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-REF = ROOT / "tourism-landing-staging/images/global/world-map-arc-ref.png"
-OUT = ROOT / "tourism-landing-staging/images/global/world-map-arc.png"
+REF = ROOT / "public/destination-marketing-agency/images/global/world-map-arc-ref.png"
+OUT = ROOT / "public/destination-marketing-agency/images/global/world-map-arc.png"
 OCEAN = np.array([232, 231, 236, 255], dtype=np.uint8)  # #E8E7EC
 LAND = np.array([255, 255, 255, 255], dtype=np.uint8)
 INDIA_FILL = np.array([91, 33, 182, 255], dtype=np.uint8)

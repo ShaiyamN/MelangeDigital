@@ -67,15 +67,15 @@ const Ui = () => {
         />
       </Helmet>
       <Navbar />
-      <div className="font-nunito px-6 pt-24 md:pt-16 lg:px-28 text-base md:px-16 lg:pt-32 md:text-lg font-semibold mb-6">
+      <div className="font-nunito px-6 pt-24 md:pt-16 lg:px-28 text-body md:px-16 lg:pt-32 font-semibold mb-6">
         <BreadCrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="px-6 pb-3 md:px-16 md:pb-16 lg:px-28 lg:pb-4">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             UI/UX Development Services
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[78%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[78%]">
             In the realm of UI/UX design, aesthetics are just the tip of the
             iceberg. The true power lies in crafting seamless and intuitive
             experiences that prioritize user needs.
@@ -92,7 +92,7 @@ const Ui = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10">
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ui1} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Research
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -104,7 +104,7 @@ const Ui = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ui2} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Strategy
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -116,7 +116,7 @@ const Ui = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ui3} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Figma Mockups
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -128,7 +128,7 @@ const Ui = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={ui4} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-2">
+              <h3 className="font-bold text-title my-1 lg:my-2">
                 Responsive and Adaptive Design
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">

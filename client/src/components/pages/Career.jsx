@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Footer, Navbar, CareerForm, OpeningPositions } from "../layout";
+import { Footer, Navbar, CareerForm, OpeningPositions, MelangeCta } from "../layout";
 import CareerBenefits from "./CareerBenefits";
 import CareerBehindTheScenes from "./CareerBehindTheScenes";
 import CareerInterview from "./CareerInterview";
-import "./career-clay.css";
 import "./career.css";
 
 const IMG = "/careers";
-const ARROW = "/about/arrow-top-right-purple.svg";
 
 function WhyCard({ n, title, body, cls }) {
   return (
@@ -18,30 +16,6 @@ function WhyCard({ n, title, body, cls }) {
       <p className="career-why__t">{title}</p>
       <p className="career-why__b">{body}</p>
     </article>
-  );
-}
-
-function Cta({ to, onClick, children, className = "" }) {
-  const inner = (
-    <>
-      <span>{children}</span>
-      <span className="career-cta__icon" aria-hidden="true">
-        <img src={ARROW} width="12" height="12" alt="" />
-      </span>
-    </>
-  );
-  const cls = `career-cta ${className}`.trim();
-  if (onClick) {
-    return (
-      <button type="button" className={cls} onClick={onClick}>
-        {inner}
-      </button>
-    );
-  }
-  return (
-    <Link to={to} className={cls}>
-      {inner}
-    </Link>
   );
 }
 
@@ -81,7 +55,7 @@ const Career = () => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:ital@1&family=Lato:wght@400;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&family=Lato:wght@400;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
           rel="stylesheet"
         />
         <script type="application/ld+json">
@@ -181,7 +155,7 @@ const Career = () => {
         <section className="career-wander">
           <img
             className="career-wander__bg"
-            src="/about/wanderlust.jpg"
+            src="/destination-marketing-agency/images/about/wanderlust.jpg"
             alt=""
             width="1437"
             height="290"
@@ -190,7 +164,7 @@ const Career = () => {
           <h2 className="career-h2">
             Your Next Role <span className="career-italic">Starts Here.</span>
           </h2>
-          <Cta onClick={scrollToOpenings}>View Open Positions</Cta>
+          <MelangeCta onClick={scrollToOpenings}>View Open Positions</MelangeCta>
         </section>
       </main>
       <Footer />

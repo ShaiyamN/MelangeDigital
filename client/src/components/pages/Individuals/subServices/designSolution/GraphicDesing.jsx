@@ -73,10 +73,10 @@ const GraphicDesign = () => {
       </div>
       <div className="px-6 pb-3 md:px-16 md:pb-16 lg:px-28 lg:pb-6">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Graphic Design Service
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[78%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[78%]">
             Graphic design transcends colors and visuals; it is the art of
             narrating stories through captivating imagery and compelling
             visuals. At Mélange, embrace the influential potential of design to
@@ -98,7 +98,7 @@ const GraphicDesign = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Animations
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -115,7 +115,7 @@ const GraphicDesign = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Illustrations
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -131,7 +131,7 @@ const GraphicDesign = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Social Media
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -148,7 +148,7 @@ const GraphicDesign = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Advertisements
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">

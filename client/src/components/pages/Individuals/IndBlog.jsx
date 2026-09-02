@@ -51,14 +51,14 @@ const IndBlog = () => {
         />
       </Helmet>
       <Navbar />
-      <div className="lg:px-[110px] lg:pb-[80px] px-5 py-10 lg:pt-0 pt-6">
+      <div className="lg:px-[110px] lg:pb-section-y px-5 py-10 lg:pt-0 pt-6">
         <div className="font-nunito lg:pt-32 pt-20 text-[16px] lg:text-[18px] ml-0 lg:ml-0 mb-6 lg:mb-10">
           <BreadCrumbs breadcrumbs={breadcrumbs} />
         </div>
         <div className="text-stone-400 text-base font-normal font-nunito">
           SEO - March 28, 2024
         </div>
-        <div className="multiverse-text my-[16px] lg:text-[40px] text-2xl lg:font-semibold font-bold lg:leading-[48px] leading-[31.20px] font-nunito mt-[2px]">
+        <div className="multiverse-text my-[16px] text-display lg:font-semibold font-bold font-nunito mt-[2px]">
           Why Your Business Can't Afford to Ignore SEO Agency Services?
         </div>
         {/* <div className="text-zinc-900 lg:text-xl text-lg font-bold font-nunito mt-[6px]">
@@ -439,7 +439,7 @@ const IndBlog = () => {
         {/*Other Related Post*/}
 
         <div className=" font-nunito lg:mt-[80px] mt-10">
-          <div className=" text-zinc-900 lg:text-[40px] text-2xl lg:font-semibold font-bold lg:leading-[48px] leading-[27px] ">
+          <div className="text-zinc-900 text-display lg:font-semibold font-bold">
             Other Related Posts
           </div>
           <div className="grid lg:grid-cols-3 grid-cols-1 lg:gap-x-[30px] lg:gap-y-10 gap-y-[30px] lg:mt-4 mt-4    ">

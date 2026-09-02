@@ -1,8 +1,8 @@
 export { default as Home } from "./Home";
-export { default as Services } from "./ServicesTourism";
+export { default as Services } from "./Services";
 export { default as Contact } from "./Contact";
 export { default as About } from "./About";
-export { default as Works } from "./Works";
+export { default as Works } from "./Work";
 export { default as Error } from "./Error";
 export { default as TermsofService } from "./TermsofService";
 export { default as PrivatePolicy } from "./PrivatePolicy";

@@ -42,7 +42,7 @@ const Work = ({ icon, tag1, tag2, tag3, tag4, title, description, path, services
           />
         </div>
       </Link>
-      <div className="flex flex-wrap py-1 text-[#1A1A1A] font-bold lg:text-[15px] text-[12px] lg:pt-[26px] lg:pb-3 pt-2 gap-x-7 gap-y-2">
+      <div className="flex flex-wrap py-1 text-[#1A1A1A] font-bold text-body lg:pt-[26px] lg:pb-3 pt-2 gap-x-7 gap-y-2">
         {services && services.length > 0 ? (
           services.slice(0, 4).map((service, idx) => (
             <p key={idx}>{service}</p>
@@ -58,7 +58,7 @@ const Work = ({ icon, tag1, tag2, tag3, tag4, title, description, path, services
       </div>
       <Link to={path} className="cursor-pointer">
         <motion.h2
-          className="font-bold lg:text-[36px] lg:leading-[1.2] text-[28px] leading-[1.2] text-[#141F59] break-words line-clamp-2 overflow-hidden mt-2"
+          className="font-bold text-title text-[#141F59] break-words line-clamp-2 overflow-hidden mt-2"
           variants={raiseFromBottom}
           initial="hidden"
           whileInView="visible"
@@ -159,10 +159,10 @@ const   WorkSummary = () => {
       : works.filter((work) => work.filter.includes(selectedFilter));
 
   return (
-    <div className="font-bricolage lg:px-20 px-5 pb-[40px] max-container relative ">
+    <div className="font-bricolage lg:px-20 px-5 pb-section-y max-container relative ">
       {/*Heading*/}
-      <div className="  pb-10 sm:pb-[0px]">
-        <h2 className="font-bold text-[#141F59] lg:text-[124px] text-[40px] lg:leading-[124px] leading-[40px] font-bricolage">
+      <div className="pb-10 sm:pb-[0px]">
+        <h2 className="font-bold text-display text-[#141F59] font-bricolage">
           Stories in <span className="multiverse-text">Action</span>
         </h2>
       </div>

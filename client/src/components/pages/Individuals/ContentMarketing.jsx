@@ -99,7 +99,7 @@ const ContentMarketing = () => {
         />
       </Helmet>
       <Navbar />
-      <div className="font-nunito font-semibold text-[16px] pt-28 md:pt-32 lg:text-[18px] ml-7 lg:ml-[114px] mb-6 ">
+      <div className="font-nunito font-semibold text-body pt-28 md:pt-32 ml-7 lg:ml-[114px] mb-6 ">
         <BreadCrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div
@@ -108,9 +108,9 @@ const ContentMarketing = () => {
         }`}
       >
         <div className="">
-          <h1 className="text-3xl md:text-4xl  font-semibold">
+          <h2 className="text-hero font-display font-semibold">
             Get Strategic Content Marketing Service
-          </h1>
+          </h2>
           {/* <p className="font-bold multiverse-text text-lg md:text-2xl w-auto mt-1">
             Crafting conversations to drive conversions.
           </p> */}

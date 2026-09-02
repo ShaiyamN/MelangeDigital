@@ -1,0 +1,312 @@
+{
+  "generatedAt": "2026-09-01T08:41:44.377Z",
+  "totals": {
+    "assetFiles": 771,
+    "unused": 0,
+    "unusedBytes": 0,
+    "review": 13,
+    "reviewBytes": 1885621,
+    "duplicates": 0,
+    "duplicatesBytes": 0
+  },
+  "brokenReferences": [
+    {
+      "ref": "/images/row1-logo1.png",
+      "disk": "images/row1-logo1.png"
+    },
+    {
+      "ref": "/images/row1-logo2.png",
+      "disk": "images/row1-logo2.png"
+    },
+    {
+      "ref": "/images/row1-logo3.png",
+      "disk": "images/row1-logo3.png"
+    },
+    {
+      "ref": "/images/row2-logo1.png",
+      "disk": "images/row2-logo1.png"
+    },
+    {
+      "ref": "/images/row2-logo2.png",
+      "disk": "images/row2-logo2.png"
+    },
+    {
+      "ref": "/images/row2-logo3.png",
+      "disk": "images/row2-logo3.png"
+    },
+    {
+      "ref": "/images/row2-logo4.png",
+      "disk": "images/row2-logo4.png"
+    },
+    {
+      "ref": "/images/row3-logo1.png",
+      "disk": "images/row3-logo1.png"
+    },
+    {
+      "ref": "/images/row3-logo2.png",
+      "disk": "images/row3-logo2.png"
+    },
+    {
+      "ref": "/images/row3-logo3.png",
+      "disk": "images/row3-logo3.png"
+    },
+    {
+      "ref": "/videos/sanket.png",
+      "disk": "public/videos/sanket.png"
+    },
+    {
+      "ref": "/videos/jason.png",
+      "disk": "public/videos/jason.png"
+    },
+    {
+      "ref": "/videos/ekaterina.png",
+      "disk": "public/videos/ekaterina.png"
+    },
+    {
+      "ref": "/videos/ashmita.png",
+      "disk": "public/videos/ashmita.png"
+    },
+    {
+      "ref": "/videos/rakesh.png",
+      "disk": "public/videos/rakesh.png"
+    },
+    {
+      "ref": "/videos/shreyash.png",
+      "disk": "public/videos/shreyash.png"
+    },
+    {
+      "ref": "/videos/anson.png",
+      "disk": "public/videos/anson.png"
+    },
+    {
+      "ref": "/videos/sheefa.png",
+      "disk": "public/videos/sheefa.png"
+    },
+    {
+      "ref": "/videos/akshata.png",
+      "disk": "public/videos/akshata.png"
+    },
+    {
+      "ref": "/videos/siffa.png",
+      "disk": "public/videos/siffa.png"
+    },
+    {
+      "ref": "/videos/saswat.png",
+      "disk": "public/videos/saswat.png"
+    },
+    {
+      "ref": "/videos/rosanne.png",
+      "disk": "public/videos/rosanne.png"
+    },
+    {
+      "ref": "/videos/siddharth.png",
+      "disk": "public/videos/siddharth.png"
+    },
+    {
+      "ref": "/videos/vaibhavi.png",
+      "disk": "public/videos/vaibhavi.png"
+    },
+    {
+      "ref": "/videos/mihir.png",
+      "disk": "public/videos/mihir.png"
+    },
+    {
+      "ref": "/videos/maria.png",
+      "disk": "public/videos/maria.png"
+    },
+    {
+      "ref": "/videos/sakshi.png",
+      "disk": "public/videos/sakshi.png"
+    },
+    {
+      "ref": "/videos/julien.png",
+      "disk": "public/videos/julien.png"
+    },
+    {
+      "ref": "/videos/kirk.png",
+      "disk": "public/videos/kirk.png"
+    },
+    {
+      "ref": "/videos/pranav.png",
+      "disk": "public/videos/pranav.png"
+    },
+    {
+      "ref": "/videos/dylan.png",
+      "disk": "public/videos/dylan.png"
+    },
+    {
+      "ref": "/videos/souvik.png",
+      "disk": "public/videos/souvik.png"
+    },
+    {
+      "ref": "/videos/kaustubh.png",
+      "disk": "public/videos/kaustubh.png"
+    },
+    {
+      "ref": "/videos/shaiyam.png",
+      "disk": "public/videos/shaiyam.png"
+    },
+    {
+      "ref": "/videos/shrutitnya.png",
+      "disk": "public/videos/shrutitnya.png"
+    },
+    {
+      "ref": "/videos/amardeep.png",
+      "disk": "public/videos/amardeep.png"
+    },
+    {
+      "ref": "/videos/ayusha.png",
+      "disk": "public/videos/ayusha.png"
+    },
+    {
+      "ref": "/videos/ashna.png",
+      "disk": "public/videos/ashna.png"
+    },
+    {
+      "ref": "/videos/sneha.png",
+      "disk": "public/videos/sneha.png"
+    },
+    {
+      "ref": "/videos/maithili.png",
+      "disk": "public/videos/maithili.png"
+    },
+    {
+      "ref": "/./assets/images/worktogether.png",
+      "disk": "./assets/images/worktogether.png"
+    },
+    {
+      "ref": "/./assets/images/careerDropArrow.png",
+      "disk": "./assets/images/careerDropArrow.png"
+    },
+    {
+      "ref": "/./assets/images/serviceBg.png",
+      "disk": "./assets/images/serviceBg.png"
+    },
+    {
+      "ref": "/assets/video/final.gif",
+      "disk": "public/assets/video/final.gif"
+    },
+    {
+      "ref": "/assets/video/partner.gif",
+      "disk": "public/assets/video/partner.gif"
+    },
+    {
+      "ref": "/assets/video/mobileBanner.gif",
+      "disk": "public/assets/video/mobileBanner.gif"
+    },
+    {
+      "ref": "/../images/newQuote.gif",
+      "disk": "../images/newQuote.gif"
+    },
+    {
+      "ref": "/../images/bg-cover.jpg",
+      "disk": "../images/bg-cover.jpg"
+    },
+    {
+      "ref": "/../images/bg-c2a.png",
+      "disk": "../images/bg-c2a.png"
+    },
+    {
+      "ref": "/../images/background-gradient.webp",
+      "disk": "../images/background-gradient.webp"
+    },
+    {
+      "ref": "/./photo.jpeg",
+      "disk": "./photo.jpeg"
+    },
+    {
+      "ref": "/./photo.png",
+      "disk": "./photo.png"
+    },
+    {
+      "ref": "/destination-marketing-agency/videos/hero-video.mp4",
+      "disk": "public/destination-marketing-agency/videos/hero-video.mp4"
+    },
+    {
+      "ref": "/favicon-away.ico",
+      "disk": "favicon-away.ico"
+    }
+  ],
+  "unused": [],
+  "review": [
+    {
+      "path": "public/destination-marketing-agency/images/background-gradient.webp",
+      "sizeBytes": 297786,
+      "root": "destination-marketing-agency",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/bg-c2a.png",
+      "sizeBytes": 266905,
+      "root": "destination-marketing-agency",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/bg-cover.jpg",
+      "sizeBytes": 237511,
+      "root": "destination-marketing-agency",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/about/leaders/jason.png",
+      "sizeBytes": 166403,
+      "root": "about",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/about/leaders/sanket.png",
+      "sizeBytes": 165896,
+      "root": "about",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/about/leaders/kaustubh.png",
+      "sizeBytes": 160669,
+      "root": "about",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/about/leaders/maria.png",
+      "sizeBytes": 158619,
+      "root": "about",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/about/leaders/ekaterina.png",
+      "sizeBytes": 156738,
+      "root": "about",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/about/leaders/julien.png",
+      "sizeBytes": 147237,
+      "root": "about",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/influencer_marketing/img/new-update/hero-shape-1.png",
+      "sizeBytes": 102762,
+      "root": "influencer_marketing",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/newQuote.gif",
+      "sizeBytes": 18107,
+      "root": "destination-marketing-agency",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/favicon.ico",
+      "sizeBytes": 3494,
+      "root": "destination-marketing-agency",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/influencer_marketing/img/favicon.ico",
+      "sizeBytes": 3494,
+      "root": "influencer_marketing",
+      "reason": "review-basename-collision"
+    }
+  ],
+  "duplicates": []
+}

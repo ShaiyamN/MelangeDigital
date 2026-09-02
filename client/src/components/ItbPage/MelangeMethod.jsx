@@ -13,7 +13,7 @@ const MelangeMethod = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         viewport={{ once: true }}
       >
-        <div className="text-[#791FF0] lg:text-[80px] text-[60px] lg:leading-[80px] leading-[60px] font-bold">
+        <div className="text-[#791FF0] text-display font-bold">
           <p>The</p>
           <p className="ml-20">Melange</p>
           <p>Method</p>
@@ -33,7 +33,7 @@ const MelangeMethod = () => {
           <p className="font-semibold">RESEARCH-DRIVEN</p>
           <p className="text-[#791FF0] font-semibold">
             {" "}
-            <span className="text-[30px]">4Cs</span> APPROACH
+            <span className="text-title">4Cs</span> APPROACH
           </p>
         </div>
       </motion.div>

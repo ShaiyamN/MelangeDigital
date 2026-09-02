@@ -6,9 +6,9 @@ import { feature } from "topojson-client";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CLIENT = path.join(__dirname, "..");
-const STAGING = path.join(CLIENT, "tourism-landing-staging");
-const OUT_SVG = path.join(STAGING, "images/global/world-map-globe.svg");
-const INDEX = path.join(STAGING, "index.html");
+const MARKETING = path.join(CLIENT, "public/destination-marketing-agency");
+const OUT_SVG = path.join(MARKETING, "images/global/world-map-globe.svg");
+const HOME_MARKUP = path.join(CLIENT, "src/components/pages/Home/markup.html");
 const CACHE = "20260815n";
 const OCEAN = "#E8E7EC";
 const LAND = "#FFFFFF";
@@ -121,10 +121,10 @@ ${routes.map((d) => `         <path d="${d}"/>`).join("\n")}
 ${pinHtml}
       </figure>`;
 
-const html = readFileSync(INDEX, "utf8");
+const html = readFileSync(HOME_MARKUP, "utf8");
 const next = html.replace(/<figure class="global-reach-visual">[\s\S]*?<\/figure>/, figure);
 if (next === html) throw new Error("global-reach figure not found in index.html");
-writeFileSync(INDEX, next);
+writeFileSync(HOME_MARKUP, next);
 
 console.log("saved", OUT_SVG);
 console.log("params", JSON.stringify(PARAMS));

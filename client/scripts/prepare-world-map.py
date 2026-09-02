@@ -19,7 +19,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "tourism-landing-staging/images/global/world-map-reach.svg"
+OUT = ROOT / "public/destination-marketing-agency/images/global/world-map-reach.svg"
 
 # --- source decoding -------------------------------------------------------
 PURPLE_REF = 180  # brightest channel of the artwork's purple; below it means partial coverage

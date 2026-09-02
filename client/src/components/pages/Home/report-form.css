@@ -1,0 +1,99 @@
+/* Report access — copy block + form; matches report-promo card rhythm */
+
+.home-report-access-section {
+  scroll-margin-top: calc(var(--nav-sticky-offset, 69px) + 12px);
+  padding-top: clamp(24px, 3svh, 40px) !important;
+  padding-bottom: clamp(24px, 3svh, 40px) !important;
+  background: #fff;
+}
+
+.home-report-access-section .container-4 {
+  max-width: min(100%, 1180px);
+}
+
+.report-access-shell {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  padding: clamp(20px, 2.5svh, 28px) clamp(20px, 2.5vw, 32px);
+  background: #f3ebff;
+  border: 1.5px solid #c9a6f5;
+  border-radius: 28px;
+}
+
+.report-access-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.report-access-header {
+  text-align: left;
+}
+
+.report-access-heading {
+  text-align: left !important;
+  line-height: 1.2 !important;
+}
+
+.report-access-intro {
+  margin-top: 16px;
+}
+
+.home-report-access-section .report-access-benefits-title {
+  margin-top: 16px;
+  margin-bottom: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--black-10);
+}
+
+.home-report-access-section .report-access-benefits {
+  margin: 12px 0 0;
+}
+
+.home-report-access-section .leadform-contact-line.report-access-meta {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--black-10);
+  text-align: left;
+}
+
+.report-access-form {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.report-access-form .report-form-iframe-mount {
+  width: 100%;
+  line-height: 0;
+}
+
+.report-access-form iframe {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  height: 360px;
+  border: none;
+}
+
+@media (min-width: 900px) {
+  .report-access-shell {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+    align-items: start;
+    gap: clamp(24px, 4vw, 40px);
+  }
+
+  .report-access-form {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 899px) {
+  .report-access-shell {
+    gap: 24px;
+  }
+}

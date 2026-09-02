@@ -77,10 +77,10 @@ const Contact = () => {
     ],
     "location": [
       { "@type": "Place", "name": "Mélange Digital — India (Headquarters)", "address": { "@type": "PostalAddress", "addressLocality": "Mumbai", "addressRegion": "Maharashtra", "addressCountry": "IN" } },
-      { "@type": "Place", "name": "Mélange Digital — UAE", "address": { "@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE" } },
       { "@type": "Place", "name": "Mélange Digital — Singapore", "address": { "@type": "PostalAddress", "addressLocality": "Singapore", "addressCountry": "SG" } },
+      { "@type": "Place", "name": "Mélange Digital — United Arab Emirates", "address": { "@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE" } },
       { "@type": "Place", "name": "Mélange Digital — United Kingdom", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" } },
-      { "@type": "Place", "name": "Mélange Digital — Africa", "address": { "@type": "PostalAddress", "addressCountry": "ZM" } }
+      { "@type": "Place", "name": "Mélange Digital — Zambia", "address": { "@type": "PostalAddress", "addressCountry": "ZM" } }
     ],
     "sameAs": [
       "https://www.linkedin.com/company/melangedigital/",
@@ -132,7 +132,7 @@ const Contact = () => {
   "@type": "WebPage",
   "name": "Contact Us — Mélange Digital",
   "url": "https://melangedigital.co/contact",
-  "description": "Contact Mélange Digital — your dedicated digital growth partner. Book a call, email us, or reach out to our global offices in India, UAE, Singapore, UK, and Africa.",
+  "description": "Contact Mélange Digital — your dedicated digital growth partner. Book a call, email us, or reach out to our global offices in India, Singapore, the United Arab Emirates, the United Kingdom, and Zambia.",
   "inLanguage": "en",
   "isPartOf": { "@type": "WebSite", "name": "Melange Digital", "url": "https://melangedigital.co" },
   "breadcrumb": {

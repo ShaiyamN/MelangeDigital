@@ -174,9 +174,9 @@ const CaseStudyDetail = () => {
           {/* Title */}
           <div className="px-5 md:px-16 lg:px-20">
             <div className="mb-10 w-full lg:max-w-[1200px]">
-              <h1 className="font-semibold text-[44px] leading-[52px] md:text-[50px] lg:leading-[57.60px] break-words">
+              <h2 className="font-semibold text-hero font-display break-words">
                 {cs.title}
-              </h1>
+              </h2>
             </div>
           </div>
 
@@ -215,7 +215,7 @@ const CaseStudyDetail = () => {
             )}
 
             {/* Introduction heading — consistent size */}
-            <p className="multiverse-text font-bold pb-2 text-[32px] md:text-[40px] leading-[36px] md:leading-[44px]">
+            <p className="multiverse-text font-bold pb-2 text-display">
               Introduction
             </p>
             <p className="text-lg md:text-xl w-auto lg:w-[90%] leading-relaxed">
@@ -258,7 +258,7 @@ const CaseStudyDetail = () => {
         {/* Approach Section */}
         {cs.approach && cs.approach.length > 0 && (
           <div className="mt-2 lg:mt-4 px-5 md:px-16 lg:px-20 max-container animate-fade-in">
-            <p className="text-[#000144] font-bold text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] pb-3">
+            <p className="text-[#000144] font-bold text-display pb-3">
               Our <span className="multiverse-text"> Approach </span>
             </p>
 
@@ -395,7 +395,7 @@ const CaseStudyDetail = () => {
       {/* Results Section — displayed as blocks */}
       {cs.results && cs.results.length > 0 && (
         <div className="px-5 md:px-16 lg:px-20 mt-12 md:mt-20 max-container mb-16">
-          <p className="multiverse-text font-bold text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] pb-6 md:pb-8">
+          <p className="multiverse-text font-bold text-display pb-6 md:pb-8">
             Results
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">

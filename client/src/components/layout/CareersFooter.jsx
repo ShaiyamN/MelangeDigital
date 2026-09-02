@@ -80,7 +80,7 @@ const CareersFooter = () => {
               <motion.span
                 key={index}
                 variants={letterAnimation}
-                className="text-white text-[73px] md:text-[224px] font-normal leading-none"
+                className="text-white text-hero font-normal leading-none"
               >
                 {char === " " ? "\u00A0" : char}
               </motion.span>

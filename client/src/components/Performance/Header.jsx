@@ -15,7 +15,7 @@ const Header = () => {
       <img src={header2} alt="" className="lg:hidden w-full" />
 
       <div className="absolute lg:left-[120px] top-[16rem] ">
-        <p className="font-bricolage font-bold lg:text-[52px] text-[35px] lg:leading-[62px] leading-[36px] px-5 lg:px-0">
+        <p className="font-bricolage font-bold text-display px-5 lg:px-0">
           We help Brands add ₹600M+ <br className="lg:block hidden" /> in Annual
           Revenue through <br className="lg:block hidden" /> Ads that Perform &{" "}
           <br className="lg:block hidden" /> Creatives that Convert

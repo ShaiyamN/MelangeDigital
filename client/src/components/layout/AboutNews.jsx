@@ -4,7 +4,7 @@ import { upLeftArr } from "../../assets/images";
 const AboutNews = () => {
   return (
     <div className="font-nunito pb-20 px-6 md:px-16 lg:px-24">
-      <h2 className="font-bold text-3xl mt-[50px] lg:mt-[100px] mb-12 md:text-4xl lg:text-[40px]">
+      <h2 className="font-bold text-display mt-[50px] lg:mt-section-y mb-12">
         News
       </h2>
       <div className="">

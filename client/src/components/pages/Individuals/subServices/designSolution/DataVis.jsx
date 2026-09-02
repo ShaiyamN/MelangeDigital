@@ -67,10 +67,10 @@ const DataVis = () => {
       </div>
       <div className="px-6 pb-3 md:px-16 md:pb-16 lg:px-28 lg:pb-6">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Turn your Data into Business with Our Data Visualization Service
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[79%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[79%]">
             At Mélange, our mission is to distill complex information into
             clear, concise, and visually stunning representations that empower
             your data as a dynamic tool to drive valuable insights, engagement,
@@ -92,7 +92,7 @@ const DataVis = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1 lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Data Exploration & Analysis
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -110,7 +110,7 @@ const DataVis = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Design & Storytelling
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -126,7 +126,7 @@ const DataVis = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Interactive & User Friendly Visualisations
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">
@@ -144,7 +144,7 @@ const DataVis = () => {
                 alt=""
                 className="w-8 h-8 lg:w-auto lg:h-auto"
               />
-              <h3 className="font-bold text-[16px] my-1  lg:text-[20px] lg:mt-5 lg:mb-1">
+              <h3 className="font-bold text-title my-1 lg:mt-5 lg:mb-1">
                 Customization & Branding
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-auto lg:w-[100%]">

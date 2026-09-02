@@ -1,12 +1,11 @@
 /** Central indexable route list for prerender + sitemap. Keep in sync with App.jsx. */
 export const SITE_ORIGIN = "https://melangedigital.co";
 
-/** Static tourism / DMA landing (synced folder). Canonical has no trailing slash. */
+/** Legacy asset path; `/` is the canonical home. */
 export const DESTINATION_LANDING = "/destination-marketing-agency";
 
 export const routes = [
   "/",
-  DESTINATION_LANDING,
   "/services",
   "/work",
   "/about",

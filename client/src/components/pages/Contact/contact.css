@@ -1,4 +1,4 @@
-/* Contact — Figma 334:1076. Tokens match About. */
+/* Contact — Figma 334:1076. Color tokens local; spacing/type from melange-tokens.css */
 .contact-page {
   --melange-ink: #0f0330;
   --melange-highlight: #c671f9;
@@ -8,11 +8,8 @@
   --melange-display: "Alan Sans", sans-serif;
   --melange-serif: "Libre Baskerville", "Baskervville", serif;
   --melange-body: "Poppins", sans-serif;
-  --type-body: 16px;
-  --type-title: 22px;
   --contact-pad: 40px;
   --contact-max: 1400px;
-  --section-pad-y: 55px;
   color: var(--melange-ink);
   background: #fff;
   font-family: var(--melange-body);
@@ -34,43 +31,6 @@
 
 .contact-stage {
   padding-bottom: var(--section-pad-y);
-}
-
-.contact-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  width: max-content;
-  max-width: 100%;
-  min-height: 44px;
-  padding: 8px 8px 8px 22px;
-  background: linear-gradient(90deg, var(--melange-accent), var(--melange-cta-mid));
-  border: 2px solid var(--melange-cta-border);
-  border-radius: 999px;
-  color: #fff;
-  text-decoration: none;
-  font-family: var(--melange-body);
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.2;
-}
-.contact-cta__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: #fff;
-  flex-shrink: 0;
-}
-.contact-cta__icon img {
-  width: 12px;
-  height: 12px;
-  display: block;
-}
-.contact-cta:hover {
-  filter: brightness(1.06);
 }
 
 /* —— Hero —— */
@@ -682,6 +642,18 @@
 .contact-page .w-form-fail {
   display: none;
 }
+.contact-page .w-form-done.is-visible {
+  display: block !important;
+  padding: clamp(24px, 4vw, 40px);
+  text-align: center;
+  font-family: var(--melange-body);
+  font-size: var(--type-body);
+  line-height: 1.5;
+  color: var(--melange-text, #1a1028);
+}
+.contact-page .leadform-card[data-contact-success="1"] .zf-templateWidth {
+  display: none;
+}
 
 @media (max-width: 900px) {
   .contact-page .leadform-card .leadform-fields {
@@ -761,7 +733,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contact-cta {
+  .contact-cta:hover,
+  .melange-cta:hover {
     filter: none;
   }
   .contact-page .leadform-card .zf-submitColor:hover {

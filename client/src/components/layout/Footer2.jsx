@@ -112,7 +112,7 @@ const Footer2 = () => {
                   <motion.span
                     key={index}
                     variants={letterAnimation}
-                    className="text-white text-[73px] md:text-[224px] font-normal leading-none"
+                    className="text-white text-hero font-normal leading-none"
                   >
                     {char === " " ? "\u00A0" : char}
                   </motion.span>
@@ -130,7 +130,7 @@ const Footer2 = () => {
                     whileTap={{ scale: 0.95 }}
                     className="contact-btn-footer mb-10 lg:mt-0 mt-7 w-[177px] h-[56px] flex items-center justify-center rounded-2xl cursor-pointer bg-[#ffffff]"
                   >
-                    <span className="font-medium text-[#1a1a1a] text-[17px]">
+                    <span className="font-medium text-[#1a1a1a] text-body">
                       Get in Touch
                     </span>
                   </motion.div>
@@ -152,7 +152,7 @@ const Footer2 = () => {
             {/* Social Links Section */}
             <div className="flex mt-7 justify-between lg:mt-0 pb-10  w-full">
               <div className="w-[100%] lg:w-[100%] lg:mt-0 mb-6 lg:mb-0 lg:ml-0">
-                <h2 className="font-normal text-lg md:text-[24px]  ">
+                <h2 className="font-normal text-title">
                   Follow us
                 </h2>
                 <div className="flex mt-1">
@@ -173,12 +173,12 @@ const Footer2 = () => {
                 </div>
               </div>
               <div className="w-[40%] lg:w-[15%] ">
-                <h2 className="font-normal text-lg md:text-[24px] mb-0 md:mb-0">
+                <h2 className="font-normal text-title mb-0 md:mb-0">
                   Email Us
                 </h2>
                 <a
                   href="mailto:hello@melangedigital.co"
-                  className="text-base whitespace-nowrap md:text-lg mb-2 md:mb-0 md:mt-2 text-[#DDDDDD]"
+                  className="text-body whitespace-nowrap mb-2 md:mb-0 md:mt-2 text-[#DDDDDD]"
                 >
                   careers@melangedigital.co
                 </a>

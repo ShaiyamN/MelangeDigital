@@ -64,15 +64,15 @@ const SocialMedia = () => {
         />
       </Helmet>
       <Navbar />
-      <div className="font-nunito px-6 pt-24 md:pt-16 lg:px-28 text-base md:px-16 lg:pt-32 md:text-lg font-semibold mb-6">
+      <div className="font-nunito px-6 pt-24 md:pt-16 lg:px-28 text-body md:px-16 lg:pt-32 font-semibold mb-6">
         <BreadCrumbs breadcrumbs={breadcrumbs} />
       </div>
       <div className="px-6 pb-3 md:px-16 md:pb-16 lg:px-28 lg:pb-4">
         <div>
-          <h1 className="text-3xl md:text-4xl lg:text-4xl font-semibold py-2">
+          <h2 className="text-hero font-display font-semibold py-2">
             Social Media Marketing for your Businesses
-          </h1>
-          <p className="text-base md:text-xl w-auto lg:w-[82%]">
+          </h2>
+          <p className="text-body w-auto lg:w-[82%]">
             As your social media marketing agency, trust us to infuse your
             brand's social media profile with sophistication and sass, capturing
             the attention and admiration of your followers
@@ -88,7 +88,7 @@ const SocialMedia = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10">
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={sm1} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-5">
+              <h3 className="font-bold text-title my-1 lg:my-5">
                 Reels Marketing
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -100,7 +100,7 @@ const SocialMedia = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={sm2} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-5">
+              <h3 className="font-bold text-title my-1 lg:my-5">
                 Campaigns
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -113,7 +113,7 @@ const SocialMedia = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={sm3} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-5">
+              <h3 className="font-bold text-title my-1 lg:my-5">
                 Social Media Management
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">
@@ -125,7 +125,7 @@ const SocialMedia = () => {
             </div>
             <div className="bg-white box-shadow p-6 md:p-10">
               <img src={sm4} alt="" className="w-8 h-8 lg:w-auto lg:h-auto" />
-              <h3 className="font-bold text-[16px] lg:text-[20px] my-1 lg:my-5">
+              <h3 className="font-bold text-title my-1 lg:my-5">
                 Social Listening and Insights
               </h3>
               <p className="text-[12px] md:text-[18px] lg:leading-6 w-[100%]">

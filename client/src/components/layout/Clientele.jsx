@@ -22,7 +22,7 @@ const Clientele = ({ clients }) => {
     <div className="font-bricolage pb-[85px]  partners-bg">
       <div className="">
         <div className="px-5  pt-20 pb-6 lg:px-20 max-container">
-          <h2 className="text-[#fff] text-[40px]  lg:text-[48px] font-bold leading-[48px]">
+          <h2 className="text-[#fff] text-display font-bold">
           Featured Clientele
           </h2>
         </div>
