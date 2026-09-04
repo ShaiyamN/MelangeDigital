@@ -666,7 +666,7 @@
 @media (max-width: 767px) {
   .contact-page {
     --contact-pad: 16px;
-    --section-pad-y: 40px;
+    --section-pad-y: var(--section-pad-y-xs);
   }
   .contact-hero {
     overflow: visible;

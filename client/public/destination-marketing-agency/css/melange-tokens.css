@@ -7,11 +7,11 @@
   --font-body: "Lato", sans-serif;
   --melange-highlight: #c76bfc;
 
-  /* Section spacing */
-  --section-pad-y: 55px;
-  --section-pad-y-lg: 55px;
-  --section-pad-y-sm: 48px;
-  --section-pad-y-xs: 40px;
+  /* Section spacing — reduced by 10% (55px→50px, 48px→43px, 40px→36px) */
+  --section-pad-y: 50px;
+  --section-pad-y-lg: 50px;
+  --section-pad-y-sm: 43px;
+  --section-pad-y-xs: 36px;
   --section-header-gap: 40px;
   --section-title-gap: 16px;
   --section-gap: var(--section-header-gap);

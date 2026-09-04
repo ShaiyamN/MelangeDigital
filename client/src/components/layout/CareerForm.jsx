@@ -113,9 +113,9 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
   }, [selectedPosition]);
 
   return (
-    <div ref={ref} className="max-w-[1440px] mx-auto">
+    <section ref={ref} className="career-form max-w-[1440px] mx-auto">
       {selectedPosition && (
-        <div className="mx-6 md:mx-16 lg:mx-28 mt-10 mb-0">
+        <div className="mx-6 md:mx-16 lg:mx-28 mb-6">
           <div className="flex items-center gap-3 px-5 py-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-2xl">
             <div className="w-2.5 h-2.5 rounded-full bg-purple-500 flex-shrink-0 animate-pulse" />
             <p className="font-bricolage text-[15px] font-semibold text-purple-800">
@@ -129,10 +129,10 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
         </div>
       )}
 
-      <div className="mx-6 md:mx-16 lg:mx-28 mt-6 md:mt-10 mb-6 flex justify-center">
+      <div className="mx-6 md:mx-16 lg:mx-28 flex justify-center">
         <div ref={mountRef} className="w-full flex justify-center" />
       </div>
-    </div>
+    </section>
   );
 });
 

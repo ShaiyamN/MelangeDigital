@@ -22,7 +22,7 @@ const FAQ_SCHEMA = {
       name: "What does digital marketing for travel and tourism include?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Digital marketing for travel and tourism includes influencer and celebrity marketing, branded content and IP integration, experiential activations, FAM trips and PR, all built specifically for destinations, DMOs, NTOs and travel brands, not adapted from retail or FMCG playbooks.",
+        text: "Digital marketing for travel and tourism includes influencer and celebrity marketing, branded content and IP integrations, experiential activations, FAM trips and PR, all built specifically for destinations, DMOs, NTOs and travel brands, not adapted from retail or FMCG playbooks.",
       },
     },
     {

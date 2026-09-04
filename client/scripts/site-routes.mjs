@@ -16,7 +16,6 @@ export const routes = [
   "/privacy-policy",
   "/cancellation-and-refund-policy",
   "/cookie-policy",
-  "/performance-marketing",
   "/work/zee5",
   "/work/costa-cruises",
   "/work/kalon",

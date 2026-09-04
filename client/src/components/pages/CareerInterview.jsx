@@ -19,7 +19,7 @@ const STEPS = [
   {
     n: "4",
     title: "Founders interview",
-    body: "A conversation with Sanket and Ekaterina, our founders, about where the agency's headed and where you'd fit. Ask us anything about culture or direction before deciding this is right for you.",
+    body: "A conversation with our founders.",
   },
   {
     n: "5",

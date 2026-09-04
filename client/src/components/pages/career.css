@@ -12,9 +12,7 @@
   --melange-body: "Lato", sans-serif;
   --career-pad: 40px;
   --career-max: 1400px;
-  --section-pad-y: 55px;
-  --section-pad-y-sm: 48px;
-  --section-pad-y-xs: 40px;
+  /* Section paddings come from melange-tokens.css (single source). */
   color: var(--melange-ink);
   background: #fff;
   font-family: var(--melange-body);
@@ -563,6 +561,11 @@
   cursor: pointer;
 }
 
+/* —— Application form —— */
+.career-form {
+  padding: var(--section-pad-y) 0;
+}
+
 /* —— Wanderlust —— */
 .career-wander {
   position: relative;
@@ -589,7 +592,7 @@
   opacity: 0.3;
 }
 .career-wander .career-h2 {
-  margin: 0 auto 14px;
+  margin: 0 auto 32px;
   max-width: none;
   color: var(--melange-heading);
   font-size: clamp(28px, 3.4vw, 46px);

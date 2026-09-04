@@ -36,7 +36,6 @@ const Refund = lazy(() => import("./components/pages/Refund"));
 const Cookies = lazy(() => import("./components/pages/Cookies"));
 const Career = lazy(() => import("./components/pages/Career"));
 const ItbTourism = lazy(() => import("./components/pages/ItbTourism"));
-const PerformanceLandingPage = lazy(() => import("./components/pages/PerformanceLandingPage"));
 const Location = lazy(() => import("./components/pages/Location"));
 
 // const BrandStrategy = lazy(() => import("./components/pages/Individuals/BrandStrategy"));
@@ -197,11 +196,6 @@ function App() {
           <Route exact path="/contact" Component={Contact} />
           <Route exact path="/careers" Component={Career} />
           <Route exact path="/location/:locationId" Component={Location} />
-          <Route
-            exact
-            path="/performance-marketing"
-            Component={PerformanceLandingPage}
-          />
           <Route exact path="/singapore-tourism" Component={SingaporeTourism} />
           <Route exact path="/singapore-tourism-aeo-seo" Component={SingaporeTourismAeoSeo} />
           <Route exact path="/siam-malls" Component={SiamMalls} />

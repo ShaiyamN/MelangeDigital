@@ -1365,59 +1365,9 @@ section:not(:first-of-type)::before{
   line-height: 1.17;
   color: var(--melange-ink);
 }
-.home-audiences-section .audiences-gov-banner {
-  position: relative;
-  margin-top: 24px;
-  border-radius: 17px;
-  overflow: hidden;
-  min-height: 130px;
-}
-.home-audiences-section .audiences-gov-banner__bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-.home-audiences-section .audiences-gov-banner__content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 28px 32px;
-  min-height: 130px;
-  max-width: min(560px, 62%);
-}
-.home-audiences-section .audiences-gov-banner__icon {
-  flex: 0 0 60px;
-  width: 60px;
-  height: 60px;
-  display: block;
-}
-.home-audiences-section .audiences-gov-banner__copy .heading-25 {
-  margin: 0 0 8px;
-  font-size: 20px !important;
-  font-weight: 800 !important;
-  line-height: 1.05 !important;
-  color: var(--melange-ink) !important;
-  white-space: normal !important;
-}
-.home-audiences-section .audiences-gov-banner__copy .builtfor-descp {
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.17;
-  color: var(--melange-ink);
-}
 @media (max-width: 991px) {
   .home-audiences-section .audiences-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-  .home-audiences-section .audiences-gov-banner__content {
-    max-width: 100%;
-    padding: 24px;
   }
 }
 @media (max-width: 767px) {
@@ -8114,7 +8064,7 @@ a.leadform-contact-item:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  gap: 32px;
 }
 .home-prefooter-heading {
   max-width: none;
@@ -8445,7 +8395,7 @@ a.svc-project:focus-visible .svc-project__media img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 32px;
 }
 .svc-wander__title {
   font-family: var(--melange-display) !important;
@@ -10155,7 +10105,7 @@ a.svc-project:focus-visible .svc-project__media img {
   object-position: center 80%;
 }
 .about-wander .about-h2 {
-  margin: 0 0 14px;
+  margin: 0 0 32px;
   max-width: 22em;
   color: var(--melange-heading, #39107b) !important;
   -webkit-text-fill-color: var(--melange-heading, #39107b) !important;

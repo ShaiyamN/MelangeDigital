@@ -7,7 +7,7 @@
 }
 
 .career-clay {
-  padding: var(--section-pad-y, 55px) 0;
+  padding: var(--section-pad-y, 50px) 0;
   --cc-fg: rgb(0, 0, 0);
   --cc-bg: rgb(255, 255, 255);
   --cc-primary: rgb(250, 105, 0);

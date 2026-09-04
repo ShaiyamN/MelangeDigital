@@ -10,4 +10,3 @@ export { default as Refund } from "./Refund";
 export { default as Cookies } from "./Cookies";
 export { default as Career } from "./Career";
 export { default as ItbTourism } from "./ItbTourism";
-export { default as PerformanceLandingPage } from "./PerformanceLandingPage";
