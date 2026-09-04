@@ -10150,6 +10150,10 @@ a.svc-project:focus-visible .svc-project__media img {
   object-position: center;
   opacity: 0.3;
 }
+/* Work page: keep the wander crop lower on the footer artwork. */
+.wrk-page .about-wander__bg {
+  object-position: center 80%;
+}
 .about-wander .about-h2 {
   margin: 0 0 14px;
   max-width: 22em;
