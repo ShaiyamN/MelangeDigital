@@ -1,0 +1,29 @@
+<IfModule mod_headers.c>
+  # Stale index.html after deploy → browser requests deleted /assets/*.js → 404
+  <Files "index.html">
+    Header set Cache-Control "no-cache"
+  </Files>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Tourism landing is SPA home (`/`). Old URLs redirect; assets stay under DMA/.
+  DirectorySlash Off
+  RewriteRule ^destination-marketing-agency/?$ / [R=301,L]
+  RewriteRule ^destination-marketing/?$ / [R=301,L]
+  RewriteRule ^tourism/?$ / [R=301,L]
+
+  # Pretty PDF URL
+  RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]
+
+  # Missing /assets/* → real 404 (not SPA html)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^assets/ - [R=404,L]
+
+  # SPA: only if path is not a real file or directory
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [QSA,L]
+</IfModule>

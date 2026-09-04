@@ -1,0 +1,42 @@
+/* Careers Zoho form — field widths only (injected via /careers/form-embed) */
+
+.twoColumn .col {
+  max-width: 50% !important;
+  box-sizing: border-box;
+}
+.twoColumn .col .fieldContainer,
+.twoColumn .col .fieldtypeText,
+.twoColumn .col .zfFieldDiv_cont,
+.twoColumn .col input.fieldtext,
+.twoColumn .col select,
+.twoColumn .col textarea {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.zfNameContainer {
+  display: flex !important;
+  gap: 16px;
+  width: 100% !important;
+}
+.zfNameContainer .nameCompLabelWrapper {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto !important;
+}
+.zfNameContainer input.fieldtext {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .twoColumn .col {
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+  .zfNameContainer {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

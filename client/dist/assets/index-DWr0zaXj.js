@@ -1,0 +1,335 @@
+import{j as e,W as t}from"./index-CuKC8I8T.js";import{u as n,m as i,M as r,a as s}from"./marketingShell-B-hqMTfm.js";const c=`<div class="main svc-page">
+   <section class="about-hero" id="svc-hero">
+    <div class="about-hero__backdrop" aria-hidden="true">
+     <span>CONTENT</span>
+     <span>STORY</span>
+     <span>ARRIVALS</span>
+    </div>
+    <p class="about-hero__mark" aria-hidden="true">
+     <span class="about-hero__mark-em">INFLUENCE</span>
+     <span>CONTENT</span>
+     <span>EXPERIENCE /</span>
+    </p>
+    <div class="about-wrap about-hero__inner">
+     <div class="about-hero__copy">
+      <h1 class="about-hero__eyebrow">Digital Marketing For Travel And Tourism</h1>
+      <h2 class="about-hero__title">How We Engineer<br/>Desire To <span class="about-accent">Arrivals</span></h2>
+      <span class="about-hero__rule" aria-hidden="true"></span>
+      <p class="about-hero__lede">One method: decode the culture, narrate the story, match the creator, convert the emotion into a booking</p>
+      <div class="about-hero__actions">
+       <a class="button hero-download-btn w-inline-block" href="/contact">
+        <div class="text-block-6">Get In Touch</div>
+        <span class="hero-btn-icon" aria-hidden="true">
+         <img alt="" src="/destination-marketing-agency/images/services/cta-arrow.svg" width="36" height="34"/>
+        </span>
+       </a>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <section class="svc-block" id="influencer">
+    <div class="svc-wrap">
+     <h2 class="svc-block__title"><span class="svc-accent">Influencer &amp; Celebrity</span> Marketing</h2>
+     <p class="svc-block__intro">We treat influencer marketing as travel and tourism's most trusted distribution channel. We cast creators based on how credible they already are within a subculture, not on their follower count.</p>
+     <h3 class="svc-edge">Our Approach</h3>
+     <div class="svc-tiles">
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/destination-marketing-agency/images/services/icon-cast.svg" alt="" width="59" height="62"/>
+       <h3 class="svc-tile__title">Cast for Credibility</h3>
+       <p class="svc-tile__body">We match creators to the subculture, not the follower count.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/destination-marketing-agency/images/services/icon-data.svg" alt="" width="53" height="51"/>
+       <h3 class="svc-tile__title">Data Before Deals</h3>
+       <p class="svc-tile__body">We check the data behind every creator before signing a contract.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/destination-marketing-agency/images/services/icon-team.svg" alt="" width="58" height="58"/>
+       <h3 class="svc-tile__title">One Team, Not Four</h3>
+       <p class="svc-tile__body">Casting, negotiation, content and reporting run under one roof, not four vendors.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/destination-marketing-agency/images/services/icon-community.svg" alt="" width="64" height="52"/>
+       <h3 class="svc-tile__title">Community, Not Just Reach</h3>
+       <p class="svc-tile__body">Our campaigns build creator communities that outlast the campaign.</p>
+      </article>
+     </div>
+     <div class="svc-projects">
+      <a class="svc-project" href="/work/singapore-tourism-board-isthisevensingapore">
+       <div class="svc-project__media">
+        <img class="svc-media--stb" alt="Singapore Tourism Board: Is This Even Singapore?" src="/destination-marketing-agency/images/services/banner-stb.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Singapore Tourism Board: "Is This Even Singapore?"</h3>
+        <p class="svc-project__caption">21 creators across five youth subcultures. 190M views. +18% YOY arrivals from India's under-35 cohort.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/hong-kong-tourism-board-herhongkong">
+       <div class="svc-project__media">
+        <img alt="Hong Kong Tourism Board: #HerHongKong" src="/destination-marketing-agency/images/work/her-hong-kong-hktb.png" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Hong Kong Tourism Board: #HerHongKong</h3>
+        <p class="svc-project__caption">+22% YOY growth in South Indian female arrivals, driven by four actresses cast against real travel motivations.</p>
+       </div>
+      </a>
+     </div>
+     <div class="svc-cta-row">
+      <a class="button hero-download-btn svc-cta--ghost w-inline-block" href="/work">
+       <div class="text-block-6">View all Projects</div>
+       <span class="hero-btn-icon" aria-hidden="true">
+        <img alt="" loading="lazy" src="/destination-marketing-agency/images/services/cta-arrow-ghost.svg" width="36" height="34"/>
+       </span>
+      </a>
+     </div>
+    </div>
+   </section>
+
+   <section class="svc-block" id="branded">
+    <div class="svc-wrap">
+     <h2 class="svc-block__title"><span class="svc-accent">Branded</span> Content &amp; IPs</h2>
+     <p class="svc-block__intro">This is travel branding built through the biggest cultural platforms: films, music and celebrity moments. We get destinations inside them through real relationships.</p>
+     <h3 class="svc-edge">The Melange Edge</h3>
+     <div class="svc-tiles">
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/secure IP.png" alt="" width="59" height="62"/>
+       <h3 class="svc-tile__title">We Secure the IPs</h3>
+       <p class="svc-tile__body">We land the production or the track, not just a placement inside it.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/story first.png" alt="" width="53" height="51"/>
+       <h3 class="svc-tile__title">Story First</h3>
+       <p class="svc-tile__body">The destination lives inside the narrative, never bolted on top.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/access not outreach.png" alt="" width="58" height="58"/>
+       <h3 class="svc-tile__title">Access, Not Outreach</h3>
+       <p class="svc-tile__body">Our film and music network gets a destination cast, not just pitched.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/community.png" alt="" width="64" height="52"/>
+       <h3 class="svc-tile__title">Built for Earned Reach</h3>
+       <p class="svc-tile__body">Every asset is designed to travel past the paid media budget.</p>
+      </article>
+     </div>
+     <div class="svc-projects">
+      <a class="svc-project" href="/work/dharma-productions-x-singapore-tourism-board-jigra">
+       <div class="svc-project__media">
+        <img alt="Dharma Productions and Singapore Tourism Board: Jigra" src="/destination-marketing-agency/images/services/banner-jigra.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Dharma Productions – Singapore Tourism Board: Jigra</h3>
+        <p class="svc-project__caption">Over 50% of the film shot in Singapore across seven landmarks. Six-plus follow-on production conversations generated.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/singapore-tourism-board-x-divine-saucy-music-video">
+       <div class="svc-project__media">
+        <img alt="Singapore Tourism Board and DIVINE: Saucy" src="/destination-marketing-agency/images/services/banner-divine.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Singapore Tourism Board – DIVINE: "Saucy"</h3>
+        <p class="svc-project__caption">A destination woven into hip-hop's biggest release of the year. +21pts youth-cohort travel affinity.</p>
+       </div>
+      </a>
+     </div>
+     <div class="svc-cta-row">
+      <a class="button hero-download-btn svc-cta--ghost w-inline-block" href="/work">
+       <div class="text-block-6">View all Projects</div>
+       <span class="hero-btn-icon" aria-hidden="true">
+        <img alt="" loading="lazy" src="/destination-marketing-agency/images/services/cta-arrow-ghost.svg" width="36" height="34"/>
+       </span>
+      </a>
+     </div>
+    </div>
+   </section>
+
+   <section class="svc-block" id="experiential">
+    <div class="svc-wrap">
+     <h2 class="svc-block__title"><span class="svc-accent">Experiential</span> Marketing</h2>
+     <p class="svc-block__intro">We turn a booth, a mall or a trade show floor into the highest-performing square foot in travel and tourism.</p>
+     <h3 class="svc-edge">We Do It Differently</h3>
+     <div class="svc-tiles">
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/out experience.png" alt="" width="59" height="62"/>
+       <h3 class="svc-tile__title">Out-Experience, Not Out-Spend</h3>
+       <p class="svc-tile__body">A first-time entrant can win the floor without the biggest budget.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/design to deliver.png" alt="" width="53" height="51"/>
+       <h3 class="svc-tile__title">Design to Delivery</h3>
+       <p class="svc-tile__body">Our team designs, fabricates and staffs the activation end to end.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/sensory.png" alt="" width="58" height="58"/>
+       <h3 class="svc-tile__title">Sensory Over Screens</h3>
+       <p class="svc-tile__body">We build physical, shareable moments a scroll can't replace.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/leads.png" alt="" width="64" height="52"/>
+       <h3 class="svc-tile__title">Leads, Not Just Footfall</h3>
+       <p class="svc-tile__body">Every activation is engineered to capture a qualified enquiry, not just a photo.</p>
+      </article>
+     </div>
+     <div class="svc-projects">
+      <a class="svc-project" href="/work">
+       <div class="svc-project__media">
+        <img alt="Saudi Tourism Authority and Akbar Travels mall activation" src="/destination-marketing-agency/images/services/banner-saudi.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Saudi Tourism Authority – Akbar Travels: Mall Activation</h3>
+        <p class="svc-project__caption">A four-day immersive kiosk at Phoenix Marketcity. 400+ walk-ins and 1,200+ e-visa enquiries in four days.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/zambia-tourism-otm-mumbai-2026">
+       <div class="svc-project__media">
+        <img alt="Zambia Tourism Authority at OTM Mumbai 2026" src="/destination-marketing-agency/images/services/banner-zambia.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Zambia Tourism Authority: OTM Mumbai 2026</h3>
+        <p class="svc-project__caption">A first-time entrant's booth built for experience, not just visibility. 500+ qualified trade connections and a Most Promising Destination award.</p>
+       </div>
+      </a>
+     </div>
+     <div class="svc-cta-row">
+      <a class="button hero-download-btn svc-cta--ghost w-inline-block" href="/work">
+       <div class="text-block-6">View all Projects</div>
+       <span class="hero-btn-icon" aria-hidden="true">
+        <img alt="" loading="lazy" src="/destination-marketing-agency/images/services/cta-arrow-ghost.svg" width="36" height="34"/>
+       </span>
+      </a>
+     </div>
+    </div>
+   </section>
+
+   <section class="svc-block" id="fam">
+    <div class="svc-wrap">
+     <h2 class="svc-block__title"><span class="svc-accent">FAM</span> Trips + PR</h2>
+     <p class="svc-block__intro">This is public relations built for travel and tourism's oldest currency, trust. Earned through a magazine cover, a trade show floor, or a journalist experiencing the destination itself.</p>
+     <h3 class="svc-edge">What Sets Us Apart</h3>
+     <div class="svc-tiles">
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/earned.png" alt="" width="59" height="62"/>
+       <h3 class="svc-tile__title">Earned Over Bought</h3>
+       <p class="svc-tile__body">A cover story lands harder than a media buy ever could.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/on the ground.png" alt="" width="53" height="51"/>
+       <h3 class="svc-tile__title">On the Ground, Always</h3>
+       <p class="svc-tile__body">Our regional teams host, negotiate and staff every trip and stall in person.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/dignitary.png" alt="" width="58" height="58"/>
+       <h3 class="svc-tile__title">Dignitary Ready</h3>
+       <p class="svc-tile__body">We've run trade floors built for ministers, not just visitors.</p>
+      </article>
+      <article class="svc-tile">
+       <img class="svc-tile__icon" src="/assets/services/real relationship.png" alt="" width="64" height="52"/>
+       <h3 class="svc-tile__title">Real Relationships</h3>
+       <p class="svc-tile__body">Our publisher and journalist network is built over years, not rented per campaign.</p>
+      </article>
+     </div>
+     <div class="svc-projects">
+      <a class="svc-project" href="/work/resorts-world-sentosa-go-bananas-in-minion-land">
+       <div class="svc-project__media">
+        <img class="svc-media--rws" alt="Resorts World Sentosa: Go Bananas in Minion Land" src="/destination-marketing-agency/images/services/banner-rws.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Resorts World Sentosa: Go Bananas in Minion Land</h3>
+        <p class="svc-project__caption">Five regional-language creators on ShareChat and Moj. 56M views. +6.8% lift in consideration to visit.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/hong-kong-tourism-board-x-ram-charan-esquire-india-cover">
+       <div class="svc-project__media">
+        <img alt="Hong Kong Tourism Board and Ram Charan Esquire cover" src="/destination-marketing-agency/images/services/banner-hktb.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Hong Kong Tourism Board – Ram Charan: Esquire Cover</h3>
+        <p class="svc-project__caption">A destination cover story shot on location. ~10X ROI on HKTB's investment and $2.5M in earned media value.</p>
+       </div>
+      </a>
+     </div>
+     <div class="svc-cta-row">
+      <a class="button hero-download-btn svc-cta--ghost w-inline-block" href="/work">
+       <div class="text-block-6">View all Projects</div>
+       <span class="hero-btn-icon" aria-hidden="true">
+        <img alt="" loading="lazy" src="/destination-marketing-agency/images/services/cta-arrow-ghost.svg" width="36" height="34"/>
+       </span>
+      </a>
+     </div>
+    </div>
+   </section>
+
+   <section class="section-8" id="faq">
+    <div class="w-layout-blockcontainer container-10 w-container">
+     <div class="w-layout-grid grid-16">
+      <h2 class="heading-20"><span class="span-txt">Answered</span> before you ask</h2>
+     </div>
+     <div class="div-block-41 faq-list" id="faqList" data-faq-collapsed="true">
+      <details class="accordian-item">
+       <summary class="accordion-toggle">
+        <h3 class="text-block-30">What does digital marketing for travel and tourism include?</h3>
+       </summary>
+       <div class="text-block-34">Digital marketing for travel and tourism includes influencer and celebrity marketing, branded content and IP integrations, experiential activations, FAM trips and PR, all built specifically for destinations, DMOs, NTOs and travel brands, not adapted from retail or FMCG playbooks.</div>
+      </details>
+      <details class="accordian-item">
+       <summary class="accordion-toggle">
+        <h3 class="text-block-30">What is digital marketing for DMOs?</h3>
+       </summary>
+       <div class="text-block-35">Digital marketing for DMOs is the full stack of services we offer specifically for destination marketing organisations. We build campaigns that survive government-level approval chains, prove arrivals rather than impressions, and understand procurement realities a typical ad agency has never worked inside.</div>
+      </details>
+      <details class="accordian-item">
+       <summary class="accordion-toggle">
+        <h3 class="text-block-30">Does Melange handle influencer marketing in travel and tourism, or only celebrity campaigns?</h3>
+       </summary>
+       <div class="text-block-36">Both. Melange's influencer marketing in travel and tourism spans everything from mega-follower celebrities to regional-language creators on platforms like ShareChat and Moj, cast by subculture fit rather than follower count alone.</div>
+      </details>
+      <details class="accordian-item faq-item--extra">
+       <summary class="accordion-toggle">
+        <h3 class="text-block-30">Is marketing for NTOs different from marketing other travel brands?</h3>
+       </summary>
+       <div class="text-block-37">Yes. NTO marketing means working within a national tourism organisation's mandate, budget cycles and ministerial reporting lines: categorically different from marketing a private travel brand, and a large part of what Melange specialises in.</div>
+      </details>
+      <details class="accordian-item faq-item--extra">
+       <summary class="accordion-toggle">
+        <h3 class="text-block-30">What does Melange Digital specialise in?</h3>
+       </summary>
+       <div class="text-block-38">Melange is a travel and tourism marketing agency. We decode the culture, narrate the story, match the creator, and convert emotion into a booking. Success is measured in arrivals, not impressions.</div>
+      </details>
+      <details class="accordian-item faq-item--extra">
+       <summary class="accordion-toggle">
+        <h3 class="text-block-30">How do you choose creators for a destination campaign?</h3>
+       </summary>
+       <div class="text-block-39">We cast for credibility inside a subculture, not follower count. We check the data behind every creator before signing a contract, and casting, negotiation, content and reporting run under one roof.</div>
+      </details>
+      <button type="button" class="faq-more-btn" id="faqMoreBtn" aria-expanded="false" aria-controls="faqList">
+       <span class="faq-more-btn__label">Show all questions</span>
+       <span class="faq-more-btn__icon" aria-hidden="true"></span>
+      </button>
+     </div>
+    </div>
+   </section>
+
+   <section class="svc-wander">
+    <div class="svc-wander__bg" aria-hidden="true">
+     <img alt="" src="/assets/Footers/Services footer.png" width="1437" height="519"/>
+    </div>
+    <div class="svc-wrap svc-wander__content">
+     <h2 class="svc-wander__title">Every Service. One Outcome: <span class="svc-accent">Arrivals.</span></h2>
+     <a class="button hero-download-btn w-inline-block" href="/contact">
+      <div class="text-block-6">Get In Touch</div>
+      <span class="hero-btn-icon" aria-hidden="true">
+       <img alt="" loading="lazy" src="/destination-marketing-agency/images/services/cta-arrow.svg" width="36" height="34"/>
+      </span>
+     </a>
+    </div>
+   </section>
+
+   </div>
+  <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top" hidden>
+   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+    <path d="M12 5l-7 7h4.5v7h5v-7H19l-7-7z" fill="currentColor"/>
+   </svg>
+   <span>Back to top</span>
+  </button>
+`,o=[`${s}/css/melange-shared.css?v=20260724e`,`${s}/css/melange.css?v=20260831d`],l=[`${s}/js/services.js?v=20260824w`],d={"@context":"https://schema.org","@type":"FAQPage",mainEntity:[{"@type":"Question",name:"What does digital marketing for travel and tourism include?",acceptedAnswer:{"@type":"Answer",text:"Digital marketing for travel and tourism includes influencer and celebrity marketing, branded content and IP integrations, experiential activations, FAM trips and PR, all built specifically for destinations, DMOs, NTOs and travel brands, not adapted from retail or FMCG playbooks."}},{"@type":"Question",name:"What is digital marketing for DMOs?",acceptedAnswer:{"@type":"Answer",text:"Digital marketing for DMOs is the full stack of services we offer specifically for destination marketing organisations. We build campaigns that survive government-level approval chains, prove arrivals rather than impressions, and understand procurement realities a typical ad agency has never worked inside."}},{"@type":"Question",name:"Does Melange handle influencer marketing in travel and tourism, or only celebrity campaigns?",acceptedAnswer:{"@type":"Answer",text:"Both. Melange's influencer marketing in travel and tourism spans everything from mega-follower celebrities to regional-language creators on platforms like ShareChat and Moj, cast by subculture fit rather than follower count alone."}},{"@type":"Question",name:"Is marketing for NTOs different from marketing other travel brands?",acceptedAnswer:{"@type":"Answer",text:"Yes. NTO marketing means working within a national tourism organisation's mandate, budget cycles and ministerial reporting lines: categorically different from marketing a private travel brand, and a large part of what Melange specialises in."}}]},g=()=>{const a=n("svc",o,l);return e.jsxs(e.Fragment,{children:[e.jsxs(t,{children:[e.jsx("title",{children:"Digital Marketing for Travel and Tourism | Melange"}),e.jsx("meta",{name:"description",content:"Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branded content, built for destinations, DMOs and NTOs."}),e.jsx("link",{rel:"canonical",href:"https://melangedigital.co/services"}),e.jsx("link",{rel:"preconnect",href:"https://fonts.googleapis.com"}),e.jsx("link",{rel:"preconnect",href:"https://fonts.gstatic.com",crossOrigin:"anonymous"}),e.jsx("link",{href:"https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",rel:"stylesheet"}),e.jsx("base",{href:"/destination-marketing-agency/"}),e.jsx("meta",{property:"og:url",content:"https://melangedigital.co/services"}),e.jsx("meta",{property:"og:title",content:"Digital Marketing for Travel and Tourism | Melange"}),e.jsx("meta",{property:"og:description",content:"Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branded content, built for destinations, DMOs and NTOs."}),e.jsx("script",{type:"application/ld+json",children:JSON.stringify(d)}),e.jsx("script",{type:"application/ld+json",children:JSON.stringify({"@context":"https://schema.org","@type":"Service",name:"Travel and Tourism Marketing",url:"https://melangedigital.co/services",provider:{"@type":"Organization",name:"Melange Digital",url:"https://melangedigital.co"},description:"Influencer and celebrity marketing, branded content and IP, experiential activations, and FAM trips plus PR for tourism boards.",hasOfferCatalog:{"@type":"OfferCatalog",name:"Tourism marketing services",itemListElement:[{"@type":"Offer",itemOffered:{"@type":"Service",name:"Influencer & Celebrity Marketing"}},{"@type":"Offer",itemOffered:{"@type":"Service",name:"Branded Content & IPs"}},{"@type":"Offer",itemOffered:{"@type":"Service",name:"Experiential Marketing"}},{"@type":"Offer",itemOffered:{"@type":"Service",name:"FAM Trips + PR"}}]}})}),e.jsx("script",{type:"application/ld+json",children:JSON.stringify({"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"Home",item:"https://melangedigital.co/"},{"@type":"ListItem",position:2,name:"Services",item:"https://melangedigital.co/services"}]})}),e.jsx("style",{type:"text/css",children:i("svc")})]}),e.jsx(r,{slug:"svc",cssReady:a,markup:c})]})};export{g as default};

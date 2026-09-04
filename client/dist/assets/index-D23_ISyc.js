@@ -1,0 +1,222 @@
+import{j as a,W as n}from"./index-CuKC8I8T.js";import{u as t,m as o,M as r,a as e}from"./marketingShell-B-hqMTfm.js";const i=`<a class="about-skip" href="#main-content">Skip to main content</a>
+  <div class="main wrk-page" id="main-content">
+   <section class="about-hero">
+    <div class="about-hero__backdrop" aria-hidden="true">
+     <span>WORK</span>
+     <span>IMPACT</span>
+     <span>ARRIVALS</span>
+    </div>
+    <p class="about-hero__mark" aria-hidden="true">
+     <span class="about-hero__mark-em">CULTURE</span>
+     <span>STORY</span>
+     <span>BOOKING /</span>
+    </p>
+    <div class="about-wrap about-hero__inner">
+     <div class="about-hero__copy">
+      <h1 class="about-hero__eyebrow">Our Work</h1>
+      <h2 class="about-hero__title"><span class="about-hero__title-row">Work That Moved <span class="about-accent">Arrivals.</span></span><span class="about-hero__title-row">Not Just A Metric.</span></h2>
+      <span class="about-hero__rule" aria-hidden="true"></span>
+      <p class="about-hero__lede">How we did it: decode the culture, narrate the story, match the creator, convert the emotion into a booking.</p>
+      <div class="about-hero__actions">
+       <a class="button hero-download-btn w-inline-block" href="/contact">
+        <div class="text-block-6">Get In Touch</div>
+        <span class="hero-btn-icon" aria-hidden="true">
+         <img alt="" src="/destination-marketing-agency/images/services/cta-arrow.svg" width="36" height="34"/>
+        </span>
+       </a>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <section class="wrk-grid-section" aria-label="Case studies">
+    <div class="svc-wrap">
+     <div class="svc-projects">
+      <a class="svc-project" href="/work/singapore-tourism-board-isthisevensingapore">
+       <div class="svc-project__media">
+        <img class="svc-media--stb" alt="Singapore Tourism Board: #IsThisEvenSingapore" src="/destination-marketing-agency/images/services/banner-stb.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Singapore Tourism Board: #IsThisEvenSingapore</h3>
+        <p class="svc-project__caption">21 creators across five youth subcultures. 190M views. +18% YOY arrivals from India's under-35 cohort.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/hong-kong-tourism-board-herhongkong">
+       <div class="svc-project__media">
+        <img alt="Hong Kong Tourism Board: #HerHongKong" src="/destination-marketing-agency/images/work/her-hong-kong-hktb.png?v=20260828p" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Hong Kong Tourism Board: #HerHongKong</h3>
+        <p class="svc-project__caption">+22% YOY growth in South Indian female arrivals, driven by four actresses cast against real travel motivations.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/dharma-productions-x-singapore-tourism-board-jigra">
+       <div class="svc-project__media">
+        <img alt="Dharma Productions x Singapore Tourism Board: Jigra" src="/destination-marketing-agency/images/services/banner-jigra.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Dharma Productions x Singapore Tourism Board: Jigra</h3>
+        <p class="svc-project__caption">Over 50% of the film shot in Singapore across seven landmarks. Six-plus follow-on production conversations generated.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/hong-kong-tourism-board-x-ram-charan-esquire-india-cover">
+       <div class="svc-project__media">
+        <img alt="Hong Kong Tourism Board x Ram Charan: Esquire Cover" src="/destination-marketing-agency/images/work/ram-charan-hktb.png?v=20260828p" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Hong Kong Tourism Board x Ram Charan: Esquire Cover</h3>
+        <p class="svc-project__caption">A destination cover story shot on location. ~10X ROI on HKTB's investment and $2.5M in earned media value.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/singapore-tourism-board-x-divine-saucy-music-video">
+       <div class="svc-project__media">
+        <img alt="Singapore Tourism Board x DIVINE: Saucy Music Video" src="/destination-marketing-agency/images/services/banner-divine.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Singapore Tourism Board x DIVINE: &ldquo;Saucy&rdquo; Music Video</h3>
+        <p class="svc-project__caption">A destination woven into hip-hop's biggest release of the year. +21pts youth-cohort travel affinity.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/resorts-world-cruises-premium-cruise-launch-dubai">
+       <div class="svc-project__media">
+        <img alt="Resorts World Cruises: Premium Cruise Launch, Dubai" src="/destination-marketing-agency/images/work/resorts-world-cruises.png?v=20260828p" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Resorts World Cruises: Premium Cruise Launch, Dubai</h3>
+        <p class="svc-project__caption">$2.3M in attributed sales, three audiences served in three languages, one integrated team.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/resorts-world-sentosa-go-bananas-in-minion-land">
+       <div class="svc-project__media">
+        <img class="svc-media--rws" alt="Resorts World Sentosa: Go Bananas in Minion Land" src="/destination-marketing-agency/images/services/banner-rws.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Resorts World Sentosa: Go Bananas in Minion Land</h3>
+        <p class="svc-project__caption">Five regional-language creators on ShareChat and Moj. 56M views. +6.8% lift in consideration to visit.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/costa-cruises">
+       <div class="svc-project__media">
+        <img alt="Costa Cruises: Introducing Luxury Cruising to India" src="/destination-marketing-agency/images/services/banner-costa.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Costa Cruises: Introducing Luxury Cruising to India</h3>
+        <p class="svc-project__caption">40+ creators hosted onboard a maiden voyage. 9,000+ qualified booking enquiries.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/zambia-tourism-otm-mumbai-2026">
+       <div class="svc-project__media">
+        <img alt="Zambia Tourism Authority: OTM Mumbai 2026" src="/destination-marketing-agency/images/services/banner-zambia.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Zambia Tourism Authority: OTM Mumbai 2026</h3>
+        <p class="svc-project__caption">A first-time entrant's booth built for experience, not just visibility. 500+ qualified trade connections and a Most Promising Destination award.</p>
+       </div>
+      </a>
+      <a class="svc-project" href="/work/akbar-travels">
+       <div class="svc-project__media">
+        <img alt="Saudi Tourism Authority x Akbar Travels: Mall Activation" src="/destination-marketing-agency/images/services/banner-saudi.webp" width="1200" height="600"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">Saudi Tourism Authority x Akbar Travels: Mall Activation</h3>
+        <p class="svc-project__caption">A four-day immersive kiosk at Phoenix Marketcity. 400+ walk-ins and 1,200+ e-visa enquiries in four days.</p>
+       </div>
+      </a>
+     </div>
+    </div>
+   </section>
+
+   <section class="about-report" id="reports">
+    <div class="about-wrap">
+     <header class="report-promo-header">
+      <h2 class="report-promo-heading">The Intelligence Behind Every <span class="about-accent">Campaign</span> Here</h2>
+      <p class="report-promo-desc">Every case study on this page starts with research, not a creative brief. We publish original research once or twice a year on what actually moves Indian travellers to book, and it's the same intelligence that shapes the campaigns above.</p>
+     </header>
+     <div class="report-promo-carousel" data-report-carousel>
+      <div class="report-promo-slides">
+       <article class="report-promo-card" data-report-slide>
+        <div class="report-promo-grid">
+         <div class="report-promo-copy">
+          <h3 class="report-promo-card__title">What you get:</h3>
+          <ul class="report-promo-benefits__list">
+           <li>The full India Outbound Inspiration Report 2026, 4,200 respondents, 12 cities, Tier 1 through Tier 3.</li>
+           <li>Which inspiration channels move Indian travellers to consider new destinations.</li>
+           <li>Which of the six Indian traveller cohorts is most likely to choose your destination.</li>
+           <li>A follow-up from the Melange team if you want to talk through the implications.</li>
+          </ul>
+          <a class="button hero-download-btn report-promo-download w-inline-block" href="/?report=indian-outbound-2026#report-access">
+           <div class="text-block-6">Download the Report</div>
+           <span class="hero-btn-icon" aria-hidden="true">
+            <img alt="" loading="lazy" src="/destination-marketing-agency/images/arrow-top-right-purple.svg" width="12"/>
+           </span>
+          </a>
+         </div>
+         <div class="report-promo-visual">
+          <div class="report-promo-stack">
+           <div class="report-promo-stack__frame">
+            <span class="report-promo-stack__layer report-promo-stack__layer--grey" aria-hidden="true"></span>
+            <span class="report-promo-stack__layer report-promo-stack__layer--purple" aria-hidden="true"></span>
+            <img class="report-promo-stack__photo" alt="The Indian Outbound Inspiration Report 2026 on a desk" loading="lazy" width="440" height="400" src="/destination-marketing-agency/images/report/report-desk-cover.png?v=20260821d"/>
+           </div>
+          </div>
+         </div>
+        </div>
+       </article>
+       <article class="report-promo-card" data-report-slide hidden>
+        <div class="report-promo-grid">
+         <div class="report-promo-copy">
+          <h3 class="report-promo-card__title">Next report — coming soon</h3>
+          <ul class="report-promo-benefits__list">
+           <li>Full report download once it goes live</li>
+           <li>Audience and market findings for a new travel brief</li>
+           <li>Cohort and channel takeaways boards can act on</li>
+           <li>A follow-up from the Mélange team when you’re ready</li>
+          </ul>
+          <button class="button hero-download-btn report-promo-download" type="button" disabled>
+           <div class="text-block-6">Coming soon</div>
+           <span class="hero-btn-icon" aria-hidden="true">
+            <img alt="" loading="lazy" src="/destination-marketing-agency/images/arrow-top-right-purple.svg" width="12"/>
+           </span>
+          </button>
+         </div>
+         <div class="report-promo-visual">
+          <div class="report-promo-stack">
+           <div class="report-promo-stack__frame">
+            <span class="report-promo-stack__layer report-promo-stack__layer--grey" aria-hidden="true"></span>
+            <span class="report-promo-stack__layer report-promo-stack__layer--purple" aria-hidden="true"></span>
+            <div class="report-promo-stack__photo report-promo-stack__photo--placeholder" role="img" aria-label="Second report coming soon">Coming soon</div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </article>
+      </div>
+      <button class="work-carousel-nav work-carousel-nav--prev" type="button" data-report-prev aria-label="Previous report">
+       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M15.5 5.5L9 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="work-carousel-nav work-carousel-nav--next" type="button" data-report-next aria-label="Next report">
+       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M8.5 5.5L15 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+     </div>
+    </div>
+   </section>
+
+   <section class="about-wander">
+    <img class="about-wander__bg" src="/assets/Footers/Work footer.png" alt="" width="1437" height="290" loading="lazy"/>
+    <h2 class="about-h2">Want Your Campaign on This Page <span class="about-accent">Next?</span></h2>
+    <a class="button hero-download-btn w-inline-block" href="/contact">
+     <div class="text-block-6">Get In Touch</div>
+     <span class="hero-btn-icon" aria-hidden="true">
+      <img alt="" loading="lazy" src="/destination-marketing-agency/images/services/cta-arrow.svg" width="36" height="34"/>
+     </span>
+    </a>
+   </section>
+
+  </div>
+  <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top" hidden>
+   <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+    <path d="M12 5l-7 7h4.5v7h5v-7H19l-7-7z" fill="currentColor"/>
+   </svg>
+   <span>Back to top</span>
+  </button>
+`,c=[`${e}/css/melange-shared.css?v=20260724e`,`${e}/css/melange.css?v=20260904t`],l=[`${e}/js/about.js?v=20260824ap`],d={"@context":"https://schema.org","@type":"BreadcrumbList",itemListElement:[{"@type":"ListItem",position:1,name:"Home",item:"https://melangedigital.co"},{"@type":"ListItem",position:2,name:"Work",item:"https://melangedigital.co/work"}]},p={"@context":"https://schema.org","@type":"CollectionPage","@id":"https://melangedigital.co/work#webpage",url:"https://melangedigital.co/work",name:"Our Work | Case Studies | Melange Digital",description:"See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike.",isPartOf:{"@type":"WebSite",name:"Mélange Digital",url:"https://melangedigital.co"}},v=()=>{const s=t("wrk",c,l);return a.jsxs(a.Fragment,{children:[a.jsxs(n,{children:[a.jsx("title",{children:"Our Work | Case Studies | Melange Digital"}),a.jsx("meta",{name:"description",content:"See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."}),a.jsx("link",{rel:"canonical",href:"https://melangedigital.co/work"}),a.jsx("link",{rel:"preconnect",href:"https://fonts.googleapis.com"}),a.jsx("link",{rel:"preconnect",href:"https://fonts.gstatic.com",crossOrigin:"anonymous"}),a.jsx("link",{href:"https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",rel:"stylesheet"}),a.jsx("base",{href:"/destination-marketing-agency/"}),a.jsx("meta",{property:"og:type",content:"website"}),a.jsx("meta",{property:"og:url",content:"https://melangedigital.co/work"}),a.jsx("meta",{property:"og:title",content:"Our Work | Case Studies | Melange Digital"}),a.jsx("meta",{property:"og:description",content:"See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."}),a.jsx("meta",{property:"og:image",content:"https://melangedigital.co/og-work.jpg"}),a.jsx("script",{type:"application/ld+json",children:JSON.stringify(d)}),a.jsx("script",{type:"application/ld+json",children:JSON.stringify(p)}),a.jsx("style",{type:"text/css",children:o("wrk")})]}),a.jsx(r,{slug:"wrk",cssReady:s,markup:i})]})};export{v as default};
