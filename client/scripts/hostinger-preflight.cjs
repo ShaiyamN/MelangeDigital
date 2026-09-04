@@ -47,7 +47,8 @@ for (const rel of [
   "public/destination-marketing-agency/images/site/si-insta.svg",
   "public/destination-marketing-agency/images/figma/pooja.jpeg",
   "public/destination-marketing-agency/images/creators/hk-1.png",
-  "public/careers/721bcf8d9032.avif",
+  "public/careers/health insurance.png",
+  "public/careers/work life balance.jpeg",
 ]) {
   if (fs.existsSync(path.join(root, rel))) ok(rel);
   else bad(`missing ${rel}`);

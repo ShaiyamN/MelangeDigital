@@ -9,7 +9,7 @@
   --melange-cta-border: #e797ff;
   --melange-display: "Alan Sans", sans-serif;
   --melange-serif: "Libre Baskerville", "Baskervville", serif;
-  --melange-body: "Poppins", sans-serif;
+  --melange-body: "Lato", sans-serif;
   --career-pad: 40px;
   --career-max: 1400px;
   --section-pad-y: 55px;
@@ -61,7 +61,7 @@
   font-family: var(--melange-display);
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--melange-ink);
+  color: var(--melange-heading);
   text-wrap: balance;
 }
 .career-h1 {
@@ -229,8 +229,8 @@
 }
 .career-why__t {
   margin: 6px 0 0;
-  font-family: var(--melange-display);
-  font-weight: 400;
+  font-family: var(--melange-body);
+  font-weight: 700;
   font-size: 20px;
   line-height: 1.25;
 }
@@ -353,8 +353,8 @@
 }
 .career-benefits__card h3 {
   margin: 0;
-  font-family: var(--melange-display);
-  font-weight: 600;
+  font-family: var(--melange-body);
+  font-weight: 700;
   font-size: 20px;
   line-height: 1.25;
   color: var(--melange-ink);
@@ -532,9 +532,9 @@
 }
 .career-open__dialog-h4 {
   margin: 0 0 8px;
-  font-family: var(--melange-display);
+  font-family: var(--melange-body);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--melange-ink);
 }
 .career-open__dialog-body {
@@ -567,14 +567,16 @@
 .career-wander {
   position: relative;
   isolation: isolate;
-  min-height: 280px;
-  padding: var(--section-pad-y) var(--career-pad);
+  height: 277px;
+  padding: 16px var(--career-pad);
+  box-sizing: border-box;
   text-align: center;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #fff;
 }
 .career-wander__bg {
   position: absolute;
@@ -583,19 +585,18 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 22%;
-  opacity: 0.38;
+  object-position: center;
+  opacity: 0.3;
 }
 .career-wander .career-h2 {
-  margin: 0 auto 28px;
+  margin: 0 auto 14px;
   max-width: none;
-  white-space: nowrap;
-  color: #000;
-  font-size: clamp(32px, 4vw, 55px);
-  line-height: 1.1;
+  color: var(--melange-heading);
+  font-size: clamp(28px, 3.4vw, 46px);
+  line-height: 1.15;
 }
 .career-wander .career-italic {
-  color: #8126d7;
+  color: var(--melange-accent-2);
 }
 
 @media (max-width: 991px) {

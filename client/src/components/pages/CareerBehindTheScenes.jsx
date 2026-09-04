@@ -1,48 +1,47 @@
 import { useEffect, useRef, useState } from "react";
 
-const IMG = "/careers";
-const CDN = "https://cdn.prod.website-files.com/61477f2c24a826836f969afe";
+const IMG = "/Career Pages";
 
 const TOP_CLS = ["career-bts__l", "career-bts__s", "career-bts__l", "career-bts__s"];
 const BOT_CLS = ["career-bts__s", "career-bts__l", "career-bts__s", "career-bts__l"];
 
 const SLIDES = [
   [
-    `${IMG}/bts-1.png`,
-    `${IMG}/bts-5.png`,
-    `${IMG}/bts-2.png`,
-    `${IMG}/bts-6.png`,
-    `${IMG}/why-03.jpg`,
-    `${IMG}/bts-3.png`,
-    `${IMG}/why-02.jpg`,
-    `${IMG}/bts-4.png`,
+    { src: `${IMG}/Team 4.jpg`, pos: "86.6% 66.8%" },
+    { src: `${IMG}/Team 1.jpg`, pos: "45.9% 48.3%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.30.13 PM.jpeg`, pos: "50% 50%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.35.36 PM.jpeg`, pos: "50% 40%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.30.13 PM (2).jpeg`, pos: "50% 40%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.42.32 PM.jpeg`, pos: "50.1% 54.1%" },
+    { src: `${IMG}/Team 3.jpg`, pos: "50% 50%" },
+    { src: `${IMG}/Team 2.jpg`, pos: "35.5% 59.7%" },
   ],
   [
-    `${CDN}/69308453b43b3dd6d1b99d25_clay%20retreat%202025%20by%20Luis%20Nieto%20Dickens%20-%20web%20-202.jpg`,
-    `${CDN}/67212b94bf55407e09b6e258_career%20gallery%20img%2007.avif`,
-    `${CDN}/693084577b17b71f7de31173_clay%20retreat%202025%20by%20Luis%20Nieto%20Dickens%20-%20web%20-401%20(1).jpg`,
-    `${CDN}/67211245ca13549557b63451_career%20gallery%20img%2002.avif`,
-    `${CDN}/693084c10dcd53b8ba432494_clay%20retreat%202025%20by%20Luis%20Nieto%20Dickens%20-%20web%20-474.jpg`,
-    `${CDN}/672112467d409c6fa497c735_career%20gallery%20img%2015.webp`,
-    `${CDN}/6721124620b28b7a359fee7f_career%20gallery%20img%2016.webp`,
-    `${CDN}/672112469082a1060de4f56d_career%20gallery%20img%2014.webp`,
+    { src: `${IMG}/WhatsApp Image 2026-08-31 at 2.09.03 PM (3).jpeg`, pos: "46.2% 41.2%" },
+    { src: `${IMG}/WhatsApp Image 2026-08-31 at 2.09.03 PM (1).jpeg`, pos: "50% 71%" },
+    { src: `${IMG}/WhatsApp Image 2026-08-31 at 2.09.03 PM (4).jpeg`, pos: "54.9% 43.3%" },
+    { src: `${IMG}/From blueprint to build-up in under 10 days.From ideation to impact.From vision to victory.✨What (1).jpg`, pos: "43.4% 20.6%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.35.57 PM.jpeg`, pos: "50% 50%" },
+    { src: `${IMG}/Image_20260123_184650_098 (1).jpeg`, pos: "50% 50%" },
+    { src: `${IMG}/Singapore-just-got-louder-2.jpg`, pos: "55.8% 62.5%" },
+    { src: `${IMG}/Copy of AOS03206.JPG`, pos: "50% 50%" },
   ],
   [
-    `${CDN}/67211246c3733a9e6f4f3927_career%20gallery%20img%2004.webp`,
-    `${CDN}/672112455497d6ce1df4409c_career%20gallery%20img%2009.avif`,
-    `${CDN}/67211246a183aab7abb1e42d_career%20gallery%20img%2010.webp`,
-    `${CDN}/672112465cf7d140297e4224_career%20gallery%20img%2003.webp`,
-    `${CDN}/67211245751e4fdd43462d0d_career%20gallery%20img%2005.avif`,
-    `${CDN}/672112462c7e7be67ee63c20_career%20gallery%20img%2012.webp`,
-    `${CDN}/69308537f4ac90971531f62c_clay%20office%20party%20jan%2031%202025%20by%20Luis%20Nieto%20Dickens%20-%20web%20-30.jpg`,
-    `${CDN}/693085b8806f9997cba4cdd7_clay%20office%20party%20jan%2031%202025%20by%20Luis%20Nieto%20Dickens%20-96.jpg`,
+    { src: `${IMG}/From blueprint to build-up in under 10 days.From ideation to impact.From vision to victory.✨What (2).jpg`, pos: "51.2% 34.7%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.34.41 PM.jpeg`, pos: "50% 40%" },
+    { src: `${IMG}/IMG_4395.HEIC`, pos: "69.8% 58.4%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.33.13 PM.jpeg`, pos: "73.5% 38.9%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.30.13 PM (1).jpeg`, pos: "50% 40%" },
+    { src: `${IMG}/WhatsApp Image 2026-08-31 at 2.09.03 PM (7).jpeg`, pos: "50% 50%" },
+    { src: `${IMG}/From blueprint to build-up in under 10 days.From ideation to impact.From vision to victory.✨What.jpg`, pos: "74.9% 41.9%" },
+    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.41.35 PM.jpeg`, pos: "50% 40%" },
   ],
 ];
 
-function Tile({ src, cls }) {
+function Tile({ tile, cls }) {
   return (
     <div className={cls}>
-      <img src={src} alt="" draggable={false} />
+      <img src={tile.src} alt="" draggable={false} style={{ objectPosition: tile.pos }} />
     </div>
   );
 }
@@ -116,13 +115,13 @@ function LifeGallery({ padRef }) {
       {SLIDES.map((srcs, i) => (
         <div key={i} className="career-bts__slide" aria-label={`${i + 1} / ${SLIDES.length}`} role="group">
           <div className="career-bts__row career-bts__row--top">
-            {srcs.slice(0, 4).map((src, j) => (
-              <Tile key={src} src={src} cls={TOP_CLS[j]} />
+            {srcs.slice(0, 4).map((t, j) => (
+              <Tile key={t.src} tile={t} cls={TOP_CLS[j]} />
             ))}
           </div>
           <div className="career-bts__row career-bts__row--bot">
-            {srcs.slice(4, 8).map((src, j) => (
-              <Tile key={src} src={src} cls={BOT_CLS[j]} />
+            {srcs.slice(4, 8).map((t, j) => (
+              <Tile key={t.src} tile={t} cls={BOT_CLS[j]} />
             ))}
           </div>
         </div>

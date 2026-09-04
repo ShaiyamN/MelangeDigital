@@ -1,13 +1,15 @@
 /* Contact — Figma 334:1076. Color tokens local; spacing/type from melange-tokens.css */
 .contact-page {
   --melange-ink: #0f0330;
+  --melange-heading: #39107b;
   --melange-highlight: #c671f9;
   --melange-accent: #6e1eee;
+  --melange-accent-2: #7123ee;
   --melange-cta-mid: #9a30b9;
   --melange-cta-border: #e797ff;
   --melange-display: "Alan Sans", sans-serif;
   --melange-serif: "Libre Baskerville", "Baskervville", serif;
-  --melange-body: "Poppins", sans-serif;
+  --melange-body: "Lato", sans-serif;
   --contact-pad: 40px;
   --contact-max: 1400px;
   color: var(--melange-ink);
@@ -105,7 +107,7 @@
   font-weight: 400;
   font-size: inherit;
   line-height: inherit;
-  color: #7b3fe4;
+  color: var(--melange-accent-2, #7123ee);
 }
 
 .contact-glass {
@@ -283,7 +285,7 @@
 }
 .contact-page .leadform-card .zf-frmTitle,
 .contact-page .leadform-card .zf-frmTitle em {
-  font-family: var(--melange-display) !important;
+  font-family: var(--melange-body) !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: var(--type-title) !important;
@@ -292,7 +294,7 @@
   text-align: center !important;
   margin: 0 !important;
   padding: 0 !important;
-  color: var(--melange-ink) !important;
+  color: var(--melange-heading) !important;
 }
 .contact-page .leadform-card .zf-frmDesc:empty {
   display: none !important;

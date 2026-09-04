@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-01T08:41:44.377Z",
+  "generatedAt": "2026-09-04T05:57:42.565Z",
   "totals": {
-    "assetFiles": 771,
-    "unused": 0,
-    "unusedBytes": 0,
-    "review": 13,
-    "reviewBytes": 1885621,
+    "assetFiles": 858,
+    "unused": 31,
+    "unusedBytes": 9137100,
+    "review": 20,
+    "reviewBytes": 2711647,
     "duplicates": 0,
     "duplicatesBytes": 0
   },
@@ -227,8 +227,201 @@
       "disk": "favicon-away.ico"
     }
   ],
-  "unused": [],
+  "unused": [
+    {
+      "path": "src/assets/images/home page .png",
+      "sizeBytes": 5672529,
+      "root": "src-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/AkbarHolidays.png",
+      "sizeBytes": 1390377,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/VeenaWorld.png",
+      "sizeBytes": 320528,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/collins.jpg",
+      "sizeBytes": 308978,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/site/logo-footer.png",
+      "sizeBytes": 288604,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/about/logo-footer.png",
+      "sizeBytes": 288604,
+      "root": "about",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/rohit-machcha.jpg",
+      "sizeBytes": 140120,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/rae-soon.png",
+      "sizeBytes": 127486,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/sajin-nawshad.jpg",
+      "sizeBytes": 124855,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/thrillophilia-logo.png",
+      "sizeBytes": 101906,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/about/trust-team.webp",
+      "sizeBytes": 98230,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/vasundara.png",
+      "sizeBytes": 75215,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/Naresh-Rawal-Profile-Pic.jpg",
+      "sizeBytes": 62025,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/emt-logo1.svg",
+      "sizeBytes": 26126,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/cleartrip-seeklogo.png",
+      "sizeBytes": 25030,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/Puneet-Kumar.jpg",
+      "sizeBytes": 24945,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/figma/pooja.jpeg",
+      "sizeBytes": 15890,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/Goibibo_Logo.svg",
+      "sizeBytes": 5855,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/TripAdvisor_Logo.svg",
+      "sizeBytes": 5599,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/Travel Partners/Makemytrip_logo.svg",
+      "sizeBytes": 5460,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/logos/infra/PATA(1).png",
+      "sizeBytes": 4133,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/careers/Travel For Work.png",
+      "sizeBytes": 3744,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/logos/infra/pata.png",
+      "sizeBytes": 3376,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/careers/competetive salary.png",
+      "sizeBytes": 3369,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/careers/flexible schedule.png",
+      "sizeBytes": 3172,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/site/si-insta.svg",
+      "sizeBytes": 3166,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/about/si-insta.svg",
+      "sizeBytes": 3166,
+      "root": "about",
+      "reason": "unused"
+    },
+    {
+      "path": "public/assets/careers/health insurance.png",
+      "sizeBytes": 2679,
+      "root": "public-assets",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/site/si-linkedin.svg",
+      "sizeBytes": 835,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    },
+    {
+      "path": "public/about/si-linkedin.svg",
+      "sizeBytes": 835,
+      "root": "about",
+      "reason": "unused"
+    },
+    {
+      "path": "public/destination-marketing-agency/images/services/faq-chevron.svg",
+      "sizeBytes": 263,
+      "root": "destination-marketing-agency",
+      "reason": "unused"
+    }
+  ],
   "review": [
+    {
+      "path": "public/assets/Travel Partners/SOTC.png",
+      "sizeBytes": 609415,
+      "root": "public-assets",
+      "reason": "review-basename-collision"
+    },
     {
       "path": "public/destination-marketing-agency/images/background-gradient.webp",
       "sizeBytes": 297786,
@@ -284,15 +477,45 @@
       "reason": "review-basename-collision"
     },
     {
+      "path": "public/assets/Travel Partners/Kesari.png",
+      "sizeBytes": 110544,
+      "root": "public-assets",
+      "reason": "review-basename-collision"
+    },
+    {
       "path": "public/influencer_marketing/img/new-update/hero-shape-1.png",
       "sizeBytes": 102762,
       "root": "influencer_marketing",
       "reason": "review-basename-collision"
     },
     {
+      "path": "public/assets/Travel Partners/curly-tales.png",
+      "sizeBytes": 47649,
+      "root": "public-assets",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/assets/Travel Partners/pickyourtrail.png",
+      "sizeBytes": 33175,
+      "root": "public-assets",
+      "reason": "review-basename-collision"
+    },
+    {
       "path": "public/destination-marketing-agency/images/newQuote.gif",
       "sizeBytes": 18107,
       "root": "destination-marketing-agency",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/assets/Travel Partners/Agoda.png",
+      "sizeBytes": 16810,
+      "root": "public-assets",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/assets/Travel Partners/Expedia.png",
+      "sizeBytes": 8152,
+      "root": "public-assets",
       "reason": "review-basename-collision"
     },
     {
@@ -305,6 +528,12 @@
       "path": "public/influencer_marketing/img/favicon.ico",
       "sizeBytes": 3494,
       "root": "influencer_marketing",
+      "reason": "review-basename-collision"
+    },
+    {
+      "path": "public/about/arrow-top-right-purple.svg",
+      "sizeBytes": 281,
+      "root": "about",
       "reason": "review-basename-collision"
     }
   ],

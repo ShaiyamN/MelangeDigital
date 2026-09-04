@@ -20,17 +20,27 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
       .catch((error) => console.error("Error loading jobs:", error));
   }, []);
 
+  // While the details dialog is open, freeze the page (native + Lenis smooth
+  // scroll) so only the dialog body scrolls, not the whole careers page.
+  useEffect(() => {
+    if (!selectedJob) return;
+    document.body.style.overflow = "hidden";
+    window.__melangeLenis?.stop?.();
+    return () => {
+      document.body.style.overflow = "";
+      window.__melangeLenis?.start?.();
+    };
+  }, [selectedJob]);
+
   const hasText = (html) =>
     typeof html === "string" && html.replace(/<[^>]*>/g, "").trim().length > 0;
 
   const closeDetails = () => {
     setSelectedJob(null);
-    document.body.style.overflow = "";
   };
 
   const openDetails = (job) => {
     setSelectedJob(job);
-    document.body.style.overflow = "hidden";
   };
 
   const applyFor = (title) => {
@@ -73,6 +83,7 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="career-job-title"
+            data-lenis-prevent="true"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 id="career-job-title" className="career-open__dialog-title">
@@ -88,7 +99,7 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
 
             {selectedJob.sections?.map((section, index) => (
               <div key={index} className="career-open__dialog-body">
-                <h4 className="career-open__dialog-h4">{section.title}</h4>
+                <h3 className="career-open__dialog-h4">{section.title}</h3>
                 <ul className="career-open__dialog-list">
                   {section.items?.map((item, itemIndex) => (
                     <li key={itemIndex}>{item}</li>
@@ -107,7 +118,7 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
             {((Array.isArray(selectedJob.keyResponsibilities) && selectedJob.keyResponsibilities.some(Boolean)) ||
               hasText(selectedJob.keyResponsibilities)) && (
               <div className="career-open__dialog-body">
-                <h4 className="career-open__dialog-h4">Key Responsibilities</h4>
+                <h3 className="career-open__dialog-h4">Key Responsibilities</h3>
                 {Array.isArray(selectedJob.keyResponsibilities) ? (
                   <ul className="career-open__dialog-list">
                     {selectedJob.keyResponsibilities.map((item, index) => (
@@ -126,7 +137,7 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
             {((Array.isArray(selectedJob.qualifications) && selectedJob.qualifications.some(Boolean)) ||
               hasText(selectedJob.qualifications)) && (
               <div className="career-open__dialog-body">
-                <h4 className="career-open__dialog-h4">Qualifications</h4>
+                <h3 className="career-open__dialog-h4">Qualifications</h3>
                 {Array.isArray(selectedJob.qualifications) ? (
                   <ul className="career-open__dialog-list">
                     {selectedJob.qualifications.map((item, index) => (
@@ -145,7 +156,7 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
             {((Array.isArray(selectedJob.benefits) && selectedJob.benefits.some(Boolean)) ||
               hasText(selectedJob.benefits)) && (
               <div className="career-open__dialog-body">
-                <h4 className="career-open__dialog-h4">Benefits</h4>
+                <h3 className="career-open__dialog-h4">Benefits</h3>
                 {Array.isArray(selectedJob.benefits) ? (
                   <ul className="career-open__dialog-list">
                     {selectedJob.benefits.map((item, index) => (

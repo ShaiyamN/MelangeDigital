@@ -8,6 +8,21 @@ import "./contact.css";
 
 const FORM_CLEAR_KEY = "zf_lead_form_clear";
 const CONTACT_THANKS_KEY = "contact-form-thanks";
+// Confirmation shows briefly, then the form clears itself and returns.
+const CONTACT_SUCCESS_FLASH_MS = 8000;
+
+function resetContactForm(root) {
+  const card = root.querySelector(".leadform-card");
+  const done = root.querySelector(".w-form-done");
+  const form = root.querySelector("#form");
+  if (!card || !done) return;
+  card.removeAttribute("data-contact-success");
+  done.classList.remove("is-visible");
+  if (form) {
+    form.hidden = false;
+    form.reset(); // custom multiselect / country-code widgets re-sync on "reset"
+  }
+}
 
 function showContactSuccess(root) {
   const card = root.querySelector(".leadform-card");
@@ -17,6 +32,11 @@ function showContactSuccess(root) {
   if (form) form.hidden = true;
   done.classList.add("is-visible");
   card.setAttribute("data-contact-success", "1");
+  if (card.__contactResetTimer) window.clearTimeout(card.__contactResetTimer);
+  card.__contactResetTimer = window.setTimeout(
+    () => resetContactForm(root),
+    CONTACT_SUCCESS_FLASH_MS,
+  );
 }
 
 function maybeShowThanks(root) {

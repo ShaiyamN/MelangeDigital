@@ -134,7 +134,7 @@ const Career = () => {
                 cls="career-why__card--3"
               />
               <div className="career-why__photo career-why__photo--solo">
-                <img src={`${IMG}/why-03.jpg`} alt="" width="380" height="246" />
+                <img src={`${IMG}/work life balance.jpeg`} alt="" width="380" height="246" style={{ objectPosition: "32.5% 50.7%" }} />
               </div>
               <WhyCard
                 n="04"
@@ -155,7 +155,7 @@ const Career = () => {
         <section className="career-wander">
           <img
             className="career-wander__bg"
-            src="/destination-marketing-agency/images/about/wanderlust.jpg"
+            src="/assets/Footers/Careers footer.png"
             alt=""
             width="1437"
             height="290"

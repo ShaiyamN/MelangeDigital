@@ -3164,9 +3164,10 @@ box-sizing:border-box;
 
 :root {
   --melange-ink: #0F0330;
+  --melange-heading: #39107B;
   --melange-highlight: #C76BFC;
   --melange-accent: #6E1EEE;
-  --melange-accent-2: #6E1EEE;
+  --melange-accent-2: #7123EE;
   --melange-accent-deep: #49149d;
   --melange-cta-mid: #9a30b9;
   --melange-cta-border: #e797ff;
@@ -3176,7 +3177,7 @@ box-sizing:border-box;
   --melange-cream: #ffffff;
   --melange-lilac: #ffffff;
   --melange-display: "Alan Sans", sans-serif;
-  --melange-body: "Poppins", sans-serif;
+  --melange-body: "Lato", sans-serif;
   --melange-serif: "Baskervville", "Libre Baskerville", serif;
   --melange-italic: "Alan Sans", sans-serif;
   --violet-100: #6E1EEE;
@@ -3266,6 +3267,54 @@ body {
   -webkit-text-fill-color: var(--melange-highlight) !important;
 }
 
+/* Brand violet (#7123EE) replaces the generic purple for highlighted words
+   (spec: h2 normal #39107B, highlighted #7123EE). Home sections carry their
+   own section classes (the #home scope is only the hero) so target each. */
+#home .hero-heading-h1 .hero-italic,
+#home .hero-heading-h1 .span-txt,
+#home .hero-heading-h1 .hero-accent,
+#home .hero-eyebrow,
+.home-logo-section h2 .span-txt,
+.home-logo-section h2 .trusted-accent,
+.home-logo-section h2 .trusted-text,
+.home-shift-section h2 .span-txt,
+.home-caas-section h2 .span-txt,
+.home-caas-section h2 .span-italic-txt,
+.home-innovation-section h2 .span-txt,
+.home-our-work-section h2 .span-txt,
+.home-our-work-section h2 .span-italic-txt,
+.home-awards-section h2 .span-txt,
+.home-awards-section h2 .span-italic-txt,
+.home-network-section h2 .about-accent,
+.home-network-section h2 .span-txt,
+.home-global-section h2 .span-txt,
+.home-testimonial-stagger-section h2 .span-txt,
+.home-report-promo-section h2 .about-accent,
+.home-report-access-section h2 .about-accent,
+.home-prefooter-section h2 .span-txt,
+.home-prefooter-section h2 .about-accent {
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
+}
+#home .hero-stat-num,
+.home-shift-section .shift-stat__value {
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
+}
+
+.abt-page .about-hero__mark-em,
+.svc-page .about-hero__mark-em,
+.wrk-page .about-hero__mark-em,
+.abt-page h2 .about-accent,
+.svc-page h2 .about-accent,
+.wrk-page h2 .about-accent,
+.abt-page h2 .svc-accent,
+.svc-page h2 .svc-accent,
+.wrk-page h2 .svc-accent {
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
+}
+
 .trusted-accent,
 .hero-report-prompt,
 .report-card__notify,
@@ -3332,8 +3381,66 @@ body {
 .repurposed-heading-fix2 .span-txt,
 .crafting-heading.caas-heading .caas-cap,
 .crafting-heading.caas-heading .caas-cap * {
-  color: var(--melange-highlight) !important;
-  -webkit-text-fill-color: var(--melange-highlight) !important;
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
+}
+
+/* h2 normal text = brand deep violet; h2 highlighted/accent words = brand
+   violet (see tokens: --melange-heading / --melange-accent-2). */
+.abt-page .hero-heading-h1,
+.svc-page .hero-heading-h1,
+.wrk-page .hero-heading-h1,
+.abt-page .about-hero__title,
+.svc-page .about-hero__title,
+.wrk-page .about-hero__title,
+.abt-page .crafting-heading,
+.abt-page .home-heading-h2,
+.abt-page .our-work-heading,
+.abt-page .testimonial-heading-h2,
+.abt-page .achevement-heading-h2,
+.abt-page .heading-20,
+.abt-page .video-heading,
+.abt-page .infra-heading,
+.abt-page .svc-block__title,
+.abt-page .svc-wander__title,
+.abt-page .leadform-heading,
+.abt-page .about-h2,
+.svc-page .crafting-heading,
+.svc-page .home-heading-h2,
+.svc-page .our-work-heading,
+.svc-page .testimonial-heading-h2,
+.svc-page .achevement-heading-h2,
+.svc-page .heading-20,
+.svc-page .video-heading,
+.svc-page .infra-heading,
+.svc-page .svc-block__title,
+.svc-page .svc-wander__title,
+.svc-page .leadform-heading,
+.svc-page .about-h2,
+.wrk-page .crafting-heading,
+.wrk-page .home-heading-h2,
+.wrk-page .our-work-heading,
+.wrk-page .testimonial-heading-h2,
+.wrk-page .achevement-heading-h2,
+.wrk-page .heading-20,
+.wrk-page .video-heading,
+.wrk-page .infra-heading,
+.wrk-page .svc-block__title,
+.wrk-page .svc-wander__title,
+.wrk-page .leadform-heading,
+.wrk-page .about-h2 {
+  color: var(--melange-heading, #39107b) !important;
+  -webkit-text-fill-color: var(--melange-heading, #39107b) !important;
+}
+
+.abt-page .about-accent,
+.svc-page .about-accent,
+.wrk-page .about-accent,
+.abt-page .svc-accent,
+.svc-page .svc-accent,
+.wrk-page .svc-accent {
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
 }
 
 /* —— Atmosphere / soft section washes (match Figma R2 / purple rectangles) —— */
@@ -3823,6 +3930,12 @@ input.zf-submitColor,
   margin: 0 !important;
 }
 
+/* Stat values pick up the same accent colour the About hero stats use */
+#home .hero-cta-cluster .trusted-text .hero-stat-num {
+  color: var(--melange-highlight);
+  font-weight: 700;
+}
+
 /* Full-bleed hero image with soft left fade (Figma 456:30). */
 .hero-figma__visual {
   position: absolute;
@@ -3878,6 +3991,17 @@ input.zf-submitColor,
 
 .hero-figma__glow {
   display: none;
+}
+
+/* Desktop: show the FULL artwork (no top/bottom crop) while keeping the same
+   full-bleed frame — art is anchored to the right edge at its natural 16:9
+   ratio, i.e. pulled back / zoomed out relative to a cover crop. Mobile keeps
+   cover because it already shows the whole image at 16:9. */
+@media (min-width: 992px) {
+  .hero-figma__visual img {
+    object-fit: contain;
+    object-position: right center;
+  }
 }
 
 /* Desktop-only forced breaks — mobile/tablet wraps to fill width (1–2 lines) */
@@ -6636,10 +6760,11 @@ html,
 }
 
 /* ==========================================================================
-   Tourism typography uniformity — Alan Sans (headings) + Poppins (body) only
+   Tourism typography uniformity — Alan Sans (h1/h2) + Baskerville (h2 accent
+   italics) + Lato (h3 and all other copy) only.
    ========================================================================== */
 :root {
-  --inter: "Poppins", sans-serif;
+  --inter: "Lato", sans-serif;
   --instrument: "Alan Sans", sans-serif;
 }
 
@@ -7959,32 +8084,55 @@ a.leadform-contact-item:hover {
 
 /* —— Wireframe: Pre-footer CTA —— */
 .home-prefooter-cta {
-  padding: clamp(32px, 4vw, 48px) 0 clamp(40px, 5vw, 56px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 277px;
+  box-sizing: border-box;
+  padding: 16px 0;
   text-align: center;
-  background: linear-gradient(180deg, rgba(247, 244, 255, 0.45) 0%, #fff 100%);
+  background: #fff;
   border-top: 1px solid rgba(15, 3, 48, 0.06);
 }
+.home-prefooter-cta__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.3;
+}
 .home-prefooter-cta .container-4 {
+  position: relative;
+  z-index: 1;
   max-width: 720px;
+  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  gap: 18px;
 }
 .home-prefooter-heading {
   max-width: none;
   margin: 0;
-  font-size: clamp(30px, 3.8vw, 42px) !important;
-  line-height: 1.12 !important;
+  font-size: clamp(28px, 3.4vw, 46px) !important;
+  line-height: 1.15 !important;
+  color: var(--melange-heading, #39107b) !important;
+  -webkit-text-fill-color: var(--melange-heading, #39107b) !important;
 }
 .home-prefooter-heading .span-txt {
   font-family: var(--melange-serif) !important;
   font-style: italic !important;
   font-weight: 400 !important;
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
 }
 .home-prefooter-btn {
-  margin-top: 4px !important;
+  margin-top: 0 !important;
 }
 
 @media (max-width: 991px) {
@@ -8267,17 +8415,21 @@ a.svc-project:focus-visible .svc-project__media img {
 /* Pre-footer wanderlust */
 .svc-wander {
   position: relative;
-  min-height: 290px;
+  isolation: isolate;
+  height: 277px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: var(--about-section, var(--section-pad-y)) 24px;
+  padding: 16px 24px;
   overflow: hidden;
+  background: #fff;
 }
 .svc-wander__bg {
   position: absolute;
   inset: 0;
+  z-index: -1;
   opacity: 0.3;
   pointer-events: none;
 }
@@ -8285,7 +8437,7 @@ a.svc-project:focus-visible .svc-project__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 40%;
+  object-position: center;
 }
 .svc-wander__content {
   position: relative;
@@ -8293,16 +8445,22 @@ a.svc-project:focus-visible .svc-project__media img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 18px;
 }
 .svc-wander__title {
   font-family: var(--melange-display) !important;
   font-weight: 600;
-  font-size: 55px;
-  line-height: 1.1;
-  color: #000;
+  font-size: clamp(28px, 3.4vw, 46px);
+  line-height: 1.15;
+  color: var(--melange-heading, #39107b) !important;
+  -webkit-text-fill-color: var(--melange-heading, #39107b) !important;
   margin: 0;
   max-width: 1119px;
+}
+.svc-wander__title .svc-accent,
+.svc-page .svc-wander__title .svc-accent {
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -8326,10 +8484,6 @@ a.svc-project:focus-visible .svc-project__media img {
   .svc-block__title {
     font-size: 36px;
     line-height: 1.2;
-  }
-  .svc-wander__title {
-    font-size: 40px;
-    line-height: 1.15;
   }
 }
 
@@ -8365,10 +8519,6 @@ a.svc-project:focus-visible .svc-project__media img {
     height: auto;
     aspect-ratio: 16 / 9;
   }
-  .svc-wander__title {
-    font-size: 28px;
-    line-height: 1.2;
-  }
   .svc-faq__item summary {
     min-height: 44px;
     padding: 10px 16px;
@@ -8392,7 +8542,7 @@ a.svc-project:focus-visible .svc-project__media img {
   background: #0f0330;
   color: #fff;
   border-radius: 8px;
-  font-family: "Poppins", sans-serif;
+  font-family: "Lato", sans-serif;
   font-size: 14px;
   text-decoration: none;
   transform: translateY(-120%);
@@ -8407,12 +8557,14 @@ a.svc-project:focus-visible .svc-project__media img {
 .svc-page,
 .wrk-page {
   --melange-ink: #0f0330;
+  --melange-heading: #39107b;
   --melange-highlight: #c671f9;
   --melange-accent: #6e1eee;
+  --melange-accent-2: #7123ee;
   --melange-cta-mid: #9a30b9;
   --melange-cta-border: #e797ff;
   --melange-display: "Alan Sans", sans-serif;
-  --melange-body: "Poppins", sans-serif;
+  --melange-body: "Lato", sans-serif;
   /* Same column + rhythm as Home `.container-4` / `--section-pad-y` */
   --about-pad: 40px;
   --about-section: var(--section-pad-y);
@@ -8590,7 +8742,7 @@ a.svc-project:focus-visible .svc-project__media img {
   line-height: 1.35;
   letter-spacing: 0.06em !important;
   text-transform: none;
-  color: var(--melange-highlight);
+  color: var(--melange-accent-2, #7123ee);
   max-width: 100%;
   white-space: normal;
   overflow-wrap: anywhere;
@@ -8661,43 +8813,68 @@ a.svc-project:focus-visible .svc-project__media img {
 .about-hero__mark-em {
   color: var(--melange-accent);
 }
-.about-hero__stats {
-  position: relative;
-  z-index: 1;
+/* CTA + stats mirror the home hero cluster: [button] | dotted divider | stats lines */
+.about-hero__cluster {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 26px;
   flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 16px 28px;
-  margin: 4px 0 0;
+}
+.about-hero__divider {
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: 0;
+  border-left: 2px dotted rgba(57, 16, 123, 0.35);
+}
+.about-hero__stats {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
   padding: 0;
   list-style: none;
   border: 0;
 }
 .about-hero__stats li {
+  display: block;
   min-width: 0;
-  flex: 0 1 auto;
-  max-width: 11rem;
+  max-width: none;
 }
 .about-hero__stats strong {
-  display: block;
+  display: inline;
   font-family: var(--melange-display);
-  font-size: clamp(36px, 6vw, 48px);
+  font-size: var(--type-title, 22px);
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--melange-accent);
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: var(--melange-highlight);
   font-variant-numeric: tabular-nums;
 }
 .about-hero__stats span {
-  display: block;
-  margin-top: 8px;
+  display: inline;
+  margin-left: 4px;
   font-family: var(--melange-display);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: var(--type-title, 22px);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--melange-ink);
+}
+
+@media (max-width: 767px) {
+  .about-hero__cluster {
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .about-hero__divider {
+    display: none;
+  }
+  .about-hero__stats strong,
+  .about-hero__stats span {
+    font-size: 19px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -8705,8 +8882,7 @@ a.svc-project:focus-visible .svc-project__media img {
     padding-top: 48px;
   }
   .about-hero__stats {
-    gap: 12px 32px;
-    margin-top: 8px;
+    gap: 8px;
   }
 }
 
@@ -9021,7 +9197,7 @@ a.svc-project:focus-visible .svc-project__media img {
   width: min(1400px, calc(100vw - 32px));
   max-width: none;
   min-width: 0;
-  margin: 64px auto 0;
+  margin: 28px auto 0;
   border: none;
   background: transparent;
   overflow: visible;
@@ -9830,7 +10006,7 @@ a.svc-project:focus-visible .svc-project__media img {
   position: relative;
   margin: 0;
   max-width: 42rem;
-  font-family: var(--melange-body, "Poppins", sans-serif);
+  font-family: var(--melange-body, "Lato", sans-serif);
   font-size: clamp(15px, 1.25vw, 17px);
   line-height: 1.7;
   color: rgba(15, 3, 48, 0.78);
@@ -9953,14 +10129,16 @@ a.svc-project:focus-visible .svc-project__media img {
 .about-wander {
   position: relative;
   isolation: isolate;
-  min-height: 320px;
-  padding: var(--about-section) var(--about-pad);
+  height: 277px;
+  padding: 16px var(--about-pad);
+  box-sizing: border-box;
   text-align: center;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #fff;
 }
 .about-wander__bg {
   position: absolute;
@@ -9969,12 +10147,24 @@ a.svc-project:focus-visible .svc-project__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 22%;
-  opacity: 0.55;
+  object-position: center;
+  opacity: 0.3;
 }
 .about-wander .about-h2 {
-  margin: 0 auto 28px;
+  margin: 0 0 14px;
   max-width: 22em;
+  color: var(--melange-heading, #39107b) !important;
+  -webkit-text-fill-color: var(--melange-heading, #39107b) !important;
+  font-size: clamp(28px, 3.4vw, 46px) !important;
+  line-height: 1.15 !important;
+  white-space: normal;
+}
+.about-wander .about-accent,
+.about-wander .svc-accent,
+.abt-page .about-wander .about-h2 .about-accent,
+.wrk-page .about-wander .about-h2 .about-accent {
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
 }
 .about-wander .about-accent,
 .svc-wander__title .svc-accent {
@@ -10132,7 +10322,8 @@ a.svc-project:focus-visible .svc-project__media img {
   }
 }
 
-/* H1 Alan Sans + Baskervville italic accents. H3 Lato (wins over older display locks). */
+/* H1 Alan Sans + Baskervville italic accents (#7123EE brand violet, per spec:
+   h2 normal #39107B, highlighted #7123EE). H3 Lato (wins over older display locks). */
 .hero-heading-h1 .hero-accent,
 #home .hero-heading-h1 .hero-accent,
 .about-hero__title .about-accent,
@@ -10142,8 +10333,8 @@ h2 .span-txt {
   font-family: var(--melange-serif) !important;
   font-style: italic !important;
   font-weight: 400 !important;
-  color: var(--melange-highlight) !important;
-  -webkit-text-fill-color: var(--melange-highlight) !important;
+  color: var(--melange-accent-2, #7123ee) !important;
+  -webkit-text-fill-color: var(--melange-accent-2, #7123ee) !important;
 }
 h3,
 h3.heading-25,
