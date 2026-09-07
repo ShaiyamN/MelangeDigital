@@ -9,4 +9,5 @@ export { default as PrivatePolicy } from "./PrivatePolicy";
 export { default as Refund } from "./Refund";
 export { default as Cookies } from "./Cookies";
 export { default as Career } from "./Career";
-export { default as ItbTourism } from "./ItbTourism";
+export { default as Blogs } from "./Blogs";
+export { default as BlogDetail } from "./BlogDetail";

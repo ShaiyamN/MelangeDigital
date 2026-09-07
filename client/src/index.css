@@ -2524,20 +2524,6 @@ body {
 }
 
 
-/* ITB Landing Page */
-
-@keyframes slowSpin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.spinAnimation {
-  animation: slowSpin 15s linear infinite;
-}
 
 
 /* Hide scrollbar for webkit */

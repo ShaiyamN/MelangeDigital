@@ -23,13 +23,6 @@ const routesToTest = [
   { path: "/work/singapore-tourism-board", name: "Case Study - Singapore Tourism" },
   { path: "/work/genvr", name: "Case Study - GenVR" },
   { path: "/work/neotraders", name: "Case Study - NeoTraders" },
-  { path: "/services/brand-strategy", name: "Service - Brand Strategy" },
-  { path: "/services/influencer-marketing", name: "Service - Influencer Marketing" },
-  { path: "/services/aeo-seo", name: "Service - AEO/SEO" },
-  { path: "/singapore-tourism", name: "Individual - Singapore Tourism" },
-  { path: "/singapore-tourism-aeo-seo", name: "Individual - Singapore Tourism AEO/SEO" },
-  { path: "/ganga-fashion", name: "Individual - Ganga Fashion" },
-  { path: "/siam-malls", name: "Individual - Siam Malls" },
   { path: "/report-download.html", name: "Report Download HTML" },
 ];
 

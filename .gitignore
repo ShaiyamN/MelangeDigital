@@ -7,9 +7,8 @@ client/public/tourism/
 !.env.example
 .vscode/
 .qodo/
-.cursor/*
-!.cursor/mcp.json
-!.cursor/settings.json
+.cursor/
+.claude/
 .agents/
 __pycache__/
 *.log

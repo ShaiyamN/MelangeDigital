@@ -1,11 +1,60 @@
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
+import { DEFAULT_SERVICE_CARDS } from "../../../constants/serviceCards";
 import {
   MARKETING_ASSET as ASSET,
   MarketingShell,
   marketingNavCss,
   useMarketingBoot,
 } from "../marketingShell";
-import markup from "./markup.html?raw";
+import rawMarkup from "./markup.html?raw";
+
+function esc(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function renderServiceCardHtml(card) {
+  if (!card) return "";
+  const href = card.slug ? (card.slug.startsWith("/") ? card.slug : `/work/${card.slug}`) : "/work";
+  return `      <a class="svc-project" href="${esc(href)}">
+       <div class="svc-project__media">
+        <img alt="${esc(card.title)}" src="${esc(card.bannerImage)}" width="1200" height="600" style="object-fit: cover; width: 100%; height: 100%;" />
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">${esc(card.title)}</h3>
+        <p class="svc-project__caption">${esc(card.caption || "")}</p>
+       </div>
+      </a>`;
+}
+
+function buildDynamicMarkup(baseHtml, settings) {
+  if (!settings) return baseHtml;
+
+  let result = baseHtml;
+  for (const [serviceId, serviceData] of Object.entries(DEFAULT_SERVICE_CARDS)) {
+    const custom = settings[serviceId];
+    if (!custom) continue;
+
+    const card1 = custom.slot1 !== undefined && custom.slot1 !== null ? custom.slot1 : serviceData.slot1;
+    const card2 = custom.slot2 !== undefined && custom.slot2 !== null ? custom.slot2 : serviceData.slot2;
+
+    const newCardsHtml = `\n${renderServiceCardHtml(card1)}\n${renderServiceCardHtml(card2)}\n     `;
+    const regex = new RegExp(
+      `(<section[^>]*id="${serviceId}"[\\s\\S]*?<div class="svc-projects">)([\\s\\S]*?)(<\\/div>\\s*<div class="svc-cta-row">)`
+    );
+
+    result = result.replace(regex, `$1${newCardsHtml}$3`);
+  }
+
+  return result;
+}
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
@@ -54,6 +103,27 @@ const FAQ_SCHEMA = {
 
 const Services = () => {
   const cssReady = useMarketingBoot("svc", CSS, SCRIPT_BASES);
+  const [markup, setMarkup] = useState(rawMarkup);
+
+  useEffect(() => {
+    let active = true;
+    const loadServiceCards = async () => {
+      try {
+        const snap = await getDoc(doc(db, "settings", "service_cards"));
+        if (snap.exists() && active) {
+          const updated = buildDynamicMarkup(rawMarkup, snap.data());
+          setMarkup(updated);
+        }
+      } catch (err) {
+        console.warn("Could not load dynamic service cards:", err);
+      }
+    };
+
+    loadServiceCards();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <>
