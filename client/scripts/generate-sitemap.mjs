@@ -35,7 +35,7 @@ for (const route of routes) {
   if (seen.has(locPath)) continue;
   seen.add(locPath);
   const { changefreq, priority } = metaFor(locPath);
-  const loc = locPath === "/" ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${locPath}`;
+  const loc = locPath === "/" ? SITE_ORIGIN : `${SITE_ORIGIN}${locPath}`;
   urls.push({ loc, lastmod, changefreq, priority });
 }
 

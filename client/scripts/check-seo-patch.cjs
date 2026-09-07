@@ -30,6 +30,8 @@ const samples = [
     "https://melangedigital.co/services/design-and-development",
     "Design",
   ],
+  ["/services", "https://melangedigital.co/services", "Melange offers digital marketing services"],
+  ["/services/", "https://melangedigital.co/services", "Melange offers digital marketing services"],
   ["/blogs/hello-world", "https://melangedigital.co/blogs/hello-world", "Hello World"],
 ];
 

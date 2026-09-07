@@ -164,7 +164,7 @@ const Home = () => {
           name="description"
           content="Melange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
         />
-        <link rel="canonical" href="https://melangedigital.co/" />
+        <link rel="canonical" href="https://melangedigital.co" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -172,7 +172,7 @@ const Home = () => {
           rel="stylesheet"
         />
         <base href="/destination-marketing-agency/" />
-        <meta property="og:url" content="https://melangedigital.co/" />
+        <meta property="og:url" content="https://melangedigital.co" />
         <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Melange Digital" />
         <meta
           property="og:description"

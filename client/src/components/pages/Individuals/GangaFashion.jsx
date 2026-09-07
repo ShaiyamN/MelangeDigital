@@ -17,6 +17,7 @@ const GangaFashion = () => {
       <Helmet>
         <title>Ganga Fashion – We Put the 'Soul' in Ganga Fashions</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="canonical" href="https://melangedigital.co/ganga-fashion" />
       </Helmet>
 
       <style>{`

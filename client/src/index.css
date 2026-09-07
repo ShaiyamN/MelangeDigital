@@ -119,6 +119,7 @@
 
 /* ─── Rich Text — rendered content on PUBLIC frontend ─────────────────────── */
 .cs-rendered-content {
+  font-family: var(--font-body);
   white-space: normal !important;
 }
 .cs-rendered-content h1 {

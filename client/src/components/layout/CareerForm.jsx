@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef } from "react";
 
-const ZOHO_BASE_SRC = "/careers/form-embed?zf_rszfm=1";
+const ZOHO_BASE_SRC = "/careers/form";
 
 // Zoho Form Builder → Settings → Prefill → Field Alias for Position dropdown: Position
 const ZOHO_POSITION_ALIAS = "Position";
@@ -40,7 +40,7 @@ const appendUtmParams = (src) => {
 const buildZohoSrc = (selectedPosition) => {
   let src = ZOHO_BASE_SRC;
   if (selectedPosition) {
-    src += "&" + ZOHO_POSITION_ALIAS + "=" + encodeURIComponent(selectedPosition);
+    src += "?" + ZOHO_POSITION_ALIAS + "=" + encodeURIComponent(selectedPosition);
   }
   return appendUtmParams(src);
 };
@@ -62,20 +62,37 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
     iframe.style.border = "none";
     iframe.style.width = "90%";
     iframe.style.height = "1354px";
-    iframe.style.pointerEvents = "none";
     iframe.setAttribute("aria-label", "Apply Now and Join the Team!");
     iframeRef.current = iframe;
-    mount.appendChild(iframe);
 
-    const enable = () => {
-      iframe.style.pointerEvents = "auto";
+    const onIframeLoad = () => {
+      try {
+        if (window.__melangeLenis) {
+          window.__melangeLenis.resize();
+        }
+        const iframeWin = iframe.contentWindow;
+        if (!iframeWin) return;
+        const forwardWheel = (e) => {
+          const lenis = window.__melangeLenis;
+          if (lenis && !lenis.isStopped && !lenis.isLocked) {
+            const mult = e.deltaMode === 1 ? 40 : (e.deltaMode === 2 ? window.innerHeight : 1);
+            const deltaY = e.deltaY * mult;
+            lenis.scrollTo(lenis.targetScroll + deltaY, {
+              programmatic: false,
+              duration: lenis.options.duration,
+              easing: lenis.options.easing,
+              lerp: lenis.options.lerp,
+            });
+          } else {
+            window.scrollBy({ top: e.deltaY, left: e.deltaX, behavior: "auto" });
+          }
+        };
+        iframeWin.addEventListener("wheel", forwardWheel, { passive: true });
+      } catch (_) {}
     };
-    const disable = () => {
-      iframe.style.pointerEvents = "none";
-    };
-    mount.addEventListener("mousedown", enable);
-    mount.addEventListener("touchstart", enable, { passive: true });
-    mount.addEventListener("mouseleave", disable);
+    iframe.addEventListener("load", onIframeLoad);
+
+    mount.appendChild(iframe);
 
     const onMessage = (event) => {
       const evntData = event?.data;
@@ -87,13 +104,15 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
           const currentIframe = mount?.getElementsByTagName("iframe")[0];
           if (
             currentIframe &&
-            (currentIframe.src.indexOf("form-embed") !== -1 ||
-              (currentIframe.src.indexOf("formperma") > 0 &&
-                currentIframe.src.indexOf(zf_perma) > 0))
+            (currentIframe.src.indexOf("/careers/form") !== -1 ||
+              currentIframe.src.indexOf("formperma") > 0)
           ) {
             const prevHeight = currentIframe.style.height;
             if (prevHeight !== newHeight) {
               currentIframe.style.height = newHeight;
+              if (window.__melangeLenis) {
+                window.__melangeLenis.resize();
+              }
             }
           }
         }
@@ -103,9 +122,7 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
     window.addEventListener("message", onMessage, false);
     return () => {
       window.removeEventListener("message", onMessage, false);
-      mount.removeEventListener("mousedown", enable);
-      mount.removeEventListener("touchstart", enable);
-      mount.removeEventListener("mouseleave", disable);
+      iframe.removeEventListener("load", onIframeLoad);
       if (mount && iframe && mount.contains(iframe)) {
         mount.removeChild(iframe);
       }

@@ -69,30 +69,35 @@ async function sendIndex(req, res) {
 }
 
 const DMA = "destination-marketing-agency";
-const ZOHO_CAREERS_FORM =
-  "https://forms.zohopublic.in/melangedigital1/form/CareersForm/formperma/D3dMn9tzL49YuMHf4zm1NhIL7IYLUTx4iHNZ-0HaHgI";
 
-async function serveCareersFormEmbed(req, res) {
-  const qs = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "?zf_rszfm=1";
-  try {
-    const upstream = await fetch(ZOHO_CAREERS_FORM + qs);
-    if (!upstream.ok) {
-      res.status(upstream.status).type("text/plain").send("Form unavailable");
-      return;
-    }
-    let html = await upstream.text();
-    const inject = '<link rel="stylesheet" href="/careers/zoho-form.css">';
-    html = html.includes("</head>")
-      ? html.replace("</head>", inject + "</head>")
-      : inject + html;
-    res.type("html").set("Cache-Control", "no-cache").send(html);
-  } catch (err) {
-    console.error("careers form embed failed:", err.message);
-    res.status(502).type("text/plain").send("Form unavailable");
-  }
+const CAREERS_FORM_HTML = path.join(DIST, "careers", "form", "index.html");
+let cachedFormFragment = null;
+
+function getFormFragment() {
+  if (cachedFormFragment) return cachedFormFragment;
+  if (!fs.existsSync(CAREERS_FORM_HTML)) return null;
+  // Serve the full standalone document so the <head> stylesheet link and
+  // validation script load; the iframe renders it as a normal page.
+  cachedFormFragment = fs.readFileSync(CAREERS_FORM_HTML, "utf8");
+  return cachedFormFragment;
 }
 
-app.get(["/careers/form-embed", "/careers/form-embed/"], serveCareersFormEmbed);
+app.get(["/careers/form", "/careers/form/"], (_req, res) => {
+  const fragment = getFormFragment();
+  if (!fragment) {
+    res.status(404).type("text/plain").send("Careers form not found");
+    return;
+  }
+  res.type("html").set("Cache-Control", "no-cache").send(fragment);
+});
+
+// Serve the careers form's CSS and JS assets from dist/
+const CAREERS_DIST_DIR = path.join(DIST, "careers", "form");
+app.use("/careers/form", express.static(CAREERS_DIST_DIR, {
+  setHeaders(res, filePath) {
+    res.setHeader("Cache-Control", "no-cache");
+  },
+}));
 
 app.get(["/report-download", "/report-download/"], (_req, res) => {
   res.type("html").set("Cache-Control", "no-cache").send(reportDownloadHtml());

@@ -16,6 +16,7 @@ const SingaporeTourismAeoSeo = () => {
       <Helmet>
         <title>Singapore Tourism Board – "Is This Even Singapore"</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="canonical" href="https://melangedigital.co/singapore-tourism-aeo-seo" />
       </Helmet>
 
       <style>{`

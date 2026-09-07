@@ -190,7 +190,7 @@ const BlogDetail = () => {
         {blog.altText && <meta property="og:image:alt" content={blog.altText} data-rh="true" />}
         <meta property="og:title" content={blog.seoTitle || blog.title} data-rh="true" />
         <meta property="og:description" content={blog.metaDescription || blog.description || ""} data-rh="true" />
-        <link rel="canonical" href={`https://melangedigital.co/blogs/${blog.slug}`} data-rh="true" />
+        <link rel="canonical" href={`https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`} data-rh="true" />
       </Helmet>
 
       <Navbar />

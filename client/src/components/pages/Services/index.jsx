@@ -61,7 +61,7 @@ const Services = () => {
         <title>Digital Marketing for Travel and Tourism | Melange</title>
         <meta
           name="description"
-          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branded content, built for destinations, DMOs and NTOs."
+          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
         />
         <link rel="canonical" href="https://melangedigital.co/services" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -75,7 +75,7 @@ const Services = () => {
         <meta property="og:title" content="Digital Marketing for Travel and Tourism | Melange" />
         <meta
           property="og:description"
-          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branded content, built for destinations, DMOs and NTOs."
+          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
         />
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
         <script type="application/ld+json">

@@ -1,11 +1,16 @@
 // CookiePolicy.js
 
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { Footer, Navbar } from "../layout";
 
 const CookiePolicy = () => {
   return (
     <>
+      <Helmet>
+        <title>Cookie Policy | Mélange Digital</title>
+        <link rel="canonical" href="https://melangedigital.co/cookie-policy" />
+      </Helmet>
       <Navbar />
       <div className="container font-nunito mx-auto text-[#1a1a1a] xxl:px-[100px] bg-white pt-[100px] lg:pt-[120px] pb-[50px] lg:pb-[100px] px-4  lg:px-[80px]">
         <h2 className="text-display font-display font-semibold mb-6">

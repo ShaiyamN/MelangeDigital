@@ -16,6 +16,7 @@ const SiamMalls = () => {
       <Helmet>
         <title>Siam Malls – #ShopBangkokWithSiamMalls | Melange Digital</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="canonical" href="https://melangedigital.co/siam-malls" />
       </Helmet>
 
       <style>{`

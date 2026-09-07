@@ -27,4 +27,23 @@ for (const route of routes) {
 }
 
 console.log(`write-spa-shells: ${routes.length} admin shells`);
+
+// Copy the standalone careers form HTML + assets into dist/ so server.cjs can serve them
+const careersFormDir = path.join(__dirname, "..", "public", "careers", "Apply_Now_and_Become_a_Part_of_Our_Team");
+const careersDistDir = path.join(dist, "careers", "form");
+if (fs.existsSync(careersFormDir)) {
+  fs.mkdirSync(careersDistDir, { recursive: true });
+  for (const entry of fs.readdirSync(careersFormDir, { recursive: true })) {
+    const src = path.join(careersFormDir, entry);
+    const dest = path.join(careersDistDir, entry);
+    if (fs.statSync(src).isDirectory()) {
+      fs.mkdirSync(dest, { recursive: true });
+    } else {
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.copyFileSync(src, dest);
+    }
+  }
+  console.log(`write-spa-shells: careers form copied to dist/careers/form/`);
+}
+
 console.log(`hostinger-build: ok (${index})`);

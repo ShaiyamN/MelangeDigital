@@ -26,9 +26,29 @@ const PAGE_META = {
       "Meet the team behind Mélange Digital. Passionate global agency driven by strategy, creativity & a mission to grow brands that matter. Discover our story",
   },
   "/services": {
-    title: "Travel & Tourism Marketing Services | Melange Digital",
+    title: "Digital Marketing for Travel and Tourism | Melange",
     description:
-      "Influencer and celebrity marketing, branded content and IP, experiential activations, and FAM trips plus PR for tourism boards. How Melange engineers desire to arrivals.",
+      "Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs.",
+  },
+  "/terms-of-service": {
+    title: "Terms of Service | Mélange Digital",
+    description:
+      "Terms of Service for Mélange Digital. Please read these terms and conditions before using our services.",
+  },
+  "/privacy-policy": {
+    title: "Privacy Policy | Mélange Digital",
+    description:
+      "Privacy Policy for Mélange Digital. Learn how we collect, use, and protect your personal information.",
+  },
+  "/cancellation-and-refund-policy": {
+    title: "Cancellation & Refund Policy | Mélange Digital",
+    description:
+      "Cancellation and Refund Policy for Mélange Digital services.",
+  },
+  "/cookie-policy": {
+    title: "Cookie Policy | Mélange Digital",
+    description:
+      "Cookie Policy for Mélange Digital to understand our use of cookies.",
   },
   "/blogs": {
     title: "Blog & Insights | Mélange Digital",
@@ -106,13 +126,14 @@ function titleFromPath(p) {
 }
 
 function canonicalFor(path, origin = ORIGIN) {
-  if (path === "/") return `${origin}/`;
-  const m = path.match(/^\/work\/(.+)$/);
+  const clean = normalizePath(path);
+  if (clean === "/") return origin;
+  const m = clean.match(/^\/work\/(.+)$/);
   if (m) {
     const slug = CANONICAL_SLUG[m[1].toLowerCase()] || m[1];
     return `${origin}/work/${slug}`;
   }
-  return `${origin}${path}`;
+  return `${origin}${clean}`;
 }
 
 function pathKey(index, path) {
@@ -270,6 +291,17 @@ if (require.main === module) {
     stbKeep.canonical ===
       "https://melangedigital.co/work/singapore-tourism-board",
   );
+  const svcMeta = resolveMeta("/services", { routes: new Set(["/services"]), byPath: {} });
+  assert.strictEqual(
+    svcMeta.description,
+    "Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
+  );
+  assert.strictEqual(svcMeta.canonical, "https://melangedigital.co/services");
+
+  // Trailing slash normalization test:
+  assert.strictEqual(canonicalFor("/services/"), "https://melangedigital.co/services");
+  assert.strictEqual(canonicalFor("/"), "https://melangedigital.co/");
+  assert.strictEqual(canonicalFor(""), "https://melangedigital.co/");
 
   console.log("seo-head self-check ok");
 }

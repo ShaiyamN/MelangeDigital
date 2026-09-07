@@ -18,43 +18,33 @@ const REPORT_PDF_FILE = path.join(
   "reports",
   "The Indian Outbound Inspiration report 2026.pdf",
 );
-const ZOHO_CAREERS_FORM =
-  "https://forms.zohopublic.in/melangedigital1/form/CareersForm/formperma/D3dMn9tzL49YuMHf4zm1NhIL7IYLUTx4iHNZ-0HaHgI";
-
-async function proxyCareersFormEmbed(req, res) {
-  const qs = req.url?.includes("?") ? req.url.slice(req.url.indexOf("?")) : "?zf_rszfm=1";
-  try {
-    const upstream = await fetch(ZOHO_CAREERS_FORM + qs);
-    if (!upstream.ok) {
-      res.statusCode = upstream.status;
-      res.end("Form unavailable");
-      return;
-    }
-    let html = await upstream.text();
-    const inject = '<link rel="stylesheet" href="/careers/zoho-form.css">';
-    html = html.includes("</head>")
-      ? html.replace("</head>", inject + "</head>")
-      : inject + html;
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.setHeader("Cache-Control", "no-cache");
-    res.end(html);
-  } catch (err) {
-    res.statusCode = 502;
-    res.end("Form unavailable");
-  }
-}
-
+const careersFormDir = path.join(
+  __dirname,
+  "public",
+  "careers",
+  "Apply_Now_and_Become_a_Part_of_Our_Team"
+);
+const mimeTypes = {
+  ".html": "text/html",
+  ".js": "application/javascript",
+  ".css": "text/css",
+  ".json": "application/json",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".svg": "image/svg+xml",
+  ".webp": "image/webp",
+  ".ico": "image/x-icon",
+  ".mp4": "video/mp4",
+  ".pdf": "application/pdf",
+};
 function marketingDevMiddleware() {
   return {
     name: "marketing-dev-middleware",
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url?.split("?")[0] || "";
-
-        if (url === "/careers/form-embed" || url === "/careers/form-embed/") {
-          await proxyCareersFormEmbed(req, res);
-          return;
-        }
 
         if (url === "/report-download" || url === "/report-download/") {
           res.setHeader("Content-Type", "text/html; charset=utf-8");
@@ -91,6 +81,37 @@ function marketingDevMiddleware() {
           return;
         }
 
+        // Standalone careers form — mirror the server.cjs production routes so the
+        // careers page iframe loads the form in dev instead of the SPA fallback.
+        if (url === "/careers/form" || url === "/careers/form/") {
+          const indexFile = path.join(careersFormDir, "index.html");
+          if (!fs.existsSync(indexFile)) {
+            res.statusCode = 404;
+            res.end("Careers form not found");
+            return;
+          }
+          res.setHeader("Content-Type", "text/html; charset=utf-8");
+          res.setHeader("Cache-Control", "no-cache");
+          fs.createReadStream(indexFile).pipe(res);
+          return;
+        }
+
+        if (url.startsWith("/careers/form/")) {
+          const relativePath = url.replace(/^\/careers\/form\//, "");
+          const candidate = path.join(careersFormDir, relativePath);
+          if (
+            candidate.startsWith(careersFormDir) &&
+            fs.existsSync(candidate) &&
+            fs.statSync(candidate).isFile() &&
+            fs.statSync(candidate).size > 0
+          ) {
+            const ext = path.extname(candidate);
+            res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
+            fs.createReadStream(candidate).pipe(res);
+            return;
+          }
+        }
+
         if (!url.startsWith(`/${MARKETING_SLUG}/`)) {
           next();
           return;
@@ -115,21 +136,6 @@ function marketingDevMiddleware() {
         }
 
         const ext = path.extname(candidate);
-        const mimeTypes = {
-          ".html": "text/html",
-          ".js": "application/javascript",
-          ".css": "text/css",
-          ".json": "application/json",
-          ".png": "image/png",
-          ".jpg": "image/jpeg",
-          ".jpeg": "image/jpeg",
-          ".gif": "image/gif",
-          ".svg": "image/svg+xml",
-          ".webp": "image/webp",
-          ".ico": "image/x-icon",
-          ".mp4": "video/mp4",
-          ".pdf": "application/pdf",
-        };
         res.setHeader("Content-Type", mimeTypes[ext] || "application/octet-stream");
         fs.createReadStream(candidate).pipe(res);
       });

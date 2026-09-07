@@ -65,19 +65,15 @@ import {
   naviSavi,
   saudi,
   zambia,
-  greenLabel,
   maisonLuxe,
   veda
 } from "../assets/images";
 import {
-  GenVRBanner,
   aarWork,
   enerWork,
   genWork,
   rockWork,
   rockCase,
-  gangaBanner,
-  hkBanner,
   HKbanner,
 } from "../assets/caseImages";
 import {
