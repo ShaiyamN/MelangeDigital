@@ -8328,36 +8328,99 @@ a.svc-project:focus-visible .svc-project__media img {
     white-space: normal;
   }
 }
-.svc-page .section-8 details.accordian-item {
+.section-8 .accordian-item,
+.svc-page .section-8 .accordian-item {
   background: #fff !important;
   border: 1px solid rgba(57, 16, 123, 0.1) !important;
   border-radius: 16px !important;
   overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.svc-page .section-8 details.accordian-item summary.accordion-toggle {
-  list-style: none;
-  cursor: pointer;
+
+.section-8 .accordian-item:hover,
+.svc-page .section-8 .accordian-item:hover {
+  border-color: rgba(57, 16, 123, 0.25) !important;
+}
+
+.section-8 .accordion-toggle,
+.svc-page .section-8 .accordion-toggle {
   background: transparent !important;
   border: none !important;
   padding: 20px 24px !important;
   min-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  cursor: pointer;
+  width: 100%;
+  position: relative;
+  user-select: none;
+  text-align: left;
+}
+
+.section-8 .accordion-toggle .text-block-30,
+.svc-page .section-8 .accordion-toggle .text-block-30 {
+  color: var(--melange-ink, #1b1d1e) !important;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0 !important;
+  padding-right: 16px;
+  flex: 1;
+}
+
+.section-8 .accordian-icon.w-icon-dropdown-toggle,
+.svc-page .section-8 .accordian-icon.w-icon-dropdown-toggle {
+  position: static !important;
+  margin: 0 !important;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--melange-ink, #1b1d1e);
 }
-.svc-page .section-8 details.accordian-item summary.accordion-toggle::-webkit-details-marker {
+
+.section-8 .accordian-item.w--open .accordian-icon.w-icon-dropdown-toggle,
+.section-8 .accordian-item.is-open .accordian-icon.w-icon-dropdown-toggle,
+.svc-page .section-8 .accordian-item.w--open .accordian-icon.w-icon-dropdown-toggle,
+.svc-page .section-8 .accordian-item.is-open .accordian-icon.w-icon-dropdown-toggle {
+  transform: rotate(180deg);
+}
+
+.section-8 .dropdown-list,
+.section-8 .w-dropdown-list,
+.svc-page .section-8 .dropdown-list,
+.svc-page .section-8 .w-dropdown-list {
   display: none;
-}
-.svc-page .section-8 details.accordian-item .text-block-34,
-.svc-page .section-8 details.accordian-item .text-block-35,
-.svc-page .section-8 details.accordian-item .text-block-36,
-.svc-page .section-8 details.accordian-item .text-block-37,
-.svc-page .section-8 details.accordian-item .text-block-38,
-.svc-page .section-8 details.accordian-item .text-block-39 {
-  padding: 0 24px 16px !important;
+  background: transparent !important;
+  padding: 0 24px 20px !important;
   margin: 0 !important;
+  position: static !important;
 }
+
+.section-8 .accordian-item.w--open .dropdown-list,
+.section-8 .accordian-item.is-open .dropdown-list,
+.section-8 .dropdown-list.w--open,
+.svc-page .section-8 .accordian-item.w--open .dropdown-list,
+.svc-page .section-8 .accordian-item.is-open .dropdown-list,
+.svc-page .section-8 .dropdown-list.w--open {
+  display: block !important;
+}
+
+.section-8 .dropdown-list div[class^="text-block-"],
+.svc-page .section-8 .dropdown-list div[class^="text-block-"] {
+  color: #1b1d1e99 !important;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .svc-page .section-8 .faq-more-btn {
   align-self: center;
 }
