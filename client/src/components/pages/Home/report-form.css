@@ -330,3 +330,18 @@
     gap: 24px;
   }
 }
+
+/* What We Do subheader single line on desktop */
+.home-audiences-section .innovation-heading-wrap {
+  max-width: none !important;
+}
+.home-audiences-section .audiences-section-sub {
+  max-width: none !important;
+  white-space: nowrap !important;
+}
+@media (max-width: 991px) {
+  .home-audiences-section .audiences-section-sub {
+    white-space: normal !important;
+  }
+}
+

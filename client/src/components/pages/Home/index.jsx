@@ -14,7 +14,7 @@ const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260902i`,
+  `${ASSET}/css/melange.css?v=20260909b`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
@@ -208,6 +208,19 @@ const Home = () => {
             body.dma-react {
               --nav-sticky-offset: 84.8px;
               padding-top: 5.3rem;
+            }
+          }
+          /* What We Do subheader single line on desktop */
+          body.dma-react .home-audiences-section .innovation-heading-wrap {
+            max-width: none !important;
+          }
+          body.dma-react .home-audiences-section .audiences-section-sub {
+            max-width: none !important;
+            white-space: nowrap !important;
+          }
+          @media (max-width: 991px) {
+            body.dma-react .home-audiences-section .audiences-section-sub {
+              white-space: normal !important;
             }
           }
         `}</style>
