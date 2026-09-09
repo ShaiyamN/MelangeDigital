@@ -15,7 +15,6 @@ const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
   `${ASSET}/css/melange.css?v=20260909c`,
-  "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
 const SCRIPT_BASES = [
@@ -26,14 +25,13 @@ const SCRIPT_BASES = [
   `${ASSET}/js/gsap.min.js`,
   `${ASSET}/js/splittext.min.js`,
   `${ASSET}/js/scrolltrigger.min.js`,
-  "https://unpkg.com/lenis@1.1.14/dist/lenis.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
   "/about/network-sphere.js?v=20260902f",
   `${ASSET}/js/melange.js?v=20260909c`,
 ];
 
 function loadCss(href) {
-  const existing = document.querySelector(`link[data-dma-css="${href}"]`);
+  const existing = document.querySelector(`link[href="${href}"]`);
   if (existing) {
     return existing.sheet
       ? Promise.resolve()
@@ -72,16 +70,7 @@ function showBootLoader(show) {
 }
 
 function teardownDmaAssets() {
-  document.querySelectorAll("link[data-dma-css]").forEach((el) => el.remove());
   document.querySelectorAll("script[data-dma-js]").forEach((el) => el.remove());
-  if (window.__tourismLenis && typeof window.__tourismLenis.destroy === "function") {
-    try {
-      window.__tourismLenis.destroy();
-    } catch (_) {
-      /* ignore */
-    }
-    delete window.__tourismLenis;
-  }
 }
 
 /**
@@ -109,9 +98,6 @@ const Home = () => {
       document.head.insertBefore(baseEl, document.head.firstChild);
     }
     baseEl.setAttribute("href", `${ASSET}/`);
-
-    const spaLenis = window.__melangeLenis;
-    if (spaLenis && typeof spaLenis.stop === "function") spaLenis.stop();
 
     const id = ++bootId.current;
     let cancelled = false;
@@ -142,7 +128,6 @@ const Home = () => {
       document.body.classList.remove("body", "dma-react");
       document.querySelectorAll("base[data-dma-base]").forEach((el) => el.remove());
       teardownDmaAssets();
-      if (spaLenis && typeof spaLenis.start === "function") spaLenis.start();
     };
   }, []);
 

@@ -292,8 +292,10 @@
 })();
 
 
-/* --- Lenis smooth scroll (index only — Lenis is not loaded on 404) --- */
-if (
+/* --- Lenis smooth scroll (reuse app's __melangeLenis to prevent dual-instance scroll fight) --- */
+if (window.__melangeLenis) {
+  window.__tourismLenis = window.__melangeLenis;
+} else if (
   typeof Lenis !== 'undefined' &&
   typeof ScrollTrigger !== 'undefined' &&
   !window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -308,10 +310,10 @@ if (
    });
    window.__tourismLenis = lenis;
 
-  
    lenis.on('scroll', ScrollTrigger.update);
 
    function raf(time) {
+     if (window.__tourismLenis !== lenis) return;
      lenis.raf(time);
      requestAnimationFrame(raf);
    }

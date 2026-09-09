@@ -2905,3 +2905,20 @@ body {
   margin-top: 1.25rem;
   margin-bottom: 0.75rem;
 }
+
+/* FOUC gate for marketing pages mounted from extracted markup */
+.dma-react-root:not(.dma-css-ready),
+.svc-react-root:not(.svc-css-ready),
+.wrk-react-root:not(.wrk-css-ready),
+.abt-react-root:not(.abt-css-ready) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.dma-react-root,
+.svc-react-root,
+.wrk-react-root,
+.abt-react-root {
+  transition: opacity 0.2s ease;
+}
+

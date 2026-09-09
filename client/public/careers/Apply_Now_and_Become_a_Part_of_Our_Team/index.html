@@ -40,6 +40,9 @@ this opportunity to grow, learn, and innovate with us.</p>
 </label>
 <div class="zf-tempContDiv">
 <select class="zf-form-sBox" name="Dropdown" checktype="c1"><option selected="true" value="-Select-">Position</option>
+<option value="Creative Director Strategy & Operations">Creative Director Strategy & Operations</option>
+<option value="Account Manager">Account Manager</option>
+<option value="Videographer & Editor">Videographer & Editor</option>
 <option value="Video Editor (On-Site, Goa)">Video Editor (On-Site, Goa)</option>
 <option value="Social Media Manager (On-Site, Goa)">Social Media Manager (On-Site, Goa)</option>
 <option value="Web Developer (Automation &amp; AI-First)">Web Developer (Automation &amp; AI-First)</option></select><p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Invalid value</p></div>
@@ -133,20 +136,47 @@ var zf_MandArray = [ "Name_First", "Name_Last", "Email", "Date", "SingleLine", "
 var zf_FieldArray = [ "Name_First", "Name_Last", "Email", "Date", "Dropdown", "SingleLine2", "SingleLine", "Decimal", "PhoneNumber_countrycode", "PhoneNumber_countrycodeval", "SingleLine5", "SingleLine3", "SingleLine1", "Website1", "Website", "FileUpload"]; 
 var isSalesIQIntegrationEnabled = false;
 var salesIQFieldsArray = [];
-/* Prefill the Position dropdown from the ?Position= query param (set by the careers page) */
+/* Prefill the Position dropdown & unlisted position field from the ?Position= query param */
 (function () {
   try {
-    var position = new URLSearchParams(window.location.search).get("Position");
+    var rawPosition = new URLSearchParams(window.location.search).get("Position");
+    if (!rawPosition) return;
+    var position = rawPosition.trim();
     if (!position) return;
+
     var select = document.getElementsByName("Dropdown")[0];
-    if (!select) return;
-    for (var i = 0; i < select.options.length; i++) {
-      if (select.options[i].value === position) {
-        select.selectedIndex = i;
-        break;
+    var customInput = document.getElementsByName("SingleLine2")[0];
+    var matched = false;
+
+    if (select) {
+      for (var i = 0; i < select.options.length; i++) {
+        var optVal = (select.options[i].value || "").trim().toLowerCase();
+        var optText = (select.options[i].text || "").trim().toLowerCase();
+        var target = position.toLowerCase();
+        if (optVal === target || optText === target) {
+          select.selectedIndex = i;
+          matched = true;
+          break;
+        }
+      }
+
+      // If position wasn't in the predefined options, dynamically add and select it
+      if (!matched) {
+        var newOpt = new Option(position, position, true, true);
+        select.add(newOpt);
+        select.value = position;
+        matched = true;
       }
     }
-  } catch (e) {}
+
+    // Always populate the fallback "Position not listed? Type Here" field so
+    // Zoho backend captures the role even if Zoho's server rejects custom dropdown keys
+    if (customInput) {
+      customInput.value = position;
+    }
+  } catch (e) {
+    console.error("Error prefilling position:", e);
+  }
 })();
 /* Resize the parent iframe to fit the form (same zf_perma|height message the old Zoho page sent) */
 (function () {

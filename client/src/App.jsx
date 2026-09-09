@@ -12,26 +12,26 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Homepage + error stay eager for first paint / 404
+// Primary navigation pages stay eager for instant navigation without Suspense flashes
 import Home from "./components/pages/Home";
 import Error from "./components/pages/Error";
+import Services from "./components/pages/Services";
+import Works from "./components/pages/Work";
+import About from "./components/pages/About";
+import Contact from "./components/pages/Contact";
+import Career from "./components/pages/Career";
 
-// Everything else: load on navigation
-const Services = lazy(() => import("./components/pages/Services"));
-const Works = lazy(() => import("./components/pages/Work"));
-const About = lazy(() => import("./components/pages/About"));
-const Contact = lazy(() => import("./components/pages/Contact"));
+// Secondary content & dynamic routes: load on demand
 const Blogs = lazy(() => import("./components/pages/Blogs"));
 const BlogDetail = lazy(() => import("./components/pages/BlogDetail"));
 const CaseStudyDetail = lazy(() => import("./components/pages/Casestudies/CaseStudyDetail"));
+const Location = lazy(() => import("./components/pages/Location"));
 
-// Lazy load less frequently visited routes
+// Legal / Policy routes
 const TermsofService = lazy(() => import("./components/pages/TermsofService"));
 const PrivatePolicy = lazy(() => import("./components/pages/PrivatePolicy"));
 const Refund = lazy(() => import("./components/pages/Refund"));
 const Cookies = lazy(() => import("./components/pages/Cookies"));
-const Career = lazy(() => import("./components/pages/Career"));
-const Location = lazy(() => import("./components/pages/Location"));
 
 // Admin components
 const AdminLogin = lazy(() => import("./components/admin/AdminLogin"));
@@ -100,7 +100,7 @@ function App() {
   return (
     <>
       <ScrollToTop />
-      <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <Suspense fallback={<div className="min-h-screen bg-transparent" aria-hidden="true" />}>
         <Routes>
           {/* Canonical core pages */}
           <Route exact path="/" Component={Home} />

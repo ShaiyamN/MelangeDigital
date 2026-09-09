@@ -29,7 +29,9 @@ export default function CareerBenefits() {
       <div className="career-wrap">
         <div className="career-split">
           <h2 className="career-h2">
-            Benefits to help you make the <span className="career-italic">best work</span> of your life
+            Benefits to help you make
+            <br className="hidden sm:inline" />{" "}
+            the <span className="career-italic">best work</span> of your life
           </h2>
           <p className="career-lede">
             We work across five countries and a dozen clients. The benefits reflect that: real growth, real time off, and work worth talking about.

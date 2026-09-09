@@ -11,7 +11,7 @@ function showBootLoader(show) {
 }
 
 function loadCss(href, attr) {
-  const existing = document.querySelector(`link[${attr}="${href}"]`);
+  const existing = document.querySelector(`link[href="${href}"]`);
   if (existing) {
     return existing.sheet
       ? Promise.resolve()
@@ -87,7 +87,7 @@ export function useMarketingBoot(slug, css, scripts) {
     const bodyClass = `${slug}-react`;
 
     const teardown = () => {
-      document.querySelectorAll(`link[${cssAttr}]`).forEach((el) => el.remove());
+      // Clean up page-specific scripts so event listeners and animation loops don't leak
       document.querySelectorAll(`script[${jsAttr}]`).forEach((el) => el.remove());
     };
 
@@ -148,6 +148,7 @@ export function MarketingShell({ slug, cssReady, markup }) {
       />
       <div
         className={`${slug}-react-root${cssReady ? ` ${slug}-css-ready` : ""}`}
+        style={!cssReady ? { opacity: 0, visibility: "hidden" } : undefined}
         dangerouslySetInnerHTML={{ __html: markup }}
       />
       <Footer />
