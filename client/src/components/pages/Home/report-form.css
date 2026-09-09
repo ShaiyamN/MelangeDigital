@@ -345,3 +345,13 @@
   }
 }
 
+/* FAQ card styling sync with Services */
+.section-8 .accordion-toggle .text-block-30 {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
+.section-8 .faq-more-btn {
+  align-self: center !important;
+}

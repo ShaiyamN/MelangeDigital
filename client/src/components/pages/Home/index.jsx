@@ -14,7 +14,7 @@ const ASSET = "/destination-marketing-agency";
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
   `${ASSET}/css/form.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260909b`,
+  `${ASSET}/css/melange.css?v=20260909c`,
   "https://unpkg.com/lenis@1.1.14/dist/lenis.css",
 ];
 
@@ -29,7 +29,7 @@ const SCRIPT_BASES = [
   "https://unpkg.com/lenis@1.1.14/dist/lenis.min.js",
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
   "/about/network-sphere.js?v=20260902f",
-  `${ASSET}/js/melange.js?v=20260902c`,
+  `${ASSET}/js/melange.js?v=20260909c`,
 ];
 
 function loadCss(href) {
@@ -222,6 +222,15 @@ const Home = () => {
             body.dma-react .home-audiences-section .audiences-section-sub {
               white-space: normal !important;
             }
+          }
+          /* FAQ card styling sync with Services */
+          body.dma-react .section-8 .accordion-toggle .text-block-30 {
+            font-size: 18px !important;
+            font-weight: 500 !important;
+            line-height: 1.4 !important;
+          }
+          body.dma-react .section-8 .faq-more-btn {
+            align-self: center !important;
           }
         `}</style>
       </Helmet>

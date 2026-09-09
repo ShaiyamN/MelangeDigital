@@ -7567,9 +7567,9 @@ h3.zf-frmTitle {
 /* —— FAQ —— */
 .section-8 h3.text-block-30,
 .section-8 .text-block-30 {
-  font-size: var(--type-title) !important;
-  line-height: 1.35 !important;
-  font-weight: 600 !important;
+  font-size: 18px !important;
+  line-height: 1.4 !important;
+  font-weight: 500 !important;
 }
 
 .section-8 .text-block-34,
@@ -7687,7 +7687,6 @@ h3.zf-frmTitle {
 .main h3.heading-7,
 .main h3.heading-25,
 .main h3.creative-block-title,
-.main h3.text-block-30,
 .main h3.data-filter-title,
 .main h3.zf-frmTitle,
 .main h3.pricing,
@@ -8893,14 +8892,15 @@ a.svc-project:focus-visible .svc-project__media img {
 }
 
 .section-8 .accordion-toggle .text-block-30,
-.svc-page .section-8 .accordion-toggle .text-block-30 {
+.svc-page .section-8 .accordion-toggle .text-block-30,
+.main .section-8 .accordion-toggle .text-block-30 {
   color: var(--melange-ink, #1b1d1e) !important;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 1.4;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 1.4 !important;
   margin: 0 !important;
-  padding-right: 16px;
-  flex: 1;
+  padding-right: 16px !important;
+  flex: 1 !important;
 }
 
 .section-8 .accordian-icon.w-icon-dropdown-toggle,
@@ -8947,12 +8947,13 @@ a.svc-project:focus-visible .svc-project__media img {
 .section-8 .dropdown-list div[class^="text-block-"],
 .svc-page .section-8 .dropdown-list div[class^="text-block-"] {
   color: #1b1d1e99 !important;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 16px !important;
+  line-height: 1.6 !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
+.section-8 .faq-more-btn,
 .svc-page .section-8 .faq-more-btn {
   align-self: center;
 }

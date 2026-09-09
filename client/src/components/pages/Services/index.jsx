@@ -58,7 +58,7 @@ function buildDynamicMarkup(baseHtml, settings) {
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260831d`,
+  `${ASSET}/css/melange.css?v=20260909c`,
 ];
 const SCRIPT_BASES = [`${ASSET}/js/services.js?v=20260824w`];
 
@@ -96,6 +96,22 @@ const FAQ_SCHEMA = {
       acceptedAnswer: {
         "@type": "Answer",
         text: "Yes. NTO marketing means working within a national tourism organisation's mandate, budget cycles and ministerial reporting lines: categorically different from marketing a private travel brand, and a large part of what Melange specialises in.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does Melange Digital specialise in?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Melange is a travel and tourism marketing agency. We decode the culture, narrate the story, match the creator, and convert emotion into a booking. Success is measured in arrivals, not impressions.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do you choose creators for a destination campaign?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We cast for credibility inside a subculture, not follower count. We check the data behind every creator before signing a contract, and casting, negotiation, content and reporting run under one roof.",
       },
     },
   ],

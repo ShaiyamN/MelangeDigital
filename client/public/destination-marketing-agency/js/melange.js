@@ -1222,12 +1222,12 @@ positionCards();
 
 /* --- FAQ: show 3 by default, expand to all on click --- */
 (function initFaqMore() {
-  var list = document.querySelector(".faq-list");
-  var btn = document.getElementById("faqMoreBtn");
-  if (!list || !btn) return;
-  var label = btn.querySelector(".faq-more-btn__label");
-
-  btn.addEventListener("click", function () {
+  function onFaqMoreClick(e) {
+    var btn = e.target.closest(".faq-more-btn");
+    if (!btn) return;
+    var list = btn.closest(".faq-list") || document.querySelector(".faq-list");
+    if (!list) return;
+    var label = btn.querySelector(".faq-more-btn__label");
     var collapsed = list.getAttribute("data-faq-collapsed") !== "false";
     if (collapsed) {
       list.setAttribute("data-faq-collapsed", "false");
@@ -1238,7 +1238,26 @@ positionCards();
       btn.setAttribute("aria-expanded", "false");
       if (label) label.textContent = "Show all questions";
     }
-  });
+  }
+
+  function onFaqKeydown(e) {
+    if (e.key === "Enter" || e.key === " ") {
+      var toggle = e.target.closest(".section-8 .accordion-toggle");
+      if (toggle) {
+        e.preventDefault();
+        toggle.click();
+      }
+    }
+  }
+
+  if (window.__melangeFaqMoreHandler) {
+    document.removeEventListener("click", window.__melangeFaqMoreHandler);
+    document.removeEventListener("keydown", window.__melangeFaqKeyHandler);
+  }
+  window.__melangeFaqMoreHandler = onFaqMoreClick;
+  window.__melangeFaqKeyHandler = onFaqKeydown;
+  document.addEventListener("click", onFaqMoreClick);
+  document.addEventListener("keydown", onFaqKeydown);
 })();
 
 /* --- Mobile menu: open/close drawer (vanilla — ignore Webflow IX2 inline styles) --- */
