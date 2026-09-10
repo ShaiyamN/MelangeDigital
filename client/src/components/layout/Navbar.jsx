@@ -114,6 +114,95 @@ const Navbar = () => {
   return (
     <>
       <style>{`
+        /* Universal Navbar Reset & Typography */
+        .font-bricolage.fixed,
+        .font-bricolage.fixed *,
+        body > .font-bricolage,
+        body > .font-bricolage * {
+          font-family: "Bricolage Grotesque", sans-serif !important;
+        }
+
+        .font-bricolage.fixed a,
+        .font-bricolage.fixed a:hover,
+        .font-bricolage.fixed a:focus,
+        .font-bricolage.fixed a:active,
+        body > .font-bricolage a,
+        body > .font-bricolage a:hover,
+        body > .font-bricolage a:focus,
+        body > .font-bricolage a:active {
+          text-decoration: none !important;
+        }
+
+        .navbar-link {
+          display: inline-block;
+          padding: 0.5rem;
+          text-decoration: none !important;
+          color: #1a1a1a !important;
+          position: relative;
+        }
+
+        .navbar-link a,
+        .navbar-link .nav-link,
+        .nav-link {
+          display: inline-block;
+          color: #1a1a1a !important;
+          text-decoration: none !important;
+          transition: color 0.2s ease;
+          background: none;
+          -webkit-text-fill-color: initial;
+        }
+
+        .navbar-link:hover,
+        .navbar-link:hover a,
+        .navbar-link:hover .nav-link,
+        .navbar-link a:hover,
+        .nav-link:hover {
+          background: linear-gradient(
+            268.81deg,
+            #3858ff 28.07%,
+            #b745ff 74.52%,
+            #d940ff 101.17%
+          ) !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          background-clip: text !important;
+          text-fill-color: transparent !important;
+          color: transparent !important;
+          text-decoration: none !important;
+        }
+
+        .nav-link.activePath,
+        .navbar-link .nav-link.activePath {
+          background: linear-gradient(
+            268.81deg,
+            #3858ff 28.07%,
+            #b745ff 74.52%,
+            #d940ff 101.17%
+          ) !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          background-clip: text !important;
+          text-fill-color: transparent !important;
+          color: transparent !important;
+          text-decoration: none !important;
+          position: relative;
+        }
+
+        .nav-cta-link,
+        .nav-cta-link:hover,
+        .nav-cta-link:focus,
+        .nav-cta-link:active,
+        .nav-cta-link *,
+        .nav-cta-link:hover *,
+        .contact-btn,
+        .contact-btn:hover,
+        .contact-btn:focus,
+        .contact-btn:active,
+        .contact-btn *,
+        .contact-btn:hover * {
+          text-decoration: none !important;
+        }
+
         @keyframes fadeSlideIn {
           from { opacity: 0; transform: translateY(6px); }
           to { opacity: 1; transform: translateY(0); }
@@ -549,9 +638,13 @@ const Navbar = () => {
                   </div>
                 ))}
 
-                <Link to="/contact">
+                <Link
+                  to="/contact"
+                  className="nav-cta-link no-underline hover:no-underline"
+                  style={{ textDecoration: "none" }}
+                >
                   <div className="contact-btn h-[56px] px-6 flex items-center justify-center rounded-full cursor-pointer bg-[#1A1A1A] font-medium text-body whitespace-nowrap">
-                    <span>Book a Strategy Call</span>
+                    <span style={{ textDecoration: "none" }}>Book a Strategy Call</span>
                   </div>
                 </Link>
               </div>
