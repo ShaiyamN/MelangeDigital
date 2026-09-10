@@ -47,28 +47,22 @@ Images and videos are stored in Git (not LFS) so Hostinger can build without `gi
 
 Use a **Node.js Web App** (not static hosting). Application root must be **`client`**.
 
-### Recommended — CI prebuild (avoids Hostinger OOM)
+### Production Deployment via `main` Branch
 
-Vite needs ~768MB heap; shared Hostinger plans often kill the build mid-Vite with no useful error. **Build on GitHub Actions instead:**
-
-1. Push to **`staging`** — workflow [`.github/workflows/hostinger-build.yml`](.github/workflows/hostinger-build.yml) builds `client/dist` and force-pushes branch **`hostinger-dist`**.
-2. Wait for the **Hostinger prebuild** Action to finish (green) on GitHub.
-3. Point Hostinger at **`hostinger-dist`** (not `staging`):
+Deploy directly from the **`main`** branch. Production assets (`client/dist`) are tracked in the repository, avoiding Hostinger Vite OOM errors.
 
 | Setting | Value |
 | --- | --- |
-| Branch | **`hostinger-dist`** |
-| Application root | `client` |
+| Branch | **`main`** |
+| Application root | `client` *(or empty repo root — both supported)* |
 | Framework | **Express** or **Other** |
-| Node.js version | **20.x** *(not 22 — change in hPanel if still on default)* |
-| Build command | `node scripts/verify-dist.cjs` |
+| Node.js version | **20.x** *(change in hPanel if on default)* |
+| Build command | `node scripts/verify-dist.cjs` *(or `npm run build`)* |
 | Start command | `npm start` |
-| Entry file | `server.cjs` |
-| Output directory | `dist` *(not `client/dist`)* |
+| Entry file | `server.cjs` *(or `server.js`)* |
+| Output directory | `dist` |
 
-Hostinger still runs `npm install` for runtime deps (`express`, etc.) but **does not run Vite**.
-
-**Deploy flow:** edit code → push `staging` → wait for GitHub Action → Hostinger redeploys `hostinger-dist` (auto or manual Redeploy).
+Hostinger runs `npm install` for runtime deps (`express`, `firebase`, etc.) and instantly verifies the pre-built `dist/`.
 
 **Success markers in build logs:**
 ```

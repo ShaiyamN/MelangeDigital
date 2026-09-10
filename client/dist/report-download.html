@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Downloading report…</title>
+</head>
+<body>
+<p>Preparing your download…</p>
+<script>
+(function () {
+  var KEY = "pending-report";
+  var DEFAULT = "indian-outbound-2026";
+  var REPORTS = {"indian-outbound-2026":{"title":"The Indian Outbound Inspiration Report 2026","path":"/indian-outbound-tourism-report"}};
+  var slug = DEFAULT;
+  try {
+    var stored = sessionStorage.getItem(KEY);
+    if (stored && REPORTS[stored]) slug = stored;
+    sessionStorage.removeItem(KEY);
+  } catch (e) {}
+  var entry = REPORTS[slug] || REPORTS[DEFAULT];
+  if (entry && entry.path) location.replace(entry.path);
+  else document.body.textContent = "Report not found.";
+})();
+</script>
+</body>
+</html>

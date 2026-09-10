@@ -162,6 +162,18 @@ app.use(
   })
 );
 
+const PUBLIC_DIR = path.join(__dirname, "public");
+app.use(
+  express.static(PUBLIC_DIR, {
+    redirect: false,
+    setHeaders(res, filePath) {
+      if (filePath.endsWith(`${path.sep}index.html`) || filePath.endsWith("/index.html")) {
+        res.setHeader("Cache-Control", "no-cache");
+      }
+    },
+  })
+);
+
 app.use((req, res) => {
   if (req.path.startsWith("/assets/")) {
     res.status(404).type("text/plain").send("Not found");

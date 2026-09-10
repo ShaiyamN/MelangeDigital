@@ -16,9 +16,10 @@ node_modules
 
 # ----------------------------
 # Build output
-# ----------------------------
-dist
+# dist is tracked for Hostinger deployment on main
+# dist
 dist-ssr
+dist/videos/
 
 # ----------------------------
 # Environment files

@@ -1,5 +1,7 @@
 node_modules/
-dist/
+# dist/ is tracked in client for Hostinger main branch deployment
+# dist/
+client/dist/videos/
 client/public/indian-outbound-tourism-report/
 client/public/tourism/
 .env

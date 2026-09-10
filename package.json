@@ -1,11 +1,17 @@
 {
   "name": "melange-digital",
   "private": true,
+  "main": "server.js",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
     "build": "node scripts/hostinger-build.cjs",
     "start": "node client/server.cjs"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-basic-auth": "^1.2.1",
+    "firebase": "^12.14.0"
   }
 }

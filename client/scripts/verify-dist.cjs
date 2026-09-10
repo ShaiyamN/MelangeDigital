@@ -24,6 +24,16 @@ const reportPdf = path.join(
 console.log(`verify-dist: ok (${index}, ${bytes} bytes)`);
 console.log("hostinger-build: ok (dist/index.html)");
 
+const distVideos = path.join(root, "dist", "videos");
+const publicVideos = path.join(root, "public", "videos");
+if (!fs.existsSync(distVideos) && fs.existsSync(publicVideos)) {
+  try {
+    fs.symlinkSync(publicVideos, distVideos, "junction");
+  } catch {
+    // server.cjs fallback serves public directory directly
+  }
+}
+
 if (!fs.existsSync(reportDownload)) {
   console.error("FAIL: dist/report-download.html missing");
   process.exit(1);
@@ -35,7 +45,7 @@ if (!fs.existsSync(reportPdf)) {
 
 console.log("");
 console.log("Hostinger panel (recommended — skip on-server Vite):");
-console.log("  Branch:           hostinger-dist");
+console.log("  Branch:           main");
 console.log("  Application root: client");
 console.log("  Node.js version:  20.x");
 console.log("  Build command:    node scripts/verify-dist.cjs");

@@ -25,6 +25,14 @@ process.env.NODE_OPTIONS = [process.env.NODE_OPTIONS, "--max-old-space-size=768"
   .join(" ");
 
 run("npm install --prefix client --no-audit --no-fund --legacy-peer-deps");
+
+if (fs.existsSync(distIndex)) {
+  console.log(`hostinger-build: pre-built dist already exists (${distIndex})`);
+  run("npm run verify:dist --prefix client");
+  console.log("hostinger-build: ok (dist verified)");
+  process.exit(0);
+}
+
 run("npm run build --prefix client");
 
 if (!fs.existsSync(distIndex)) {
