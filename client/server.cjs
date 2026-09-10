@@ -71,15 +71,10 @@ async function sendIndex(req, res) {
 const DMA = "destination-marketing-agency";
 
 const CAREERS_FORM_HTML = path.join(DIST, "careers", "form", "index.html");
-let cachedFormFragment = null;
 
 function getFormFragment() {
-  if (cachedFormFragment) return cachedFormFragment;
   if (!fs.existsSync(CAREERS_FORM_HTML)) return null;
-  // Serve the full standalone document so the <head> stylesheet link and
-  // validation script load; the iframe renders it as a normal page.
-  cachedFormFragment = fs.readFileSync(CAREERS_FORM_HTML, "utf8");
-  return cachedFormFragment;
+  return fs.readFileSync(CAREERS_FORM_HTML, "utf8");
 }
 
 app.get(["/careers/form", "/careers/form/"], (_req, res) => {

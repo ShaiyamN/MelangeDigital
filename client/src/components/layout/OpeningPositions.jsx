@@ -4,21 +4,21 @@ import { db } from "../../firebase";
 import { closeBtn } from "../../assets/images";
 import MelangeCta from "./MelangeCta";
 
-const OpeningPositions = ({ scrollToForm, onApply }) => {
+const OpeningPositions = ({ scrollToForm, onApply, onJobsLoaded }) => {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
     getDocs(collection(db, "jobs"))
-      .then((snapshot) =>
-        setJobs(
-          snapshot.docs
-            .map((doc) => ({ id: doc.id, ...doc.data() }))
-            .filter((job) => job.active !== false),
-        ),
-      )
+      .then((snapshot) => {
+        const loadedJobs = snapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((job) => job.active !== false);
+        setJobs(loadedJobs);
+        if (onJobsLoaded) onJobsLoaded(loadedJobs);
+      })
       .catch((error) => console.error("Error loading jobs:", error));
-  }, []);
+  }, [onJobsLoaded]);
 
   // While the details dialog is open, freeze the page (native + Lenis smooth
   // scroll) so only the dialog body scrolls, not the whole careers page.
@@ -44,7 +44,8 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
   };
 
   const applyFor = (title) => {
-    if (onApply) onApply(title);
+    const cleanTitle = (title || "").trim();
+    if (onApply) onApply(cleanTitle);
     scrollToForm();
   };
 
@@ -171,6 +172,22 @@ const OpeningPositions = ({ scrollToForm, onApply }) => {
                 )}
               </div>
             )}
+
+            <div className="career-open__dialog-footer mt-8 pt-6 border-t border-slate-100 flex items-center justify-end gap-4">
+              <button type="button" className="career-open__link" onClick={closeDetails}>
+                Close
+              </button>
+              <MelangeCta
+                className="career-open__apply"
+                onClick={() => {
+                  const title = selectedJob?.title;
+                  closeDetails();
+                  applyFor(title);
+                }}
+              >
+                Apply for this role
+              </MelangeCta>
+            </div>
 
             <button type="button" className="career-open__close" aria-label="Close" onClick={closeDetails}>
               <img src={closeBtn} alt="" width="24" height="24" />

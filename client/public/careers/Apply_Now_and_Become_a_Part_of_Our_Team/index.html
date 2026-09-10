@@ -39,13 +39,7 @@ this opportunity to grow, learn, and innovate with us.</p>
 <div class="zf-tempFrmWrapper  zf-large "><label class="zf-labelName"> 
 </label>
 <div class="zf-tempContDiv">
-<select class="zf-form-sBox" name="Dropdown" checktype="c1"><option selected="true" value="-Select-">Position</option>
-<option value="Creative Director Strategy & Operations">Creative Director Strategy & Operations</option>
-<option value="Account Manager">Account Manager</option>
-<option value="Videographer & Editor">Videographer & Editor</option>
-<option value="Video Editor (On-Site, Goa)">Video Editor (On-Site, Goa)</option>
-<option value="Social Media Manager (On-Site, Goa)">Social Media Manager (On-Site, Goa)</option>
-<option value="Web Developer (Automation &amp; AI-First)">Web Developer (Automation &amp; AI-First)</option></select><p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Invalid value</p></div>
+<select class="zf-form-sBox" name="Dropdown" checktype="c1"><option selected="true" value="-Select-">Position</option></select><p id="Dropdown_error" class="zf-errorMessage" style="display:none;">Invalid value</p></div>
 <div class="zf-clearBoth"></div></div>
 <div class="zf-tempFrmWrapper  zf-large "><label class="zf-labelName">  
 </label>
@@ -136,23 +130,75 @@ var zf_MandArray = [ "Name_First", "Name_Last", "Email", "Date", "SingleLine", "
 var zf_FieldArray = [ "Name_First", "Name_Last", "Email", "Date", "Dropdown", "SingleLine2", "SingleLine", "Decimal", "PhoneNumber_countrycode", "PhoneNumber_countrycodeval", "SingleLine5", "SingleLine3", "SingleLine1", "Website1", "Website", "FileUpload"]; 
 var isSalesIQIntegrationEnabled = false;
 var salesIQFieldsArray = [];
-/* Prefill the Position dropdown & unlisted position field from the ?Position= query param */
+/* Dynamic Position Synchronization & Prefill */
 (function () {
-  try {
-    var rawPosition = new URLSearchParams(window.location.search).get("Position");
-    if (!rawPosition) return;
-    var position = rawPosition.trim();
-    if (!position) return;
+  var currentSelectedPosition = "";
 
-    var select = document.getElementsByName("Dropdown")[0];
-    var customInput = document.getElementsByName("SingleLine2")[0];
+  function getSelect() {
+    return document.getElementsByName("Dropdown")[0];
+  }
+
+  function getCustomInput() {
+    return document.getElementsByName("SingleLine2")[0];
+  }
+
+  // Populate dropdown options with active jobs
+  function populatePositions(positions, selected) {
+    var select = getSelect();
+    if (!select) return;
+
+    if (!selected && select.value && select.value !== "-Select-") {
+      selected = select.value;
+    }
+
+    var targetSelected = (selected || currentSelectedPosition || "").trim();
+
+    // Reset options
+    select.innerHTML = '<option value="-Select-">Position</option>';
+
+    var added = {};
+    if (Array.isArray(positions)) {
+      for (var i = 0; i < positions.length; i++) {
+        var pos = positions[i];
+        if (!pos || typeof pos !== "string") continue;
+        var clean = pos.trim();
+        var lower = clean.toLowerCase();
+        if (!clean || added[lower]) continue;
+        added[lower] = true;
+        var opt = document.createElement("option");
+        opt.value = clean;
+        opt.textContent = clean;
+        select.appendChild(opt);
+      }
+    }
+
+    // Always add "Other / Not Listed" option at the end
+    var otherOpt = document.createElement("option");
+    otherOpt.value = "Other / Not Listed";
+    otherOpt.textContent = "Other / Not Listed";
+    select.appendChild(otherOpt);
+
+    if (targetSelected) {
+      selectPosition(targetSelected);
+    }
+  }
+
+  // Select a specific position in the dropdown and sync to SingleLine2
+  function selectPosition(pos) {
+    if (!pos) return;
+    var raw = String(pos).trim();
+    if (!raw) return;
+    currentSelectedPosition = raw;
+
+    var select = getSelect();
+    var customInput = getCustomInput();
     var matched = false;
 
     if (select) {
+      var target = raw.toLowerCase();
       for (var i = 0; i < select.options.length; i++) {
         var optVal = (select.options[i].value || "").trim().toLowerCase();
         var optText = (select.options[i].text || "").trim().toLowerCase();
-        var target = position.toLowerCase();
         if (optVal === target || optText === target) {
           select.selectedIndex = i;
           matched = true;
@@ -160,22 +206,110 @@ var salesIQFieldsArray = [];
         }
       }
 
-      // If position wasn't in the predefined options, dynamically add and select it
+      // If position was not in options, add it before "Other / Not Listed"
       if (!matched) {
-        var newOpt = new Option(position, position, true, true);
-        select.add(newOpt);
-        select.value = position;
+        var newOpt = new Option(raw, raw, true, true);
+        var lastOpt = select.options[select.options.length - 1];
+        if (lastOpt && lastOpt.value === "Other / Not Listed") {
+          select.insertBefore(newOpt, lastOpt);
+        } else {
+          select.add(newOpt);
+        }
+        select.value = raw;
         matched = true;
       }
     }
 
-    // Always populate the fallback "Position not listed? Type Here" field so
-    // Zoho backend captures the role even if Zoho's server rejects custom dropdown keys
+    // Always sync to customInput (SingleLine2) so Zoho backend captures the role
     if (customInput) {
-      customInput.value = position;
+      customInput.value = raw;
     }
-  } catch (e) {
-    console.error("Error prefilling position:", e);
+  }
+
+  // Handle user manual dropdown changes
+  function setupSelectChangeListener() {
+    var select = getSelect();
+    if (!select) return;
+
+    select.addEventListener("change", function () {
+      var customInput = getCustomInput();
+      var val = select.value;
+      if (!val || val === "-Select-") {
+        if (customInput) customInput.value = "";
+        currentSelectedPosition = "";
+      } else if (val === "Other / Not Listed") {
+        if (customInput) {
+          customInput.value = "";
+          customInput.focus();
+        }
+        currentSelectedPosition = "";
+      } else {
+        if (customInput) customInput.value = val;
+        currentSelectedPosition = val;
+      }
+    });
+  }
+
+  // Expose globally on window for direct same-origin parent invocation
+  window.populatePositions = populatePositions;
+  window.selectPosition = selectPosition;
+
+  // Listen for messages from parent window
+  window.addEventListener("message", function (event) {
+    var data = event && event.data;
+    if (!data) return;
+    if (typeof data === "object") {
+      if (data.type === "SYNC_POSITIONS" || data.type === "UPDATE_POSITION" || data.type === "SET_POSITIONS") {
+        if (data.positions && data.positions.length) {
+          populatePositions(data.positions, data.selectedPosition);
+        } else if (data.selectedPosition) {
+          selectPosition(data.selectedPosition);
+        }
+      } else if (data.type === "SET_POSITION") {
+        selectPosition(data.position);
+      }
+    }
+  }, false);
+
+  setupSelectChangeListener();
+
+  // Initial prefill from URL query param (?Position=... or ?position=... or ?apply=...)
+  try {
+    var urlParams = new URLSearchParams(window.location.search);
+    var initialPosition = urlParams.get("Position") || urlParams.get("position") || urlParams.get("apply");
+    if (initialPosition) {
+      selectPosition(initialPosition);
+    }
+  } catch (_) {}
+
+  // Notify parent window that form script is ready
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: "CAREER_FORM_READY" }, "*");
+    }
+  } catch (_) {}
+
+  // Standalone fallback: if opened directly in a browser tab without parent frame, fetch live jobs from Firestore REST API
+  if (window.parent === window) {
+    try {
+      fetch("https://firestore.googleapis.com/v1/projects/melangewebsite/databases/(default)/documents/jobs?key=AIzaSyDNp1Q7aW4Z06uWl2K58Hn4Q2y9v3x5w6z")
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data && data.documents) {
+            var fetched = [];
+            data.documents.forEach(function (d) {
+              if (d.fields && d.fields.active && d.fields.active.booleanValue === false) return;
+              if (d.fields && d.fields.title && d.fields.title.stringValue) {
+                fetched.push(d.fields.title.stringValue.trim());
+              }
+            });
+            if (fetched.length) {
+              populatePositions(fetched, currentSelectedPosition);
+            }
+          }
+        })
+        .catch(function () {});
+    } catch (_) {}
   }
 })();
 /* Resize the parent iframe to fit the form (same zf_perma|height message the old Zoho page sent) */

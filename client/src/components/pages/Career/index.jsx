@@ -21,10 +21,18 @@ function WhyCard({ n, title, body, cls }) {
 
 const Career = () => {
   const [selectedPosition, setSelectedPosition] = useState("");
+  const [openPositions, setOpenPositions] = useState([]);
   const formRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const pos = params.get("Position") || params.get("position") || params.get("apply");
+      if (pos && pos.trim()) {
+        setSelectedPosition(pos.trim());
+      }
+    } catch (_) {}
   }, []);
 
   const scrollTo = (el) => {
@@ -149,8 +157,8 @@ const Career = () => {
         <CareerBenefits />
         <CareerBehindTheScenes />
         <CareerInterview onSeeJobs={scrollToOpenings} />
-        <OpeningPositions scrollToForm={scrollToForm} onApply={setSelectedPosition} />
-        <CareerForm ref={formRef} selectedPosition={selectedPosition} />
+        <OpeningPositions scrollToForm={scrollToForm} onApply={setSelectedPosition} onJobsLoaded={setOpenPositions} />
+        <CareerForm ref={formRef} selectedPosition={selectedPosition} openPositions={openPositions} />
 
         <section className="career-wander">
           <img

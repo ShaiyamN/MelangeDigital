@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, forwardRef } from "react";
 
-const ZOHO_BASE_SRC = "/careers/form";
+const ZOHO_BASE_SRC = "/careers/form/";
 
 // Zoho Form Builder → Settings → Prefill → Field Alias for Position dropdown: Position
 const ZOHO_POSITION_ALIAS = "Position";
@@ -8,6 +8,7 @@ const ZOHO_POSITION_ALIAS = "Position";
 const appendUtmParams = (src) => {
   try {
     if (typeof window === "undefined") return src;
+    const url = new URL(src, window.location.origin);
     if (typeof window.ZFAdvLead !== "undefined" && typeof window.zfutm_zfAdvLead !== "undefined") {
       for (let i = 0; i < window.ZFAdvLead.utmPNameArr.length; i++) {
         let utmPm = window.ZFAdvLead.utmPNameArr[i];
@@ -18,7 +19,7 @@ const appendUtmParams = (src) => {
             : utmPm;
         const utmVal = window.zfutm_zfAdvLead.zfautm_gC_enc(window.ZFAdvLead.utmPNameArr[i]);
         if (typeof utmVal !== "undefined" && utmVal !== "") {
-          src += "&" + utmPm + "=" + utmVal;
+          url.searchParams.set(utmPm, utmVal);
         }
       }
     }
@@ -27,28 +28,68 @@ const appendUtmParams = (src) => {
         const utmPm = window.ZFLead.utmPNameArr[i];
         const utmVal = window.zfutm_zfLead.zfutm_gC_enc(window.ZFLead.utmPNameArr[i]);
         if (typeof utmVal !== "undefined" && utmVal !== "") {
-          src += "&" + utmPm + "=" + utmVal;
+          url.searchParams.set(utmPm, utmVal);
         }
       }
     }
+    return url.pathname + url.search;
   } catch (_) {
-    /* fail silently */
+    return src;
   }
-  return src;
 };
 
 const buildZohoSrc = (selectedPosition) => {
   let src = ZOHO_BASE_SRC;
-  if (selectedPosition) {
-    src += "?" + ZOHO_POSITION_ALIAS + "=" + encodeURIComponent(selectedPosition);
+  if (selectedPosition && selectedPosition.trim()) {
+    src += "?" + ZOHO_POSITION_ALIAS + "=" + encodeURIComponent(selectedPosition.trim());
   }
   return appendUtmParams(src);
 };
 
-const CareerForm = forwardRef(({ selectedPosition }, ref) => {
+const CareerForm = forwardRef(({ selectedPosition, openPositions = [] }, ref) => {
   const mountRef = useRef(null);
   const iframeRef = useRef(null);
+  const selectedPositionRef = useRef(selectedPosition);
+  const openPositionsRef = useRef(openPositions);
 
+  selectedPositionRef.current = selectedPosition;
+  openPositionsRef.current = openPositions;
+
+  const syncToIframe = (pos, positions) => {
+    const iframe = iframeRef.current;
+    if (!iframe || !iframe.contentWindow) return;
+
+    const titles = (positions || openPositionsRef.current || [])
+      .map((j) => (typeof j === "string" ? j : j?.title || "").trim())
+      .filter(Boolean);
+
+    const targetPos = (pos !== undefined ? pos : selectedPositionRef.current || "").trim();
+
+    // 1. Post message to iframe
+    try {
+      iframe.contentWindow.postMessage(
+        {
+          type: "SYNC_POSITIONS",
+          positions: titles,
+          selectedPosition: targetPos,
+        },
+        "*"
+      );
+    } catch (_) {}
+
+    // 2. Direct same-origin DOM access fallback
+    try {
+      if (typeof iframe.contentWindow.populatePositions === "function") {
+        iframe.contentWindow.populatePositions(titles, targetPos);
+      } else if (typeof iframe.contentWindow.selectPosition === "function") {
+        if (targetPos) {
+          iframe.contentWindow.selectPosition(targetPos);
+        }
+      }
+    } catch (_) {}
+  };
+
+  // Mount iframe once on component mount
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
@@ -58,7 +99,7 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
     }
 
     const iframe = document.createElement("iframe");
-    iframe.src = buildZohoSrc(selectedPosition);
+    iframe.src = buildZohoSrc(selectedPositionRef.current);
     iframe.style.border = "none";
     iframe.style.width = "90%";
     iframe.style.height = "1354px";
@@ -70,6 +111,9 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
         if (window.__melangeLenis) {
           window.__melangeLenis.resize();
         }
+        // Sync active jobs and currently selected role to newly loaded iframe
+        syncToIframe(selectedPositionRef.current, openPositionsRef.current);
+
         const iframeWin = iframe.contentWindow;
         if (!iframeWin) return;
         const forwardWheel = (e) => {
@@ -90,16 +134,20 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
         iframeWin.addEventListener("wheel", forwardWheel, { passive: true });
       } catch (_) {}
     };
-    iframe.addEventListener("load", onIframeLoad);
 
+    iframe.addEventListener("load", onIframeLoad);
     mount.appendChild(iframe);
 
     const onMessage = (event) => {
-      const evntData = event?.data;
-      if (evntData && evntData.constructor === String) {
-        const parts = evntData.split("|");
+      const data = event?.data;
+      if (data && typeof data === "object" && data.type === "CAREER_FORM_READY") {
+        syncToIframe(selectedPositionRef.current, openPositionsRef.current);
+        return;
+      }
+
+      if (data && typeof data === "string") {
+        const parts = data.split("|");
         if (parts.length === 2 || parts.length === 3) {
-          const zf_perma = parts[0];
           const newHeight = parseInt(parts[1], 10) + 15 + "px";
           const currentIframe = mount?.getElementsByTagName("iframe")[0];
           if (
@@ -127,7 +175,12 @@ const CareerForm = forwardRef(({ selectedPosition }, ref) => {
         mount.removeChild(iframe);
       }
     };
-  }, [selectedPosition]);
+  }, []);
+
+  // When selectedPosition or openPositions change, seamlessly update the existing iframe
+  useEffect(() => {
+    syncToIframe(selectedPosition, openPositions);
+  }, [selectedPosition, openPositions]);
 
   return (
     <section ref={ref} className="career-form max-w-[1440px] mx-auto">
