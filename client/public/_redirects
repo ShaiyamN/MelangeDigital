@@ -1,10 +1,14 @@
 # Legacy bookmark only
-/tourism  /destination-marketing-agency  301
-/tourism/ /destination-marketing-agency  301
+/tourism  /  301
+/tourism/ /  301
 
 # Pretty PDF URL
 /indian-outbound-tourism-report  /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf  200
 /indian-outbound-tourism-report/ /assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf  200
+
+# Report download resolver (reads sessionStorage, redirects to PDF)
+/report-download  /report-download.html  200
+/report-download/ /report-download.html  200
 
 # SPA fallback (real files/dirs like destination-marketing-agency/ are served first)
 /*  /index.html  200

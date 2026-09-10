@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { logo } from "../../assets/images";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { NavLink, Link } from "react-router-dom";
+import { GLOBAL_NAV_COUNTRIES } from "../../constants/officeGmb";
 
 // FlagImg: renders a proper flag image from flagcdn.com — works on all OS including Windows
 const FlagImg = ({ code, size = 20 }) => (
@@ -22,72 +23,25 @@ const FlagImg = ({ code, size = 20 }) => (
   />
 );
 
-const globalRegions = [
-  {
-    continent: "Asia",
-    countries: [
-      {
-        label: "India",
-        code: "in",
-        href: "https://melangedigital.co/india",
-        cities: [
-          { label: "Goa", href: "https://melangedigital.co/india/digital-marketing-agency-goa/" },
-          { label: "Mumbai", href: "https://melangedigital.co/india/digital-marketing-agency-mumbai/" },
-          { label: "Delhi", href: "https://melangedigital.co/india/digital-marketing-agency-delhi/" },
-        ],
-      },
-      {
-        label: "UAE",
-        code: "ae",
-        href: "https://melangedigital.co/uae",
-        cities: [
-          { label: "Dubai", href: "https://melangedigital.co/uae/digital-marketing-agency-dubai/" },
-        ],
-      },
-      {
-        label: "Zambia",
-        code: "zm",
-        href: "https://melangedigital.co/zambia",
-        cities: [
-          { label: "Lusaka", href: "https://melangedigital.co/zambia/digital-marketing-agency-lusaka/" },
-        ],
-      }
-      ,
-      {
-        label: "Singapore",
-        code: "sg",
-        href: "https://melangedigital.co/singapore",
-        cities: [
-          { label: "Singapore", href: "https://melangedigital.co/singapore/digital-marketing-agency-singapore/" },
-        ],
-      },
-      {
-        label: "United Kingdom",
-        code: "gb",
-        href: "https://melangedigital.co/uk",
-        cities: [
-          { label: "London", href: "https://melangedigital.co/uk/digital-marketing-agency-london/" },
-        ],
-      }
-    ],
-  },
-];
-
-const allCountries = globalRegions.flatMap((r) => r.countries);
+const allCountries = GLOBAL_NAV_COUNTRIES;
 
 const navLinks = [
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About Us" },
-    { href: "/destination-marketing-agency", label: "Tourism", external: true },
+  { to: "/careers", label: "Careers" },
 ];
 
-const mobileNavLinks = [
+const mobileNavLinksBase = [
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About Us" },
-    { href: "/destination-marketing-agency", label: "Tourism", external: true },
-  { to: "/contact", label: "Contact Us" },
+  { to: "/careers", label: "Careers" },
+];
+
+const mobileNavLinks = [
+  ...mobileNavLinksBase,
+  { to: "/contact", label: "Book a Strategy Call" },
 ];
 
 const Navbar = () => {
@@ -476,7 +430,7 @@ const Navbar = () => {
       `}</style>
 
       <div
-        className={`fixed z-20 w-full transition-transform duration-300 font-bricolage mb-5 ${
+        className={`fixed top-0 left-0 z-20 w-full transition-transform duration-300 font-bricolage mb-5 ${
           visible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -505,7 +459,7 @@ const Navbar = () => {
               </div>
 
               {/* Desktop nav */}
-              <div className="hidden sm:flex font-extrabold text-[17px] justify-around items-center w-2/3 md:w-[60%] lg:w-[65%]">
+              <div className="hidden sm:flex font-extrabold text-body justify-around items-center w-2/3 md:w-[60%] lg:w-[65%]">
 
                 {/* Global dropdown — hover with bridge to prevent flicker */}
                 <div
@@ -596,8 +550,8 @@ const Navbar = () => {
                 ))}
 
                 <Link to="/contact">
-                  <div className="contact-btn w-[177px] h-[56px] flex items-center justify-center rounded-2xl cursor-pointer bg-[#1A1A1A] font-medium text-[17px]">
-                    <span>Contact Us</span>
+                  <div className="contact-btn h-[56px] px-6 flex items-center justify-center rounded-full cursor-pointer bg-[#1A1A1A] font-medium text-body whitespace-nowrap">
+                    <span>Book a Strategy Call</span>
                   </div>
                 </Link>
               </div>
@@ -638,7 +592,7 @@ const Navbar = () => {
                         window.location.assign(link.href);
                       }
                     }}
-                    className="nav-link text-[25px] py-3"
+                    className="nav-link text-title py-3"
                   >
                     {link.label}
                   </a>
@@ -647,7 +601,7 @@ const Navbar = () => {
                     to={link.to}
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
-                      `nav-link text-[25px] py-3 ${isActive ? "activePath" : ""}`
+                      `nav-link text-title py-3 ${isActive ? "activePath" : ""}`
                     }
                   >
                     {link.label}
@@ -659,7 +613,7 @@ const Navbar = () => {
             {/* Mobile Global — click to toggle, stays open on scroll */}
             <div className="hidden" style={{ width: "100%" }}>
               <button
-                className="nav-link text-[25px] py-3"
+                className="nav-link text-title py-3"
                 style={{
                   display: "flex",
                   alignItems: "center",

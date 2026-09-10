@@ -25,14 +25,14 @@ const Work = ({ icon, tag1, tag2, tag3, title, path }) => {
         </div>
       </Link>
 
-      <div className="flex py-1 text-[#1A1A1A] font-bold lg:text-[15px] text-[12px] lg:pt-[15px] pt-2">
+      <div className="flex py-1 text-[#1A1A1A] font-bold text-body lg:pt-[15px] pt-2">
         <p>{tag1}</p>
         <p className="mx-3">{tag2}</p>
         <p>{tag3}</p>
       </div>
 
       <Link to={path}>
-        <h2 className="font-bold lg:text-[50px] text-[36px] text-[#141F59] whitespace-nowrap">
+        <h2 className="font-bold text-title text-[#141F59] whitespace-nowrap">
           {title}
         </h2>
       </Link>
@@ -95,14 +95,14 @@ const WorkSummaryForServicesPage = ({ works }) => {
     <div className="bg-white font-bricolage">
       {/* ── DESKTOP ── */}
       <div ref={sectionRef} className="hidden lg:block w-full bg-white">
-        <div className="pt-[0px] pb-[80px]">
+        <div className="pb-section-y">
           {/* Header */}
           <div className="flex items-center justify-between pb-10 px-20 max-container">
-            <h2 className="font-bold text-[#000144] text-[48px]">
+            <h2 className="font-bold text-display text-[#000144]">
               Case <span className="multiverse-text">Studies</span>
             </h2>
             <Link to="/work">
-              <div className="w-[162px] h-[55px] flex items-center justify-center text-[19px] font-bold border rounded-[40px]">
+              <div className="w-[162px] h-[55px] flex items-center justify-center text-body font-bold border rounded-[40px]">
                 View All
               </div>
             </Link>
@@ -124,9 +124,9 @@ const WorkSummaryForServicesPage = ({ works }) => {
       </div>
 
       {/* ── MOBILE ── */}
-      <div className="lg:hidden px-5 pt-10 pb-[80px]">
+      <div className="lg:hidden px-5 pt-10 pb-section-y">
         <div className="flex items-center justify-between pb-10">
-          <h2 className="font-bold text-[#000144] text-[40px]">
+          <h2 className="font-bold text-display text-[#000144]">
             Case <span className="multiverse-text">Studies</span>
           </h2>
         </div>

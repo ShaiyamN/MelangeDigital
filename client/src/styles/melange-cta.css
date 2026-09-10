@@ -1,0 +1,72 @@
+/* Shared Melange pill CTA — matches hero-download-btn / about-cta on marketing pages. */
+.melange-cta,
+.career-cta,
+.contact-cta,
+.nav-cta {
+  --melange-accent: #6e1eee;
+  --melange-cta-mid: #9a30b9;
+  --melange-cta-border: #e797ff;
+  --melange-body: "Poppins", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 8px 8px 8px 22px;
+  background: linear-gradient(90deg, var(--melange-accent), var(--melange-cta-mid));
+  border: 2px solid var(--melange-cta-border);
+  border-radius: 999px;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--melange-body);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
+  cursor: pointer;
+  appearance: none;
+  box-sizing: border-box;
+}
+
+.melange-cta:hover,
+.career-cta:hover,
+.contact-cta:hover,
+.nav-cta:hover {
+  filter: brightness(1.06);
+}
+
+.melange-cta__icon,
+.career-cta__icon,
+.contact-cta__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #fff;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.melange-cta__icon img,
+.career-cta__icon img,
+.contact-cta__icon img {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.melange-cta__icon--down img,
+.career-cta__icon--down img {
+  transform: rotate(135deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .melange-cta:hover,
+  .career-cta:hover,
+  .contact-cta:hover,
+  .nav-cta:hover {
+    filter: none;
+  }
+}

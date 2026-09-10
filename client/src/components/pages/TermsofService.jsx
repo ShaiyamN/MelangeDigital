@@ -1,14 +1,19 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { Footer, Navbar } from "../layout";
 
 const TermsofService = () => {
   return (
     <>
+      <Helmet>
+        <title>Terms of Service | Mélange Digital</title>
+        <link rel="canonical" href="https://melangedigital.co/terms-of-service" />
+      </Helmet>
       <Navbar />
       <div className="container font-nunito mx-auto text-[#1a1a1a] xxl:px-[100px] bg-white pt-[100px] lg:pt-[120px] pb-[50px] lg:pb-[100px] px-4 lg:px-[80px]">
-        <h1 className="text-[28px] lg:text-[40px] font-semibold mb-6 multiverse-text">
+        <h2 className="text-display font-display font-semibold mb-6">
           Terms of Service
-        </h1>
+        </h2>
 
         <p className="mb-6 text-[18px] lg:text-[20px]">
           Welcome to Mélange Digital! Please carefully read the following terms

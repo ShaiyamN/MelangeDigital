@@ -1,0 +1,13 @@
+{
+  "reportFormPerma": "xcTd58RcdWgj94Z0Q1vN0Z6YOwjBfedp3vSkxnlNj0Q",
+  "reportAccessId": "report-access",
+  "pendingReportKey": "pending-report",
+  "reportDownloadPath": "/report-download",
+  "defaultReportSlug": "indian-outbound-2026",
+  "reports": {
+    "indian-outbound-2026": {
+      "title": "The Indian Outbound Inspiration Report 2026",
+      "path": "/indian-outbound-tourism-report"
+    }
+  }
+}

@@ -21,7 +21,11 @@ if (!fs.existsSync(INDEX)) {
 }
 
 // Buffer once — Hostinger has been returning Express finalhandler 404 from sendFile failures
-const INDEX_HTML = fs.readFileSync(INDEX);
+const INDEX_HTML = fs.readFileSync(INDEX, "utf8");
+
+const { applyHead, resolveMeta } = require("./scripts/seo-head.cjs");
+const { getSitemapXml, getPageIndex, buildXml } = require("./scripts/live-sitemap.cjs");
+const { reportDownloadHtml } = require("./scripts/report-download-html.cjs");
 
 const app = express();
 
@@ -37,31 +41,74 @@ if (stagingUser && stagingPass) {
   );
 }
 
-function sendIndex(res) {
-  res.setHeader("Cache-Control", "no-cache");
-  res.type("html");
-  res.send(INDEX_HTML);
+const PERMA_REDIRECTS = {
+  "/work/singapore-tourism-board-stb": "/work/singapore-tourism-board",
+  "/work/GenVR": "/work/genvr",
+  "/work/neoTraders": "/work/neotraders",
+  "/work/devBoost": "/work/devboost",
+};
+
+for (const [from, to] of Object.entries(PERMA_REDIRECTS)) {
+  app.get([from, `${from}/`], (_req, res) => {
+    res.redirect(301, to);
+  });
 }
 
-const DMA = "destination-marketing-agency";
-const DMA_INDEX = path.join(DIST, DMA, "index.html");
-
-// Serve both slash forms — do NOT 301 between them (Hostinger/proxy adds a
-// trailing slash for this directory; stripping it causes ERR_TOO_MANY_REDIRECTS).
-// Nav + sitemap use the no-slash URL; either form returns the landing HTML.
-app.get([`/${DMA}`, `/${DMA}/`], (_req, res) => {
-  if (!fs.existsSync(DMA_INDEX)) {
-    res.status(404).send("Tourism landing not found");
-    return;
+async function sendIndex(req, res) {
+  let meta = { stripFaq: true, noindex: true };
+  try {
+    const index = await getPageIndex();
+    meta = resolveMeta(req.path, index);
+  } catch (err) {
+    console.error("seo head index failed:", err.message);
+    meta = resolveMeta(req.path, { routes: new Set(), byPath: {} });
   }
   res.setHeader("Cache-Control", "no-cache");
   res.type("html");
-  res.sendFile(DMA_INDEX);
+  res.send(applyHead(INDEX_HTML, meta));
+}
+
+const DMA = "destination-marketing-agency";
+
+const CAREERS_FORM_HTML = path.join(DIST, "careers", "form", "index.html");
+
+function getFormFragment() {
+  if (!fs.existsSync(CAREERS_FORM_HTML)) return null;
+  return fs.readFileSync(CAREERS_FORM_HTML, "utf8");
+}
+
+app.get(["/careers/form", "/careers/form/"], (_req, res) => {
+  const fragment = getFormFragment();
+  if (!fragment) {
+    res.status(404).type("text/plain").send("Careers form not found");
+    return;
+  }
+  res.type("html").set("Cache-Control", "no-cache").send(fragment);
 });
 
-// Old /tourism bookmark → landing
+// Serve the careers form's CSS and JS assets from dist/
+const CAREERS_DIST_DIR = path.join(DIST, "careers", "form");
+app.use("/careers/form", express.static(CAREERS_DIST_DIR, {
+  setHeaders(res, filePath) {
+    res.setHeader("Cache-Control", "no-cache");
+  },
+}));
+
+app.get(["/report-download", "/report-download/"], (_req, res) => {
+  res.type("html").set("Cache-Control", "no-cache").send(reportDownloadHtml());
+});
+
+// Tourism landing lives at `/` (React shell). Old URLs redirect; assets stay under /DMA/.
+app.get([`/${DMA}`, `/${DMA}/`], (_req, res) => {
+  res.redirect(301, "/");
+});
+
 app.get(["/tourism", "/tourism/"], (_req, res) => {
-  res.redirect(301, `/${DMA}`);
+  res.redirect(301, "/");
+});
+
+app.get(["/destination-marketing", "/destination-marketing/"], (_req, res) => {
+  res.redirect(301, "/");
 });
 
 app.get(
@@ -81,7 +128,6 @@ app.get(
 );
 
 // Live sitemap from Firestore (blogs + casestudies). Before static so dist/sitemap.xml is not used.
-const { getSitemapXml } = require("./scripts/live-sitemap.cjs");
 app.get("/sitemap.xml", async (_req, res) => {
   try {
     const xml = await getSitemapXml();
@@ -90,13 +136,12 @@ app.get("/sitemap.xml", async (_req, res) => {
       .set("Cache-Control", "public, max-age=300")
       .send(xml);
   } catch (err) {
-    console.error("live sitemap failed, falling back to static:", err.message);
-    const fallback = path.join(DIST, "sitemap.xml");
-    if (fs.existsSync(fallback)) {
-      res.type("application/xml").sendFile(fallback);
-      return;
-    }
-    res.status(500).type("text/plain").send("sitemap unavailable");
+    console.error("live sitemap failed, static route list:", err.message);
+    const xml = buildXml("https://melangedigital.co", ["/"]);
+    res
+      .type("application/xml")
+      .set("Cache-Control", "public, max-age=60")
+      .send(xml);
   }
 });
 
@@ -122,7 +167,7 @@ app.use((req, res) => {
     res.status(404).type("text/plain").send("Not found");
     return;
   }
-  sendIndex(res);
+  return sendIndex(req, res);
 });
 
 app.listen(PORT, () => {

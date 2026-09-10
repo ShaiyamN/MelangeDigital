@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213 213" fill="none">
+  <circle cx="106.5" cy="106.5" r="106.5" fill="url(#venn-expertise)" fill-opacity="0.82"/>
+  <defs>
+    <linearGradient id="venn-expertise" x1="106.5" y1="9" x2="106.5" y2="213" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#932DC3"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+</svg>

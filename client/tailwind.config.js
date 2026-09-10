@@ -5,8 +5,33 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        display: ["Alan Sans", "sans-serif"],
+        accent: ['"Baskervville"', '"Libre Baskerville"', "serif"],
+        body: ["Lato", "sans-serif"],
         nunito: ["Bricolage Grotesque", "sans-serif"],
         bricolage: ["Bricolage Grotesque", "sans-serif"],
+      },
+      fontSize: {
+        eyebrow: ["var(--type-body)", { lineHeight: "var(--lh-eyebrow)", letterSpacing: "0.06em", fontWeight: "500" }],
+        hero: [
+          "var(--type-hero)",
+          { lineHeight: "var(--lh-hero)", letterSpacing: "-0.02em", fontWeight: "600" },
+        ],
+        display: [
+          "var(--type-display)",
+          { lineHeight: "var(--lh-display)", letterSpacing: "-0.02em", fontWeight: "600" },
+        ],
+        title: ["var(--type-title)", { lineHeight: "var(--lh-title)", fontWeight: "600" }],
+        body: ["var(--type-body)", { lineHeight: "var(--lh-body)" }],
+      },
+      spacing: {
+        "section-y": "var(--section-pad-y)",
+        "section-y-sm": "var(--section-pad-y-sm)",
+        "section-y-xs": "var(--section-pad-y-xs)",
+        "section-header": "var(--section-header-gap)",
+        "section-title": "var(--section-title-gap)",
+        "hero-top": "var(--hero-pad-top)",
+        "hero-bottom": "var(--hero-pad-bottom)",
       },
       keyframes: {
         scale: {

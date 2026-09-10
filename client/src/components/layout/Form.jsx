@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const COUNTRIES = [
-  "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Brazil","Canada","China","Denmark","Egypt","Finland","France","Germany","Greece","Hong Kong","India","Indonesia","Ireland","Israel","Italy","Japan","Kenya","Kuwait","Malaysia","Mexico","Nepal","Netherlands","New Zealand","Nigeria","Norway","Oman","Pakistan","Philippines","Poland","Portugal","Qatar","Russia","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Thailand","Turkey","UAE","UK","USA","Vietnam","Zimbabwe"
+  "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Australia","Austria","Bahrain","Bangladesh","Belgium","Brazil","Canada","China","Denmark","Egypt","Finland","France","Germany","Greece","Hong Kong","India","Indonesia","Ireland","Israel","Italy","Japan","Kenya","Kuwait","Malaysia","Mexico","Nepal","Netherlands","New Zealand","Nigeria","Norway","Oman","Pakistan","Philippines","Poland","Portugal","Qatar","Russia","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Thailand","Turkey","United Arab Emirates","United Kingdom","United States","Vietnam","Zimbabwe"
 ];
 
 const Form = () => {

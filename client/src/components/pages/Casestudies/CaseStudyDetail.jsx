@@ -11,12 +11,23 @@ import {
 import { Helmet } from "react-helmet-async";
 import ReactPlayer from "react-player";
 
+const SLUG_ALIASES = {
+  "singapore-tourism-board": ["singapore-tourism-board-stb"],
+  "singapore-tourism-board-stb": ["singapore-tourism-board"],
+};
+const CANONICAL_SLUG = {
+  genvr: "genvr",
+  neotraders: "neotraders",
+  devboost: "devboost",
+  "singapore-tourism-board-stb": "singapore-tourism-board",
+};
+
 const CaseStudyDetail = () => {
   const { slug: paramSlug } = useParams();
   const location = useLocation();
   // Fallback: React Router v6 prioritises literal routes over /:slug,
   // so useParams may return {} for hardcoded routes. Extract from URL instead.
-  const slug = paramSlug || location.pathname.replace(/^\/work\//, "");
+  const slug = (paramSlug || location.pathname.replace(/^\/work\/?/, "")).replace(/\/+$/, "");
   const [cs, setCs] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -25,14 +36,28 @@ const CaseStudyDetail = () => {
     const fetchCaseStudy = async () => {
       setLoading(true);
       try {
-        const q = query(collection(db, "casestudies"), where("slug", "==", slug));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-          setCs(querySnapshot.docs[0].data());
-        } else {
-          // If not found, try to redirect back to work or show a placeholder
-          setCs(null);
+        const trySlug = async (s) => {
+          const q = query(collection(db, "casestudies"), where("slug", "==", s));
+          const snap = await getDocs(q);
+          return snap.empty ? null : snap.docs[0].data();
+        };
+        let data = await trySlug(slug);
+        if (!data) {
+          for (const alt of SLUG_ALIASES[slug] || []) {
+            data = await trySlug(alt);
+            if (data) break;
+          }
         }
+        if (!data) {
+          // ponytail: case-insensitive scan, ~30 docs; query by lowercased slug if this collection grows
+          const all = await getDocs(collection(db, "casestudies"));
+          const lower = slug.toLowerCase();
+          const hit = all.docs.find(
+            (d) => (d.data().slug || "").toLowerCase() === lower,
+          );
+          data = hit ? hit.data() : null;
+        }
+        setCs(data);
       } catch (err) {
         console.error("Error fetching case study:", err);
       } finally {
@@ -109,10 +134,10 @@ const CaseStudyDetail = () => {
 
   if (!cs) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#0c0c1e] text-white p-6 text-center font-nunito">
-        <h2 className="text-3xl font-bold mb-4">Case Study Not Found</h2>
-        <p className="text-gray-400 mb-6">The case study you are looking for does not exist or has been removed.</p>
-        <Link to="/work" className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold transition-all">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#0c0c1e] text-white p-6 text-center font-body">
+        <h2 className="text-3xl font-bold font-display mb-4">Case Study Not Found</h2>
+        <p className="text-gray-400 mb-6 font-body">The case study you are looking for does not exist or has been removed.</p>
+        <Link to="/work" className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold font-body transition-all">
           Go Back to Projects
         </Link>
       </div>
@@ -134,24 +159,30 @@ const CaseStudyDetail = () => {
         <meta property="og:image" content={cs.bannerImage || ""} />
         <meta property="og:title" content={`${cs.title} | Mélange Digital's Work`} />
         <meta property="og:description" content={cs.intro?.substring(0, 160)} />
-        <link rel="canonical" href={`https://melangedigital.co/work/${cs.slug}`} />
+        <link rel="canonical" href={`https://melangedigital.co/work/${CANONICAL_SLUG[slug.toLowerCase()] || (cs && cs.slug) || slug}`} />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&family=Lato:wght@400;600;700;800&display=swap"
+          rel="stylesheet"
+        />
       </Helmet>
 
       <Navbar />
 
-      <div className="pt-28 md:pt-32 font-nunito pb-14 transition-scrolling max-container">
+      <div className="pt-28 md:pt-32 font-body text-slate-800 pb-14 transition-scrolling max-container">
         <div className="flex flex-col md:flex-col">
           {/* Breadcrumbs */}
-          <div className="font-nunito text-[16px] lg:text-[18px] lg:px-20 px-5 lg:mb-[40px] mb-6">
+          <div className="font-body text-[16px] lg:text-[18px] lg:px-20 px-5 lg:mb-[40px] mb-6">
             <BreadCrumbs breadcrumbs={breadcrumbs} />
           </div>
 
           {/* Title */}
           <div className="px-5 md:px-16 lg:px-20">
             <div className="mb-10 w-full lg:max-w-[1200px]">
-              <h1 className="font-semibold text-[44px] leading-[52px] md:text-[50px] lg:leading-[57.60px] break-words">
+              <h2 className="font-semibold text-hero font-display text-[#0f0330] break-words">
                 {cs.title}
-              </h1>
+              </h2>
             </div>
           </div>
 
@@ -178,10 +209,10 @@ const CaseStudyDetail = () => {
               <div className="lg:hidden flex flex-wrap gap-3 mb-[45px]">
                 {cs.stats.map((stat, idx) => (
                   <div key={idx} className="w-[130px] h-[85px] bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
-                    <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-nunito flex items-center justify-center">
+                    <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-display flex items-center justify-center">
                       {stat.value}
                     </div>
-                    <div className="text-center text-black text-xs font-normal font-nunito px-1 line-clamp-1">
+                    <div className="text-center text-black text-xs font-normal font-body px-1 line-clamp-1">
                       {stat.label}
                     </div>
                   </div>
@@ -189,11 +220,11 @@ const CaseStudyDetail = () => {
               </div>
             )}
 
-            {/* Introduction heading — consistent size */}
-            <p className="multiverse-text font-bold pb-2 text-[32px] md:text-[40px] leading-[36px] md:leading-[44px]">
+            {/* Introduction heading — Alan Sans H2 */}
+            <h2 className="font-display font-semibold text-display text-[#0f0330] pb-2">
               Introduction
-            </p>
-            <p className="text-lg md:text-xl w-auto lg:w-[90%] leading-relaxed">
+            </h2>
+            <p className="text-lg md:text-xl w-auto lg:w-[90%] leading-relaxed font-body text-slate-700">
               {cs.intro}
             </p>
           </div>
@@ -204,10 +235,10 @@ const CaseStudyDetail = () => {
               <div className="lg:flex hidden gap-3 mb-[45px] mt-2">
                 {cs.stats.map((stat, idx) => (
                   <div key={idx} className="w-[130px] h-[85px] bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
-                    <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-nunito flex items-center justify-center">
+                    <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-display flex items-center justify-center">
                       {stat.value}
                     </div>
-                    <div className="text-center text-black text-xs font-normal font-nunito px-1 line-clamp-1">
+                    <div className="text-center text-black text-xs font-normal font-body px-1 line-clamp-1">
                       {stat.label}
                     </div>
                   </div>
@@ -217,10 +248,10 @@ const CaseStudyDetail = () => {
 
             {cs.services && cs.services.length > 0 && (
               <>
-                <p className="font-bold text-xl md:text-2xl pb-2">Services</p>
+                <h3 className="font-display font-semibold text-xl md:text-2xl pb-2 text-[#0f0330]">Services</h3>
                 <div className="flex flex-col">
                   {cs.services.map((srv, idx) => (
-                    <p key={idx} className="whitespace-nowrap multiverse-text pb-2 text-lg font-semibold">
+                    <p key={idx} className="whitespace-nowrap multiverse-text pb-2 text-lg font-semibold font-body">
                       {srv}
                     </p>
                   ))}
@@ -233,27 +264,27 @@ const CaseStudyDetail = () => {
         {/* Approach Section */}
         {cs.approach && cs.approach.length > 0 && (
           <div className="mt-2 lg:mt-4 px-5 md:px-16 lg:px-20 max-container animate-fade-in">
-            <p className="text-[#000144] font-bold text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] pb-3">
-              Our <span className="multiverse-text"> Approach </span>
-            </p>
+            <h2 className="font-display font-semibold text-display text-[#0f0330] pb-3">
+              Our <span className="multiverse-text font-accent italic font-normal">Approach</span>
+            </h2>
 
             <div className="space-y-6">
               {cs.approach.map((section, appIdx) => (
                 <div key={appIdx} className="pt-4">
                   <div>
-                    <h3 className="text-[20px] md:text-2xl font-bold">
+                    <h3 className="text-[20px] md:text-2xl font-semibold font-display text-[#0f0330]">
                       {section.title}
                     </h3>
                   </div>
                   {section.steps && section.steps.length > 0 && (
                     section.listType === 'bullet' ? (
-                      <ul className="list-disc list-outside mt-4 text-[16px] md:text-xl space-y-3 ml-6 leading-relaxed">
+                      <ul className="list-disc list-outside mt-4 text-[16px] md:text-lg space-y-3 ml-6 leading-relaxed font-body text-slate-700">
                         {section.steps.map((step, stepIdx) => (
                           <li key={stepIdx}>{step}</li>
                         ))}
                       </ul>
                     ) : (
-                      <ol className="list-decimal list-outside mt-4 text-[16px] md:text-xl space-y-3 ml-6 leading-relaxed">
+                      <ol className="list-decimal list-outside mt-4 text-[16px] md:text-lg space-y-3 ml-6 leading-relaxed font-body text-slate-700">
                         {section.steps.map((step, stepIdx) => (
                           <li key={stepIdx}>{step}</li>
                         ))}
@@ -280,13 +311,13 @@ const CaseStudyDetail = () => {
                 {block.type === 'section' && (
                   <div className="flex flex-col">
                     {block.subheading && (
-                      <h3 className="multiverse-text font-bold text-[28px] md:text-[36px] leading-[32px] md:leading-[40px] mb-3">
+                      <h2 className="font-display font-semibold text-[28px] md:text-[36px] leading-[34px] md:leading-[42px] text-[#0f0330] mb-4 break-words">
                         {block.subheading}
-                      </h3>
+                      </h2>
                     )}
                     {block.paragraph && (
                       <div
-                        className="cs-rendered-content text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed"
+                        className="cs-rendered-content font-body text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed text-slate-700"
                         dangerouslySetInnerHTML={{ __html: block.paragraph }}
                       />
                     )}
@@ -335,13 +366,13 @@ const CaseStudyDetail = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center py-6 lg:py-10">
                     <div className={`lg:col-span-7 flex flex-col justify-center ${block.imagePosition === 'left' ? 'lg:order-2 order-2' : 'lg:order-1 order-2'}`}>
                       {block.subheading && (
-                        <h3 className="multiverse-text font-bold text-[28px] md:text-[36px] leading-[32px] md:leading-[40px] mb-6 break-words">
+                        <h2 className="font-display font-semibold text-[28px] md:text-[36px] leading-[34px] md:leading-[42px] text-[#0f0330] mb-6 break-words">
                           {block.subheading}
-                        </h3>
+                        </h2>
                       )}
                       {block.paragraph && (
                         <div
-                          className="cs-rendered-content text-[#1a1a1a] text-[18px] md:text-[20px] leading-[32px] opacity-90 break-words"
+                          className="cs-rendered-content font-body text-[#1a1a1a] text-[18px] md:text-[20px] leading-[32px] opacity-90 break-words"
                           dangerouslySetInnerHTML={{ __html: block.paragraph }}
                         />
                       )}
@@ -370,9 +401,9 @@ const CaseStudyDetail = () => {
       {/* Results Section — displayed as blocks */}
       {cs.results && cs.results.length > 0 && (
         <div className="px-5 md:px-16 lg:px-20 mt-12 md:mt-20 max-container mb-16">
-          <p className="multiverse-text font-bold text-[32px] md:text-[40px] leading-[36px] md:leading-[44px] pb-6 md:pb-8">
+          <h2 className="font-display font-semibold text-display text-[#0f0330] pb-6 md:pb-8">
             Results
-          </p>
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {cs.results.map((res, idx) => (
               <div
@@ -383,9 +414,9 @@ const CaseStudyDetail = () => {
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-500 via-blue-500 to-fuchsia-500 rounded-l-2xl"></div>
                 <div className="pl-4">
                   <div className="w-7 h-7 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full flex items-center justify-center mb-3">
-                    <span className="text-purple-600 font-bold text-xs">{idx + 1}</span>
+                    <span className="text-purple-600 font-bold text-xs font-display">{idx + 1}</span>
                   </div>
-                  <p className="text-[15px] md:text-[16px] leading-relaxed text-slate-800 font-medium">
+                  <p className="text-[15px] md:text-[16px] leading-relaxed text-slate-800 font-medium font-body">
                     {res}
                   </p>
                 </div>

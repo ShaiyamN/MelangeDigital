@@ -3,8 +3,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
+import { DEFAULT_SERVICE_CARDS } from "../../constants/serviceCards";
 import {
   ArrowLeft, Plus, Trash2, Edit2, X, Info, Sun, Moon,
   Image as ImageIcon, Briefcase, Tag, Target, TrendingUp,
@@ -146,9 +147,17 @@ const SortableCard = ({ cs, cardIdx, total, reorderMode, onEdit, onDelete, isDra
               </button>
             </div>
           )}
-          {reorderMode && cs.showOnHome && (
+          {cs.showOnHome && (
             <span className="text-[10px] font-bold px-2 py-1 bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-300 rounded-lg flex items-center gap-1">
-              <Home className="w-3 h-3" /> On Home
+              <Home className="w-3 h-3" /> Home
+            </span>
+          )}
+          {cs.showOnService && (
+            <span
+              className="text-[10px] font-bold px-2 py-1 bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-300 rounded-lg flex items-center gap-1"
+              title={`Featured on Services: ${DEFAULT_SERVICE_CARDS[cs.serviceId]?.name || cs.serviceId} (Card ${cs.serviceSlot})`}
+            >
+              <Briefcase className="w-3 h-3" /> {DEFAULT_SERVICE_CARDS[cs.serviceId]?.shortName || "Services"} (C{cs.serviceSlot})
             </span>
           )}
         </div>
@@ -184,6 +193,11 @@ const ManageCaseStudies = () => {
   const [filters, setFilters] = useState(["all"]);
   const [contentBlocks, setContentBlocks] = useState([]);
   const [showOnHome, setShowOnHome] = useState(false);
+  const [serviceCardsSettings, setServiceCardsSettings] = useState(DEFAULT_SERVICE_CARDS);
+  const [showOnService, setShowOnService] = useState(false);
+  const [serviceId, setServiceId] = useState("influencer");
+  const [serviceSlot, setServiceSlot] = useState(1);
+  const [serviceCaption, setServiceCaption] = useState("");
 
   const navigate = useNavigate();
 
@@ -244,6 +258,27 @@ const ManageCaseStudies = () => {
         return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
       });
       setHomeCaseStudies(homeItems);
+
+      // Fetch service_cards settings from Firestore
+      try {
+        const settingsSnap = await getDoc(doc(db, "settings", "service_cards"));
+        if (settingsSnap.exists()) {
+          const raw = settingsSnap.data();
+          const merged = { ...DEFAULT_SERVICE_CARDS };
+          Object.keys(DEFAULT_SERVICE_CARDS).forEach((key) => {
+            merged[key] = {
+              ...DEFAULT_SERVICE_CARDS[key],
+              slot1: raw[key]?.slot1 ? { ...DEFAULT_SERVICE_CARDS[key].slot1, ...raw[key].slot1 } : DEFAULT_SERVICE_CARDS[key].slot1,
+              slot2: raw[key]?.slot2 ? { ...DEFAULT_SERVICE_CARDS[key].slot2, ...raw[key].slot2 } : DEFAULT_SERVICE_CARDS[key].slot2,
+            };
+          });
+          setServiceCardsSettings(merged);
+        } else {
+          setServiceCardsSettings(DEFAULT_SERVICE_CARDS);
+        }
+      } catch (settingsErr) {
+        console.warn("Could not fetch service_cards settings:", settingsErr);
+      }
     } catch (err) {
       console.error("Error fetching case studies:", err);
     } finally {
@@ -317,6 +352,7 @@ const ManageCaseStudies = () => {
     setIntro(""); setServices([""]); setStats([{ value: "", label: "" }]);
     setApproach([{ title: "", steps: [""] }]); setResults([""]);
     setFilters(["all"]); setContentBlocks([]); setShowOnHome(false);
+    setShowOnService(false); setServiceId("influencer"); setServiceSlot(1); setServiceCaption("");
     setIsModalOpen(true);
   };
 
@@ -336,6 +372,10 @@ const ManageCaseStudies = () => {
     );
     setContentBlocks(cs.contentBlocks || []);
     setShowOnHome(cs.showOnHome || false);
+    setShowOnService(cs.showOnService || false);
+    setServiceId(cs.serviceId || "influencer");
+    setServiceSlot(cs.serviceSlot ? Number(cs.serviceSlot) : 1);
+    setServiceCaption(cs.serviceCaption || "");
     setIsModalOpen(true);
   };
 
@@ -429,23 +469,87 @@ const ManageCaseStudies = () => {
     const sortOrder = editingCase?.sortOrder !== undefined ? editingCase.sortOrder : caseStudies.length;
     const homeOrder = editingCase?.homeOrder !== undefined ? editingCase.homeOrder : homeCaseStudies.length;
 
+    const targetSlug = slugify(slug) || slugify(title);
+
     const csData = {
       title, breadcrumbTitle,
-      slug: slugify(slug) || slugify(title),
+      slug: targetSlug,
       bannerImage, intro,
       services: cleanServices, stats: cleanStats,
       approach: cleanApproach, results: cleanResults,
       filters: cleanFilters, contentBlocks, showOnHome,
+      showOnService,
+      serviceId: showOnService ? serviceId : null,
+      serviceSlot: showOnService ? Number(serviceSlot) : null,
+      serviceCaption: showOnService ? (serviceCaption || intro || "").trim() : "",
       sortOrder, homeOrder,
       createdAt: editingCase?.createdAt ?? new Date().toISOString()
     };
 
     try {
+      let savedId = editingCase?.id;
       if (editingCase) {
         await updateDoc(doc(db, "casestudies", editingCase.id), csData);
       } else {
-        await addDoc(collection(db, "casestudies"), csData);
+        const docRef = await addDoc(collection(db, "casestudies"), csData);
+        savedId = docRef.id;
       }
+
+      // Update centralized service_cards settings document
+      try {
+        const settingsRef = doc(db, "settings", "service_cards");
+        const settingsSnap = await getDoc(settingsRef);
+        const currentData = settingsSnap.exists() ? settingsSnap.data() : {};
+        const updatedCards = { ...currentData };
+
+        Object.keys(DEFAULT_SERVICE_CARDS).forEach((k) => {
+          if (!updatedCards[k]) updatedCards[k] = {};
+        });
+
+        // 1. If this case study previously occupied any slot, clear it
+        if (savedId) {
+          Object.keys(updatedCards).forEach((sKey) => {
+            if (updatedCards[sKey]?.slot1?.id === savedId) {
+              updatedCards[sKey].slot1 = null;
+            }
+            if (updatedCards[sKey]?.slot2?.id === savedId) {
+              updatedCards[sKey].slot2 = null;
+            }
+          });
+        }
+
+        // 2. If showOnService is true, assign to the chosen slot and clear previous holder's flags
+        if (showOnService && serviceId && serviceSlot) {
+          const slotKey = `slot${serviceSlot}`;
+          const prevHolderId = updatedCards[serviceId]?.[slotKey]?.id;
+          if (prevHolderId && prevHolderId !== savedId) {
+            try {
+              await updateDoc(doc(db, "casestudies", prevHolderId), {
+                showOnService: false,
+                serviceId: null,
+                serviceSlot: null,
+                serviceCaption: ""
+              });
+            } catch (clearErr) {
+              console.warn("Could not clear previous case study service flag:", clearErr);
+            }
+          }
+
+          if (!updatedCards[serviceId]) updatedCards[serviceId] = {};
+          updatedCards[serviceId][slotKey] = {
+            id: savedId,
+            title: title.trim(),
+            slug: targetSlug,
+            bannerImage: bannerImage || "",
+            caption: (serviceCaption || intro || "").trim()
+          };
+        }
+
+        await setDoc(settingsRef, updatedCards, { merge: true });
+      } catch (settingsErr) {
+        console.error("Error saving service cards settings:", settingsErr);
+      }
+
       setIsModalOpen(false);
       fetchCaseStudies();
     } catch (err) {
@@ -457,6 +561,31 @@ const ManageCaseStudies = () => {
     if (!window.confirm("Are you sure you want to delete this case study?")) return;
     try {
       await deleteDoc(doc(db, "casestudies", csId));
+
+      try {
+        const settingsRef = doc(db, "settings", "service_cards");
+        const settingsSnap = await getDoc(settingsRef);
+        if (settingsSnap.exists()) {
+          const data = settingsSnap.data();
+          let changed = false;
+          Object.keys(data).forEach((sKey) => {
+            if (data[sKey]?.slot1?.id === csId) {
+              data[sKey].slot1 = null;
+              changed = true;
+            }
+            if (data[sKey]?.slot2?.id === csId) {
+              data[sKey].slot2 = null;
+              changed = true;
+            }
+          });
+          if (changed) {
+            await setDoc(settingsRef, data, { merge: true });
+          }
+        }
+      } catch (clearErr) {
+        console.warn("Could not clear deleted case study from service cards:", clearErr);
+      }
+
       fetchCaseStudies();
     } catch (err) {
       console.error("Error deleting case study:", err);
@@ -694,6 +823,135 @@ const ManageCaseStudies = () => {
                           placeholder="Provide a description of the client background, challenge, and goals..." />
                       </div>
                     </div>
+                  </div>
+
+                  {/* Feature on Services Page Section */}
+                  <div className="bg-purple-50/70 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/30 p-5 rounded-2xl space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <label className="flex items-center gap-2 text-purple-900 dark:text-purple-300 text-sm font-bold mb-1">
+                          <Briefcase className="w-4 h-4 text-purple-600 dark:text-purple-400" /> Feature on Services Page
+                        </label>
+                        <p className="text-xs text-purple-700 dark:text-purple-400">
+                          Feature this case study under one of the 4 service blocks on the Services page.
+                        </p>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          className="sr-only peer"
+                          checked={showOnService}
+                          onChange={(e) => setShowOnService(e.target.checked)}
+                        />
+                        <div className="w-11 h-6 bg-slate-300 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 dark:peer-focus:ring-purple-800 rounded-full peer dark:bg-slate-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-purple-600"></div>
+                      </label>
+                    </div>
+
+                    {showOnService && (
+                      <div className="pt-3 border-t border-purple-200/60 dark:border-purple-500/20 space-y-4">
+                        {/* 1. Target Service Selector */}
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-purple-900 dark:text-purple-300 mb-2">
+                            Select Target Service Section
+                          </label>
+                          <select
+                            value={serviceId}
+                            onChange={(e) => setServiceId(e.target.value)}
+                            className="w-full px-4 py-2.5 bg-white dark:bg-slate-800 border border-purple-300 dark:border-purple-500/40 rounded-xl text-slate-900 dark:text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          >
+                            {Object.entries(DEFAULT_SERVICE_CARDS).map(([sKey, sVal]) => (
+                              <option key={sKey} value={sKey}>
+                                {sVal.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* 2. Slot Selector (Card 1 vs Card 2) */}
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-purple-900 dark:text-purple-300 mb-2">
+                            Choose Which Existing Card to Replace
+                          </label>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {[1, 2].map((slotNum) => {
+                              const currentCard =
+                                serviceCardsSettings[serviceId]?.[`slot${slotNum}`] ||
+                                DEFAULT_SERVICE_CARDS[serviceId]?.[`slot${slotNum}`];
+                              const isSelected = serviceSlot === slotNum;
+                              const isCurrentCase = editingCase && currentCard?.id === editingCase.id;
+
+                              return (
+                                <div
+                                  key={slotNum}
+                                  onClick={() => setServiceSlot(slotNum)}
+                                  className={`cursor-pointer rounded-xl p-3 border-2 transition-all flex flex-col justify-between ${
+                                    isSelected
+                                      ? "bg-white dark:bg-slate-800 border-purple-600 shadow-md ring-2 ring-purple-500/20"
+                                      : "bg-white/60 dark:bg-slate-800/40 border-slate-200 dark:border-white/10 hover:border-purple-300"
+                                  }`}
+                                >
+                                  <div>
+                                    <div className="flex items-center justify-between mb-2">
+                                      <span className="text-xs font-bold uppercase px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200">
+                                        Card {slotNum}
+                                      </span>
+                                      <input
+                                        type="radio"
+                                        name="serviceSlot"
+                                        checked={isSelected}
+                                        onChange={() => setServiceSlot(slotNum)}
+                                        className="text-purple-600 focus:ring-purple-500 cursor-pointer"
+                                      />
+                                    </div>
+
+                                    <div className="flex gap-2.5 items-start mt-1">
+                                      {currentCard?.bannerImage ? (
+                                        <img
+                                          src={currentCard.bannerImage}
+                                          alt=""
+                                          className="w-14 h-10 object-cover rounded-lg flex-shrink-0 bg-slate-100 dark:bg-slate-700"
+                                        />
+                                      ) : (
+                                        <div className="w-14 h-10 bg-slate-200 dark:bg-slate-700 rounded-lg flex items-center justify-center text-xs text-slate-400 flex-shrink-0">
+                                          No img
+                                        </div>
+                                      )}
+                                      <div className="min-w-0 flex-1">
+                                        <p className="text-xs font-semibold text-slate-900 dark:text-white line-clamp-2 leading-tight">
+                                          {currentCard?.title || "Default Card"}
+                                        </p>
+                                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+                                          {isCurrentCase ? "(Currently set to this case study)" : "Currently in this slot"}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-white/5 text-[11px] font-semibold text-center text-purple-700 dark:text-purple-300">
+                                    {isSelected ? `✓ Replacing Card ${slotNum}` : `Click to replace Card ${slotNum}`}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+
+                        {/* 3. Card Caption / Metric Highlight */}
+                        <div>
+                          <label className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-purple-900 dark:text-purple-300 mb-1">
+                            <span>Card Caption / Impact Line</span>
+                            <span className="text-[10px] text-slate-500 normal-case font-normal">Shown under title on Services page</span>
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={serviceCaption}
+                            onChange={(e) => setServiceCaption(e.target.value)}
+                            placeholder="e.g. 21 creators across five youth subcultures. 190M views. +18% YOY arrivals from India's under-35 cohort."
+                            className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-purple-200 dark:border-purple-500/30 rounded-xl text-slate-900 dark:text-white text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <hr className="border-slate-100 dark:border-white/5" />
