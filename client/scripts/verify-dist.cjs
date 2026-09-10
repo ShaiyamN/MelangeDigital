@@ -28,7 +28,8 @@ const distVideos = path.join(root, "dist", "videos");
 const publicVideos = path.join(root, "public", "videos");
 if (!fs.existsSync(distVideos) && fs.existsSync(publicVideos)) {
   try {
-    fs.symlinkSync(publicVideos, distVideos, "junction");
+    const symlinkType = process.platform === "win32" ? "junction" : "dir";
+    fs.symlinkSync(publicVideos, distVideos, symlinkType);
   } catch {
     // server.cjs fallback serves public directory directly
   }
