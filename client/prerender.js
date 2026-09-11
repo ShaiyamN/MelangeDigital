@@ -1,9 +1,17 @@
-import puppeteer from "puppeteer";
 import fs from "fs";
 import path from "path";
 import { createServer } from "http";
 import { fileURLToPath } from "url";
 import { prerenderRoutes as routes } from "./scripts/site-routes.mjs";
+
+let puppeteer;
+try {
+  puppeteer = (await import("puppeteer")).default;
+} catch {
+  console.warn("⚠️  puppeteer is not installed in dependencies (skipped during production deploy).");
+  console.warn("   To run prerender locally, run: npm i -D puppeteer");
+  process.exit(0);
+}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
