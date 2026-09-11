@@ -2,6 +2,7 @@ import {
   Route,
   Routes,
   useLocation,
+  useParams,
   Navigate,
 } from "react-router-dom";
 
@@ -93,6 +94,11 @@ function useTabVisibility() {
   }, []);
 }
 
+function BlogSlugRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/blogs/${slug}`} replace />;
+}
+
 function App() {
   useTabVisibility();
   useLenis();
@@ -128,6 +134,8 @@ function App() {
           <Route exact path="/careers" Component={Career} />
           <Route exact path="/blogs" Component={Blogs} />
           <Route exact path="/blogs/:slug" Component={BlogDetail} />
+          <Route exact path="/blog" element={<Navigate to="/blogs" replace />} />
+          <Route exact path="/blog/:slug" Component={BlogSlugRedirect} />
           <Route exact path="/location/:locationId" Component={Location} />
 
           {/* Destination marketing redirects */}

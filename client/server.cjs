@@ -46,6 +46,7 @@ const PERMA_REDIRECTS = {
   "/work/GenVR": "/work/genvr",
   "/work/neoTraders": "/work/neotraders",
   "/work/devBoost": "/work/devboost",
+  "/blog": "/blogs",
 };
 
 for (const [from, to] of Object.entries(PERMA_REDIRECTS)) {
@@ -53,6 +54,10 @@ for (const [from, to] of Object.entries(PERMA_REDIRECTS)) {
     res.redirect(301, to);
   });
 }
+
+app.get(["/blog/:slug", "/blog/:slug/"], (req, res) => {
+  res.redirect(301, `/blogs/${req.params.slug}`);
+});
 
 async function sendIndex(req, res) {
   let meta = { stripFaq: true, noindex: true };

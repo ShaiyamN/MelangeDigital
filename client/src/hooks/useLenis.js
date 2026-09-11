@@ -10,11 +10,11 @@ const useLenis = () => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-      direction: "vertical",
-      gestureDirection: "vertical",
-      smoothTouch: true,
-      touchMultiplier: 2,
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
       prevent: (node) => node.closest?.("[data-lenis-prevent]"),
     });
 
@@ -25,7 +25,7 @@ const useLenis = () => {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(tickerCb);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(500, 33);
 
     window.__melangeLenis = lenis;
 

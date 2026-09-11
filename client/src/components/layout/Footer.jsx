@@ -37,23 +37,6 @@ const Footer = () => (
         </div>
       </div>
       <div>
-        <h3>Our Services</h3>
-        <ul>
-          <li>
-            <Link to="/services#influencer">Influencer Marketing</Link>
-          </li>
-          <li>
-            <Link to="/services#branded">Branded Content &amp; IPs</Link>
-          </li>
-          <li>
-            <Link to="/services#experiential">Experiential Marketing</Link>
-          </li>
-          <li>
-            <Link to="/services#fam">FAM Trips + PR</Link>
-          </li>
-        </ul>
-      </div>
-      <div>
         <h3>Company</h3>
         <ul>
           <li>
@@ -67,6 +50,26 @@ const Footer = () => (
           </li>
           <li>
             <Link to="/careers">Careers</Link>
+          </li>
+          <li>
+            <Link to="/blogs">Blogs</Link>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3>Our Services</h3>
+        <ul>
+          <li>
+            <Link to="/services#influencer">Influencer Marketing</Link>
+          </li>
+          <li>
+            <Link to="/services#branded">Branded Content &amp; IPs</Link>
+          </li>
+          <li>
+            <Link to="/services#experiential">Experiential Marketing</Link>
+          </li>
+          <li>
+            <Link to="/services#fam">FAM Trips + PR</Link>
           </li>
         </ul>
       </div>

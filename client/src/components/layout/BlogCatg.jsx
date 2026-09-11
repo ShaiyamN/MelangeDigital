@@ -1,37 +1,74 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 
-const BlogCatg = ({ handleCategorySelect }) => {
-  const tags = [
-    { label: "All", filter: "all" },
-    { label: "Content Marketing", filter: "content-marketing" },
-    { label: "Brand Strategy", filter: "brand-strategy" },
-    { label: "E-commerce Management", filter: "ecommerce-management" },
-    { label: "Design Solutions", filter: "design-solutions" },
-    { label: "Performance Marketing", filter: "performance-marketing" },
-    { label: "Website Development & SEO", filter: "website-development-seo" },
-    // Legacy IDs still present on older Firestore posts
-    { label: "Influencer Marketing", filter: "influencer-marketing" },
-    { label: "Content Strategy", filter: "content-strategy" },
-    { label: "Design & Development", filter: "design-dev" },
-    { label: "Storytelling", filter: "storytelling" },
-    { label: "IPs & PR", filter: "pr" },
-  ];
+const categoryMap = {
+  "content-marketing": "Content Marketing",
+  "brand-strategy": "Brand Strategy",
+  "ecommerce-management": "E-commerce Management",
+  "design-solutions": "Design Solutions",
+  "performance-marketing": "Performance Marketing",
+  "website-development-seo": "Website Development & SEO",
+  "influencer-marketing": "Influencer Marketing",
+  "design-development": "Design & Development",
+  "design-dev": "Design & Development",
+  "content-strategy": "Content Strategy",
+  "storytelling": "Storytelling",
+  "ips-pr": "PR, IPs & Outreach",
+  "pr": "IPs & PR",
+  "aeo-seo": "AEO & SEO",
+  "ecommerce": "E-Commerce",
+};
 
-  const [selectedFilter, setSelectedFilter] = useState("all");
+const formatCategory = (cat) => {
+  if (!cat) return "";
+  return (
+    categoryMap[cat] ||
+    cat
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ")
+  );
+};
+
+const BlogCatg = ({
+  categories = [],
+  handleCategorySelect,
+  activeCategory = null,
+}) => {
+  const [selectedFilter, setSelectedFilter] = useState(activeCategory || "all");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  useEffect(() => {
+    setSelectedFilter(activeCategory || "all");
+  }, [activeCategory]);
 
   const handleFilterSelect = (filter) => {
     setSelectedFilter(filter);
     handleCategorySelect(filter === "all" ? null : filter);
-    setShowMobileFilters(false); // Hide mobile filter after selection
-    window.scrollTo(0, 0); // Scroll to the top
+    setShowMobileFilters(false);
+    if (window.__melangeLenis) {
+      window.__melangeLenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
   };
 
   const toggleMobileFilters = () => {
     setShowMobileFilters((prev) => !prev);
   };
+
+  if (!categories || categories.length === 0) {
+    return null;
+  }
+
+  const tags = [
+    { label: "All", filter: "all" },
+    ...categories.map((cat) => ({
+      label: formatCategory(cat),
+      filter: cat,
+    })),
+  ];
 
   const containerVariants = {
     hidden: {
@@ -64,11 +101,7 @@ const BlogCatg = ({ handleCategorySelect }) => {
   };
 
   return (
-    <div
-      className={`sticky lg:top-[90vh] shadow-2xl max-h-0 z-20 lg:w-[1100px] mx-auto flex items-end justify-center ${
-        !showMobileFilters ? "top-[92vh] " : "top-[92vh]"
-      }`}
-    >
+    <div className="w-fit max-w-[92vw] mx-auto flex items-center justify-center">
       {/* Mobile View */}
       <div className="lg:hidden flex justify-center items-center relative overflow-hidden">
         <AnimatePresence mode="wait">
@@ -80,7 +113,7 @@ const BlogCatg = ({ handleCategorySelect }) => {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.2 }}
               onClick={toggleMobileFilters}
-              className="w-[210px] h-[56px] border border-gray-400 bg-white text-[20px] rounded-[40px] py-2 px-4 flex items-center justify-center font-medium gap-2"
+              className="w-[210px] h-[56px] border border-gray-400 bg-white text-[20px] rounded-[40px] py-2 px-4 flex items-center justify-center font-medium gap-2 shadow-lg"
             >
               <RiMenu3Line size={20} />
               <span>Show Filters</span>
@@ -92,7 +125,7 @@ const BlogCatg = ({ handleCategorySelect }) => {
               animate="visible"
               exit="exit"
               variants={containerVariants}
-              className="bg-[#1a1a1a] w-[265px] h-[520px] rounded-[40px] p-6 space-y-4"
+              className="bg-[#1a1a1a] w-[265px] max-h-[520px] overflow-y-auto rounded-[40px] p-6 space-y-4 shadow-2xl"
             >
               <div className="space-y-4">
                 {tags.map((tag, index) => (
@@ -102,12 +135,11 @@ const BlogCatg = ({ handleCategorySelect }) => {
                     variants={buttonVariants}
                     initial="hidden"
                     animate="visible"
-                    className={`block py-2 px-4 rounded-full text-left text-[16px] font-bold
-                 ${
-                   selectedFilter === tag.filter
-                     ? "bg-purple-500 text-white"
-                     : "bg-white text-black"
-                 }`}
+                    className={`block w-full py-2 px-4 rounded-full text-left text-[16px] font-bold transition-colors ${
+                      selectedFilter === tag.filter
+                        ? "bg-purple-500 text-white"
+                        : "bg-white text-black"
+                    }`}
                     onClick={() => handleFilterSelect(tag.filter)}
                   >
                     {tag.label}
@@ -129,18 +161,17 @@ const BlogCatg = ({ handleCategorySelect }) => {
         </AnimatePresence>
       </div>
 
-      {/* Desktop View */}
-      <div className="hidden">
-        <div className="flex flex-row px-[30px] py-4 glsMorph space-x-4">
+      {/* Desktop View: Original floating glassmorphic dock */}
+      <div className="hidden lg:block">
+        <div className="flex flex-row px-[30px] py-3.5 glsMorph space-x-3 items-center">
           {tags.map((tag) => (
             <button
               key={tag.filter}
-              className={`py-2 px-4 whitespace-nowrap text-[14px] font-bold rounded-[50px] border
-           ${
-             selectedFilter === tag.filter
-               ? "submit-bg border-none text-white"
-               : "text-black bg-white"
-           }`}
+              className={`py-2 px-5 whitespace-nowrap text-[14px] font-bold rounded-[50px] border transition-all cursor-pointer ${
+                selectedFilter === tag.filter
+                  ? "submit-bg border-none text-white shadow-md scale-105"
+                  : "text-black bg-white border-transparent hover:bg-white/95"
+              }`}
               onClick={() => handleFilterSelect(tag.filter)}
             >
               {tag.label}
