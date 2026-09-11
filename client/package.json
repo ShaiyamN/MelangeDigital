@@ -36,7 +36,6 @@
     "framer-motion": "^10.12.16",
     "gsap": "^3.12.5",
     "lucide-react": "^0.568.0",
-    "melange-digital": "file:..",
     "postcss": "^8.5.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

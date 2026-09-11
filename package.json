@@ -1,13 +1,13 @@
 {
   "name": "melange-digital",
   "private": true,
-  "main": "server.js",
+  "main": "server.cjs",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
     "build": "node scripts/hostinger-build.cjs",
-    "start": "node client/server.cjs"
+    "start": "node server.cjs"
   },
   "dependencies": {
     "express": "^5.2.1",
