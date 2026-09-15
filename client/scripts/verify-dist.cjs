@@ -4,17 +4,16 @@ const path = require("path");
 const root = path.join(__dirname, "..");
 const spa = path.join(root, "spa");
 const dist = path.join(root, "dist");
-const served = fs.existsSync(path.join(spa, "index.html")) ? spa : dist;
+const index = path.join(spa, "index.html");
 
-if (!fs.existsSync(path.join(served, "index.html"))) {
+if (!fs.existsSync(index)) {
   console.error("FAIL: spa/index.html missing");
   process.exit(1);
 }
 
-const bytes = fs.statSync(path.join(served, "index.html")).size;
-const reportDownload = path.join(served, "report-download.html");
+const reportDownload = path.join(spa, "report-download.html");
 const reportPdf = path.join(
-  served,
+  spa,
   "assets",
   "reports",
   "The Indian Outbound Inspiration report 2026.pdf",
@@ -33,5 +32,9 @@ if (!fs.existsSync(path.join(root, "server.js")) || !fs.existsSync(path.join(roo
   process.exit(1);
 }
 
-console.log(`verify-dist: ok (${path.join(served, "index.html")}, ${bytes} bytes)`);
+fs.mkdirSync(dist, { recursive: true });
+fs.copyFileSync(index, path.join(dist, "index.html"));
+
+const bytes = fs.statSync(index).size;
+console.log(`verify-dist: ok (${index}, ${bytes} bytes)`);
 console.log("hostinger-build: ok (prebuilt spa, no Vite)");

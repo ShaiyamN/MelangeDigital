@@ -2,7 +2,7 @@
  * Hostinger Express entry.
  * Application root: client
  * Entry file: server.js
- * Output directory: (leave empty — Express serves client/dist itself)
+ * Output directory: Default may steal dist/; Express serves client/spa/
  *
  * This package is "type": "module", so the app lives in server.cjs (CommonJS).
  */

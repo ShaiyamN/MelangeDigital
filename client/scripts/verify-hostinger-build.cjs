@@ -12,7 +12,7 @@ function run(cmd, env) {
 }
 
 if (!fs.existsSync(spaIndex)) {
-  console.error("FAIL: spa/index.html missing — GitHub Actions must publish spa/ before Hostinger deploy");
+  console.error("FAIL: spa/index.html missing");
   process.exit(1);
 }
 

@@ -45,18 +45,18 @@ Images and videos are stored in Git (not LFS) so Hostinger can build without `gi
 
 ## Hostinger (frontend only)
 
-Node.js Web App. Hostinger clones the whole GitHub repo, so **staging is too large and times out at ~5 minutes with empty logs**. Deploy the thin **`hostinger-dist`** branch GitHub Actions publishes.
+Node.js Web App. GitHub Actions Vite-builds `client/spa/`; Hostinger on **`staging`** only verifies it (never runs Vite). Express serves `spa/` because Default moves `dist/` out of the Node tree.
 
 | Setting | Value |
 | --- | --- |
-| Branch | **`hostinger-dist`** |
+| Branch | **`staging`** |
 | Application root | `client` |
 | Framework | **Express** |
 | Node.js version | **20.x** |
 | Build command | default (`npm run build` = verify-only) |
 | Start command | `npm start` |
 | Entry file | **`server.js`** |
-| Output directory | **empty** |
+| Output directory | Default is fine |
 
-Wait for the "Hostinger prebuild" Action to finish after each `staging` push, then redeploy. Do not deploy `staging` on Hostinger.
+Wait for the "Hostinger prebuild" Action to finish after a source push, then Redeploy if Hostinger did not auto-deploy the spa commit.
 

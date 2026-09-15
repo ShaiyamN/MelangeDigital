@@ -1,11 +1,11 @@
-# Builds a thin hostinger-dist branch (no src/, no 2GB clone) for Hostinger.
-# Hostinger must deploy branch hostinger-dist, root client, output directory empty.
+# Vite-build spa on GitHub, commit it to staging. Hostinger never runs Vite.
 name: Hostinger prebuild
 
 on:
   push:
     branches: [staging, main]
     paths-ignore:
+      - "client/spa/**"
       - "**.md"
   workflow_dispatch:
 
@@ -21,6 +21,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
@@ -33,26 +35,16 @@ jobs:
         env:
           FORCE_VITE_BUILD: "1"
 
-      - name: Publish thin hostinger-dist
+      - name: Commit spa to staging
         working-directory: .
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          THIN=$(mktemp -d)
-          mkdir -p "$THIN/client"
-          cp client/package.json client/package-lock.json client/server.js client/server.cjs client/.nvmrc client/.npmrc "$THIN/client/"
-          cp -a client/scripts "$THIN/client/scripts"
-          cp -a client/spa "$THIN/client/spa"
-          cp -a client/public "$THIN/client/public"
-          rm -rf "$THIN/client/public/videos" "$THIN/client/spa/videos"
-          rm -rf "$THIN/client/spa/destination-marketing-agency"
-          cd "$THIN"
-          git init
-          git checkout -b hostinger-dist
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "thin Hostinger payload ${GITHUB_SHA}"
-          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push origin hostinger-dist --force
+          git add -f client/spa
+          if git diff --cached --quiet; then
+            echo "spa unchanged"
+            exit 0
+          fi
+          git commit -m "build: spa for Hostinger (${GITHUB_SHA::7})"
+          git push origin HEAD:${GITHUB_REF_NAME}
