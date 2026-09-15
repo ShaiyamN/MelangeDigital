@@ -11,9 +11,26 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
-// Vite inlines these at build time. Empty key throws auth/invalid-api-key and whitescreens the SPA.
-const app = firebaseConfig.apiKey ? initializeApp(firebaseConfig) : null;
-const auth = app ? getAuth(app) : null;
-const db = app ? getFirestore(app) : null;
+let app = null;
+let auth = null;
+let db = null;
+
+try {
+  if (
+    firebaseConfig.apiKey &&
+    typeof firebaseConfig.apiKey === "string" &&
+    !firebaseConfig.apiKey.includes(":") &&
+    firebaseConfig.apiKey !== "your_api_key_here"
+  ) {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+  } else {
+    console.warn("Firebase: Missing or invalid VITE_FIREBASE_API_KEY. Firebase services disabled.");
+  }
+} catch (error) {
+  console.error("Firebase initialization failed:", error);
+}
 
 export { auth, db };
+

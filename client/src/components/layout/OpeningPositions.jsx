@@ -9,6 +9,7 @@ const OpeningPositions = ({ scrollToForm, onApply, onJobsLoaded }) => {
   const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
+    if (!db) return;
     getDocs(collection(db, "jobs"))
       .then((snapshot) => {
         const loadedJobs = snapshot.docs
