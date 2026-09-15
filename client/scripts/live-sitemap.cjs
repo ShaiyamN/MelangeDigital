@@ -5,9 +5,13 @@ const { pathToFileURL } = require("url");
 const { initializeApp, getApps } = require("firebase/app");
 const { getFirestore, collection, getDocs } = require("firebase/firestore");
 
-const TTL_MS = 5 * 60 * 1000;
+const TTL_MS = 60 * 1000;
 let cache = { xml: null, at: 0, routes: new Set(), byPath: {}, origin: "https://melangedigital.co" };
 let db;
+
+function clearSitemapCache() {
+  cache = { xml: null, at: 0, routes: new Set(), byPath: {}, origin: "https://melangedigital.co" };
+}
 
 function loadEnvFile() {
   const envPath = path.join(__dirname, "..", ".env");
@@ -206,4 +210,4 @@ if (require.main === module) {
   console.log("live-sitemap self-check ok");
 }
 
-module.exports = { getSitemapXml, getPageIndex, buildXml };
+module.exports = { getSitemapXml, getPageIndex, buildXml, clearSitemapCache };

@@ -21,14 +21,39 @@ const PAGE_META = {
       "Get in touch with Mélange Digital today. Our team is ready to craft the perfect digital marketing strategy to grow your brand globally",
   },
   "/about": {
-    title: "About Mélange Digital: Our Story, Mission & Vision",
+    title: "Best Destination Marketing Agency | Melange Digital",
     description:
-      "Meet the team behind Mélange Digital. Passionate global agency driven by strategy, creativity & a mission to grow brands that matter. Discover our story",
+      "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
   },
   "/services": {
     title: "Digital Marketing for Travel and Tourism | Melange",
     description:
       "Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs.",
+  },
+  "/services/influencer-marketing": {
+    title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
+    description:
+      "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
+  },
+  "/services/branded-content-ips": {
+    title: "Film Tourism Marketing & Branded Content | Mélange Digital",
+    description:
+      "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.",
+  },
+  "/services/branded-content-ip": {
+    title: "Film Tourism Marketing & Branded Content | Mélange Digital",
+    description:
+      "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.",
+  },
+  "/services/experiential-marketing": {
+    title: "Tourism Experiential Marketing Agency | Mélange Digital",
+    description:
+      "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.",
+  },
+  "/services/fam-trips-pr": {
+    title: "Travel PR Agency & FAM Trip Management | Mélange Digital",
+    description:
+      "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.",
   },
   "/terms-of-service": {
     title: "Terms of Service | Mélange Digital",

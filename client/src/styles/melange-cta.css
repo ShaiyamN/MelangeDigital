@@ -70,3 +70,57 @@
     filter: none;
   }
 }
+
+/* Label fades, arrow glides to the left of the pill. Nav `.contact-btn` is excluded. */
+.btn-anim {
+  position: relative;
+  transition: box-shadow 0.25s ease, filter 0.25s ease, transform 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-anim .btn-anim__label {
+  transition: opacity 0.24s ease;
+}
+
+.btn-anim .btn-anim__icon {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  margin-left: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-anim:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(110, 30, 238, 0.28);
+    filter: brightness(1.04);
+    text-decoration: none;
+  }
+
+  .btn-anim:hover .btn-anim__label {
+    opacity: 0;
+  }
+
+  .btn-anim:hover .btn-anim__icon {
+    transform: translateX(var(--arrow-shift, -40px));
+  }
+
+  .btn-anim:hover .btn-anim__icon img {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-anim:hover {
+    transform: none;
+    box-shadow: none;
+    filter: none;
+  }
+
+  .btn-anim:hover .btn-anim__label {
+    opacity: 1;
+  }
+
+  .btn-anim:hover .btn-anim__icon {
+    transform: none;
+  }
+}

@@ -7,6 +7,7 @@ import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const { reportDownloadHtml } = require("./scripts/report-download-html.cjs");
+const { getSitemapXml, clearSitemapCache } = require("./scripts/live-sitemap.cjs");
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const MARKETING_SLUG = "destination-marketing-agency";
@@ -45,6 +46,25 @@ function marketingDevMiddleware() {
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url?.split("?")[0] || "";
+
+        if (url === "/sitemap.xml") {
+          try {
+            const xml = await getSitemapXml();
+            res.setHeader("Content-Type", "application/xml; charset=utf-8");
+            res.setHeader("Cache-Control", "no-cache");
+            res.end(xml);
+            return;
+          } catch (err) {
+            console.error("Vite dev sitemap error:", err);
+          }
+        }
+
+        if (url === "/api/sitemap/clear-cache") {
+          clearSitemapCache();
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ ok: true, cleared: true }));
+          return;
+        }
 
         if (url === "/report-download" || url === "/report-download/") {
           res.setHeader("Content-Type", "text/html; charset=utf-8");

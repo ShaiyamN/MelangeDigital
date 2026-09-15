@@ -9,9 +9,9 @@ import markup from "./markup.html?raw";
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260904t`,
+  `${ASSET}/css/melange.css?v=20260915r`,
 ];
-const SCRIPT_BASES = [`${ASSET}/js/about.js?v=20260824ap`];
+const SCRIPT_BASES = [`${ASSET}/js/about.js?v=20260915b`];
 
 const BREADCRUMB = {
   "@context": "https://schema.org",

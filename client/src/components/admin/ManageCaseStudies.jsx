@@ -552,6 +552,7 @@ const ManageCaseStudies = () => {
 
       setIsModalOpen(false);
       fetchCaseStudies();
+      fetch("/api/sitemap/clear-cache", { method: "POST" }).catch(() => {});
     } catch (err) {
       console.error("Error saving case study:", err);
     }
@@ -587,6 +588,7 @@ const ManageCaseStudies = () => {
       }
 
       fetchCaseStudies();
+      fetch("/api/sitemap/clear-cache", { method: "POST" }).catch(() => {});
     } catch (err) {
       console.error("Error deleting case study:", err);
     }

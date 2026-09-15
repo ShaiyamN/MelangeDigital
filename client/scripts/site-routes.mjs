@@ -7,6 +7,10 @@ export const DESTINATION_LANDING = "/destination-marketing-agency";
 export const routes = [
   "/",
   "/services",
+  "/services/influencer-marketing",
+  "/services/branded-content-ips",
+  "/services/experiential-marketing",
+  "/services/fam-trips-pr",
   "/work",
   "/about",
   "/contact",

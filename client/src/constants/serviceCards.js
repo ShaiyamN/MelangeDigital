@@ -14,10 +14,10 @@ export const DEFAULT_SERVICE_CARDS = {
       caption: "21 creators across five youth subcultures. 190M views. +18% YOY arrivals from India's under-35 cohort.",
     },
     slot2: {
-      title: "Hong Kong Tourism Board: #HerHongKong",
-      slug: "hong-kong-tourism-board-herhongkong",
-      bannerImage: "/destination-marketing-agency/images/work/her-hong-kong-hktb.png",
-      caption: "+22% YOY growth in South Indian female arrivals, driven by four actresses cast against real travel motivations.",
+      title: "Universal Studios Singapore — Go Bananas in Minion Land",
+      slug: "resorts-world-sentosa-go-bananas-in-minion-land",
+      bannerImage: "/destination-marketing-agency/images/services/banner-rws.webp",
+      caption: "Five regional-language creators on ShareChat and Moj. 56M views. +6.8% lift in consideration to visit.",
     },
   },
   branded: {

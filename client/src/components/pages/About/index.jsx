@@ -15,7 +15,7 @@ const SCRIPT_BASES = [
   "/about/network-sphere.js?v=20260902f",
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
   `${ASSET}/js/melange.js?v=20260902c`,
-  `${ASSET}/js/about.js?v=20260824ap`,
+  `${ASSET}/js/about.js?v=20260915b`,
 ];
 
 const BREADCRUMB = {
@@ -30,10 +30,10 @@ const BREADCRUMB = {
 const ABOUT_PAGE = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  name: "Best DMO Marketing Agency | About Melange Digital",
+  name: "Best Destination Marketing Agency | Melange Digital",
   url: "https://melangedigital.co/about",
   description:
-    "Melange Digital is a DMO marketing agency and destination marketing specialist, built by people who've worked inside tourism boards. Meet the team.",
+    "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
   inLanguage: "en",
   isPartOf: { "@type": "WebSite", name: "Mélange Digital", url: "https://melangedigital.co" },
   about: {
@@ -57,6 +57,53 @@ const ABOUT_PAGE = {
       },
     ],
   },
+};
+
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What does Melange Digital do?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Melange Digital is a destination marketing agency specialising in DMO, NTO marketing, that turn cultural insight into travel bookings. We work with national tourism boards, destination brands and travel tech platforms, building campaigns run by people who've worked inside the industry they now serve.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How is a travel marketing agency different from a regular ad agency?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A regular ad agency buys media and hopes it lands. A travel marketing agency starts with why a destination matters to a specific audience, builds the story inside that culture, then engineers the path to a booked trip. The difference shows up in arrivals, not just impressions.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What makes a destination marketing agency different from a general marketing agency?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A general agency serves any industry. A destination marketing agency works exclusively with tourism boards, DMOs, and travel brands, understanding budget cycles, ministerial reporting, and traveller psychology specific to this category. That focus is why boards trust Melange with mandates broader agencies rarely see.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What results can a destination expect from travel advertising?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Real travel advertising is measured in arrivals and bookings, not clicks or views. Melange's campaigns have driven double-digit YOY arrival growth and multi-million-dollar attributed sales for tourism boards and travel brands. Every campaign is built around a specific, trackable outcome agreed before work begins.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does it cost to work with a travel and tourism marketing agency?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Cost depends on the mandate: a single campaign, a market launch, or an ongoing retainer all price differently. Melange scopes every engagement around the board or brand's specific goals rather than a flat package. The fastest way to get a real number is a strategy call.",
+      },
+    },
+  ],
 };
 
 const LEADERS = [
@@ -92,10 +139,10 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>Best DMO Marketing Agency | About Melange Digital</title>
+        <title>Best Destination Marketing Agency | Melange Digital</title>
         <meta
           name="description"
-          content="Melange Digital is a DMO marketing agency and destination marketing specialist, built by people who've worked inside tourism boards. Meet the team."
+          content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."
         />
         <link rel="canonical" href="https://melangedigital.co/about" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -106,15 +153,19 @@ const About = () => {
         />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/about" />
-        <meta property="og:title" content="Best DMO Marketing Agency | About Melange Digital" />
+        <meta property="og:title" content="Best Destination Marketing Agency | Melange Digital" />
         <meta
           property="og:description"
-          content="Melange Digital is a DMO marketing agency and destination marketing specialist, built by people who've worked inside tourism boards. Meet the team."
+          content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."
         />
         <script type="application/ld+json">{JSON.stringify(BREADCRUMB)}</script>
         <script type="application/ld+json">{JSON.stringify(ABOUT_PAGE)}</script>
         <script type="application/ld+json">{JSON.stringify(LEADERSHIP_LIST)}</script>
-        <style type="text/css">{marketingNavCss("abt")}</style>
+        <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
+        <style type="text/css">{`${marketingNavCss("abt")}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+body.abt-react .section-8 .accordion-toggle .text-block-30{font-size:18px!important;font-weight:500!important;line-height:1.4!important}
+body.abt-react .section-8 .faq-more-btn{align-self:center!important}`}</style>
       </Helmet>
 
       <MarketingShell slug="abt" cssReady={cssReady} markup={markup} />

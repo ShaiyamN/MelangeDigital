@@ -1,60 +1,30 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { SITE_ORIGIN, routes } from "./site-routes.mjs";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const { getSitemapXml } = require("./live-sitemap.cjs");
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.join(__dirname, "..", "public", "sitemap.xml");
+const PUBLIC_OUT = path.join(__dirname, "..", "public", "sitemap.xml");
+const DIST_OUT = path.join(__dirname, "..", "dist", "sitemap.xml");
 
-function metaFor(route) {
-  if (route === "/") return { changefreq: "daily", priority: "1.0" };
-  if (route === "/destination-marketing-agency")
-    return { changefreq: "weekly", priority: "0.9" };
-  if (
-    route.startsWith("/work/") ||
-    route.startsWith("/services/") ||
-    route.startsWith("/blogs/")
-  )
-    return { changefreq: "monthly", priority: "0.8" };
-  if (
-    route.includes("policy") ||
-    route.includes("terms") ||
-    route.includes("privacy") ||
-    route.includes("cookie")
-  )
-    return { changefreq: "yearly", priority: "0.5" };
-  return { changefreq: "monthly", priority: "0.8" };
+async function main() {
+  try {
+    const xml = await getSitemapXml();
+    fs.writeFileSync(PUBLIC_OUT, xml, "utf8");
+    console.log(`Wrote live sitemap.xml → ${PUBLIC_OUT}`);
+
+    if (fs.existsSync(path.dirname(DIST_OUT))) {
+      fs.writeFileSync(DIST_OUT, xml, "utf8");
+      console.log(`Wrote live sitemap.xml → ${DIST_OUT}`);
+    }
+    process.exit(0);
+  } catch (err) {
+    console.error("Failed to generate live sitemap:", err);
+    process.exit(1);
+  }
 }
 
-const lastmod = new Date().toISOString().slice(0, 10);
-const seen = new Set();
-const urls = [];
-
-for (const route of routes) {
-  const locPath = route === "/" ? "/" : route.replace(/\/$/, "") || "/";
-  if (seen.has(locPath)) continue;
-  seen.add(locPath);
-  const { changefreq, priority } = metaFor(locPath);
-  const loc = locPath === "/" ? SITE_ORIGIN : `${SITE_ORIGIN}${locPath}`;
-  urls.push({ loc, lastmod, changefreq, priority });
-}
-
-const body = urls
-  .map(
-    (u) => `  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`,
-  )
-  .join("\n");
-
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${body}
-</urlset>
-`;
-
-fs.writeFileSync(OUT, xml, "utf8");
-console.log(`Wrote ${urls.length} URLs → ${OUT}`);
+main();

@@ -1,0 +1,1236 @@
+/* ==========================================================================
+   Service Detail Page Stylesheet — Melange Digital
+   Implements Figma "S1 Influencer & Marketing" (file 9YDhj31aMWp9fR97PHWI7E,
+   node 570:32). The frame is 1368px wide with a 1184px content column
+   (92px gutters); every px value below is quoted at that width and scaled
+   down with clamp() / percentages.
+   ========================================================================== */
+
+.svc-detail-page {
+  /* Palette, straight from the frame */
+  --svc-deep: #39107b;
+  --svc-accent: #7123ee;
+  --svc-eyebrow: #c671f9;
+  --svc-ink: #0f052f;
+  --svc-emph: #7b3fe4;
+  --svc-hairline: rgba(15, 5, 47, 0.12);
+
+  /* Families. Loaded globally by index.css; Poppins arrives via footer.css. */
+  --svc-display: var(--melange-display, var(--font-display, "Alan Sans", sans-serif));
+  --svc-serif: var(--melange-serif, var(--font-accent, "Baskervville", "Libre Baskerville", Georgia, serif));
+  --svc-text: var(--melange-body-lato, var(--font-body, "Lato", sans-serif));
+
+  /* Figma draws a 1184px column inside a 1368px frame. The rest of the site
+     runs a min(1400px, 92%) column, so at 1440+ the frame width left this page
+     visibly narrower than every other page. Widened to match the site, with
+     the display type scaled by the same ratio so the proportions still read. */
+  --svc-h: clamp(32px, 3.8vw, 52px);
+  --svc-body: 16px;
+  --svc-eyebrow-size: 16px;
+
+  --svc-container: min(1400px, 100%);
+  --svc-gutter: 40px;
+
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #ffffff;
+  color: var(--svc-ink);
+  font-family: var(--svc-text);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Shared primitives
+   -------------------------------------------------------------------------- */
+.svc-detail-page .svc-container {
+  width: 100%;
+  max-width: var(--svc-container);
+  margin-inline: auto;
+  padding-inline: var(--svc-gutter);
+}
+
+/* Full-bleed hairlines: after hero, Approach, Process and Work */
+.svc-detail-page .svc-rule {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--svc-hairline);
+}
+
+/* :where() keeps this at zero specificity so the per-section heading classes
+   below (several of which are Lato, or white on the dark band) still win. */
+.svc-detail-page :where(h1, h2, h3, h4) {
+  font-family: var(--svc-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--svc-deep);
+}
+
+/* Italic accent: Baskervville italic 70px (1.077x the 65px display size) */
+.svc-detail-page .svc-accent {
+  font-family: var(--svc-serif) !important;
+  font-style: italic !important;
+  font-weight: 400 !important;
+  font-size: 1.077em;
+  color: var(--svc-accent) !important;
+  background: none !important;
+  -webkit-text-fill-color: var(--svc-accent) !important;
+}
+
+/* The hero and manifesto headings break the italic phrase onto its own line;
+   the other four display headings keep it inline, as in the frame. */
+.svc-detail-page .svc-hero-title .svc-accent,
+.svc-detail-page .svc-philosophy-title .svc-accent {
+  display: block;
+}
+
+/* Eyebrow: Lato Medium 18px / 30px, #c671f9 */
+.svc-detail-page .svc-eyebrow {
+  display: block;
+  font-family: var(--svc-text);
+  font-size: var(--svc-eyebrow-size);
+  font-weight: 500;
+  line-height: 1.67;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: var(--svc-eyebrow);
+  margin: 0 0 4px;
+}
+
+/* Inline emphasis inside body copy */
+.svc-detail-page .svc-highlight {
+  color: var(--svc-emph);
+  font-weight: 800;
+}
+
+/* --------------------------------------------------------------------------
+   Pill buttons
+   Primary: gradient #6e1eee -> #9a30b9, 2px #e797ff, r30, 48px tall
+   -------------------------------------------------------------------------- */
+.svc-detail-page .svc-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 14px 0 18px;
+  border: 2px solid #e797ff;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #6e1eee 0%, #9a30b9 100%);
+  color: #fcfcfc !important;
+  text-decoration: none;
+  font-family: var(--svc-text);
+  font-size: clamp(15px, 1.32vw, 18px);
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.svc-detail-page .svc-pill-btn:hover {
+  color: #fcfcfc !important;
+}
+
+/* The arrow asset already carries its own gradient disc */
+.svc-detail-page .svc-pill-btn__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.svc-detail-page .svc-pill-btn__arrow img {
+  display: block;
+  width: 36px;
+  height: 34px;
+}
+
+/* Ghost pill: gradient #efd3ff -> #bd96f5, 1px #bd96f4, text #4c017b */
+.svc-detail-page .svc-ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 14px 0 18px;
+  border: 1px solid #bd96f4;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #efd3ff 0%, #bd96f5 100%);
+  color: #4c017b !important;
+  text-decoration: none;
+  font-family: var(--svc-text);
+  font-size: clamp(15px, 1.32vw, 18px);
+  font-weight: 500;
+  line-height: 1;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.svc-detail-page .svc-ghost-btn:hover {
+  color: #4c017b !important;
+}
+
+.svc-detail-page .svc-ghost-btn img {
+  display: block;
+  width: 36px;
+  height: 34px;
+  flex: none;
+}
+
+/* --------------------------------------------------------------------------
+   1. HERO — text 616px | collage 573px, eyebrow y221 -> CTA y585
+   -------------------------------------------------------------------------- */
+.svc-hero-section {
+  position: relative;
+  padding-top: calc(var(--nav-sticky-offset, 69px) + var(--section-pad-y));
+  padding-bottom: var(--section-pad-y);
+}
+
+/* Figma is 616 / 573. The text column gets a little extra because the
+   collage bleeds past the content column in the frame anyway, and Baskervville
+   sets wider than the Baskerville the design was drawn in. */
+.svc-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 640fr) minmax(0, 549fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.svc-hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.svc-hero-title {
+  font-family: var(--svc-display);
+  font-size: var(--svc-h);
+  line-height: 1.12;
+  font-weight: 600;
+  color: var(--svc-deep);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.svc-hero-desc-stack {
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  max-width: 36em;
+}
+
+.svc-hero-desc-line {
+  font-size: var(--svc-body);
+  line-height: 1.65;
+  color: var(--svc-ink);
+  margin: 0;
+}
+
+.svc-hero-cta-wrap {
+  margin-top: 30px;
+}
+
+/* Scattered collage: 8 tiles absolutely placed inside a 573 x 546 box.
+   Percentages are measured off the Figma node rectangles. */
+.svc-hero-right {
+  position: relative;
+  width: 100%;
+}
+
+.svc-collage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 573 / 546;
+}
+
+.svc-collage__tile {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 16px;
+  background: #ece7f6;
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 10px 24px rgba(15, 5, 47, 0.12);
+  transition: left 0.8s ease, top 0.8s ease, width 0.8s ease, height 0.8s ease, transform 0.8s ease;
+}
+
+.svc-collage__tile img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* object-position centres each tile on the subject Figma had framed */
+.svc-collage__tile--1 { left: 1.75%;  top: 8.79%;  width: 28.59%; height: 31.01%; transform: rotate(0.1deg) scale(0.9); }
+.svc-collage__tile--2 { left: 37.46%; top: 0;      width: 29.20%; height: 31.19%; transform: rotate(0.34deg) scale(0.9); }
+.svc-collage__tile--3 { left: 21.26%; top: 26.64%; width: 26.70%; height: 27.58%; transform: rotate(0.43deg) scale(0.9); }
+.svc-collage__tile--4 { left: 72.43%; top: 28.57%; width: 27.63%; height: 30.38%; transform: rotate(-0.36deg) scale(0.9); }
+.svc-collage__tile--5 { left: 40.94%; top: 36.99%; width: 34.43%; height: 30.19%; transform: rotate(0.12deg) scale(0.9); }
+.svc-collage__tile--6 { left: 0;      top: 48.53%; width: 27.25%; height: 32.95%; transform: scale(0.9); }
+.svc-collage__tile--7 { left: 23.73%; top: 67.22%; width: 27.75%; height: 32.78%; transform: scale(0.9); }
+.svc-collage__tile--8 { left: 61.73%; top: 65.02%; width: 28.27%; height: 30.29%; transform: rotate(0.36deg) scale(0.9); }
+
+.svc-collage__tile--3 img { object-position: 56% 52%; }
+.svc-collage__tile--5 img { object-position: 61% 45%; }
+.svc-collage__tile--6 img { object-position: 49% 58%; }
+.svc-collage__tile--7 img { object-position: 50% 58%; }
+.svc-collage__tile--8 img { object-position: 72% 64%; }
+
+/* --------------------------------------------------------------------------
+   2. MANIFESTO — left 469px, right 420px right-aligned
+   -------------------------------------------------------------------------- */
+.svc-philosophy-section {
+  position: relative;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+/* Even split rather than Figma's 469/420: the wider column would otherwise
+   open a dead gutter down the middle between the title and the paragraph. */
+.svc-philosophy-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.85fr);
+  gap: 40px;
+  align-items: end;
+  padding-block: var(--section-pad-y);
+}
+
+.svc-philosophy-title {
+  font-family: var(--svc-display);
+  font-size: clamp(26px, 3vw, 42px);
+  line-height: 1.12;
+  font-weight: 600;
+  color: var(--svc-deep);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.svc-philosophy-title-line,
+.svc-philosophy-title .svc-accent {
+  display: block;
+  white-space: nowrap;
+}
+
+.svc-philosophy-top-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  text-align: left;
+  justify-self: end;
+  width: min(100%, 22.5em);
+}
+
+.svc-philosophy-lead {
+  font-size: var(--svc-body);
+  line-height: 1.55;
+  color: var(--svc-ink);
+  margin: 0;
+}
+
+/* WHERE IT WORKS band — 364px tall, 4 glass cards 199 x 191, 20px gap */
+.svc-philosophy-banner {
+  position: relative;
+  width: 100%;
+  min-height: 364px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 43px var(--svc-gutter) 77px;
+  overflow: hidden;
+}
+
+.svc-philosophy-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    79.627deg,
+    rgba(0, 0, 30, 0.7) 0.445%,
+    rgba(20, 3, 82, 0.7) 74.417%,
+    rgba(28, 5, 103, 0.21) 101.01%
+  );
+  pointer-events: none;
+}
+
+.svc-philosophy-banner-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--svc-container);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 23px;
+}
+
+.svc-pillars-label {
+  font-family: var(--svc-text);
+  font-size: var(--svc-eyebrow-size);
+  font-weight: 500;
+  line-height: 1.67;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+}
+
+.svc-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 199px));
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.svc-pillar-card {
+  min-height: 191px;
+  padding: 22px 20px 24px;
+  border: 1px solid rgba(198, 113, 249, 0.34);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.svc-pillar-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(198, 113, 249, 0.6);
+}
+
+.svc-pillar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.svc-pillar-icon svg,
+.svc-pillar-icon img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+/* Label Lato ExtraBold 12px, description Lato SemiBold 12px / 16px */
+.svc-pillar-title {
+  font-family: var(--svc-text);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.75;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+}
+
+.svc-pillar-desc {
+  font-family: var(--svc-text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.34;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. OUR APPROACH — 797 x 228 gradient card over a #39107b card at +21/+27
+   -------------------------------------------------------------------------- */
+.svc-approach-section {
+  position: relative;
+  padding-block: var(--section-pad-y);
+  text-align: center;
+}
+
+.svc-approach-header {
+  margin-bottom: 42px;
+}
+
+.svc-approach-title {
+  font-family: var(--svc-display);
+  font-size: var(--svc-h);
+  line-height: 1.12;
+  font-weight: 600;
+  color: var(--svc-deep);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.svc-approach-heading {
+  font-size: var(--svc-body);
+  line-height: 1.65;
+  color: var(--svc-deep);
+  margin: 12px 0 0;
+}
+
+.svc-approach-deck-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin-inline: auto;
+  aspect-ratio: 818 / 255;
+  user-select: none;
+}
+
+/* #39107b card, offset 21px right / 27px down */
+.svc-approach-card-shadow {
+  position: absolute;
+  left: 21px;
+  top: 27px;
+  width: calc(100% - 21px);
+  height: calc(100% - 27px);
+  background: #39107b;
+  border: 0.5px solid rgba(180, 108, 252, 0.7);
+  border-radius: 28px;
+  box-shadow: 0 5px 17px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.svc-approach-card-active {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% - 21px);
+  height: calc(100% - 27px);
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 42.8%) minmax(0, 1fr);
+  background: linear-gradient(
+    90deg,
+    #f8f8f8 0%,
+    #f0e9fc 94.712%,
+    rgba(234, 221, 255, 0.7) 100%
+  );
+  border: 0.5px solid rgba(180, 108, 252, 0.7);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 5px 17px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: box-shadow 0.25s ease;
+}
+
+.svc-approach-card-active:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.svc-approach-media {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: #e6dcfe;
+}
+
+/* Figma top-aligns this crop, which also keeps the dark foreground at the
+   bottom of the stock shot out of frame */
+.svc-approach-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.svc-approach-text-col {
+  position: relative;
+  padding: 41px 24px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  overflow: hidden;
+}
+
+/* Lato ExtraBold 18px uppercase, then a blank line, then the body */
+.svc-approach-card-title {
+  font-family: var(--svc-text);
+  font-size: clamp(15px, 1.32vw, 18px);
+  font-weight: 800;
+  line-height: 1.17;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: var(--svc-ink);
+  margin: 0 0 21px;
+}
+
+.svc-approach-card-desc {
+  font-size: var(--svc-body);
+  line-height: 1.45;
+  color: var(--svc-ink);
+  margin: 0;
+}
+
+/* 36 x 34 arrow rotated 42.49deg, centred ~24px in / 39px up from the corner.
+   The rotation turns the asset's up-right arrow into a "next" arrow. */
+.svc-approach-arrow-btn {
+  position: absolute;
+  right: 8px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.svc-approach-arrow-btn span {
+  display: block;
+  transform: rotate(42.49deg);
+}
+
+.svc-approach-arrow-btn img {
+  display: block;
+  width: 36px;
+  height: 34px;
+}
+
+.svc-approach-arrow-btn:hover {
+  transform: translateX(3px);
+}
+
+.svc-approach-arrow-btn:focus-visible {
+  outline: 2px solid var(--svc-accent);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   4. PROCESS — 1184px rule, 43px nodes, step 1 filled
+   -------------------------------------------------------------------------- */
+.svc-process-section {
+  padding-block: var(--section-pad-y);
+}
+
+.svc-process-header {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 34px;
+}
+
+.svc-process-title {
+  font-family: var(--svc-display);
+  font-size: var(--svc-h);
+  line-height: 1.12;
+  font-weight: 600;
+  color: var(--svc-deep);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.svc-process-desc {
+  font-size: var(--svc-body);
+  line-height: 1.65;
+  color: var(--svc-ink);
+  margin: 0;
+  text-align: right;
+}
+
+/* Column count comes from steps.length. All service pages use 6 steps. */
+.svc-stepper-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--svc-steps, 6), minmax(0, 1fr));
+  column-gap: 12px;
+}
+
+.svc-stepper-line {
+  position: absolute;
+  top: 21px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--svc-accent);
+  opacity: 0.25;
+  z-index: 1;
+}
+
+.svc-step-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.svc-step-badge {
+  width: 43px;
+  height: 43px;
+  flex: none;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid var(--svc-deep);
+  color: var(--svc-deep);
+  font-family: var(--svc-text);
+  font-size: clamp(15px, 1.32vw, 18px);
+  font-weight: 400;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease, background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+
+.svc-step-node.is-active .svc-step-badge {
+  background: var(--svc-deep);
+  border-color: var(--svc-deep);
+  color: #ffffff;
+}
+
+.svc-step-node.is-active .svc-step-title {
+  color: var(--svc-accent);
+}
+
+.svc-step-title {
+  font-family: var(--svc-text);
+  font-size: var(--svc-body);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--svc-ink);
+  margin: 0;
+  transition: color 0.4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   5. WORK — 530px cards, 95px gap, caption bar overlapping the banner by 28px
+   -------------------------------------------------------------------------- */
+.svc-work-section {
+  padding-block: var(--section-pad-y);
+}
+
+.svc-work-title {
+  font-family: var(--svc-display);
+  font-size: var(--svc-h);
+  line-height: 1.12;
+  font-weight: 600;
+  color: var(--svc-deep);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--section-header-gap, 40px);
+  text-align: center;
+}
+
+.svc-work-section .svc-projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 95px;
+  margin: 0 auto 43px;
+}
+
+.svc-work-section .svc-project {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc-work-section .svc-project:hover {
+  transform: translateY(-6px);
+}
+
+.svc-work-section .svc-project__media {
+  position: relative;
+  width: 100%;
+  height: 265px;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 6px 0 4px rgba(0, 0, 0, 0.25);
+  background: #1c0567;
+}
+
+.svc-work-section .svc-project__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.svc-work-section .svc-project:hover .svc-project__media img {
+  transform: scale(1.04);
+}
+
+/* Gradient bar rides 28px up over the image, as in the frame */
+.svc-work-section .svc-project__bar {
+  position: relative;
+  z-index: 1;
+  margin-top: -28px;
+  min-height: 128px;
+  padding: 22px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 2px solid rgba(248, 248, 248, 0.34);
+  border-radius: 0 0 20px 20px;
+  background: linear-gradient(90deg, #8200cf 0%, #44006d 100%);
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.62);
+}
+
+.svc-work-section .svc-project__title {
+  font-family: var(--svc-text);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: 0;
+  color: #ffffff;
+  margin: 0;
+}
+
+.svc-work-section .svc-project__caption {
+  font-family: var(--svc-text);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.svc-work-more-cta {
+  display: flex;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   6. FAQ — same section-8 accordion as Home / Services index
+   -------------------------------------------------------------------------- */
+.svc-detail-page .section-8 {
+  padding-block: var(--section-pad-y);
+}
+
+.svc-detail-page .section-8 .heading-20,
+.svc-detail-page .svc-faq-title {
+  font-family: var(--svc-display);
+  font-size: var(--svc-h);
+  line-height: 1.12;
+  font-weight: 600;
+  color: var(--svc-deep);
+  letter-spacing: -0.02em;
+  margin: 0 0 40px;
+  text-align: center;
+}
+
+.svc-detail-page .faq-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.svc-detail-page .accordian-item {
+  background: #fff;
+  border: 1px solid rgba(57, 16, 123, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.svc-detail-page .accordian-item:hover {
+  border-color: rgba(57, 16, 123, 0.25);
+}
+
+.svc-detail-page .accordion-toggle {
+  width: 100%;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.svc-detail-page .accordion-toggle:focus-visible {
+  outline: 2px solid #6e1eee;
+  outline-offset: 2px;
+}
+
+.svc-detail-page .text-block-30 {
+  font-family: var(--svc-text);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #1b1d1e;
+  margin: 0;
+  padding-right: 16px;
+  flex: 1;
+}
+
+.svc-detail-page .w-icon-dropdown-toggle {
+  position: relative;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  color: #1b1d1e;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.svc-detail-page .w-icon-dropdown-toggle::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.svc-detail-page .accordian-item.is-open .w-icon-dropdown-toggle {
+  transform: rotate(180deg);
+}
+
+.svc-detail-page .dropdown-list {
+  padding: 0 24px 20px;
+}
+
+.svc-detail-page .dropdown-list .text-block-34 {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1b1d1e99;
+}
+
+.svc-detail-page .faq-list[data-faq-collapsed="true"] .faq-item--extra {
+  display: none;
+}
+
+.svc-detail-page .faq-more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  gap: 10px;
+  margin: 8px auto 0;
+  padding: 14px 22px;
+  border: 1px solid rgba(57, 16, 123, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1b1d1e;
+  font-family: var(--svc-text);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.svc-detail-page .faq-more-btn:hover {
+  border-color: rgba(110, 30, 238, 0.35);
+  color: #c76bfc;
+}
+
+.svc-detail-page .faq-more-btn__icon {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  margin-top: -4px;
+}
+
+.svc-detail-page .faq-list:not([data-faq-collapsed="true"]) .faq-more-btn__icon {
+  transform: rotate(-135deg);
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   7. BOTTOM CTA — full-bleed band 312px tall, artwork at 30% opacity
+   -------------------------------------------------------------------------- */
+.svc-bottom-cta-section {
+  position: relative;
+  width: 100%;
+  min-height: 312px;
+  padding: 88px var(--svc-gutter);
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+}
+
+/* The artwork itself is the 30% layer, so the heading stays legible */
+.svc-bottom-cta-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.svc-bottom-cta-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--svc-container);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* The band caps out at 312px, so this heading runs a tighter 45px leading */
+.svc-bottom-cta-title {
+  font-family: var(--svc-display);
+  font-size: var(--svc-h);
+  line-height: 1.12;
+  font-weight: 600;
+  color: var(--svc-deep);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.svc-bottom-cta-btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   8. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 1199px) {
+  .svc-approach-deck-container {
+    aspect-ratio: auto;
+    max-width: 100%;
+    padding-right: 21px;
+    padding-bottom: 27px;
+  }
+
+  .svc-approach-card-shadow,
+  .svc-approach-card-active {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: none;
+  }
+
+  .svc-approach-card-shadow {
+    position: absolute;
+    left: 21px;
+    top: 27px;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+  }
+
+  .svc-approach-card-active {
+    min-height: 228px;
+  }
+
+  .svc-work-section .svc-projects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .svc-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .svc-hero-left {
+    align-items: flex-start;
+  }
+
+  .svc-collage {
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .svc-philosophy-top {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-block: var(--section-pad-y-sm);
+  }
+
+  .svc-philosophy-title-line,
+  .svc-philosophy-title .svc-accent {
+    white-space: normal;
+  }
+
+  .svc-philosophy-top-right {
+    text-align: left;
+    justify-self: start;
+    width: 100%;
+    max-width: none;
+  }
+
+  .svc-pillars-grid {
+    grid-template-columns: repeat(2, minmax(0, 199px));
+  }
+
+  /* Two-up cards are much wider than the 199px original, so the fixed height
+     and bottom-aligned copy would leave a dead band above each label. */
+  .svc-pillar-card {
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 22px 24px;
+  }
+
+  .svc-process-header {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .svc-process-desc {
+    text-align: left;
+    justify-self: start;
+  }
+
+  /* Stepper turns into a vertical rail — the horizontal rule cannot hold
+     6-8 labels below ~900px without colliding. */
+  .svc-stepper-container {
+    grid-template-columns: 1fr;
+    row-gap: 22px;
+  }
+
+  .svc-stepper-line {
+    top: 0;
+    bottom: 0;
+    left: 21px;
+    right: auto;
+    width: 3px;
+    height: auto;
+  }
+
+  .svc-step-node {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 18px;
+  }
+
+  .svc-work-section .svc-projects {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .svc-approach-section,
+  .svc-process-section,
+  .svc-work-section,
+  .svc-detail-page .section-8 {
+    padding-block: var(--section-pad-y-sm);
+  }
+}
+
+@media (max-width: 767px) {
+  .svc-detail-page {
+    --svc-gutter: 24px;
+  }
+
+  .svc-hero-section {
+    padding-top: calc(var(--nav-sticky-offset, 69px) + var(--section-pad-y-xs));
+    padding-bottom: var(--section-pad-y-xs);
+  }
+
+  .svc-philosophy-banner {
+    padding: 36px var(--svc-gutter) 40px;
+  }
+
+  .svc-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .svc-pillar-card {
+    min-height: 0;
+    padding: 20px 22px;
+  }
+
+  .svc-approach-deck-container {
+    padding-right: 12px;
+    padding-bottom: 16px;
+  }
+
+  .svc-approach-card-shadow {
+    left: 12px;
+    top: 16px;
+  }
+
+  .svc-approach-card-active {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .svc-approach-media {
+    aspect-ratio: 341 / 200;
+    height: auto;
+  }
+
+  .svc-approach-text-col {
+    padding: 24px 22px 60px;
+  }
+
+  .svc-approach-arrow-btn {
+    right: 12px;
+    bottom: 10px;
+  }
+
+  .svc-bottom-cta-section {
+    padding: 64px var(--svc-gutter);
+    min-height: 0;
+  }
+
+  .svc-detail-page .accordion-toggle {
+    padding: 14px 18px;
+  }
+
+  .svc-detail-page .dropdown-list {
+    padding: 0 18px 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-detail-page * {
+    transition-duration: 0.01ms !important;
+  }
+
+  .svc-detail-page .svc-pill-btn:hover,
+  .svc-detail-page .svc-ghost-btn:hover,
+  .svc-work-section .svc-project:hover,
+  .svc-pillar-card:hover,
+  .svc-approach-arrow-btn:hover {
+    transform: none;
+  }
+}

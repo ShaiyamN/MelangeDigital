@@ -810,14 +810,18 @@ positionCards();
    
       })();
 
-/* --- Report promo carousel (two hosted reports; slide 2 is placeholder) --- */
+/* --- Report promo carousel (arrows only when more than one live report) --- */
 (function () {
   var root = document.querySelector("[data-report-carousel]");
   if (!root) return;
-  var slides = root.querySelectorAll("[data-report-slide]");
+  var slides = root.querySelectorAll("[data-report-slide]:not([hidden])");
   var prev = root.querySelector("[data-report-prev]");
   var next = root.querySelector("[data-report-next]");
-  if (!slides.length || !prev || !next) return;
+  if (slides.length < 2) {
+    root.classList.add("report-promo-carousel--single");
+    return;
+  }
+  if (!prev || !next) return;
   var i = 0;
   var startX = 0;
 

@@ -5,6 +5,7 @@ import { db } from "../../firebase";
 import { Navbar, Footer, BreadCrumbs, Insights } from "../layout";
 
 import { Helmet } from "react-helmet-async";
+import { activeBlogSchema } from "../../utils/blogSchema";
 import { linkedin, instagram } from "../../assets/images";
 import ReactPlayer from "react-player";
 
@@ -190,6 +191,7 @@ const BlogDetail = () => {
         <meta property="og:title" content={blog.seoTitle || blog.title} data-rh="true" />
         <meta property="og:description" content={blog.metaDescription || blog.description || ""} data-rh="true" />
         <link rel="canonical" href={`https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`} data-rh="true" />
+        <script type="application/ld+json">{JSON.stringify(activeBlogSchema(blog))}</script>
       </Helmet>
 
       <Navbar />

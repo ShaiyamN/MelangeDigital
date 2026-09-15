@@ -8303,6 +8303,10 @@ a.leadform-contact-item:hover {
   grid-row: 1;
 }
 
+.report-promo-carousel--single .work-carousel-nav {
+  display: none !important;
+}
+
 .report-promo-carousel .work-carousel-nav--next {
   grid-column: 3;
   grid-row: 1;

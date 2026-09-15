@@ -8,6 +8,7 @@ import {
 
 import { useEffect, useLayoutEffect, lazy, Suspense } from "react";
 import useLenis from "./hooks/useLenis";
+import { deorphan } from "./utils/deorphan";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
@@ -25,6 +26,7 @@ import Career from "./components/pages/Career";
 // Secondary content & dynamic routes: load on demand
 const Blogs = lazy(() => import("./components/pages/Blogs"));
 const BlogDetail = lazy(() => import("./components/pages/BlogDetail"));
+const ServiceDetail = lazy(() => import("./components/pages/Services/ServiceDetail"));
 const CaseStudyDetail = lazy(() => import("./components/pages/Casestudies/CaseStudyDetail"));
 const Location = lazy(() => import("./components/pages/Location"));
 
@@ -41,6 +43,33 @@ const ManageCaseStudies = lazy(() => import("./components/admin/ManageCaseStudie
 const ManageBlogs = lazy(() => import("./components/admin/ManageBlogs"));
 const ManageJobs = lazy(() => import("./components/admin/ManageJobs"));
 const ManageTeam = lazy(() => import("./components/admin/ManageTeam"));
+
+function DeorphanCopy() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    let raf;
+    let applying = false;
+    const run = () => {
+      if (applying) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        applying = true;
+        deorphan(document.body);
+        applying = false;
+      });
+    };
+    run();
+    const mo = new MutationObserver(run);
+    mo.observe(document.body, { subtree: true, childList: true, characterData: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      mo.disconnect();
+    };
+  }, [pathname]);
+
+  return null;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -106,11 +135,13 @@ function App() {
   return (
     <>
       <ScrollToTop />
+      <DeorphanCopy />
       <Suspense fallback={<div className="min-h-screen bg-transparent" aria-hidden="true" />}>
         <Routes>
           {/* Canonical core pages */}
           <Route exact path="/" Component={Home} />
           <Route exact path="/services" Component={Services} />
+          <Route exact path="/services/:slug" Component={ServiceDetail} />
           {/* Legacy sub-service redirects */}
           <Route path="/services/*" element={<Navigate to="/services" replace />} />
 

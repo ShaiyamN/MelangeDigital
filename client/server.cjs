@@ -24,7 +24,7 @@ if (!fs.existsSync(INDEX)) {
 const INDEX_HTML = fs.readFileSync(INDEX, "utf8");
 
 const { applyHead, resolveMeta } = require("./scripts/seo-head.cjs");
-const { getSitemapXml, getPageIndex, buildXml } = require("./scripts/live-sitemap.cjs");
+const { getSitemapXml, getPageIndex, buildXml, clearSitemapCache } = require("./scripts/live-sitemap.cjs");
 const { reportDownloadHtml } = require("./scripts/report-download-html.cjs");
 
 const app = express();
@@ -32,13 +32,22 @@ const app = express();
 const stagingUser = process.env.STAGING_USER;
 const stagingPass = process.env.STAGING_PASS;
 if (stagingUser && stagingPass) {
-  app.use(
-    basicAuth({
-      users: { [stagingUser]: stagingPass },
-      challenge: true,
-      realm: "Melange Digital Staging",
-    })
-  );
+  const authMiddleware = basicAuth({
+    users: { [stagingUser]: stagingPass },
+    challenge: true,
+    realm: "Melange Digital Staging",
+  });
+  app.use((req, res, next) => {
+    // Exempt SEO and indexing files from basic auth on staging
+    if (
+      req.path === "/sitemap.xml" ||
+      req.path === "/robots.txt" ||
+      req.path === "/api/sitemap/clear-cache"
+    ) {
+      return next();
+    }
+    return authMiddleware(req, res, next);
+  });
 }
 
 const PERMA_REDIRECTS = {
@@ -132,13 +141,22 @@ app.get(
   }
 );
 
+// Clear sitemap cache API for Admin triggers
+app.post("/api/sitemap/clear-cache", (_req, res) => {
+  clearSitemapCache();
+  res.json({ ok: true, cleared: true });
+});
+
 // Live sitemap from Firestore (blogs + casestudies). Before static so dist/sitemap.xml is not used.
-app.get("/sitemap.xml", async (_req, res) => {
+app.get("/sitemap.xml", async (req, res) => {
   try {
+    if (req.query.refresh === "1") {
+      clearSitemapCache();
+    }
     const xml = await getSitemapXml();
     res
       .type("application/xml")
-      .set("Cache-Control", "public, max-age=300")
+      .set("Cache-Control", "public, max-age=60")
       .send(xml);
   } catch (err) {
     console.error("live sitemap failed, static route list:", err.message);

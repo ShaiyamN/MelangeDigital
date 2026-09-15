@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, deleteField } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, Plus, Trash2, Edit2, X, Sun, Moon, Image as ImageIcon, Calendar, User, AlignLeft, Tag, BookOpen, Check, Table, PlusCircle, LayoutTemplate, Type, FileText, Target, Video, ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, Edit2, X, Sun, Moon, Image as ImageIcon, Calendar, User, AlignLeft, Tag, BookOpen, Check, Table, PlusCircle, LayoutTemplate, Type, FileText, Target, Video, ArrowUp, ArrowDown, Code2 } from "lucide-react";
 import CloudinaryUpload from "./CloudinaryUpload";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import {
+  generateBlogSchema,
+  validateBlogSchema,
+  prettySchema,
+  schemasEqual,
+} from "../../utils/blogSchema";
 
 const ManageBlogs = () => {
   const [user, setUser] = useState(null);
@@ -43,9 +49,29 @@ const ManageBlogs = () => {
   const [tableHeaders, setTableHeaders] = useState(["Column 1", "Column 2"]);
   const [tableRows, setTableRows] = useState([["", ""]]);
   const [contentBlocks, setContentBlocks] = useState([]);
-
+  const [schemaMode, setSchemaMode] = useState("auto");
+  const [schemaText, setSchemaText] = useState("");
+  const [schemaError, setSchemaError] = useState("");
+  const [schemaOk, setSchemaOk] = useState("");
+  const [showAutoPreview, setShowAutoPreview] = useState(false);
 
   const navigate = useNavigate();
+
+  const formBlog = (updatedAt) => ({
+    title,
+    seoTitle,
+    slug: slugify(slug) || slugify(title),
+    date,
+    author,
+    description,
+    metaDescription,
+    image,
+    category: categories.length > 0 ? categories[0] : category,
+    categories,
+    focusKeywords,
+    contentBlocks,
+    updatedAt,
+  });
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -66,6 +92,26 @@ const ManageBlogs = () => {
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
+
+  useEffect(() => {
+    if (!isModalOpen || schemaMode !== "auto") return;
+    setSchemaText(prettySchema(generateBlogSchema(formBlog())));
+  }, [
+    isModalOpen,
+    schemaMode,
+    title,
+    seoTitle,
+    slug,
+    date,
+    author,
+    description,
+    metaDescription,
+    image,
+    category,
+    categories,
+    focusKeywords,
+    contentBlocks,
+  ]);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
@@ -130,6 +176,16 @@ const ManageBlogs = () => {
     setTableHeaders(["Column 1", "Column 2"]);
     setTableRows([["", ""]]);
     setContentBlocks([]);
+    setSchemaMode("auto");
+    setSchemaError("");
+    setSchemaOk("");
+    setShowAutoPreview(false);
+    setSchemaText(prettySchema(generateBlogSchema({
+      date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+      author: "Mélange Digital",
+      categories: ["content-marketing"],
+      category: "content-marketing",
+    })));
 
     setIsModalOpen(true);
   };
@@ -159,12 +215,27 @@ const ManageBlogs = () => {
     setTableHeaders(blog.tableHeaders || ["Column 1", "Column 2"]);
     setTableRows(blog.tableRows ? blog.tableRows.map(row => Array.isArray(row) ? row : row.cells || []) : [["", ""]]);
     setContentBlocks(blog.contentBlocks || []);
+    const isCustom = blog.schemaMode === "custom" && blog.customSchema;
+    setSchemaMode(isCustom ? "custom" : "auto");
+    setSchemaText(prettySchema(isCustom ? blog.customSchema : (blog.generatedSchema || generateBlogSchema(blog))));
+    setSchemaError("");
+    setSchemaOk("");
+    setShowAutoPreview(false);
 
     setIsModalOpen(true);
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
+    const updatedAt = new Date().toISOString();
+    const generatedSchema = generateBlogSchema(formBlog(updatedAt));
+    const check = validateBlogSchema(schemaText);
+    if (!check.ok) {
+      setSchemaError(check.error);
+      setSchemaOk("");
+      return;
+    }
+    const useCustom = schemaMode === "custom" && !schemasEqual(check.value, generatedSchema);
     const blogData = {
       title,
       breadcrumbTitle,
@@ -186,8 +257,16 @@ const ManageBlogs = () => {
       hasTable,
       tableHeaders,
       tableRows: tableRows.map(row => ({ cells: row })),
-      contentBlocks
+      contentBlocks,
+      updatedAt,
+      generatedSchema,
+      schemaMode: useCustom ? "custom" : "auto",
     };
+    if (useCustom) {
+      blogData.customSchema = check.value;
+    } else if (editingBlog) {
+      blogData.customSchema = deleteField();
+    }
 
     try {
       if (editingBlog) {
@@ -198,6 +277,7 @@ const ManageBlogs = () => {
       }
       setIsModalOpen(false);
       fetchBlogs();
+      fetch("/api/sitemap/clear-cache", { method: "POST" }).catch(() => {});
     } catch (err) {
       console.error("Error saving blog:", err);
     }
@@ -208,6 +288,7 @@ const ManageBlogs = () => {
     try {
       await deleteDoc(doc(db, "blogs", blogId));
       fetchBlogs();
+      fetch("/api/sitemap/clear-cache", { method: "POST" }).catch(() => {});
     } catch (err) {
       console.error("Error deleting blog:", err);
     }
@@ -717,6 +798,85 @@ const ManageBlogs = () => {
                         </div>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="bg-slate-50 dark:bg-black/20 p-6 rounded-2xl border border-slate-200/80 dark:border-white/5 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <h3 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                        <Code2 className="w-5 h-5 text-indigo-500" /> Structured Data
+                      </h3>
+                      <span className={`text-xs font-bold px-3 py-1.5 rounded-lg ${
+                        schemaMode === "custom"
+                          ? "bg-amber-100 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300"
+                          : "bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300"
+                      }`}>
+                        Status: {schemaMode === "custom" ? "Manually Edited" : "Automatically Generated"}
+                      </span>
+                    </div>
+                    <textarea
+                      value={schemaText}
+                      onChange={(e) => {
+                        setSchemaText(e.target.value);
+                        setSchemaMode("custom");
+                        setSchemaError("");
+                        setSchemaOk("");
+                      }}
+                      rows={14}
+                      spellCheck={false}
+                      className="w-full px-4 py-3 bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white resize-y font-mono text-xs leading-relaxed"
+                    />
+                    {schemaError && <p className="text-sm font-medium text-red-600 dark:text-red-400">{schemaError}</p>}
+                    {schemaOk && <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400">{schemaOk}</p>}
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const check = validateBlogSchema(schemaText);
+                          if (check.ok) {
+                            setSchemaError("");
+                            setSchemaOk("Schema is valid.");
+                          } else {
+                            setSchemaOk("");
+                            setSchemaError(check.error);
+                          }
+                        }}
+                        className="text-xs font-bold px-3 py-1.5 bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 rounded-lg hover:bg-indigo-200 dark:hover:bg-indigo-500/30"
+                      >
+                        Validate
+                      </button>
+                      {schemaMode === "custom" && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => setShowAutoPreview((v) => !v)}
+                            className="text-xs font-bold px-3 py-1.5 bg-slate-200 dark:bg-white/10 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-300 dark:hover:bg-white/20"
+                          >
+                            {showAutoPreview ? "Hide Automatic Version" : "View Automatic Version"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSchemaMode("auto");
+                              setShowAutoPreview(false);
+                              setSchemaError("");
+                              setSchemaOk("");
+                              setSchemaText(prettySchema(generateBlogSchema(formBlog())));
+                            }}
+                            className="text-xs font-bold px-3 py-1.5 bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-500/30"
+                          >
+                            Reset to Automatically Generated
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    {showAutoPreview && schemaMode === "custom" && (
+                      <div>
+                        <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mb-2">Current automatic schema (not saved)</p>
+                        <pre className="w-full px-4 py-3 bg-white dark:bg-black/40 border border-slate-200 dark:border-white/10 rounded-xl text-slate-700 dark:text-slate-300 font-mono text-xs leading-relaxed overflow-auto max-h-64 whitespace-pre-wrap">
+                          {prettySchema(generateBlogSchema(formBlog()))}
+                        </pre>
+                      </div>
+                    )}
                   </div>
 
                   {/* Main Content Area */}
