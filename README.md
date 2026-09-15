@@ -60,3 +60,5 @@ Node.js Web App. GitHub Actions Vite-builds `client/spa/`; Hostinger on **`stagi
 
 Wait for the "Hostinger prebuild" Action to finish after a source push, then Redeploy if Hostinger did not auto-deploy the spa commit.
 
+GitHub Actions bakes `VITE_FIREBASE_*` into `spa/` at build time (Hostinger env vars are too late). Add those keys as repository secrets from `client/.env`.
+
