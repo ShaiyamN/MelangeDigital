@@ -6,8 +6,8 @@ const index = path.join(root, "dist", "index.html");
 
 if (!fs.existsSync(index)) {
   console.error("FAIL: dist/index.html missing");
-  console.error("  CI builds dist on push to staging and publishes the hostinger-dist branch.");
-  console.error("  Wait for GitHub Actions to finish, then redeploy from hostinger-dist.");
+  console.error("  Hostinger Output directory must be empty. If it is `dist`, Hostinger deletes the prebuilt files before npm run build.");
+  console.error("  Deploy branch hostinger-dist with build command: node scripts/verify-dist.cjs");
   process.exit(1);
 }
 

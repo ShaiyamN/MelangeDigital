@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/verify-dist.cjs",
+    "build": "node scripts/run-vite-build.cjs && node scripts/verify-dist.cjs",
     "build:full": "node scripts/hostinger-preflight.cjs && node scripts/assert-real-assets.cjs && node scripts/check-imports.cjs && node scripts/check-services-data.mjs && node scripts/generate-sitemap.mjs && node scripts/write-report-download.cjs && node scripts/run-vite-build.cjs && node scripts/write-spa-shells.cjs",
     "build:prerender": "npm run build:full && npm run prerender",
     "verify:hostinger": "node scripts/verify-hostinger-build.cjs",

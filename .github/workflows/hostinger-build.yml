@@ -29,9 +29,10 @@ jobs:
           cache-dependency-path: client/package-lock.json
 
       - name: Install and build
-        run: npm ci --no-audit --no-fund --legacy-peer-deps && npm run build
+        run: npm ci --no-audit --no-fund --legacy-peer-deps && npm run build:full
         env:
           NODE_ENV: production
+          FORCE_VITE_BUILD: "1"
 
       - name: Publish hostinger-dist branch
         working-directory: .
