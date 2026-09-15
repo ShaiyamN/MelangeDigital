@@ -19,6 +19,7 @@ node_modules
 # Vite writes dist/; Hostinger serves git-tracked spa/
 dist
 dist-ssr
+spa/videos/
 
 # ----------------------------
 # Environment files
