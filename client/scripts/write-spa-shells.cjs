@@ -1,0 +1,53 @@
+const fs = require("fs");
+const path = require("path");
+
+// Copy dist/index.html into SPA deep-link folders so Hostinger/static can
+// serve them without relying on Express sendFile fallback.
+const dist = path.join(__dirname, "..", "dist");
+const index = path.join(dist, "index.html");
+if (!fs.existsSync(index)) {
+  console.error("write-spa-shells: missing dist/index.html");
+  process.exit(1);
+}
+
+const routes = [
+  "admin",
+  "admin/login",
+  "admin/dashboard",
+  "admin/manage-case-studies",
+  "admin/manage-blogs",
+  "admin/manage-jobs",
+  "admin/manage-team",
+];
+
+for (const route of routes) {
+  const dir = path.join(dist, route);
+  fs.mkdirSync(dir, { recursive: true });
+  fs.copyFileSync(index, path.join(dir, "index.html"));
+}
+
+console.log(`write-spa-shells: ${routes.length} admin shells`);
+
+// Copy the standalone careers form HTML + assets into dist/ so server.cjs can serve them
+const careersFormDir = path.join(__dirname, "..", "public", "careers", "Apply_Now_and_Become_a_Part_of_Our_Team");
+const careersDistDir = path.join(dist, "careers", "form");
+if (fs.existsSync(careersFormDir)) {
+  fs.mkdirSync(careersDistDir, { recursive: true });
+  for (const entry of fs.readdirSync(careersFormDir, { recursive: true })) {
+    const src = path.join(careersFormDir, entry);
+    const dest = path.join(careersDistDir, entry);
+    if (fs.statSync(src).isDirectory()) {
+      fs.mkdirSync(dest, { recursive: true });
+    } else {
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.copyFileSync(src, dest);
+    }
+  }
+  console.log(`write-spa-shells: careers form copied to dist/careers/form/`);
+}
+
+const spa = path.join(__dirname, "..", "spa");
+fs.rmSync(spa, { recursive: true, force: true });
+fs.cpSync(dist, spa, { recursive: true });
+console.log("write-spa-shells: synced spa/ for Hostinger");
+console.log(`hostinger-build: ok (${index})`);
