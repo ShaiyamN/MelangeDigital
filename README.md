@@ -45,65 +45,18 @@ Images and videos are stored in Git (not LFS) so Hostinger can build without `gi
 
 ## Hostinger (frontend only)
 
-Use a **Node.js Web App** (not static hosting). Application root must be **`client`**.
-
-### Production Deployment via `main` Branch
-
-Deploy directly from the **`main`** branch. Production assets (`client/dist`) are tracked in the repository, avoiding Hostinger Vite OOM errors.
+Node.js Web App. Application root **`client`**. Hostinger must **never run Vite** — that is what made deploys fail 10 times and succeed once (OOM). GitHub Actions builds `client/spa/`; Hostinger only verifies it.
 
 | Setting | Value |
 | --- | --- |
-| Branch | **`main`** |
-| Application root | `client` *(or empty repo root — both supported)* |
-| Framework | **Express** or **Other** *(not Vite/React — those are static-only)* |
-| Node.js version | **20.x** *(change in hPanel if on default)* |
-| Build command | `node scripts/verify-dist.cjs` *(or `npm run build`)* |
-| Start command | `npm start` |
-| Entry file | **`server.js`** |
-| Output directory | *(leave empty)* |
-
-`server.js` starts Express, which serves `dist/` itself. If Output directory is set to `dist`, Hostinger deploys only that folder and then cannot find `server.js`.
-
-Hostinger runs `npm install` for runtime deps (`express`, `firebase`, etc.) and instantly verifies the pre-built `dist/`.
-
-**Success markers in build logs:**
-```
-verify-dist: ok (.../dist/index.html, ... bytes)
-hostinger-build: ok (dist/index.html)
-```
-
-### Fallback — build on Hostinger
-
-Only if the plan has **2GB+ RAM** (Business/Cloud). Use branch **`staging`**:
-
-| Setting | Value |
-| --- | --- |
-| Branch | `staging` |
+| Branch | `staging` (or `hostinger-dist`) |
 | Application root | `client` |
-| Framework | **Express** or **Other** |
+| Framework | **Express** |
 | Node.js version | **20.x** |
-| Build command | `npm run build` *(do not add `npm install` — Hostinger already installs)* |
+| Build command | *leave default* (`npm run build` = verify-only) |
 | Start command | `npm start` |
 | Entry file | **`server.js`** |
-| Output directory | *(leave empty)* |
+| Output directory | **leave empty** |
 
-Build tools (`vite`, `tailwindcss`, etc.) live in `dependencies` so production install includes them. Vite heap is capped at 768MB in [`scripts/run-vite-build.cjs`](client/scripts/run-vite-build.cjs).
+Vite runs on GitHub (`FORCE_VITE_BUILD=1 npm run build:full`), not on Hostinger.
 
-**Success markers in build logs:**
-```
-run-vite-build: node v20.x.x, NODE_OPTIONS=--max-old-space-size=768
-✓ built in XXs
-hostinger-build: ok (.../dist/index.html)
-```
-
-**Stale deploy warning:** If logs show `postinstall` → `maybe-hostinger-build`, `computing gzip size...`, or `react-router@8.3.0`, Hostinger is on an **old commit** — redeploy latest `staging` or switch to `hostinger-dist`.
-
-Before every deploy, run from `client/`:
-
-```bash
-npm run verify:hostinger
-```
-
-If PNGs/JPGs return **422** from `hcdn` while SVG/admin images work, redeploy after a clean build (broken LFS pointers). If still 422, disable Hostinger **CDN** for staging.
-
-API is **not** deployed by that static build — run `server/` on its own host.

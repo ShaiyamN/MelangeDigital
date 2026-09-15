@@ -46,4 +46,8 @@ if (fs.existsSync(careersFormDir)) {
   console.log(`write-spa-shells: careers form copied to dist/careers/form/`);
 }
 
+const spa = path.join(__dirname, "..", "spa");
+fs.rmSync(spa, { recursive: true, force: true });
+fs.cpSync(dist, spa, { recursive: true });
+console.log("write-spa-shells: synced spa/ for Hostinger");
 console.log(`hostinger-build: ok (${index})`);

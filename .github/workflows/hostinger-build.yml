@@ -7,6 +7,7 @@ on:
     branches: [staging, main]
     paths-ignore:
       - "client/dist/**"
+      - "**.md"
   workflow_dispatch:
 
 permissions:
@@ -31,7 +32,6 @@ jobs:
       - name: Install and build
         run: npm ci --no-audit --no-fund --legacy-peer-deps && npm run build:full
         env:
-          NODE_ENV: production
           FORCE_VITE_BUILD: "1"
 
       - name: Publish hostinger-dist branch
@@ -41,6 +41,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B hostinger-dist
           git add -A
-          git add -f client/dist
-          git commit -m "build: prebuilt dist for Hostinger (${GITHUB_SHA::7})" --allow-empty
+          git add -f client/spa
+          git commit -m "build: prebuilt spa for Hostinger (${GITHUB_SHA::7})" --allow-empty
           git push origin hostinger-dist --force

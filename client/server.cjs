@@ -5,7 +5,9 @@ const path = require("path");
 
 // Hostinger entry when app root is client/ — serves Vite dist on process.env.PORT.
 // Root package.json also starts this file via `node client/server.cjs`.
-const DIST = path.join(__dirname, "dist");
+const SPA = path.join(__dirname, "spa");
+const DIST_DIR = path.join(__dirname, "dist");
+const DIST = fs.existsSync(path.join(DIST_DIR, "index.html")) ? DIST_DIR : SPA;
 const PORT = Number(process.env.PORT) || 3000;
 const INDEX = path.join(DIST, "index.html");
 const REPORT_PDF = path.join(

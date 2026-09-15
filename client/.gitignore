@@ -16,10 +16,9 @@ node_modules
 
 # ----------------------------
 # Build output
-# dist is tracked for Hostinger deployment on main
-# dist
+# Vite writes dist/; Hostinger serves git-tracked spa/
+dist
 dist-ssr
-dist/videos/
 
 # ----------------------------
 # Environment files
