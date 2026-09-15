@@ -59,7 +59,6 @@ const REQUIRED_LISTS = [
   ["philosophy.pillars", ["title", "description"], 4],
   ["approach.cards", ["title", "description", "image"], 1],
   ["process.steps", ["number", "title"], 6],
-  ["caseStudies.cards", ["title", "caption", "bannerImage", "slug"], 1],
   ["faqs.items", ["question", "answer"], 1],
 ];
 
@@ -133,9 +132,19 @@ for (const [slug, service] of Object.entries(SERVICES_DATA)) {
   (get(service, "approach.cards") || []).forEach((c, i) =>
     checkAsset(slug, `approach.cards[${i}].image`, c?.image)
   );
-  (get(service, "caseStudies.cards") || []).forEach((c, i) =>
-    checkAsset(slug, `caseStudies.cards[${i}].bannerImage`, c?.bannerImage)
-  );
+}
+
+const { DEFAULT_SERVICE_CARDS } = await import("../src/constants/serviceCards.js");
+for (const [id, svc] of Object.entries(DEFAULT_SERVICE_CARDS)) {
+  for (const slot of ["slot1", "slot2"]) {
+    const card = svc[slot];
+    for (const key of ["title", "caption", "bannerImage", "slug"]) {
+      if (!nonEmpty(card?.[key])) {
+        errors.push(`serviceCards.${id}.${slot}.${key} is missing or empty`);
+      }
+    }
+    checkAsset(id, `${slot}.bannerImage`, card?.bannerImage);
+  }
 }
 
 // The hero collage is shared art, not per-service data, so check it once.

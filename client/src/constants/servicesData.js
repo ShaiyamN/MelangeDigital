@@ -80,7 +80,7 @@ export const SERVICES_DATA = {
           title: "CAST FOR CREDIBILITY",
           description:
             "We match creators to the subculture, not the follower count. Selected for audience trust, niche authority and storytelling ability, so the endorsement actually carries weight.",
-          image: "/destination-marketing-agency/images/services/approach-laptop.png",
+          image: "/destination-marketing-agency/images/services/approach/approach-inf-cast.png",
         },
         {
           id: "data-before-deals",
@@ -88,7 +88,7 @@ export const SERVICES_DATA = {
           title: "DATA BEFORE DEALS",
           description:
             "We check the data behind every creator before signing a contract: audience geography, engagement quality, authenticity, prior brand fit. Decisions backed by evidence, not instinct.",
-          image: "/destination-marketing-agency/images/work/her-hong-kong-hktb.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-inf-data.png",
         },
         {
           id: "one-team-not-four",
@@ -96,7 +96,7 @@ export const SERVICES_DATA = {
           title: "ONE TEAM, NOT FOUR",
           description:
             "Casting, negotiation, content and reporting run under one roof, not four vendors. That's what a travel influencer marketing agency means, One point of accountability from brief to final report.",
-          image: "/destination-marketing-agency/images/work/her-hong-kong-hktb.png",
+          image: "/destination-marketing-agency/images/services/approach/approach-inf-team.png",
         },
         {
           id: "community-not-reach",
@@ -104,7 +104,7 @@ export const SERVICES_DATA = {
           title: "COMMUNITY, NOT JUST REACH",
           description:
             "Our campaigns build creator communities that outlast the campaign. Participation and advocacy that keep working after the spend stops.",
-          image: "/destination-marketing-agency/images/services/banner-rws.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-inf-community.png",
         },
       ],
     },
@@ -125,24 +125,6 @@ export const SERVICES_DATA = {
     caseStudies: {
       titlePart1: "Work That Moved",
       titleAccent: "Arrivals",
-      cards: [
-        {
-          id: "singapore-tourism-board-isthisevensingapore",
-          title: 'Singapore Tourism Board: "Is This Even Singapore?"',
-          caption:
-            "21 creators across five youth subcultures. 190M views. +18% YOY arrivals from India's under-35 cohort.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-stb.webp",
-          slug: "/work/singapore-tourism-board-isthisevensingapore",
-        },
-        {
-          id: "resorts-world-sentosa-go-bananas-in-minion-land",
-          title: "Universal Studios Singapore — Go Bananas in Minion Land",
-          caption:
-            "Five regional-language creators on ShareChat and Moj. 56M views. +6.8% lift in consideration to visit.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-rws.webp",
-          slug: "/work/resorts-world-sentosa-go-bananas-in-minion-land",
-        },
-      ],
     },
     faqs: {
       titlePart1: "",
@@ -266,7 +248,7 @@ export const SERVICES_DATA = {
           step: "01",
           title: "We Secure the IPs",
           description: "We land the production or the track, not just a placement inside it.",
-          image: "/destination-marketing-agency/images/services/banner-jigra.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-brd-ips.png",
           icon: "/destination-marketing-agency/images/services/icon-cast.svg",
         },
         {
@@ -274,7 +256,7 @@ export const SERVICES_DATA = {
           step: "02",
           title: "Story First",
           description: "The destination lives inside the narrative, never bolted on top.",
-          image: "/destination-marketing-agency/images/services/banner-divine.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-brd-story.png",
           icon: "/destination-marketing-agency/images/services/icon-data.svg",
         },
         {
@@ -282,7 +264,7 @@ export const SERVICES_DATA = {
           step: "03",
           title: "Access, Not Outreach",
           description: "Our film and music network gets a destination cast, not just pitched.",
-          image: "/destination-marketing-agency/images/services/banner-stb.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-brd-access.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
         {
@@ -290,7 +272,7 @@ export const SERVICES_DATA = {
           step: "04",
           title: "Built for Earned Reach",
           description: "Every asset is designed to travel past the paid media budget.",
-          image: "/destination-marketing-agency/images/services/banner-rws.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-brd-reach.png",
           icon: "/destination-marketing-agency/images/services/icon-community.svg",
         },
       ],
@@ -312,24 +294,6 @@ export const SERVICES_DATA = {
     caseStudies: {
       titlePart1: "Work That Moved",
       titleAccent: "Arrivals",
-      cards: [
-        {
-          id: "dharma-productions-x-singapore-tourism-board-jigra",
-          title: "Dharma Productions × Singapore Tourism Board — Jigra",
-          caption:
-            "Over 50% of the film shot in Singapore across seven landmarks. Six-plus follow-on production conversations generated.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-jigra.webp",
-          slug: "/work/dharma-productions-x-singapore-tourism-board-jigra",
-        },
-        {
-          id: "singapore-tourism-board-x-divine-saucy-music-video",
-          title: "Singapore Tourism Board × DIVINE — Saucy",
-          caption:
-            "A destination woven into hip-hop's biggest release of the year. +21pts youth-cohort travel affinity.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-divine.webp",
-          slug: "/work/singapore-tourism-board-x-divine-saucy-music-video",
-        },
-      ],
     },
     faqs: {
       titlePart1: "",
@@ -453,7 +417,7 @@ export const SERVICES_DATA = {
           title: "Destination First",
           description:
             "Every activation starts with the destination, audience and commercial objective. The experience is designed around what needs to be remembered, felt and acted upon.",
-          image: "/destination-marketing-agency/images/services/banner-saudi.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-exp-destination.png",
           icon: "/destination-marketing-agency/images/services/icon-cast.svg",
         },
         {
@@ -462,7 +426,7 @@ export const SERVICES_DATA = {
           title: "Built to Be Experienced",
           description:
             "We combine physical storytelling with technology, performance and interaction — from VR and AR to gamification and interactive installations.",
-          image: "/destination-marketing-agency/images/services/banner-zambia.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-exp-experience.png",
           icon: "/destination-marketing-agency/images/services/icon-data.svg",
         },
         {
@@ -471,7 +435,7 @@ export const SERVICES_DATA = {
           title: "One Team, End to End",
           description:
             "Strategy, design, fabrication, staffing and execution run under one roof. One connected process, one point of accountability from concept to activation.",
-          image: "/destination-marketing-agency/images/services/banner-rws.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-exp-team.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
         {
@@ -480,7 +444,7 @@ export const SERVICES_DATA = {
           title: "Designed to Deliver",
           description:
             "We measure what happens beyond the crowd: qualified enquiries, trade connections, engagement and campaign results. Because footfall is an input. A qualified lead is the output.",
-          image: "/destination-marketing-agency/images/work/singapore-stb.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-exp-deliver.png",
           icon: "/destination-marketing-agency/images/services/icon-community.svg",
         },
       ],
@@ -502,24 +466,6 @@ export const SERVICES_DATA = {
     caseStudies: {
       titlePart1: "Work That Moved",
       titleAccent: "Arrivals",
-      cards: [
-        {
-          id: "akbar-travels",
-          title: "Saudi Tourism Authority × Akbar Travels",
-          caption:
-            "A four-day immersive kiosk at Phoenix Marketcity. 400+ walk-ins and 1,200+ e-visa enquiries in four days.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-saudi.webp",
-          slug: "/work/akbar-travels",
-        },
-        {
-          id: "zambia-tourism-otm-mumbai-2026",
-          title: "Zambia Tourism Agency × OTM Mumbai 2026",
-          caption:
-            "A first-time entrant's booth built for experience, not just visibility. 500+ qualified trade connections and a Most Promising Destination award.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-zambia.webp",
-          slug: "/work/zambia-tourism-otm-mumbai-2026",
-        },
-      ],
     },
     faqs: {
       titlePart1: "",
@@ -643,7 +589,7 @@ export const SERVICES_DATA = {
           title: "Earned Credibility",
           description:
             "We build relationships with the publishers, journalists and creators who matter in each market, creating opportunities for destinations to be experienced and talked about authentically.",
-          image: "/destination-marketing-agency/images/services/banner-hktb.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-fam-credibility.png",
           icon: "/destination-marketing-agency/images/services/icon-cast.svg",
         },
         {
@@ -652,7 +598,7 @@ export const SERVICES_DATA = {
           title: "On the Ground",
           description:
             "Our regional teams manage hosting, negotiations and execution in person, giving every FAM, media engagement and destination activation the local detail it needs.",
-          image: "/destination-marketing-agency/images/services/banner-costa.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-fam-ground.png",
           icon: "/destination-marketing-agency/images/services/icon-data.svg",
         },
         {
@@ -661,7 +607,7 @@ export const SERVICES_DATA = {
           title: "Dignitary Ready",
           description:
             "From trade floors to ministerial engagements, we understand the precision and protocol behind high-profile destination representation.",
-          image: "/destination-marketing-agency/images/services/banner-stb.webp",
+          image: "/destination-marketing-agency/images/services/approach/approach-fam-dignitary.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
         {
@@ -670,7 +616,7 @@ export const SERVICES_DATA = {
           title: "Long-Term Relationships",
           description:
             "The strongest media, creator and trade relationships continue beyond a single campaign. We build connections that keep creating opportunities after the FAM or placement is over.",
-          image: "/destination-marketing-agency/images/work/her-hong-kong-hktb.png",
+          image: "/destination-marketing-agency/images/services/approach/approach-fam-relationships.png",
           icon: "/destination-marketing-agency/images/services/icon-community.svg",
         },
       ],
@@ -692,24 +638,6 @@ export const SERVICES_DATA = {
     caseStudies: {
       titlePart1: "Work That Moved",
       titleAccent: "Arrivals",
-      cards: [
-        {
-          id: "hong-kong-tourism-board-x-ram-charan-esquire-india-cover",
-          title: "Hong Kong Tourism Board × Ram Charan + Esquire India",
-          caption:
-            "A destination cover story shot on location. ~10X ROI on HKTB's investment and $2.5M in earned media value.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-hktb.webp",
-          slug: "/work/hong-kong-tourism-board-x-ram-charan-esquire-india-cover",
-        },
-        {
-          id: "costa-cruises",
-          title: "Costa Cruise",
-          caption:
-            "40+ creators hosted onboard a maiden voyage. 9,000+ qualified booking enquiries.",
-          bannerImage: "/destination-marketing-agency/images/services/banner-costa.webp",
-          slug: "/work/costa-cruises",
-        },
-      ],
     },
     faqs: {
       titlePart1: "",

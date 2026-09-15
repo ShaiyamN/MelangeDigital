@@ -72,3 +72,28 @@ export const DEFAULT_SERVICE_CARDS = {
     },
   },
 };
+
+/** Same slot merge the /services index uses, so detail pages can't drift. */
+export function resolveServiceSlots(serviceId, settings) {
+  const defaults = DEFAULT_SERVICE_CARDS[serviceId];
+  if (!defaults) return [];
+  const custom = settings?.[serviceId];
+  const slot1 =
+    custom && custom.slot1 !== undefined && custom.slot1 !== null
+      ? custom.slot1
+      : defaults.slot1;
+  const slot2 =
+    custom && custom.slot2 !== undefined && custom.slot2 !== null
+      ? custom.slot2
+      : defaults.slot2;
+  return [slot1, slot2].filter(Boolean);
+}
+
+if (import.meta.env?.DEV) {
+  const fam = resolveServiceSlots("fam");
+  console.assert(fam.length === 2, "fam has two default slots");
+  console.assert(
+    fam[0].slug === "resorts-world-sentosa-go-bananas-in-minion-land",
+    "fam slot1 matches /services"
+  );
+}

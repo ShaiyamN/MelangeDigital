@@ -7,6 +7,7 @@ import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
 import { useBtnAnim } from "../../layout/MelangeCta";
 import { SERVICES_DATA } from "../../../constants/servicesData";
+import { resolveServiceSlots } from "../../../constants/serviceCards";
 import "./serviceDetail.css";
 
 const CTA_ARROW = "/destination-marketing-agency/images/services/cta-arrow.svg";
@@ -116,17 +117,35 @@ export default function ServiceDetail() {
       ? "fam"
       : null;
 
-  const [cards, setCards] = useState(service ? service.caseStudies.cards : []);
+  const [cards, setCards] = useState(() => resolveServiceSlots(serviceKey));
 
   useEffect(() => {
-    if (service) {
-      setCards(service.caseStudies.cards);
-      setActiveApproachIndex(0);
-      setActiveStep(0);
-      setOpenFaqIndex(0);
-      setFaqCollapsed(true);
+    setActiveApproachIndex(0);
+    setActiveStep(0);
+    setOpenFaqIndex(0);
+    setFaqCollapsed(true);
+  }, [serviceKey]);
+
+  useEffect(() => {
+    if (!serviceKey) {
+      setCards([]);
+      return;
     }
-  }, [service]);
+    setCards(resolveServiceSlots(serviceKey));
+    let active = true;
+    getDoc(doc(db, "settings", "service_cards"))
+      .then((snap) => {
+        if (snap.exists() && active) {
+          setCards(resolveServiceSlots(serviceKey, snap.data()));
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not load dynamic service cards for detail:", err);
+      });
+    return () => {
+      active = false;
+    };
+  }, [serviceKey]);
 
   useEffect(() => {
     if (!service?.process?.steps?.length) return;
@@ -160,36 +179,6 @@ export default function ServiceDetail() {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    let active = true;
-    if (!serviceKey) return;
-
-    const loadServiceCards = async () => {
-      try {
-        const snap = await getDoc(doc(db, "settings", "service_cards"));
-        if (snap.exists() && active) {
-          const data = snap.data();
-          const custom = data[serviceKey];
-          if (custom) {
-            const list = [];
-            if (custom.slot1) list.push({ ...custom.slot1, id: "slot1" });
-            if (custom.slot2) list.push({ ...custom.slot2, id: "slot2" });
-            if (list.length > 0) {
-              setCards(list);
-            }
-          }
-        }
-      } catch (err) {
-        console.warn("Could not load dynamic service cards for detail:", err);
-      }
-    };
-
-    loadServiceCards();
-    return () => {
-      active = false;
-    };
-  }, [serviceKey]);
-
   // If slug doesn't match any known service, fallback to services index
   if (!service) {
     return <Navigate to="/services" replace />;
@@ -204,6 +193,13 @@ export default function ServiceDetail() {
   const handleNextApproach = () => {
     if (approachCards.length > 0) {
       setActiveApproachIndex((prev) => (prev + 1) % approachCards.length);
+    }
+  };
+  const handlePrevApproach = () => {
+    if (approachCards.length > 0) {
+      setActiveApproachIndex(
+        (prev) => (prev - 1 + approachCards.length) % approachCards.length
+      );
     }
   };
 
@@ -399,32 +395,39 @@ export default function ServiceDetail() {
             <div className="svc-approach-card-shadow" aria-hidden="true" />
 
             {activeApproach && (
-              <div
-                className="svc-approach-card-active"
-                onClick={handleNextApproach}
-                title="Show the next approach point"
-              >
+              <div className="svc-approach-card-active">
                 <div className="svc-approach-media">
                   <img src={activeApproach.image} alt="" loading="lazy" />
                 </div>
                 <div className="svc-approach-text-col">
                   <h3 className="svc-approach-card-title">{activeApproach.title}</h3>
                   <p className="svc-approach-card-desc">{activeApproach.description}</p>
-                  <button
-                    type="button"
-                    className="svc-approach-arrow-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNextApproach();
-                    }}
-                    aria-label={`Show the next approach point (${
-                      activeApproachIndex + 1
-                    } of ${approachCards.length})`}
-                  >
-                    <span aria-hidden="true">
-                      <img src={CTA_ARROW} alt="" width="36" height="34" />
-                    </span>
-                  </button>
+                  <div className="svc-approach-arrows">
+                    <button
+                      type="button"
+                      className="svc-approach-arrow-btn svc-approach-arrow-btn--prev"
+                      onClick={handlePrevApproach}
+                      aria-label={`Show the previous approach point (${
+                        activeApproachIndex + 1
+                      } of ${approachCards.length})`}
+                    >
+                      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                        <path d="M15.5 5.5L9 12l6.5 6.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      className="svc-approach-arrow-btn svc-approach-arrow-btn--next"
+                      onClick={handleNextApproach}
+                      aria-label={`Show the next approach point (${
+                        activeApproachIndex + 1
+                      } of ${approachCards.length})`}
+                    >
+                      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                        <path d="M8.5 5.5L15 12l-6.5 6.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

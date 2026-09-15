@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { DEFAULT_SERVICE_CARDS } from "../../../constants/serviceCards";
+import { DEFAULT_SERVICE_CARDS, resolveServiceSlots } from "../../../constants/serviceCards";
 import {
   MARKETING_ASSET as ASSET,
   MarketingShell,
@@ -35,24 +35,15 @@ function renderServiceCardHtml(card) {
 }
 
 function buildDynamicMarkup(baseHtml, settings) {
-  if (!settings) return baseHtml;
-
   let result = baseHtml;
-  for (const [serviceId, serviceData] of Object.entries(DEFAULT_SERVICE_CARDS)) {
-    const custom = settings[serviceId];
-    if (!custom) continue;
-
-    const card1 = custom.slot1 !== undefined && custom.slot1 !== null ? custom.slot1 : serviceData.slot1;
-    const card2 = custom.slot2 !== undefined && custom.slot2 !== null ? custom.slot2 : serviceData.slot2;
-
+  for (const serviceId of Object.keys(DEFAULT_SERVICE_CARDS)) {
+    const [card1, card2] = resolveServiceSlots(serviceId, settings);
     const newCardsHtml = `\n${renderServiceCardHtml(card1)}\n${renderServiceCardHtml(card2)}\n     `;
     const regex = new RegExp(
       `(<section[^>]*id="${serviceId}"[\\s\\S]*?<div class="svc-projects">)([\\s\\S]*?)(<\\/div>\\s*<div class="svc-cta-row">)`
     );
-
-    result = result.replace(regex, `$1${newCardsHtml}$3`);
+    result = result.replace(regex, (_m, start, _old, end) => `${start}${newCardsHtml}${end}`);
   }
-
   return result;
 }
 
@@ -119,7 +110,7 @@ const FAQ_SCHEMA = {
 
 const Services = () => {
   const cssReady = useMarketingBoot("svc", CSS, SCRIPT_BASES);
-  const [markup, setMarkup] = useState(rawMarkup);
+  const [markup, setMarkup] = useState(() => buildDynamicMarkup(rawMarkup, null));
 
   useEffect(() => {
     let active = true;
@@ -127,8 +118,7 @@ const Services = () => {
       try {
         const snap = await getDoc(doc(db, "settings", "service_cards"));
         if (snap.exists() && active) {
-          const updated = buildDynamicMarkup(rawMarkup, snap.data());
-          setMarkup(updated);
+          setMarkup(buildDynamicMarkup(rawMarkup, snap.data()));
         }
       } catch (err) {
         console.warn("Could not load dynamic service cards:", err);

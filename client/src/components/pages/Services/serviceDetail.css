@@ -522,12 +522,6 @@
   border-radius: 28px;
   overflow: hidden;
   box-shadow: 0 5px 17px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: box-shadow 0.25s ease;
-}
-
-.svc-approach-card-active:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .svc-approach-media {
@@ -535,26 +529,27 @@
   height: 100%;
   overflow: hidden;
   background: #e6dcfe;
+  min-width: 0;
 }
 
-/* Figma top-aligns this crop, which also keeps the dark foreground at the
-   bottom of the stock shot out of frame */
 .svc-approach-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   display: block;
 }
 
 .svc-approach-text-col {
   position: relative;
-  padding: 41px 24px 24px 28px;
+  padding: 32px 20px 16px 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
   overflow: hidden;
+  min-width: 0;
+  min-height: 0;
 }
 
 /* Lato ExtraBold 18px uppercase, then a blank line, then the body */
@@ -574,40 +569,64 @@
   line-height: 1.45;
   color: var(--svc-ink);
   margin: 0;
+  padding-right: 96px;
+  text-wrap: wrap;
+  overflow-wrap: break-word;
 }
 
-/* 36 x 34 arrow rotated 42.49deg, centred ~24px in / 39px up from the corner.
-   The rotation turns the asset's up-right arrow into a "next" arrow. */
-.svc-approach-arrow-btn {
+.svc-approach-arrows {
   position: absolute;
-  right: 8px;
-  bottom: 20px;
+  right: 12px;
+  bottom: 12px;
   display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 3;
+}
+
+.svc-approach-arrow-btn {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   padding: 0;
-  border: none;
+  border: 1px solid rgba(57, 16, 123, 0.28);
   border-radius: 50%;
-  background: transparent;
+  background: rgba(57, 16, 123, 0.12);
+  box-shadow: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #39107b;
   cursor: pointer;
-  transition: transform 0.25s ease;
+  opacity: 0.35;
+  transition: background-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease;
 }
 
-.svc-approach-arrow-btn span {
-  display: block;
-  transform: rotate(42.49deg);
+.svc-approach-card-active:hover .svc-approach-arrow-btn,
+.svc-approach-card-active:focus-within .svc-approach-arrow-btn {
+  opacity: 0.72;
 }
 
-.svc-approach-arrow-btn img {
-  display: block;
-  width: 36px;
-  height: 34px;
+.svc-approach-arrow-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
-.svc-approach-arrow-btn:hover {
-  transform: translateX(3px);
+.svc-approach-arrow-btn:hover,
+.svc-approach-arrow-btn:focus-visible {
+  opacity: 1 !important;
+  background: rgba(57, 16, 123, 0.55);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
+  transform: scale(1.06);
+}
+
+.svc-approach-arrow-btn:active {
+  transform: scale(0.97);
 }
 
 .svc-approach-arrow-btn:focus-visible {
@@ -1180,7 +1199,7 @@
   }
 
   .svc-approach-card-active {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     min-height: 0;
   }
 
@@ -1190,10 +1209,10 @@
   }
 
   .svc-approach-text-col {
-    padding: 24px 22px 60px;
+    padding: 24px 16px 56px;
   }
 
-  .svc-approach-arrow-btn {
+  .svc-approach-arrows {
     right: 12px;
     bottom: 10px;
   }
@@ -1209,6 +1228,12 @@
 
   .svc-detail-page .dropdown-list {
     padding: 0 18px 16px;
+  }
+}
+
+@media (hover: none) {
+  .svc-approach-arrow-btn {
+    opacity: 0.55;
   }
 }
 
