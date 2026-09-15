@@ -20,6 +20,7 @@ node_modules
 dist
 dist-ssr
 spa/videos/
+public/videos/
 
 # ----------------------------
 # Environment files
