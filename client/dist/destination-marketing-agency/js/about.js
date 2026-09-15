@@ -79,10 +79,14 @@
 (function initReportCarousel() {
   var root = document.querySelector("[data-report-carousel]");
   if (!root) return;
-  var slides = root.querySelectorAll("[data-report-slide]");
+  var slides = root.querySelectorAll("[data-report-slide]:not([hidden])");
   var prev = root.querySelector("[data-report-prev]");
   var next = root.querySelector("[data-report-next]");
-  if (!slides.length || !prev || !next) return;
+  if (slides.length < 2) {
+    root.classList.add("report-promo-carousel--single");
+    return;
+  }
+  if (!prev || !next) return;
   var i = 0;
   var startX = 0;
 
@@ -145,4 +149,55 @@
   window.addEventListener("scroll", sync, { passive: true });
   window.addEventListener("resize", sync);
   sync();
+})();
+
+(function initFaqAccordion() {
+  function onFaqToggle(e) {
+    var toggle = e.target.closest(".section-8 .accordion-toggle");
+    if (!toggle) return;
+
+    var item = toggle.closest(".accordian-item");
+    if (!item) return;
+
+    e.preventDefault();
+    var list = item.querySelector(".dropdown-list, .w-dropdown-list");
+    var isOpen = item.classList.contains("w--open") || item.classList.contains("is-open");
+
+    if (isOpen) {
+      item.classList.remove("w--open", "is-open");
+      toggle.classList.remove("w--open", "is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      if (list) {
+        list.classList.remove("w--open");
+        list.style.display = "none";
+      }
+    } else {
+      item.classList.add("w--open", "is-open");
+      toggle.classList.add("w--open", "is-open");
+      toggle.setAttribute("aria-expanded", "true");
+      if (list) {
+        list.classList.add("w--open");
+        list.style.display = "block";
+      }
+    }
+  }
+
+  function onFaqKeydown(e) {
+    if (e.key === "Enter" || e.key === " ") {
+      var toggle = e.target.closest(".section-8 .accordion-toggle");
+      if (toggle) {
+        e.preventDefault();
+        toggle.click();
+      }
+    }
+  }
+
+  if (window.__abtFaqToggleHandler) {
+    document.removeEventListener("click", window.__abtFaqToggleHandler);
+    document.removeEventListener("keydown", window.__abtFaqKeyHandler);
+  }
+  window.__abtFaqToggleHandler = onFaqToggle;
+  window.__abtFaqKeyHandler = onFaqKeydown;
+  document.addEventListener("click", onFaqToggle);
+  document.addEventListener("keydown", onFaqKeydown);
 })();

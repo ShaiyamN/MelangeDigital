@@ -48,22 +48,22 @@ export const SERVICES_DATA = {
       bgImage: "/destination-marketing-agency/images/services/where-it-works-bg.png",
       pillars: [
         {
-          iconType: "pin",
+          icon: "/destination-marketing-agency/images/services/pillars/inf-reposition.png",
           title: "REPOSITION",
           description: "Put a destination in front of a new audience.",
         },
         {
-          iconType: "rocket",
+          icon: "/destination-marketing-agency/images/services/pillars/inf-launch.png",
           title: "LAUNCH",
           description: "Build demand before a destination, hotel or resort opens.",
         },
         {
-          iconType: "megaphone",
+          icon: "/destination-marketing-agency/images/services/pillars/inf-amplify.png",
           title: "AMPLIFY",
           description: "Turn seasonal campaigns into cultural moments.",
         },
         {
-          iconType: "globe",
+          icon: "/destination-marketing-agency/images/services/pillars/inf-expand.png",
           title: "EXPAND",
           description: "Open new source markets through the creators already shaping them.",
         },
@@ -235,22 +235,22 @@ export const SERVICES_DATA = {
       bgImage: "/destination-marketing-agency/images/services/banner-jigra.webp",
       pillars: [
         {
-          icon: "/destination-marketing-agency/images/services/icon-cast.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/brd-film.png",
           title: "FILM",
           description: "Position a destination as a filming hub.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-data.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/brd-music.png",
           title: "MUSIC",
           description: "Embed a destination into releases built around a specific culture.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-team.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/brd-editorial.png",
           title: "EDITORIAL",
           description: "Create credible moments through publishers and platforms people trust.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-community.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/brd-culture.png",
           title: "CULTURE",
           description: "Build associations that outlast the campaign.",
         },
@@ -421,22 +421,22 @@ export const SERVICES_DATA = {
       bgImage: "/destination-marketing-agency/images/services/banner-saudi.webp",
       pillars: [
         {
-          icon: "/destination-marketing-agency/images/services/icon-cast.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/exp-launch.png",
           title: "LAUNCH",
           description: "Make a new destination, route, hotel or proposition impossible to ignore.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-data.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/exp-connect.png",
           title: "CONNECT",
           description: "Bring destinations to life for the trade and consumers in priority markets.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-team.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/exp-engage.png",
           title: "ENGAGE",
           description: "Turn trade shows, roadshows and retail spaces into meaningful brand experiences.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-community.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/exp-convert.png",
           title: "CONVERT",
           description: "Capture qualified enquiries and connections that move beyond the activation.",
         },
@@ -611,22 +611,22 @@ export const SERVICES_DATA = {
       bgImage: "/destination-marketing-agency/images/services/banner-hktb.webp",
       pillars: [
         {
-          icon: "/destination-marketing-agency/images/services/icon-cast.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/fam-launch.png",
           title: "LAUNCH",
           description: "Build credibility around a new destination, proposition or market entry.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-data.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/fam-experience.png",
           title: "EXPERIENCE",
           description: "Host journalists, creators and travel trade so they can experience the destination firsthand.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-team.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/fam-connect.png",
           title: "CONNECT",
           description: "Build relationships with publishers, media and trade partners who shape destination discovery.",
         },
         {
-          icon: "/destination-marketing-agency/images/services/icon-community.svg",
+          icon: "/destination-marketing-agency/images/services/pillars/fam-protect.png",
           title: "PROTECT",
           description: "Manage sensitive moments with the local presence and relationships destination reputation requires.",
         },

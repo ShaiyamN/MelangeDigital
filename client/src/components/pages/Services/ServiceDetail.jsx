@@ -7,7 +7,6 @@ import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
 import { useBtnAnim } from "../../layout/MelangeCta";
 import { SERVICES_DATA } from "../../../constants/servicesData";
-import { Globe, MapPin, Megaphone, Rocket } from "lucide-react";
 import "./serviceDetail.css";
 
 const CTA_ARROW = "/destination-marketing-agency/images/services/cta-arrow.svg";
@@ -76,19 +75,9 @@ const slotStyle = (slot) => ({
   transform: `rotate(${slot.rotate}deg) scale(0.9)`,
 });
 
-const PILLAR_ICONS = { pin: MapPin, rocket: Rocket, megaphone: Megaphone, globe: Globe };
-
-function PillarIcon({ type, src }) {
-  if (src) {
-    return <img className="svc-pillar-icon" src={src} alt="" width="24" height="24" />;
-  }
-  const Icon = PILLAR_ICONS[type];
-  if (!Icon) return null;
-  return (
-    <span className="svc-pillar-icon" aria-hidden="true">
-      <Icon size={24} strokeWidth={1.6} />
-    </span>
-  );
+function PillarIcon({ src }) {
+  if (!src) return null;
+  return <img className="svc-pillar-icon" src={src} alt="" />;
 }
 
 function AnimCta({ to, className, arrowSrc, children }) {
@@ -380,7 +369,7 @@ export default function ServiceDetail() {
               <div className="svc-pillars-grid">
                 {service.philosophy.pillars.map((pillar, idx) => (
                   <div key={idx} className="svc-pillar-card">
-                    <PillarIcon type={pillar.iconType} src={pillar.icon} />
+                    <PillarIcon src={pillar.icon} />
                     <h4 className="svc-pillar-title">{pillar.title}</h4>
                     <p className="svc-pillar-desc">{pillar.description}</p>
                   </div>

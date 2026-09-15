@@ -1,6 +1,9 @@
 /* Shared typography + section spacing tokens (destination-marketing-agency reference).
    Imported by melange.css (marketing pages) and client/src/index.css (React app). */
 :root {
+  /* Keep the last two words of a line together when a wrap would leave one behind. */
+  text-wrap: pretty;
+
   /* Fonts — h1/h2 Alan Sans, h2 accents Baskerville italic, h3+ Lato */
   --font-display: "Alan Sans", sans-serif;
   --font-accent: "Baskervville", "Libre Baskerville", serif;
