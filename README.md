@@ -45,18 +45,18 @@ Images and videos are stored in Git (not LFS) so Hostinger can build without `gi
 
 ## Hostinger (frontend only)
 
-Node.js Web App. Application root **`client`**. Hostinger must **never run Vite** — that is what made deploys fail 10 times and succeed once (OOM). GitHub Actions builds `client/spa/`; Hostinger only verifies it.
+Node.js Web App. Hostinger clones the whole GitHub repo, so **staging is too large and times out at ~5 minutes with empty logs**. Deploy the thin **`hostinger-dist`** branch GitHub Actions publishes.
 
 | Setting | Value |
 | --- | --- |
-| Branch | `staging` (or `hostinger-dist`) |
+| Branch | **`hostinger-dist`** |
 | Application root | `client` |
 | Framework | **Express** |
 | Node.js version | **20.x** |
-| Build command | *leave default* (`npm run build` = verify-only) |
+| Build command | default (`npm run build` = verify-only) |
 | Start command | `npm start` |
 | Entry file | **`server.js`** |
-| Output directory | **leave empty** |
+| Output directory | **empty** |
 
-Vite runs on GitHub (`FORCE_VITE_BUILD=1 npm run build:full`), not on Hostinger.
+Wait for the "Hostinger prebuild" Action to finish after each `staging` push, then redeploy. Do not deploy `staging` on Hostinger.
 

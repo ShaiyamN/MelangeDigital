@@ -1,12 +1,11 @@
-# Builds client/dist on GitHub (enough RAM) and publishes hostinger-dist for Hostinger.
-# Hostinger should deploy hostinger-dist with build command: node scripts/verify-dist.cjs
+# Builds a thin hostinger-dist branch (no src/, no 2GB clone) for Hostinger.
+# Hostinger must deploy branch hostinger-dist, root client, output directory empty.
 name: Hostinger prebuild
 
 on:
   push:
     branches: [staging, main]
     paths-ignore:
-      - "client/dist/**"
       - "**.md"
   workflow_dispatch:
 
@@ -30,17 +29,30 @@ jobs:
           cache-dependency-path: client/package-lock.json
 
       - name: Install and build
-        run: npm ci --no-audit --no-fund --legacy-peer-deps && npm run build:full
+        run: npm ci --no-audit --no-fund --legacy-peer-deps --include=dev && npm run build:full
         env:
           FORCE_VITE_BUILD: "1"
 
-      - name: Publish hostinger-dist branch
+      - name: Publish thin hostinger-dist
         working-directory: .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -euo pipefail
+          THIN=$(mktemp -d)
+          mkdir -p "$THIN/client"
+          cp client/package.json client/package-lock.json client/server.js client/server.cjs client/.nvmrc client/.npmrc "$THIN/client/"
+          cp -a client/scripts "$THIN/client/scripts"
+          cp -a client/spa "$THIN/client/spa"
+          cp -a client/public "$THIN/client/public"
+          rm -rf "$THIN/client/public/videos" "$THIN/client/spa/videos"
+          rm -rf "$THIN/client/spa/destination-marketing-agency"
+          cd "$THIN"
+          git init
+          git checkout -b hostinger-dist
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B hostinger-dist
           git add -A
-          git add -f client/spa
-          git commit -m "build: prebuilt spa for Hostinger (${GITHUB_SHA::7})" --allow-empty
+          git commit -m "thin Hostinger payload ${GITHUB_SHA}"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push origin hostinger-dist --force

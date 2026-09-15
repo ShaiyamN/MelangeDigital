@@ -7,7 +7,7 @@ const path = require("path");
 // Root package.json also starts this file via `node client/server.cjs`.
 const SPA = path.join(__dirname, "spa");
 const DIST_DIR = path.join(__dirname, "dist");
-const DIST = fs.existsSync(path.join(DIST_DIR, "index.html")) ? DIST_DIR : SPA;
+const DIST = fs.existsSync(path.join(SPA, "index.html")) ? SPA : DIST_DIR;
 const PORT = Number(process.env.PORT) || 3000;
 const INDEX = path.join(DIST, "index.html");
 const REPORT_PDF = path.join(
