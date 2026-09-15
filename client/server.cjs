@@ -22,9 +22,30 @@ if (!fs.existsSync(INDEX)) {
 // Buffer once — Hostinger has been returning Express finalhandler 404 from sendFile failures
 const INDEX_HTML = fs.readFileSync(INDEX, "utf8");
 
-const { applyHead, resolveMeta } = require("./scripts/seo-head.cjs");
-const { getSitemapXml, getPageIndex, buildXml, clearSitemapCache } = require("./scripts/live-sitemap.cjs");
-const { reportDownloadHtml } = require("./scripts/report-download-html.cjs");
+// Resilient requires — server must always start even if Firebase/SEO modules fail
+let applyHead, resolveMeta, getSitemapXml, getPageIndex, buildXml, clearSitemapCache, reportDownloadHtml;
+try {
+  ({ applyHead, resolveMeta } = require("./scripts/seo-head.cjs"));
+} catch (err) {
+  console.error("seo-head.cjs failed to load:", err.message);
+  applyHead = (html) => html;
+  resolveMeta = () => ({ stripFaq: true, noindex: true });
+}
+try {
+  ({ getSitemapXml, getPageIndex, buildXml, clearSitemapCache } = require("./scripts/live-sitemap.cjs"));
+} catch (err) {
+  console.error("live-sitemap.cjs failed to load:", err.message);
+  getSitemapXml = async () => '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://melangedigital.co/</loc></url></urlset>';
+  getPageIndex = async () => ({ routes: new Set(), byPath: {} });
+  buildXml = (origin, routes) => `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${origin}/</loc></url></urlset>`;
+  clearSitemapCache = () => {};
+}
+try {
+  ({ reportDownloadHtml } = require("./scripts/report-download-html.cjs"));
+} catch (err) {
+  console.error("report-download-html.cjs failed to load:", err.message);
+  reportDownloadHtml = () => "<html><body>Report download unavailable</body></html>";
+}
 
 const app = express();
 

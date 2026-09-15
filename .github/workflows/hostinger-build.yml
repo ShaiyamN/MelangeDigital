@@ -30,13 +30,22 @@ jobs:
           cache: npm
           cache-dependency-path: client/package-lock.json
 
-      - name: Install and build
+      # ── Secrets gate ───────────────────────────────────────────
+      # Fail visibly instead of silently producing an empty build.
+      - name: Check Firebase secrets
         run: |
           if [ -z "$VITE_FIREBASE_API_KEY" ]; then
-            echo "Add repo secrets VITE_FIREBASE_* (see client/.env.example). Skipping Vite so spa is not overwritten with an empty key."
-            exit 0
+            echo "::warning::VITE_FIREBASE_* repository secrets are not set. spa/ was NOT rebuilt. Add them from client/.env.example."
+            echo "SECRETS_PRESENT=false" >> "$GITHUB_ENV"
+          else
+            echo "SECRETS_PRESENT=true" >> "$GITHUB_ENV"
           fi
-          npm ci --no-audit --no-fund --legacy-peer-deps --include=dev && npm run build:full
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+
+      - name: Install and build
+        if: env.SECRETS_PRESENT == 'true'
+        run: npm ci --no-audit --no-fund --legacy-peer-deps --include=dev && npm run build:full
         env:
           FORCE_VITE_BUILD: "1"
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
@@ -48,7 +57,30 @@ jobs:
           VITE_CLOUDINARY_CLOUD_NAME: ${{ secrets.VITE_CLOUDINARY_CLOUD_NAME }}
           VITE_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.VITE_CLOUDINARY_UPLOAD_PRESET }}
 
-      - name: Commit spa to staging
+      # ── Validate build output ──────────────────────────────────
+      - name: Validate spa
+        if: env.SECRETS_PRESENT == 'true'
+        run: |
+          set -euo pipefail
+          if [ ! -f spa/index.html ]; then
+            echo "::error::spa/index.html missing after build"
+            exit 1
+          fi
+          # Ensure the bundle <script> tag references a real file
+          BUNDLE=$(grep -oP 'src="/assets/index-[^"]+\.js"' spa/index.html | head -1 | sed 's/src="//;s/"//')
+          if [ -z "$BUNDLE" ]; then
+            echo "::error::No JS bundle reference found in spa/index.html"
+            exit 1
+          fi
+          if [ ! -f "spa${BUNDLE}" ]; then
+            echo "::error::Bundle file spa${BUNDLE} missing"
+            exit 1
+          fi
+          echo "✓ spa/index.html valid — bundle: ${BUNDLE}"
+
+      # ── Commit & push (with rebase to avoid conflicts) ─────────
+      - name: Commit spa
+        if: env.SECRETS_PRESENT == 'true'
         working-directory: .
         run: |
           set -euo pipefail
@@ -60,4 +92,6 @@ jobs:
             exit 0
           fi
           git commit -m "build: spa for Hostinger (${GITHUB_SHA::7})"
+          # Pull with rebase to handle concurrent pushes, then push
+          git pull --rebase origin ${GITHUB_REF_NAME} || true
           git push origin HEAD:${GITHUB_REF_NAME}
