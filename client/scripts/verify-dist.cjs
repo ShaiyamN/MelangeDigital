@@ -44,6 +44,15 @@ if (!fs.existsSync(reportPdf)) {
   process.exit(1);
 }
 
+if (!fs.existsSync(path.join(root, "server.js"))) {
+  console.error("FAIL: server.js missing (Hostinger Express entry)");
+  process.exit(1);
+}
+if (!fs.existsSync(path.join(root, "server.cjs"))) {
+  console.error("FAIL: server.cjs missing");
+  process.exit(1);
+}
+
 console.log("");
 console.log("Hostinger panel (recommended — skip on-server Vite):");
 console.log("  Branch:           main");
@@ -51,5 +60,5 @@ console.log("  Application root: client");
 console.log("  Node.js version:  20.x");
 console.log("  Build command:    node scripts/verify-dist.cjs");
 console.log("  Start command:    npm start");
-console.log("  Entry file:       server.cjs");
-console.log("  Output directory: dist");
+console.log("  Entry file:       server.js");
+console.log("  Output directory: (leave empty — Express, not static Vite)");

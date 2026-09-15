@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "server.cjs",
+  "main": "server.js",
   "engines": {
     "node": ">=20"
   },
@@ -20,7 +20,7 @@
     "assert:assets": "node scripts/assert-real-assets.cjs",
     "audit:assets": "node scripts/find-unused-assets.cjs",
     "prerender": "node prerender.js",
-    "start": "node server.cjs",
+    "start": "node server.js",
     "preview": "vite preview"
   },
   "dependencies": {

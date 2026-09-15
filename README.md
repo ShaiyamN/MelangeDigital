@@ -55,12 +55,14 @@ Deploy directly from the **`main`** branch. Production assets (`client/dist`) ar
 | --- | --- |
 | Branch | **`main`** |
 | Application root | `client` *(or empty repo root — both supported)* |
-| Framework | **Express** or **Other** |
+| Framework | **Express** or **Other** *(not Vite/React — those are static-only)* |
 | Node.js version | **20.x** *(change in hPanel if on default)* |
 | Build command | `node scripts/verify-dist.cjs` *(or `npm run build`)* |
 | Start command | `npm start` |
-| Entry file | `server.cjs` *(or `server.js`)* |
-| Output directory | `dist` |
+| Entry file | **`server.js`** |
+| Output directory | *(leave empty)* |
+
+`server.js` starts Express, which serves `dist/` itself. If Output directory is set to `dist`, Hostinger deploys only that folder and then cannot find `server.js`.
 
 Hostinger runs `npm install` for runtime deps (`express`, `firebase`, etc.) and instantly verifies the pre-built `dist/`.
 
@@ -82,8 +84,8 @@ Only if the plan has **2GB+ RAM** (Business/Cloud). Use branch **`staging`**:
 | Node.js version | **20.x** |
 | Build command | `npm run build` *(do not add `npm install` — Hostinger already installs)* |
 | Start command | `npm start` |
-| Entry file | `server.cjs` |
-| Output directory | `dist` |
+| Entry file | **`server.js`** |
+| Output directory | *(leave empty)* |
 
 Build tools (`vite`, `tailwindcss`, etc.) live in `dependencies` so production install includes them. Vite heap is capped at 768MB in [`scripts/run-vite-build.cjs`](client/scripts/run-vite-build.cjs).
 
