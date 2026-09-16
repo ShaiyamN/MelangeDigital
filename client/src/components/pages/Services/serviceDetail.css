@@ -272,6 +272,7 @@
   height: 100%;
   display: block;
   object-fit: cover;
+  object-position: top center;
 }
 
 /* object-position centres each tile on the subject Figma had framed */
@@ -283,12 +284,6 @@
 .svc-collage__tile--6 { left: 0;      top: 48.53%; width: 27.25%; height: 32.95%; transform: scale(0.9); }
 .svc-collage__tile--7 { left: 23.73%; top: 67.22%; width: 27.75%; height: 32.78%; transform: scale(0.9); }
 .svc-collage__tile--8 { left: 61.73%; top: 65.02%; width: 28.27%; height: 30.29%; transform: rotate(0.36deg) scale(0.9); }
-
-.svc-collage__tile--3 img { object-position: 56% 52%; }
-.svc-collage__tile--5 img { object-position: 61% 45%; }
-.svc-collage__tile--6 img { object-position: 49% 58%; }
-.svc-collage__tile--7 img { object-position: 50% 58%; }
-.svc-collage__tile--8 img { object-position: 72% 64%; }
 
 /* --------------------------------------------------------------------------
    2. MANIFESTO — left 469px, right 420px right-aligned

@@ -117,6 +117,9 @@ export default function ServiceDetail() {
       ? "fam"
       : null;
 
+  const serviceFolder =
+    slug === "branded-content-ip" ? "branded-content-ips" : slug;
+
   const [cards, setCards] = useState(() => resolveServiceSlots(serviceKey));
 
   useEffect(() => {
@@ -294,7 +297,7 @@ export default function ServiceDetail() {
             {/* Scattered creator collage */}
             <div className="svc-hero-right" aria-hidden="true">
               <div
-                className="svc-collage"
+                className={`svc-collage svc-collage--${serviceFolder}`}
                 onMouseEnter={() => {
                   collagePaused.current = true;
                 }}
@@ -302,10 +305,7 @@ export default function ServiceDetail() {
                   collagePaused.current = false;
                 }}
               >
-                {HERO_TILES.map((n, i) => {
-                  const serviceFolder =
-                    slug === "branded-content-ip" ? "branded-content-ips" : slug;
-                  return (
+                {HERO_TILES.map((n, i) => (
                     <div
                       key={`${serviceFolder}-${n}`}
                       className={`svc-collage__tile svc-collage__tile--${n}`}
@@ -322,8 +322,7 @@ export default function ServiceDetail() {
                         }}
                       />
                     </div>
-                  );
-                })}
+                ))}
               </div>
             </div>
           </div>
