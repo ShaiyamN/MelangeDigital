@@ -147,10 +147,23 @@ for (const [id, svc] of Object.entries(DEFAULT_SERVICE_CARDS)) {
   }
 }
 
-// The hero collage is shared art, not per-service data, so check it once.
+// The hero collage shared art fallback
 for (let n = 1; n <= 8; n += 1) {
   checkAsset("shared", `hero collage tile ${n}`,
     `/destination-marketing-agency/images/services/collage/tile-${n}.jpg`);
+}
+
+// Per-service hero collage tiles
+const serviceHeroFolders = [
+  "influencer-marketing",
+  "branded-content-ips",
+  "experiential-marketing",
+  "fam-trips-pr",
+];
+for (const folder of serviceHeroFolders) {
+  for (let n = 1; n <= 8; n += 1) {
+    checkAsset(folder, `hero collage tile ${n}`, `/assets/services/${folder}/tile-${n}.jpg`);
+  }
 }
 
 const count = Object.keys(SERVICES_DATA).length;

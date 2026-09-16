@@ -18,3 +18,5 @@ __pycache__/
 server/uploads/
 .tmp-*/
 client/scripts/tmp-*
+*.cr3
+*.CR3

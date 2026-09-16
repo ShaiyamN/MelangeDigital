@@ -302,20 +302,28 @@ export default function ServiceDetail() {
                   collagePaused.current = false;
                 }}
               >
-                {HERO_TILES.map((n, i) => (
-                  <div
-                    key={n}
-                    className={`svc-collage__tile svc-collage__tile--${n}`}
-                    style={slotStyle(COLLAGE_LAYOUTS[collage.layout][collage.order[i]])}
-                  >
-                    <img
-                      src={`${COLLAGE_BASE}/tile-${n}.jpg`}
-                      alt=""
-                      loading={n <= 4 ? "eager" : "lazy"}
-                      decoding="async"
-                    />
-                  </div>
-                ))}
+                {HERO_TILES.map((n, i) => {
+                  const serviceFolder =
+                    slug === "branded-content-ip" ? "branded-content-ips" : slug;
+                  return (
+                    <div
+                      key={`${serviceFolder}-${n}`}
+                      className={`svc-collage__tile svc-collage__tile--${n}`}
+                      style={slotStyle(COLLAGE_LAYOUTS[collage.layout][collage.order[i]])}
+                    >
+                      <img
+                        src={`/assets/services/${serviceFolder}/tile-${n}.jpg`}
+                        alt=""
+                        loading={n <= 4 ? "eager" : "lazy"}
+                        decoding="async"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = `${COLLAGE_BASE}/tile-${n}.jpg`;
+                        }}
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -509,10 +517,7 @@ export default function ServiceDetail() {
 
         {/* Same section-8 accordion as Home / Services index */}
         <section className="section-8 svc-container" id="faq" aria-label="Frequently Asked Questions">
-          <h2 className="heading-20 svc-faq-title">
-            {service.faqs.titlePart1} <span className="svc-accent">{service.faqs.titleAccent}</span>{" "}
-            {service.faqs.titlePart2}
-          </h2>
+          <h2 className="heading-20 svc-faq-title">FAQs</h2>
 
           <div
             className="faq-list"

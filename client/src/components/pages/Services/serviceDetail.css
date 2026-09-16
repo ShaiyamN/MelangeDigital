@@ -303,7 +303,7 @@
    open a dead gutter down the middle between the title and the paragraph. */
 .svc-philosophy-top {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 40px;
   align-items: end;
   padding-block: var(--section-pad-y);
@@ -329,9 +329,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.35em;
-  text-align: left;
+  text-align: right;
   justify-self: end;
-  width: min(100%, 22.5em);
+  width: min(100%, 38em);
 }
 
 .svc-philosophy-lead {
@@ -339,6 +339,11 @@
   line-height: 1.55;
   color: var(--svc-ink);
   margin: 0;
+  text-align: right;
+}
+
+.svc-philosophy-lead br.svc-lead-break {
+  display: inline;
 }
 
 /* WHERE IT WORKS band — 364px tall, 4 glass cards 199 x 191, 20px gap */
@@ -844,8 +849,8 @@
   font-family: var(--svc-display);
   font-size: var(--svc-h);
   line-height: 1.12;
-  font-weight: 600;
-  color: var(--svc-deep);
+  font-weight: 700;
+  color: #1b1d1e;
   letter-spacing: -0.02em;
   margin: 0 0 40px;
   text-align: center;
@@ -1104,6 +1109,14 @@
     justify-self: start;
     width: 100%;
     max-width: none;
+  }
+
+  .svc-philosophy-lead {
+    text-align: left;
+  }
+
+  .svc-philosophy-lead br.svc-lead-break {
+    display: none;
   }
 
   .svc-pillars-grid {

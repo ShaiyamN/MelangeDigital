@@ -35,7 +35,7 @@ export const SERVICES_DATA = {
       titlePart1: "Reach Doesn't Book a Trip.",
       titleAccent: "Trust Does.",
       paragraph:
-        "People travel because someone they trust made a place <span class=\"svc-highlight\">worth seeing</span>. That's the power of influencer marketing for travel brands and tourism boards.",
+        "People travel because someone they trust made a place <span class=\"svc-highlight\">worth seeing</span>.<br class=\"svc-lead-break\" /> That's the power of influencer marketing for travel brands and tourism boards.",
       linkText: "Scroll Down",
       linkHref: "#philosophy",
     },
@@ -128,8 +128,8 @@ export const SERVICES_DATA = {
     },
     faqs: {
       titlePart1: "",
-      titleAccent: "Answered",
-      titlePart2: "before you ask",
+      titleAccent: "FAQs",
+      titlePart2: "",
       items: [
         {
           question: "What does Travel influencer marketing for tourism boards involve?",
@@ -204,7 +204,7 @@ export const SERVICES_DATA = {
       titlePart1: "Culture Doesn't Run Ads.",
       titleAccent: "It Runs Stories.",
       paragraph:
-        "People skip ads. They don't skip the stories they <span class=\"svc-highlight\">love</span>. That's the power of film tourism for travel brands and tourism boards.",
+        "People skip ads. They don't skip the stories they <span class=\"svc-highlight\">love</span>.<br class=\"svc-lead-break\" /> That's the power of film tourism for travel brands and tourism boards.",
       linkText: "Scroll Down",
       linkHref: "#philosophy",
     },
@@ -297,8 +297,8 @@ export const SERVICES_DATA = {
     },
     faqs: {
       titlePart1: "",
-      titleAccent: "Answered",
-      titlePart2: "before you ask",
+      titleAccent: "FAQs",
+      titlePart2: "",
       items: [
         {
           question: "What is film tourism marketing?",
@@ -372,7 +372,7 @@ export const SERVICES_DATA = {
       titlePart1: "Footfall Doesn't Build Demand.",
       titleAccent: "Experience Does.",
       paragraph:
-        "People remember what they <span class=\"svc-highlight\">experience</span>, not just what they see. That's the power of experiential marketing for travel brands and tourism boards.",
+        "People remember what they <span class=\"svc-highlight\">experience</span>, not just what they see.<br class=\"svc-lead-break\" /> That's the power of experiential marketing for travel brands and tourism boards.",
       linkText: "Scroll Down",
       linkHref: "#philosophy",
     },
@@ -469,8 +469,8 @@ export const SERVICES_DATA = {
     },
     faqs: {
       titlePart1: "",
-      titleAccent: "Answered",
-      titlePart2: "before you ask",
+      titleAccent: "FAQs",
+      titlePart2: "",
       items: [
         {
           question: "What does experiential marketing for a tourism board include?",
@@ -544,7 +544,7 @@ export const SERVICES_DATA = {
       titlePart1: "Coverage Doesn't Earn Trust.",
       titleAccent: "Firsthand Does.",
       paragraph:
-        "People believe a place when someone they trust has <span class=\"svc-highlight\">actually been</span>. That's the power of travel PR for travel brands and tourism boards.",
+        "People believe a place when someone they trust has <span class=\"svc-highlight\">actually been</span>.<br class=\"svc-lead-break\" /> That's the power of travel PR for travel brands and tourism boards.",
       linkText: "Scroll Down",
       linkHref: "#philosophy",
     },
@@ -641,8 +641,8 @@ export const SERVICES_DATA = {
     },
     faqs: {
       titlePart1: "",
-      titleAccent: "Answered",
-      titlePart2: "before you ask",
+      titleAccent: "FAQs",
+      titlePart2: "",
       items: [
         {
           question: "What is a FAM trip in tourism marketing?",
