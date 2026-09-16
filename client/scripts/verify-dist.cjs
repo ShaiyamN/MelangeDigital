@@ -32,9 +32,16 @@ if (!fs.existsSync(path.join(root, "server.js")) || !fs.existsSync(path.join(roo
   process.exit(1);
 }
 
-fs.mkdirSync(dist, { recursive: true });
-fs.copyFileSync(index, path.join(dist, "index.html"));
+// Populate dist/ completely from spa/ so Hostinger finds a full distribution
+// whether it expects dist/ or serves spa/ directly
+if (fs.existsSync(dist)) {
+  fs.rmSync(dist, { recursive: true, force: true });
+}
+fs.cpSync(spa, dist, { recursive: true });
 
 const bytes = fs.statSync(index).size;
+const distCount = fs.readdirSync(dist).length;
 console.log(`verify-dist: ok (${index}, ${bytes} bytes)`);
+console.log(`verify-dist: populated dist/ from spa/ (${distCount} top-level entries)`);
 console.log("hostinger-build: ok (prebuilt spa, no Vite)");
+

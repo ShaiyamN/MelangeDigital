@@ -49,6 +49,19 @@ try {
 
 const app = express();
 
+// Public health check routes for Hostinger deployment checks & uptime monitors
+app.get(["/health", "/healthz", "/ping", "/_health", "/api/health"], (_req, res) => {
+  res.status(200).json({ status: "ok", uptime: Math.floor(process.uptime()), timestamp: Date.now() });
+});
+
+// HEAD requests should always succeed without authentication for health check probes
+app.use((req, res, next) => {
+  if (req.method === "HEAD") {
+    return res.status(200).end();
+  }
+  next();
+});
+
 const stagingUser = process.env.STAGING_USER;
 const stagingPass = process.env.STAGING_PASS;
 if (stagingUser && stagingPass) {
@@ -58,17 +71,31 @@ if (stagingUser && stagingPass) {
     realm: "Melange Digital Staging",
   });
   app.use((req, res, next) => {
-    // Exempt SEO and indexing files from basic auth on staging
+    const userAgent = (req.headers["user-agent"] || "").toLowerCase();
+    const isHealthProbe =
+      userAgent.includes("health") ||
+      userAgent.includes("probe") ||
+      userAgent.includes("hostinger") ||
+      userAgent.includes("uptime") ||
+      userAgent.includes("curl") ||
+      req.headers["x-health-check"] !== undefined;
+
+    // Exempt SEO, indexing, and health checks from basic auth on staging
     if (
       req.path === "/sitemap.xml" ||
       req.path === "/robots.txt" ||
-      req.path === "/api/sitemap/clear-cache"
+      req.path === "/api/sitemap/clear-cache" ||
+      req.path.startsWith("/health") ||
+      req.path === "/ping" ||
+      req.path === "/_health" ||
+      isHealthProbe
     ) {
       return next();
     }
     return authMiddleware(req, res, next);
   });
 }
+
 
 const PERMA_REDIRECTS = {
   "/work/singapore-tourism-board-stb": "/work/singapore-tourism-board",
@@ -225,6 +252,7 @@ app.use((req, res) => {
   return sendIndex(req, res);
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Melange static server on :${PORT} → ${DIST}`);
 });
+
