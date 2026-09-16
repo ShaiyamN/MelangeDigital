@@ -3,7 +3,9 @@
 # This prevents deploying stale pre-built bundles to Hostinger.
 
 # Find the last commit that touched client/src/ (source code)
-SRC_COMMIT=$(git log -1 --format="%H" -- client/src/)
+# Find the last commit that touched client/src/ source that Vite actually bundles.
+# Untracking mp4/gif must not block a Hostinger push.
+SRC_COMMIT=$(git log -1 --format="%H" -- client/src/ ":!*.mp4" ":!*.gif" ":!*.mov" ":!*.webm")
 # Find the last commit that touched client/spa/ (pre-built bundle)
 SPA_COMMIT=$(git log -1 --format="%H" -- client/spa/)
 
