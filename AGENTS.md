@@ -16,6 +16,7 @@ client/src/  →  (local Vite build)  →  client/dist/  →  (copy)  →  clien
 - `client/spa/` is the **pre-compiled production bundle** tracked in Git
 - Hostinger's `npm run build` only runs `verify-dist.cjs` (checks `spa/index.html` exists)
 - Express `server.cjs` serves static files from `client/spa/`
+- Hostinger clones this branch. **Do not commit** source `*.mp4` / `*.gif` under `client/src/assets/` — hashed copies already live in `spa/`. A 675MB tree dies in clone with empty logs (`package.json` null).
 
 ### MANDATORY rules for all agents
 
@@ -36,6 +37,7 @@ client/src/  →  (local Vite build)  →  client/dist/  →  (copy)  →  clien
    ```
 7. **NEVER** add `client/spa/` to `.gitignore`. It is intentionally tracked.
 8. **NEVER** delete or modify files in `client/spa/` directly — they are build output.
+9. **NEVER** commit source `*.mp4` / `*.gif` under `client/src/assets/`. Hashed copies live in `spa/`. Hostinger clone of a fat tree dies with empty logs (`package.json` null).
 
 ### Build scripts reference
 

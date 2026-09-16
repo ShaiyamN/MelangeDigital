@@ -53,3 +53,7 @@ public/assets/services/**/Copy of*
 # Local source masters (not deployed)
 # ----------------------------
 _assets-source
+src/assets/video/**/*.mp4
+src/assets/video/**/*.gif
+src/assets/video/**/*.mov
+src/assets/newImages/*.gif

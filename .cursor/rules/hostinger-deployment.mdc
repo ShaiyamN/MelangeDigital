@@ -30,5 +30,6 @@ This project deploys to Hostinger shared hosting (~1GB RAM). Hostinger **cannot*
    ```
 7. **NEVER** add `client/spa/` to `.gitignore`.
 8. **NEVER** directly edit files in `client/spa/` — they are build output.
+9. **NEVER** commit `client/src/assets/video/` or large source GIFs (hashed copies are in `spa/`). Hostinger clone of a fat tree dies with empty logs.
 
 A pre-push hook will block pushes if `client/src/` is newer than `client/spa/`.

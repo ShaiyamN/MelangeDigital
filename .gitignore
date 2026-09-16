@@ -3,6 +3,10 @@ client/dist/
 client/spa/videos/
 client/public/videos/
 client/public/assets/services/**/Copy of*
+client/src/assets/video/**/*.mp4
+client/src/assets/video/**/*.gif
+client/src/assets/video/**/*.mov
+client/src/assets/newImages/*.gif
 client/public/indian-outbound-tourism-report/
 client/public/tourism/
 .env
