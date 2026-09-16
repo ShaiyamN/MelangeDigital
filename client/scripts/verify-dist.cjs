@@ -32,16 +32,11 @@ if (!fs.existsSync(path.join(root, "server.js")) || !fs.existsSync(path.join(roo
   process.exit(1);
 }
 
-// Populate dist/ completely from spa/ so Hostinger finds a full distribution
-// whether it expects dist/ or serves spa/ directly
-if (fs.existsSync(dist)) {
-  fs.rmSync(dist, { recursive: true, force: true });
-}
-fs.cpSync(spa, dist, { recursive: true });
+// Hostinger Default steals dist/. One stub file so the output dir is not empty.
+// NEVER copy spa → dist here — that OOMs the 1GB box.
+fs.mkdirSync(dist, { recursive: true });
+fs.copyFileSync(index, path.join(dist, "index.html"));
 
 const bytes = fs.statSync(index).size;
-const distCount = fs.readdirSync(dist).length;
 console.log(`verify-dist: ok (${index}, ${bytes} bytes)`);
-console.log(`verify-dist: populated dist/ from spa/ (${distCount} top-level entries)`);
 console.log("hostinger-build: ok (prebuilt spa, no Vite)");
-

@@ -17,17 +17,18 @@ This project deploys to Hostinger shared hosting (~1GB RAM). Hostinger **cannot*
 ## Rules
 
 1. **NEVER** change `client/package.json` `"build"` script from `"node scripts/verify-dist.cjs"`.
-2. **NEVER** suggest running Vite on Hostinger or changing the Hostinger build command.
-3. **After editing ANY file under `client/src/`**, rebuild `client/spa/` before committing:
+2. **NEVER** copy `spa/` → `dist/` in `verify-dist.cjs` / Hostinger `npm run build`. Default steals `dist/`; Node serves `spa/`.
+3. **NEVER** suggest running Vite on Hostinger or changing the Hostinger build command.
+4. **After editing ANY file under `client/src/`**, rebuild `client/spa/` before committing:
    ```
    cd client && set FORCE_VITE_BUILD=1 && npm run build:full && cd ..
    ```
-4. **Always commit `client/spa/`** in the same push as source changes.
-5. **Always verify** before pushing:
+5. **Always commit `client/spa/`** in the same push as source changes.
+6. **Always verify** before pushing:
    ```
    cd client && npm run verify:hostinger && npm run verify:dist
    ```
-6. **NEVER** add `client/spa/` to `.gitignore`.
-7. **NEVER** directly edit files in `client/spa/` — they are build output.
+7. **NEVER** add `client/spa/` to `.gitignore`.
+8. **NEVER** directly edit files in `client/spa/` — they are build output.
 
 A pre-push hook will block pushes if `client/src/` is newer than `client/spa/`.

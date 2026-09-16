@@ -21,6 +21,7 @@ dist
 dist-ssr
 spa/videos/
 public/videos/
+public/assets/services/**/Copy of*
 
 # ----------------------------
 # Environment files

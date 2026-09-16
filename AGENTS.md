@@ -20,21 +20,22 @@ client/src/  →  (local Vite build)  →  client/dist/  →  (copy)  →  clien
 ### MANDATORY rules for all agents
 
 1. **NEVER** change `client/package.json`'s `"build"` script. It must remain `"node scripts/verify-dist.cjs"`.
-2. **NEVER** suggest running `vite build` on Hostinger or changing Hostinger's build command to `npm run build:full`.
-3. **After editing ANY file under `client/src/`**, you **MUST** rebuild `client/spa/` before committing:
+2. **NEVER** copy `spa/` → `dist/` in `verify-dist.cjs` or Hostinger `npm run build`. Default steals `dist/`; Node serves `spa/`. A full copy OOMs the 1GB box.
+3. **NEVER** suggest running `vite build` on Hostinger or changing Hostinger's build command to `npm run build:full`.
+4. **After editing ANY file under `client/src/`**, you **MUST** rebuild `client/spa/` before committing:
    ```
    cd client
    set FORCE_VITE_BUILD=1 && npm run build:full    # Windows
    FORCE_VITE_BUILD=1 npm run build:full            # macOS/Linux
    cd ..
    ```
-4. **Always commit `client/spa/` changes** in the same commit or push as source changes.
-5. **Always run verification** before pushing:
+5. **Always commit `client/spa/` changes** in the same commit or push as source changes.
+6. **Always run verification** before pushing:
    ```
    cd client && npm run verify:hostinger && npm run verify:dist
    ```
-6. **NEVER** add `client/spa/` to `.gitignore`. It is intentionally tracked.
-7. **NEVER** delete or modify files in `client/spa/` directly — they are build output.
+7. **NEVER** add `client/spa/` to `.gitignore`. It is intentionally tracked.
+8. **NEVER** delete or modify files in `client/spa/` directly — they are build output.
 
 ### Build scripts reference
 
