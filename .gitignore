@@ -9,9 +9,8 @@ client/public/tourism/
 !.env.example
 .vscode/
 .qodo/
-.cursor/
+.cursor/skills/
 .claude/
-.agents/
 __pycache__/
 *.log
 /assets/

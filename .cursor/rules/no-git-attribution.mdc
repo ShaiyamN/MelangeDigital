@@ -1,0 +1,10 @@
+---
+description: Never add AI co-author attribution to git commits
+alwaysApply: true
+---
+
+# Git commits — no AI attribution
+
+- Never pass `--trailer "Co-authored-by: ..."` to `git commit`.
+- Never add `Co-authored-by: Cursor`, `Co-authored-by: Claude`, or `Made-with: Cursor` to commit messages.
+- Use plain `git commit -m "message"` only.

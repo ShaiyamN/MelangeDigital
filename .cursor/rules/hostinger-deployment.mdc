@@ -1,0 +1,33 @@
+---
+description: Hostinger deployment rules — MUST follow when editing client/src/ files
+globs: client/src/**
+alwaysApply: true
+---
+
+# Hostinger Deployment Guard
+
+This project deploys to Hostinger shared hosting (~1GB RAM). Hostinger **cannot** run `vite build` (OOM).
+
+## Architecture
+
+- `client/spa/` is the **pre-compiled production bundle** committed to Git
+- Hostinger's `npm run build` only verifies `spa/index.html` exists — it does NOT compile
+- Express `server.cjs` serves from `client/spa/`
+
+## Rules
+
+1. **NEVER** change `client/package.json` `"build"` script from `"node scripts/verify-dist.cjs"`.
+2. **NEVER** suggest running Vite on Hostinger or changing the Hostinger build command.
+3. **After editing ANY file under `client/src/`**, rebuild `client/spa/` before committing:
+   ```
+   cd client && set FORCE_VITE_BUILD=1 && npm run build:full && cd ..
+   ```
+4. **Always commit `client/spa/`** in the same push as source changes.
+5. **Always verify** before pushing:
+   ```
+   cd client && npm run verify:hostinger && npm run verify:dist
+   ```
+6. **NEVER** add `client/spa/` to `.gitignore`.
+7. **NEVER** directly edit files in `client/spa/` — they are build output.
+
+A pre-push hook will block pushes if `client/src/` is newer than `client/spa/`.
