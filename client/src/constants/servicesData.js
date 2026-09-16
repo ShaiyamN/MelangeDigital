@@ -79,7 +79,7 @@ export const SERVICES_DATA = {
           step: "01",
           title: "CAST FOR CREDIBILITY",
           description:
-            "We match creators to the subculture, not the follower count. Selected for audience trust, niche authority and storytelling ability, so the endorsement actually carries weight.",
+            "We match creators to the subculture, not the follower count.",
           image: "/destination-marketing-agency/images/services/approach/approach-inf-cast.png",
         },
         {
@@ -87,7 +87,7 @@ export const SERVICES_DATA = {
           step: "02",
           title: "DATA BEFORE DEALS",
           description:
-            "We check the data behind every creator before signing a contract: audience geography, engagement quality, authenticity, prior brand fit. Decisions backed by evidence, not instinct.",
+            "We check the data behind every creator before signing a contract.",
           image: "/destination-marketing-agency/images/services/approach/approach-inf-data.png",
         },
         {
@@ -95,7 +95,7 @@ export const SERVICES_DATA = {
           step: "03",
           title: "ONE TEAM, NOT FOUR",
           description:
-            "Casting, negotiation, content and reporting run under one roof, not four vendors. That's what a travel influencer marketing agency means, One point of accountability from brief to final report.",
+            "Casting, negotiation, content and reporting run under one roof, not four vendors.",
           image: "/destination-marketing-agency/images/services/approach/approach-inf-team.png",
         },
         {
@@ -103,7 +103,7 @@ export const SERVICES_DATA = {
           step: "04",
           title: "COMMUNITY, NOT JUST REACH",
           description:
-            "Our campaigns build creator communities that outlast the campaign. Participation and advocacy that keep working after the spend stops.",
+            "Our campaigns build creator communities that outlast the campaign.",
           image: "/destination-marketing-agency/images/services/approach/approach-inf-community.png",
         },
       ],
@@ -416,7 +416,7 @@ export const SERVICES_DATA = {
           step: "01",
           title: "Destination First",
           description:
-            "Every activation starts with the destination, audience and commercial objective. The experience is designed around what needs to be remembered, felt and acted upon.",
+            "A first-time entrant can win the floor without the biggest budget.",
           image: "/destination-marketing-agency/images/services/approach/approach-exp-destination.png",
           icon: "/destination-marketing-agency/images/services/icon-cast.svg",
         },
@@ -425,7 +425,7 @@ export const SERVICES_DATA = {
           step: "02",
           title: "Built to Be Experienced",
           description:
-            "We combine physical storytelling with technology, performance and interaction — from VR and AR to gamification and interactive installations.",
+            "Our team designs, fabricates and staffs the activation end to end.",
           image: "/destination-marketing-agency/images/services/approach/approach-exp-experience.png",
           icon: "/destination-marketing-agency/images/services/icon-data.svg",
         },
@@ -434,7 +434,7 @@ export const SERVICES_DATA = {
           step: "03",
           title: "One Team, End to End",
           description:
-            "Strategy, design, fabrication, staffing and execution run under one roof. One connected process, one point of accountability from concept to activation.",
+            "We build physical, shareable moments a scroll can't replace.",
           image: "/destination-marketing-agency/images/services/approach/approach-exp-team.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
@@ -443,7 +443,7 @@ export const SERVICES_DATA = {
           step: "04",
           title: "Designed to Deliver",
           description:
-            "We measure what happens beyond the crowd: qualified enquiries, trade connections, engagement and campaign results. Because footfall is an input. A qualified lead is the output.",
+            "Every activation is engineered to capture a qualified enquiry, not just a photo.",
           image: "/destination-marketing-agency/images/services/approach/approach-exp-deliver.png",
           icon: "/destination-marketing-agency/images/services/icon-community.svg",
         },
@@ -588,7 +588,7 @@ export const SERVICES_DATA = {
           step: "01",
           title: "Earned Credibility",
           description:
-            "We build relationships with the publishers, journalists and creators who matter in each market, creating opportunities for destinations to be experienced and talked about authentically.",
+            "A cover story lands harder than a media buy ever could.",
           image: "/destination-marketing-agency/images/services/approach/approach-fam-credibility.png",
           icon: "/destination-marketing-agency/images/services/icon-cast.svg",
         },
@@ -597,7 +597,7 @@ export const SERVICES_DATA = {
           step: "02",
           title: "On the Ground",
           description:
-            "Our regional teams manage hosting, negotiations and execution in person, giving every FAM, media engagement and destination activation the local detail it needs.",
+            "Our regional teams host, negotiate and staff every trip and stall in person.",
           image: "/destination-marketing-agency/images/services/approach/approach-fam-ground.png",
           icon: "/destination-marketing-agency/images/services/icon-data.svg",
         },
@@ -606,7 +606,7 @@ export const SERVICES_DATA = {
           step: "03",
           title: "Dignitary Ready",
           description:
-            "From trade floors to ministerial engagements, we understand the precision and protocol behind high-profile destination representation.",
+            "We've run trade floors built for ministers, not just visitors.",
           image: "/destination-marketing-agency/images/services/approach/approach-fam-dignitary.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
@@ -615,7 +615,7 @@ export const SERVICES_DATA = {
           step: "04",
           title: "Long-Term Relationships",
           description:
-            "The strongest media, creator and trade relationships continue beyond a single campaign. We build connections that keep creating opportunities after the FAM or placement is over.",
+            "Our publisher and journalist network is built over years, not rented per campaign.",
           image: "/destination-marketing-agency/images/services/approach/approach-fam-relationships.png",
           icon: "/destination-marketing-agency/images/services/icon-community.svg",
         },
