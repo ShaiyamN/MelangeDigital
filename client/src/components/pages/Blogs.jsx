@@ -94,7 +94,7 @@ const Blogs = () => {
           name="description"
           content="Insights, ideas, and stories from the Mélange Digital team on travel marketing, creator economy, brand strategy, and technology."
         />
-        <link rel="canonical" href="https://melangedigital.co/blogs" />
+        <link rel="canonical" href="https://melangedigital.co/blogs" data-rh="true" />
         <meta property="og:title" content="Blog & Insights | Mélange Digital" />
         <meta
           property="og:description"

@@ -44,7 +44,7 @@ const Work = () => {
           name="description"
           content="See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."
         />
-        <link rel="canonical" href="https://melangedigital.co/work" />
+        <link rel="canonical" href="https://melangedigital.co/work" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

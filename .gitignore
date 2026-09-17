@@ -3,6 +3,7 @@ client/dist/
 client/spa/videos/
 client/public/videos/
 client/public/assets/services/**/Copy of*
+client/spa/assets/services/**/Copy of*
 client/src/assets/video/**/*.mp4
 client/src/assets/video/**/*.gif
 client/src/assets/video/**/*.mov

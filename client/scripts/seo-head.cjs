@@ -152,7 +152,7 @@ function titleFromPath(p) {
 
 function canonicalFor(path, origin = ORIGIN) {
   const clean = normalizePath(path);
-  if (clean === "/") return origin;
+  if (clean === "/") return `${origin}/`;
   const m = clean.match(/^\/work\/(.+)$/);
   if (m) {
     const slug = CANONICAL_SLUG[m[1].toLowerCase()] || m[1];

@@ -16,7 +16,7 @@ const Contact = () => {
           name="description"
           content="Get in touch with Mélange Digital today. Our team is ready to craft the perfect digital marketing strategy to grow your brand globally"
         />
-        <link rel="canonical" href="https://melangedigital.co/contact" />
+        <link rel="canonical" href="https://melangedigital.co/contact" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

@@ -97,6 +97,19 @@ if (stagingUser && stagingPass) {
 }
 
 
+// Canonical redirect: normalize trailing slashes on all subpaths (e.g. /services/ -> /services, /contact/ -> /contact)
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  const rawPath = req.path;
+  if (rawPath.length > 1 && rawPath.endsWith("/")) {
+    const cleanPath = rawPath.replace(/\/+$/, "");
+    const queryIndex = req.originalUrl.indexOf("?");
+    const query = queryIndex !== -1 ? req.originalUrl.slice(queryIndex) : "";
+    return res.redirect(301, cleanPath + query);
+  }
+  next();
+});
+
 const PERMA_REDIRECTS = {
   "/work/singapore-tourism-board-stb": "/work/singapore-tourism-board",
   "/work/GenVR": "/work/genvr",

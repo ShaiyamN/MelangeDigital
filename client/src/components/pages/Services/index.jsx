@@ -139,7 +139,7 @@ const Services = () => {
           name="description"
           content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
         />
-        <link rel="canonical" href="https://melangedigital.co/services" />
+        <link rel="canonical" href="https://melangedigital.co/services" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

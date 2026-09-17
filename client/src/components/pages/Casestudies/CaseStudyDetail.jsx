@@ -159,7 +159,7 @@ const CaseStudyDetail = () => {
         <meta property="og:image" content={cs.bannerImage || ""} />
         <meta property="og:title" content={`${cs.title} | Mélange Digital's Work`} />
         <meta property="og:description" content={cs.intro?.substring(0, 160)} />
-        <link rel="canonical" href={`https://melangedigital.co/work/${CANONICAL_SLUG[slug.toLowerCase()] || (cs && cs.slug) || slug}`} />
+        <link rel="canonical" href={`https://melangedigital.co/work/${(CANONICAL_SLUG[slug.toLowerCase()] || (cs && cs.slug) || slug).replace(/\/+$/, "")}`} data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

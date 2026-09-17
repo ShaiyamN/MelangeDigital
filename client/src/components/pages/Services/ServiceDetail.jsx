@@ -252,10 +252,10 @@ export default function ServiceDetail() {
       <Helmet>
         <title>{service.seo.title}</title>
         <meta name="description" content={service.seo.description} />
-        <link rel="canonical" href={`https://melangedigital.co/services/${service.slug}`} />
+        <link rel="canonical" href={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} data-rh="true" />
         <meta property="og:title" content={service.seo.title} />
         <meta property="og:description" content={service.seo.description} />
-        <meta property="og:url" content={`https://melangedigital.co/services/${service.slug}`} />
+        <meta property="og:url" content={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>

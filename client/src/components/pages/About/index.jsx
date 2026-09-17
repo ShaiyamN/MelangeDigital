@@ -144,7 +144,7 @@ const About = () => {
           name="description"
           content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."
         />
-        <link rel="canonical" href="https://melangedigital.co/about" />
+        <link rel="canonical" href="https://melangedigital.co/about" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

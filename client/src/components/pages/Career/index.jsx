@@ -59,7 +59,7 @@ const Career = () => {
           content="Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team."
         />
         <meta property="og:image" content="https://melangedigital.co/logo.png" />
-        <link rel="canonical" href="https://melangedigital.co/careers" />
+        <link rel="canonical" href="https://melangedigital.co/careers" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
