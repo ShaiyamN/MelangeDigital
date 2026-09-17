@@ -22,7 +22,7 @@ export const DEFAULT_SERVICE_CARDS = {
   },
   branded: {
     id: "branded",
-    name: "Branded Content & IPs",
+    name: "Branded Content & IP's",
     shortName: "Branded",
     slot1: {
       title: "Dharma Productions – Singapore Tourism Board: Jigra",

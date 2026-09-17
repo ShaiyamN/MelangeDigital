@@ -50,7 +50,7 @@ export const SERVICES_DATA = {
         {
           icon: "/destination-marketing-agency/images/services/pillars/inf-reposition.png",
           title: "REPOSITION",
-          description: "Put a destination in front of a new audience.",
+          description: "Put a destination in front of a completely new audience.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/inf-launch.png",
@@ -60,12 +60,12 @@ export const SERVICES_DATA = {
         {
           icon: "/destination-marketing-agency/images/services/pillars/inf-amplify.png",
           title: "AMPLIFY",
-          description: "Turn seasonal campaigns into cultural moments.",
+          description: "Turn seasonal campaigns into lasting cultural moments.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/inf-expand.png",
           title: "EXPAND",
-          description: "Open new source markets through the creators already shaping them.",
+          description: "Open new source markets through creators who shape them.",
         },
       ],
     },
@@ -79,7 +79,7 @@ export const SERVICES_DATA = {
           step: "01",
           title: "CAST FOR CREDIBILITY",
           description:
-            "We match creators to the subculture, not the follower count.",
+            "We match creators to the subculture and passion point, not the follower count and reach.",
           image: "/destination-marketing-agency/images/services/approach/approach-inf-cast.png",
         },
         {
@@ -87,7 +87,7 @@ export const SERVICES_DATA = {
           step: "02",
           title: "DATA BEFORE DEALS",
           description:
-            "We check the data behind every creator before signing a contract.",
+            "We run due diligence and culture matchmaking before engaging any creator.",
           image: "/destination-marketing-agency/images/services/approach/approach-inf-data.png",
         },
         {
@@ -95,7 +95,7 @@ export const SERVICES_DATA = {
           step: "03",
           title: "ONE TEAM, NOT FOUR",
           description:
-            "Casting, negotiation, content and reporting run under one roof, not four vendors.",
+            "Sourcing, strategy, production and reporting run under one roof, not four vendors.",
           image: "/destination-marketing-agency/images/services/approach/approach-inf-team.png",
         },
         {
@@ -114,12 +114,12 @@ export const SERVICES_DATA = {
       titleAccent: "Brand Momentum",
       description: "Managed as one connected campaign, not a string of individual bookings.",
       steps: [
-        { number: "01", title: "Celebrity & Creator Identification and Vetting" },
-        { number: "02", title: "Talent Negotiation and Contracting" },
-        { number: "03", title: "Campaign Strategy and Casting" },
-        { number: "04", title: "Content Direction and Production Oversight" },
-        { number: "05", title: "Community and Fandom Engagement" },
-        { number: "06", title: "Performance Tracking and Reporting" },
+        { number: "01", title: "Celebrity & Creator Identification & Vetting" },
+        { number: "02", title: "Talent Negotiation & Contracting" },
+        { number: "03", title: "Campaign Strategy & Narrative Building" },
+        { number: "04", title: "Content Direction & Production Oversight" },
+        { number: "05", title: "Community & Fandom Engagement" },
+        { number: "06", title: "Performance Tracking & Reporting" },
       ],
     },
     caseStudies: {
@@ -165,7 +165,7 @@ export const SERVICES_DATA = {
 
   "branded-content-ips": {
     slug: "branded-content-ips",
-    name: "Branded Content & IP",
+    name: "Branded Content & IP's",
     seo: {
       title: "Film Tourism Marketing & Branded Content | Mélange Digital",
       description:
@@ -178,7 +178,7 @@ export const SERVICES_DATA = {
       titlePart1: "We Secure the IP,",
       titleAccent: "Not Just a Placement.",
       descriptionLines: [
-        "Films. Music. Editorial.",
+        "Films. Music. Editorials. OTT",
         "The cultural spaces audiences choose to spend time in.",
         "We put destinations inside the story through film tourism and travel branding",
       ],
@@ -219,7 +219,7 @@ export const SERVICES_DATA = {
         {
           icon: "/destination-marketing-agency/images/services/pillars/brd-film.png",
           title: "FILM",
-          description: "Position a destination as a filming hub.",
+          description: "Position a destination as a sought-after hub for film productions.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/brd-music.png",
@@ -229,12 +229,12 @@ export const SERVICES_DATA = {
         {
           icon: "/destination-marketing-agency/images/services/pillars/brd-editorial.png",
           title: "EDITORIAL",
-          description: "Create credible moments through publishers and platforms people trust.",
+          description: "Create credible moments through trusted publishers and platforms.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/brd-culture.png",
           title: "CULTURE",
-          description: "Build associations that outlast the campaign.",
+          description: "Build cultural associations that outlast a single campaign.",
         },
       ],
     },
@@ -246,8 +246,8 @@ export const SERVICES_DATA = {
         {
           id: "secure-ips",
           step: "01",
-          title: "We Secure the IPs",
-          description: "We land the production or the track, not just a placement inside it.",
+          title: "We secure the IP's",
+          description: "We identify and secure the production of the track.",
           image: "/destination-marketing-agency/images/services/approach/approach-brd-ips.png",
           icon: "/destination-marketing-agency/images/services/icon-cast.svg",
         },
@@ -262,16 +262,16 @@ export const SERVICES_DATA = {
         {
           id: "access-not-outreach",
           step: "03",
-          title: "Access, Not Outreach",
-          description: "Our film and music network gets a destination cast, not just pitched.",
+          title: "ACCESS, NOT OUTREACH",
+          description: "Our film and music video network gets a destination cast, not just pitched.",
           image: "/destination-marketing-agency/images/services/approach/approach-brd-access.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
         {
           id: "earned-reach",
           step: "04",
-          title: "Built for Earned Reach",
-          description: "Every asset is designed to travel past the paid media budget.",
+          title: "BUILT FOR EARNED REACH",
+          description: "Every asset is designed to travel past the paid media budget and EMV",
           image: "/destination-marketing-agency/images/services/approach/approach-brd-reach.png",
           icon: "/destination-marketing-agency/images/services/icon-community.svg",
         },
@@ -285,7 +285,7 @@ export const SERVICES_DATA = {
       steps: [
         { number: "01", title: "Brand Strategy & Positioning" },
         { number: "02", title: "Content Strategy & Production" },
-        { number: "03", title: "Film & Music Integration" },
+        { number: "03", title: "Film, IP & Music Video Integration" },
         { number: "04", title: "Editorial & Publisher Partnerships" },
         { number: "05", title: "Script & Story Development" },
         { number: "06", title: "Distribution & Amplification" },
@@ -346,7 +346,7 @@ export const SERVICES_DATA = {
       titlePart1: "Presence That",
       titleAccent: "Outperforms.",
       descriptionLines: [
-        "Trade Shows. Roadshows. Retail.",
+        "Trade Shows. Roadshows. Retail Activations",
         "The physical spaces where audiences experience a destination.",
         "We deliver experiential marketing for travel and tourism, putting destinations into the real world through experiences built to engage audiences and drive commercial impact.",
       ],
@@ -387,22 +387,22 @@ export const SERVICES_DATA = {
         {
           icon: "/destination-marketing-agency/images/services/pillars/exp-launch.png",
           title: "LAUNCH",
-          description: "Make a new destination, route, hotel or proposition impossible to ignore.",
+          description: "Make a new destination, route or hotel impossible to ignore.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/exp-connect.png",
           title: "CONNECT",
-          description: "Bring destinations to life for the trade and consumers in priority markets.",
+          description: "Bring destinations to life for trade and consumers alike.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/exp-engage.png",
           title: "ENGAGE",
-          description: "Turn trade shows, roadshows and retail spaces into meaningful brand experiences.",
+          description: "Turn trade shows and retail spaces into real brand moments.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/exp-convert.png",
           title: "CONVERT",
-          description: "Capture qualified enquiries and connections that move beyond the activation.",
+          description: "Capture qualified enquiries that move beyond the activation.",
         },
       ],
     },
@@ -423,18 +423,18 @@ export const SERVICES_DATA = {
         {
           id: "built-to-be-experienced",
           step: "02",
-          title: "Built to Be Experienced",
+          title: "BUILT TO BE EXPERIENCED",
           description:
-            "Our team designs, fabricates and staffs the activation end to end.",
+            "Our team designs, fabricates and executes the activation end to end.",
           image: "/destination-marketing-agency/images/services/approach/approach-exp-experience.png",
           icon: "/destination-marketing-agency/images/services/icon-data.svg",
         },
         {
           id: "one-team-end-to-end",
           step: "03",
-          title: "One Team, End to End",
+          title: "ONE TEAM, END TO END",
           description:
-            "We build physical, shareable moments a scroll can't replace.",
+            "We build physical, shareable moments that go beyond a scroll.",
           image: "/destination-marketing-agency/images/services/approach/approach-exp-team.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
@@ -516,7 +516,7 @@ export const SERVICES_DATA = {
     hero: {
       badge: "FAM TRIPS + PR IN TRAVEL & TOURISM",
       titlePart1: "Where Trust Is Built",
-      titleAccent: "Firsthand.",
+      titleAccent: "Experience.",
       descriptionLines: [
         "Journalists. Creators. Publishers.",
         "The voices audiences trust to discover what comes next.",
@@ -559,22 +559,22 @@ export const SERVICES_DATA = {
         {
           icon: "/destination-marketing-agency/images/services/pillars/fam-launch.png",
           title: "LAUNCH",
-          description: "Build credibility around a new destination, proposition or market entry.",
+          description: "Build credibility around a new destination, proposition or entry.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/fam-experience.png",
           title: "EXPERIENCE",
-          description: "Host journalists, creators and travel trade so they can experience the destination firsthand.",
+          description: "Host journalists, creators and trade to experience it firsthand.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/fam-connect.png",
           title: "CONNECT",
-          description: "Build relationships with publishers, media and trade partners who shape destination discovery.",
+          description: "Build relationships with publishers and trade who shape discovery.",
         },
         {
           icon: "/destination-marketing-agency/images/services/pillars/fam-protect.png",
           title: "PROTECT",
-          description: "Manage sensitive moments with the local presence and relationships destination reputation requires.",
+          description: "Manage sensitive moments with the local presence reputation needs.",
         },
       ],
     },
@@ -586,27 +586,27 @@ export const SERVICES_DATA = {
         {
           id: "earned-credibility",
           step: "01",
-          title: "Earned Credibility",
+          title: "EARNED CREDIBILITY",
           description:
-            "A cover story lands harder than a media buy ever could.",
+            "An editorial cover story lands harder than a media buy ever could.",
           image: "/destination-marketing-agency/images/services/approach/approach-fam-credibility.png",
           icon: "/destination-marketing-agency/images/services/icon-cast.svg",
         },
         {
           id: "on-the-ground",
           step: "02",
-          title: "On the Ground",
+          title: "ON THE GROUND",
           description:
-            "Our regional teams host, negotiate and staff every trip and stall in person.",
+            "Our regional teams host, curate, negotiate and execute every PR campaign.",
           image: "/destination-marketing-agency/images/services/approach/approach-fam-ground.png",
           icon: "/destination-marketing-agency/images/services/icon-data.svg",
         },
         {
           id: "dignitary-ready",
           step: "03",
-          title: "Dignitary Ready",
+          title: "DIGNITARY READY",
           description:
-            "We've run trade floors built for ministers, not just visitors.",
+            "We've run trade floors built for dignitaries, ministers and not just visitors.",
           image: "/destination-marketing-agency/images/services/approach/approach-fam-dignitary.png",
           icon: "/destination-marketing-agency/images/services/icon-team.svg",
         },
@@ -683,3 +683,47 @@ export const SERVICES_DATA = {
 
 // Aliases for alternate URLs
 SERVICES_DATA["branded-content-ip"] = SERVICES_DATA["branded-content-ips"];
+
+export const SERVICE_COLLAGE_TILES = {
+  "influencer-marketing": [
+    { src: "/assets/services/influencer-marketing/%23karankundrra.jpg", position: "center 18%" },
+    { src: "/assets/services/influencer-marketing/Hebah%20Patel.jpg", position: "center 20%" },
+    { src: "/assets/services/influencer-marketing/KASHIKA-KAPOOR.jpg", position: "center 22%" },
+    { src: "/assets/services/influencer-marketing/Kanika.jpg", position: "center 20%" },
+    { src: "/assets/services/influencer-marketing/Oh%2C%20so%20rare!%20You're%20one%20of%20a%20kind%F0%9F%8C%A0.jpg", position: "center 25%" },
+    { src: "/assets/services/influencer-marketing/devdutt%20padikkal%20%E2%9D%A4%EF%B8%8F.jpg", position: "center 20%" },
+    { src: "/assets/services/influencer-marketing/divine.jpg", position: "center 30%" },
+    { src: "/assets/services/influencer-marketing/download.jpg", position: "center 25%" },
+  ],
+  "branded-content-ips": [
+    { src: "/assets/services/branded-content-ips/tile-1.jpg", position: "center 45%" },
+    { src: "/assets/services/branded-content-ips/AP.jpg", position: "center 28%" },
+    { src: "/assets/services/branded-content-ips/Divine.jpg", position: "center 35%" },
+    { src: "/assets/services/branded-content-ips/Manish-Paul.png", position: "center 22%" },
+    { src: "/assets/services/branded-content-ips/Mouni.jpg", position: "center 25%" },
+    { src: "/assets/services/branded-content-ips/tile-6.jpg", position: "center 65%" },
+    { src: "/assets/services/branded-content-ips/pratik.jpg", position: "center 20%" },
+    { src: "/assets/services/branded-content-ips/riar.jpg", position: "center 25%" },
+  ],
+  "experiential-marketing": [
+    { src: "/assets/services/experiential-marketing/tile-1.jpg", position: "center 30%" },
+    { src: "/assets/services/experiential-marketing/tile-2.jpg", position: "center center" },
+    { src: "/assets/services/experiential-marketing/tile-3.jpg", position: "center 45%" },
+    { src: "/assets/services/experiential-marketing/tile-4.jpg", position: "center 32%" },
+    { src: "/assets/services/experiential-marketing/tile-5.jpg", position: "center 55%" },
+    { src: "/assets/services/experiential-marketing/tile-6.jpg", position: "center 38%" },
+    { src: "/assets/services/experiential-marketing/tile-7.jpg", position: "center 45%" },
+    { src: "/assets/services/experiential-marketing/tile-8.jpg", position: "center 55%" },
+  ],
+  "fam-trips-pr": [
+    { src: "/assets/services/fam-trips-pr/tile-1.jpg", position: "center 22%" },
+    { src: "/assets/services/fam-trips-pr/AP.jpg", position: "center 28%" },
+    { src: "/assets/services/fam-trips-pr/Aanchal.jpg", position: "center 22%" },
+    { src: "/assets/services/fam-trips-pr/tile-4.jpg", position: "center 28%" },
+    { src: "/assets/services/fam-trips-pr/tile-5.jpg", position: "center 35%" },
+    { src: "/assets/services/fam-trips-pr/Ram%20Charan.jpg", position: "center 30%" },
+    { src: "/assets/services/fam-trips-pr/samiksha%20sud.jpg", position: "center 28%" },
+    { src: "/assets/services/fam-trips-pr/tile-8.jpg", position: "center 45%" },
+  ],
+};
+

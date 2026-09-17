@@ -272,7 +272,7 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: top center;
+  object-position: center 25%;
 }
 
 /* object-position centres each tile on the subject Figma had framed */
@@ -729,6 +729,7 @@
   font-size: var(--svc-body);
   font-weight: 400;
   line-height: 1.35;
+  min-height: calc(2 * 1.35em);
   color: var(--svc-ink);
   margin: 0;
   transition: color 0.4s ease;
@@ -1157,6 +1158,10 @@
     align-items: center;
     text-align: left;
     gap: 18px;
+  }
+
+  .svc-step-title {
+    min-height: auto;
   }
 
   .svc-work-section .svc-projects {

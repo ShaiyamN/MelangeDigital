@@ -6,7 +6,7 @@ import { db } from "../../../firebase";
 import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
 import { useBtnAnim } from "../../layout/MelangeCta";
-import { SERVICES_DATA } from "../../../constants/servicesData";
+import { SERVICES_DATA, SERVICE_COLLAGE_TILES } from "../../../constants/servicesData";
 import { resolveServiceSlots } from "../../../constants/serviceCards";
 import "./serviceDetail.css";
 
@@ -26,6 +26,7 @@ const CTA_BG = "/destination-marketing-agency/images/services/arrivals-banner-bg
 const COLLAGE_BASE = "/destination-marketing-agency/images/services/collage";
 const HERO_TILES = [1, 2, 3, 4, 5, 6, 7, 8];
 const COLLAGE_IDENTITY = [0, 1, 2, 3, 4, 5, 6, 7];
+
 const COLLAGE_LAYOUTS = [
   [
     { left: 1.75, top: 8.79, width: 28.59, height: 31.01, rotate: 0.1 },
@@ -119,6 +120,13 @@ export default function ServiceDetail() {
 
   const serviceFolder =
     slug === "branded-content-ip" ? "branded-content-ips" : slug;
+
+  const collageTiles =
+    SERVICE_COLLAGE_TILES[serviceFolder] ||
+    HERO_TILES.map((n) => ({
+      src: `/assets/services/${serviceFolder}/tile-${n}.jpg`,
+      position: "center 25%",
+    }));
 
   const [cards, setCards] = useState(() => resolveServiceSlots(serviceKey));
 
@@ -305,20 +313,23 @@ export default function ServiceDetail() {
                   collagePaused.current = false;
                 }}
               >
-                {HERO_TILES.map((n, i) => (
+                {collageTiles.map((tile, i) => (
                     <div
-                      key={`${serviceFolder}-${n}`}
-                      className={`svc-collage__tile svc-collage__tile--${n}`}
+                      key={`${serviceFolder}-${i}`}
+                      className={`svc-collage__tile svc-collage__tile--${i + 1}`}
                       style={slotStyle(COLLAGE_LAYOUTS[collage.layout][collage.order[i]])}
                     >
                       <img
-                        src={`/assets/services/${serviceFolder}/tile-${n}.jpg`}
+                        src={tile.src}
                         alt=""
-                        loading={n <= 4 ? "eager" : "lazy"}
+                        loading={i < 4 ? "eager" : "lazy"}
                         decoding="async"
+                        style={{
+                          objectPosition: tile.position || "center 25%",
+                        }}
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = `${COLLAGE_BASE}/tile-${n}.jpg`;
+                          e.currentTarget.src = `${COLLAGE_BASE}/tile-${(i % 8) + 1}.jpg`;
                         }}
                       />
                     </div>

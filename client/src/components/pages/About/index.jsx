@@ -110,7 +110,7 @@ const LEADERS = [
   { name: "Sanket Bolinjkar", jobTitle: "Founder and Chief Executive Officer" },
   { name: "Ekaterina Bolinjkar", jobTitle: "Co-Founder, Finance and People" },
   { name: "Jason Dias", jobTitle: "Director of Growth & Strategy" },
-  { name: "Kaustubh Shetye", jobTitle: "Director Creative Strategy & Operations" },
+  { name: "Mihir Shah", jobTitle: "Regional Director, UK" },
   { name: "Julien Cordon", jobTitle: "Regional Director, GCC" },
   { name: "Maria Masiri", jobTitle: "Regional Director, Africa" },
 ];

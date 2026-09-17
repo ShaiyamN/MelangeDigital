@@ -63,7 +63,7 @@ const Footer = () => (
             <Link to="/services/influencer-marketing">Influencer Marketing</Link>
           </li>
           <li>
-            <Link to="/services/branded-content-ips">Branded Content &amp; IPs</Link>
+            <Link to="/services/branded-content-ips">Branded Content &amp; IP's</Link>
           </li>
           <li>
             <Link to="/services/experiential-marketing">Experiential Marketing</Link>

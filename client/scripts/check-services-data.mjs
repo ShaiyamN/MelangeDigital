@@ -16,7 +16,7 @@ import { dirname, join } from "node:path";
 const here = dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = join(here, "..", "public");
 
-const { SERVICES_DATA } = await import("../src/constants/servicesData.js");
+const { SERVICES_DATA, SERVICE_COLLAGE_TILES } = await import("../src/constants/servicesData.js");
 
 const errors = [];
 
@@ -70,7 +70,8 @@ const IMAGE_PATHS = [
 
 const checkAsset = (slug, label, src) => {
   if (!nonEmpty(src) || !src.startsWith("/")) return; // remote or absent
-  if (!existsSync(join(PUBLIC_DIR, src.replace(/^\//, "")))) {
+  const clean = decodeURIComponent(src.replace(/^\//, ""));
+  if (!existsSync(join(PUBLIC_DIR, clean))) {
     errors.push(`${slug}: ${label} -> missing file "${src}"`);
   }
 };
@@ -154,15 +155,23 @@ for (let n = 1; n <= 8; n += 1) {
 }
 
 // Per-service hero collage tiles
-const serviceHeroFolders = [
-  "influencer-marketing",
-  "branded-content-ips",
-  "experiential-marketing",
-  "fam-trips-pr",
-];
-for (const folder of serviceHeroFolders) {
-  for (let n = 1; n <= 8; n += 1) {
-    checkAsset(folder, `hero collage tile ${n}`, `/assets/services/${folder}/tile-${n}.jpg`);
+if (SERVICE_COLLAGE_TILES) {
+  for (const [folder, tiles] of Object.entries(SERVICE_COLLAGE_TILES)) {
+    tiles.forEach((tile, idx) => {
+      checkAsset(folder, `hero collage tile ${idx + 1}`, tile.src);
+    });
+  }
+} else {
+  const serviceHeroFolders = [
+    "influencer-marketing",
+    "branded-content-ips",
+    "experiential-marketing",
+    "fam-trips-pr",
+  ];
+  for (const folder of serviceHeroFolders) {
+    for (let n = 1; n <= 8; n += 1) {
+      checkAsset(folder, `hero collage tile ${n}`, `/assets/services/${folder}/tile-${n}.jpg`);
+    }
   }
 }
 

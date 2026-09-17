@@ -493,7 +493,7 @@ const BlogDetail = () => {
                   Influencer &amp; Celebrity Marketing
                 </Link>
                 <Link to="/services#branded" className="block text-zinc-700 text-base font-semibold hover:underline">
-                  Branded Content &amp; IPs
+                  Branded Content &amp; IP's
                 </Link>
                 <Link to="/services#experiential" className="block text-zinc-700 text-base font-semibold hover:underline">
                   Experiential &amp; On-ground
