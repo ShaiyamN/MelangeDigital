@@ -37,7 +37,7 @@ const Contact = () => {
   "contactPoint": [
     {
       "@type": "ContactPoint",
-      "telephone": "+91-9988776655",
+      "telephone": "+91-9372567722",
       "contactType": "sales",
       "areaServed": "Global",
       "availableLanguage": ["English", "Hindi"]

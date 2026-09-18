@@ -24,7 +24,7 @@ const Footer = () => (
             rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
-            <img src={`${IMG}/si-linkedin.svg`} alt="" />
+            <img src={`${IMG}/si-linkedin.svg`} alt="LinkedIn" />
           </a>
           <a
             href="https://www.instagram.com/melangedigital.co"
@@ -32,7 +32,7 @@ const Footer = () => (
             rel="noopener noreferrer"
             aria-label="Instagram @melangedigital.co"
           >
-            <img src={`${IMG}/si-insta.svg`} alt="" />
+            <img src={`${IMG}/si-insta.svg`} alt="Instagram" />
           </a>
         </div>
       </div>
@@ -41,6 +41,9 @@ const Footer = () => (
         <ul>
           <li>
             <Link to="/about">About Us</Link>
+          </li>
+          <li>
+            <Link to="/services">Our Services</Link>
           </li>
           <li>
             <Link to="/work">Our Work</Link>

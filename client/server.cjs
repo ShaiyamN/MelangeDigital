@@ -228,6 +228,18 @@ app.get("/sitemap.xml", async (req, res) => {
   }
 });
 
+// Explicit plain-text serving for LLM crawler specifications
+app.get(["/llms.txt", "/llm.txt"], (_req, res) => {
+  const spaFile = path.join(DIST, "llms.txt");
+  const pubFile = path.join(__dirname, "public", "llms.txt");
+  const target = fs.existsSync(spaFile) ? spaFile : pubFile;
+  if (fs.existsSync(target)) {
+    res.type("text/plain; charset=utf-8").sendFile(target);
+  } else {
+    res.status(404).type("text/plain").send("Not found");
+  }
+});
+
 app.use(
   express.static(DIST, {
     // Avoid /admin/login → /admin/login/ 301 (breaks behind some Hostinger proxies)

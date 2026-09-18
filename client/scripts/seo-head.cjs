@@ -6,9 +6,9 @@ const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
 const PAGE_META = {
   "/": {
     title:
-      "Global Digital Marketing Agency for Travel and Tourism | Melange",
+      "Global Travel & Tourism Marketing Agency | Melange Digital",
     description:
-      "Melange is a global digital marketing agency for travel and tourism, specialising in paid ads, influencer marketing, social media, and growth campaigns.",
+      "Melange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call.",
   },
   "/work": {
     title: "Our Work & Case Study Portfolio | Mélange Digital",
