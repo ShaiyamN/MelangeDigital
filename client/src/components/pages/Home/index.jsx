@@ -209,6 +209,11 @@ const Home = () => {
             }
           }
           /* FAQ card styling sync with Services */
+          body.dma-react .section-8 .div-block-41,
+          body.dma-react .section-8 .faq-list {
+            max-width: 100% !important;
+            width: 100% !important;
+          }
           body.dma-react .section-8 .accordion-toggle .text-block-30 {
             font-size: 18px !important;
             font-weight: 500 !important;

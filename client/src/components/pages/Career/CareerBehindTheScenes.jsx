@@ -11,7 +11,7 @@ const SLIDES = [
     { src: `${IMG}/Team 1.jpg`, pos: "45.9% 48.3%" },
     { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.30.13 PM.jpeg`, pos: "50% 50%" },
     { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.35.36 PM.jpeg`, pos: "50% 40%" },
-    { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.42.32 PM.jpeg`, pos: "50.1% 54.1%" },
+    { src: `${IMG}/zambia-otm-award.jpg`, pos: "50% 40%" },
     { src: `${IMG}/WhatsApp Image 2026-09-03 at 5.30.13 PM (2).jpeg`, pos: "50% 40%" },
     { src: `${IMG}/Team 3.jpg`, pos: "50% 50%" },
     { src: `${IMG}/Team 2.jpg`, pos: "35.5% 59.7%" },

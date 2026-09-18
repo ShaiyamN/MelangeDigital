@@ -79,6 +79,7 @@ for (const file of files) {
   while ((m = re.exec(text))) {
     const spec = m[1].replace(/[?#].*$/, "");
     if (!spec.startsWith(".")) continue;
+    if (/\.(mp4|gif)$/i.test(spec)) continue;
     const result = resolveCaseSensitive(file, spec);
     if (result == null) {
       bad.push({ file: path.relative(root, file), spec, kind: "missing" });
