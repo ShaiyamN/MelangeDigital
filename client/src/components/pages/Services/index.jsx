@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { DEFAULT_SERVICE_CARDS, resolveServiceSlots } from "../../../constants/serviceCards";
 import {
@@ -25,7 +25,7 @@ function renderServiceCardHtml(card) {
   const href = card.slug ? (card.slug.startsWith("/") ? card.slug : `/work/${card.slug}`) : "/work";
   return `      <a class="svc-project" href="${esc(href)}">
        <div class="svc-project__media">
-        <img alt="${esc(card.title)}" src="${esc(card.bannerImage)}" width="1200" height="600" style="object-fit: cover; width: 100%; height: 100%;" />
+        <img alt="${esc(card.title)}" src="${esc(card.bannerImage)}" width="1200" height="600" style="object-fit: contain; width: 100%; height: 100%;" />
        </div>
        <div class="svc-project__bar">
         <h3 class="svc-project__title">${esc(card.title)}</h3>
@@ -34,10 +34,10 @@ function renderServiceCardHtml(card) {
       </a>`;
 }
 
-function buildDynamicMarkup(baseHtml, settings) {
+function buildDynamicMarkup(baseHtml, settings, caseStudiesList = null) {
   let result = baseHtml;
   for (const serviceId of Object.keys(DEFAULT_SERVICE_CARDS)) {
-    const [card1, card2] = resolveServiceSlots(serviceId, settings);
+    const [card1, card2] = resolveServiceSlots(serviceId, settings, caseStudiesList);
     const newCardsHtml = `\n${renderServiceCardHtml(card1)}\n${renderServiceCardHtml(card2)}\n     `;
     const regex = new RegExp(
       `(<section[^>]*id="${serviceId}"[\\s\\S]*?<div class="svc-projects">)([\\s\\S]*?)(<\\/div>\\s*<div class="svc-cta-row">)`
@@ -116,9 +116,18 @@ const Services = () => {
     let active = true;
     const loadServiceCards = async () => {
       try {
-        const snap = await getDoc(doc(db, "settings", "service_cards"));
-        if (snap.exists() && active) {
-          setMarkup(buildDynamicMarkup(rawMarkup, snap.data()));
+        if (!db) return;
+        const [snap, csSnap] = await Promise.all([
+          getDoc(doc(db, "settings", "service_cards")).catch(() => null),
+          getDocs(collection(db, "casestudies")).catch(() => null),
+        ]);
+        if (!active) return;
+        const settingsData = snap && snap.exists() ? snap.data() : null;
+        const caseStudiesList = csSnap && !csSnap.empty
+          ? csSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
+          : null;
+        if (settingsData || caseStudiesList) {
+          setMarkup(buildDynamicMarkup(rawMarkup, settingsData, caseStudiesList));
         }
       } catch (err) {
         console.warn("Could not load dynamic service cards:", err);
@@ -130,6 +139,39 @@ const Services = () => {
       active = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!cssReady) return;
+
+    const measureButtons = () => {
+      const root = document.querySelector(".svc-react-root");
+      if (!root) return;
+      const btns = root.querySelectorAll(".c2a-button, .let-s-collaborate, .hero-download-btn, .btn-anim");
+      btns.forEach((btn) => {
+        const icon = btn.querySelector(".btn-anim__icon, .hero-btn-icon");
+        if (!icon) return;
+        const btnRect = btn.getBoundingClientRect();
+        const iconRect = icon.getBoundingClientRect();
+        if (!btnRect.width || !iconRect.width) return;
+        const styles = window.getComputedStyle(btn);
+        const padLeft = parseFloat(styles.paddingLeft) || 8;
+        const targetX = btnRect.left + padLeft + iconRect.width / 2;
+        const currentX = iconRect.left + iconRect.width / 2;
+        btn.style.setProperty("--arrow-shift", `${Math.round(targetX - currentX)}px`);
+      });
+    };
+
+    measureButtons();
+    const t1 = setTimeout(measureButtons, 50);
+    const t2 = setTimeout(measureButtons, 250);
+    window.addEventListener("resize", measureButtons);
+    document.fonts?.ready?.then(measureButtons).catch(() => {});
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener("resize", measureButtons);
+    };
+  }, [markup, cssReady]);
 
   return (
     <>

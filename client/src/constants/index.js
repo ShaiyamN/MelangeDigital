@@ -195,9 +195,9 @@ const works = [
     tag1: "B2B",
     tag2: "Experiential Marketing",
     tag3: "Lead Generation Strategy",
-    title: "Akbar Travels",
+    title: "Mall Activation For Saudi Tourism",
     description: "",
-    path: "/work/akbar-travels",
+    path: "/work/mall-activation-for-saudi-tourism",
     filter: ["filter1", "filter5", "filter6"],
   },
   {
@@ -740,10 +740,10 @@ const workpage = [
     tag2: "Kiosk Design & Fabrication",
     tag3: "Radio Campaign Production",
     tag4: "Lead Generation Strategy",
-    title: "Akbar Travels",
+    title: "Mall Activation For Saudi Tourism",
     description:
       "Saudi Arabia: India's Next Dream Destination & generating 415+ Mall Walk-ins through strategic experiential marketing and kiosk activations.",
-    path: "/work/akbar-travels",
+    path: "/work/mall-activation-for-saudi-tourism",
     filter: ["all", "filter2", "filter5", "filter6"],
   },
   {
@@ -1759,10 +1759,10 @@ const prOutreachServiceCaseStudy = [
     tag2: "Kiosk Design & Fabrication",
     tag3: "Radio Campaign Production",
     tag4: "Lead Generation Strategy",
-    title: "Akbar Travels",
+    title: "Mall Activation For Saudi Tourism",
     description:
       "Saudi Arabia: India's Next Dream Destination & generating 415+ Mall Walk-ins through strategic experiential marketing and kiosk activations.",
-    path: "/work/akbar-travels",
+    path: "/work/mall-activation-for-saudi-tourism",
     filter: ["all", "filter2", "filter5", "filter6"],
   },
   {

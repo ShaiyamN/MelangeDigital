@@ -57,7 +57,7 @@ const REQUIRED_STRINGS = [
 // Arrays the JSX maps over, with the keys each item must carry.
 const REQUIRED_LISTS = [
   ["philosophy.pillars", ["title", "description"], 4],
-  ["approach.cards", ["title", "description", "image"], 1],
+  ["approach.cards", ["title", "description", "icon"], 1],
   ["process.steps", ["number", "title"], 6],
   ["faqs.items", ["question", "answer"], 1],
 ];
@@ -131,7 +131,7 @@ for (const [slug, service] of Object.entries(SERVICES_DATA)) {
 
     for (const path of IMAGE_PATHS) checkAsset(slug, path, get(service, path));
   (get(service, "approach.cards") || []).forEach((c, i) =>
-    checkAsset(slug, `approach.cards[${i}].image`, c?.image)
+    checkAsset(slug, `approach.cards[${i}].icon`, c?.icon)
   );
 }
 

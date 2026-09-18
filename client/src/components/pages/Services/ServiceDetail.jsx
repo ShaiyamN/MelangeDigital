@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
 import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
@@ -102,7 +102,6 @@ export default function ServiceDetail() {
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [faqCollapsed, setFaqCollapsed] = useState(true);
 
-  const [activeApproachIndex, setActiveApproachIndex] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [collage, setCollage] = useState({ layout: 0, order: COLLAGE_IDENTITY });
   const collagePaused = useRef(false);
@@ -131,7 +130,6 @@ export default function ServiceDetail() {
   const [cards, setCards] = useState(() => resolveServiceSlots(serviceKey));
 
   useEffect(() => {
-    setActiveApproachIndex(0);
     setActiveStep(0);
     setOpenFaqIndex(0);
     setFaqCollapsed(true);
@@ -144,15 +142,25 @@ export default function ServiceDetail() {
     }
     setCards(resolveServiceSlots(serviceKey));
     let active = true;
-    getDoc(doc(db, "settings", "service_cards"))
-      .then((snap) => {
-        if (snap.exists() && active) {
-          setCards(resolveServiceSlots(serviceKey, snap.data()));
-        }
-      })
-      .catch((err) => {
-        console.warn("Could not load dynamic service cards for detail:", err);
-      });
+    if (db) {
+      Promise.all([
+        getDoc(doc(db, "settings", "service_cards")).catch(() => null),
+        getDocs(collection(db, "casestudies")).catch(() => null),
+      ])
+        .then(([snap, csSnap]) => {
+          if (!active) return;
+          const settingsData = snap && snap.exists() ? snap.data() : null;
+          const caseStudiesList = csSnap && !csSnap.empty
+            ? csSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
+            : null;
+          if (settingsData || caseStudiesList) {
+            setCards(resolveServiceSlots(serviceKey, settingsData, caseStudiesList));
+          }
+        })
+        .catch((err) => {
+          console.warn("Could not load dynamic service cards for detail:", err);
+        });
+    }
     return () => {
       active = false;
     };
@@ -200,20 +208,6 @@ export default function ServiceDetail() {
   };
 
   const approachCards = service.approach?.cards || [];
-  const activeApproach = approachCards[activeApproachIndex];
-  const handleNextApproach = () => {
-    if (approachCards.length > 0) {
-      setActiveApproachIndex((prev) => (prev + 1) % approachCards.length);
-    }
-  };
-  const handlePrevApproach = () => {
-    if (approachCards.length > 0) {
-      setActiveApproachIndex(
-        (prev) => (prev - 1 + approachCards.length) % approachCards.length
-      );
-    }
-  };
-
   const manifesto = service.manifesto || {};
   const heroLines = service.hero.subtitleLines || service.hero.descriptionLines || null;
 
@@ -326,6 +320,7 @@ export default function ServiceDetail() {
                         decoding="async"
                         style={{
                           objectPosition: tile.position || "center 25%",
+                          objectFit: tile.fit || "cover",
                         }}
                         onError={(e) => {
                           e.currentTarget.onerror = null;
@@ -393,7 +388,7 @@ export default function ServiceDetail() {
           </div>
         </section>
 
-        {/* 3. OUR APPROACH — stacked card deck */}
+        {/* 3. OUR APPROACH — 4-Pillar Strategic Matrix */}
         <section className="svc-approach-section svc-container" aria-label="Our Approach">
           <div className="svc-approach-header">
             {service.approach.eyebrow && (
@@ -408,47 +403,39 @@ export default function ServiceDetail() {
             )}
           </div>
 
-          <div className="svc-approach-deck-container">
-            {/* Dark card offset behind the active one */}
-            <div className="svc-approach-card-shadow" aria-hidden="true" />
-
-            {activeApproach && (
-              <div className="svc-approach-card-active">
-                <div className="svc-approach-media">
-                  <img src={activeApproach.image} alt="" loading="lazy" />
-                </div>
-                <div className="svc-approach-text-col">
-                  <h3 className="svc-approach-card-title">{activeApproach.title}</h3>
-                  <p className="svc-approach-card-desc">{activeApproach.description}</p>
-                  <div className="svc-approach-arrows">
-                    <button
-                      type="button"
-                      className="svc-approach-arrow-btn svc-approach-arrow-btn--prev"
-                      onClick={handlePrevApproach}
-                      aria-label={`Show the previous approach point (${
-                        activeApproachIndex + 1
-                      } of ${approachCards.length})`}
-                    >
-                      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                        <path d="M15.5 5.5L9 12l6.5 6.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
-                    <button
-                      type="button"
-                      className="svc-approach-arrow-btn svc-approach-arrow-btn--next"
-                      onClick={handleNextApproach}
-                      aria-label={`Show the next approach point (${
-                        activeApproachIndex + 1
-                      } of ${approachCards.length})`}
-                    >
-                      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
-                        <path d="M8.5 5.5L15 12l-6.5 6.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </button>
+          <div className="svc-approach-grid">
+            {approachCards.map((card, idx) => (
+              <article
+                key={card.id || idx}
+                className="svc-approach-card"
+              >
+                <div className="svc-approach-card-top">
+                  <div className="svc-approach-icon-pod">
+                    <img
+                      src={card.icon}
+                      alt=""
+                      className="svc-approach-icon"
+                      loading="lazy"
+                    />
                   </div>
+                  <span
+                    className="svc-approach-step"
+                    aria-label={`Step ${card.step || `0${idx + 1}`}`}
+                  >
+                    {card.step || `0${idx + 1}`}
+                  </span>
                 </div>
-              </div>
-            )}
+
+                {card.tag && (
+                  <div className="svc-approach-tag-wrap">
+                    <span className="svc-approach-tag">{card.tag}</span>
+                  </div>
+                )}
+
+                <h3 className="svc-approach-card-title">{card.title}</h3>
+                <p className="svc-approach-card-desc">{card.description}</p>
+              </article>
+            ))}
           </div>
         </section>
 

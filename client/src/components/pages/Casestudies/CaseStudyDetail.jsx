@@ -14,12 +14,14 @@ import ReactPlayer from "react-player";
 const SLUG_ALIASES = {
   "singapore-tourism-board": ["singapore-tourism-board-stb"],
   "singapore-tourism-board-stb": ["singapore-tourism-board"],
+  "akbar-travels": ["mall-activation-for-saudi-tourism"],
 };
 const CANONICAL_SLUG = {
   genvr: "genvr",
   neotraders: "neotraders",
   devboost: "devboost",
   "singapore-tourism-board-stb": "singapore-tourism-board",
+  "akbar-travels": "mall-activation-for-saudi-tourism",
 };
 
 const CaseStudyDetail = () => {

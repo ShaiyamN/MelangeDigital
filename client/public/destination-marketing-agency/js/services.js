@@ -44,14 +44,27 @@
 
   function setup(btn) {
     if (btn.matches(EXCLUDE) || btn.closest(EXCLUDE)) return;
-    if (btn.classList.contains("btn-anim")) return;
-    var icon = findIcon(btn);
+    var icon = btn.querySelector(".btn-anim__icon") || findIcon(btn);
     if (!icon) return;
-    var label = findLabel(btn, icon);
+    var label = btn.querySelector(".btn-anim__label") || findLabel(btn, icon);
     btn.classList.add("btn-anim");
     icon.classList.add("btn-anim__icon");
     if (label) label.classList.add("btn-anim__label");
-    registered.push({ btn: btn, icon: icon, label: label });
+    for (var i = 0; i < registered.length; i++) {
+      if (registered[i].btn === btn) {
+        registered[i].icon = icon;
+        registered[i].label = label;
+        return;
+      }
+    }
+    var entry = { btn: btn, icon: icon, label: label };
+    registered.push(entry);
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function () {
+        measure(entry);
+      });
+      ro.observe(btn);
+    }
   }
 
   function init() {
@@ -60,6 +73,18 @@
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(measureAll).catch(function () {});
     }
+  }
+
+  window.__initServicesButtons = init;
+
+  if (window.__svcButtonObserver) {
+    window.__svcButtonObserver.disconnect();
+  }
+  if (window.MutationObserver) {
+    window.__svcButtonObserver = new MutationObserver(function () {
+      init();
+    });
+    window.__svcButtonObserver.observe(document.body, { childList: true, subtree: true });
   }
 
   var resizeTimer;

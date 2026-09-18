@@ -1,11 +1,48 @@
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase";
 import {
   MARKETING_ASSET as ASSET,
   MarketingShell,
   marketingNavCss,
   useMarketingBoot,
 } from "../marketingShell";
-import markup from "./markup.html?raw";
+import rawMarkup from "./markup.html?raw";
+
+function esc(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function renderWorkCardHtml(cs) {
+  if (!cs) return "";
+  const href = cs.slug ? (cs.slug.startsWith("/") ? cs.slug : `/work/${cs.slug}`) : "/work";
+  const caption = cs.serviceCaption || cs.intro || cs.caption || "";
+  const title = cs.title || "";
+  const bannerImage = cs.bannerImage || "";
+  return `      <a class="svc-project" href="${esc(href)}">
+       <div class="svc-project__media">
+        <img alt="${esc(title)}" src="${esc(bannerImage)}" width="1200" height="600" style="object-fit: contain; width: 100%; height: 100%;"/>
+       </div>
+       <div class="svc-project__bar">
+        <h3 class="svc-project__title">${esc(title)}</h3>
+        <p class="svc-project__caption">${esc(caption)}</p>
+       </div>
+      </a>`;
+}
+
+function buildWorkDynamicMarkup(baseHtml, list) {
+  if (!list || list.length === 0) return baseHtml;
+  const cardsHtml = list.map(renderWorkCardHtml).join("\n");
+  const regex = /(<div class="svc-projects">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>)/;
+  if (!regex.test(baseHtml)) return baseHtml;
+  return baseHtml.replace(regex, (_m, start, _old, end) => `${start}\n${cardsHtml}\n     ${end}`);
+}
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
@@ -34,7 +71,70 @@ const COLLECTION = {
 };
 
 const Work = () => {
+  const [markup, setMarkup] = useState(rawMarkup);
   const cssReady = useMarketingBoot("wrk", CSS, SCRIPT_BASES);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadWorkCaseStudies = async () => {
+      try {
+        if (!db) return;
+        const querySnapshot = await getDocs(collection(db, "casestudies"));
+        if (!active || querySnapshot.empty) return;
+        const list = querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+
+        const workSorted = [...list].sort((a, b) => {
+          if (a.sortOrder !== undefined && b.sortOrder !== undefined) return a.sortOrder - b.sortOrder;
+          if (a.sortOrder !== undefined) return -1;
+          if (b.sortOrder !== undefined) return 1;
+          return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+        });
+
+        setMarkup(buildWorkDynamicMarkup(rawMarkup, workSorted));
+      } catch (err) {
+        console.warn("Could not load dynamic work case studies:", err);
+      }
+    };
+
+    loadWorkCaseStudies();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!cssReady) return;
+
+    const measureButtons = () => {
+      const root = document.querySelector(".wrk-react-root");
+      if (!root) return;
+      const btns = root.querySelectorAll(".c2a-button, .let-s-collaborate, .hero-download-btn, .btn-anim");
+      btns.forEach((btn) => {
+        const icon = btn.querySelector(".btn-anim__icon, .hero-btn-icon");
+        if (!icon) return;
+        const btnRect = btn.getBoundingClientRect();
+        const iconRect = icon.getBoundingClientRect();
+        if (!btnRect.width || !iconRect.width) return;
+        const styles = window.getComputedStyle(btn);
+        const padLeft = parseFloat(styles.paddingLeft) || 8;
+        const targetX = btnRect.left + padLeft + iconRect.width / 2;
+        const currentX = iconRect.left + iconRect.width / 2;
+        btn.style.setProperty("--arrow-shift", `${Math.round(targetX - currentX)}px`);
+      });
+    };
+
+    measureButtons();
+    const t1 = setTimeout(measureButtons, 50);
+    const t2 = setTimeout(measureButtons, 250);
+    window.addEventListener("resize", measureButtons);
+    document.fonts?.ready?.then(measureButtons).catch(() => {});
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener("resize", measureButtons);
+    };
+  }, [markup, cssReady]);
 
   return (
     <>
