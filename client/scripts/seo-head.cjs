@@ -206,13 +206,80 @@ function resolveMeta(reqPath, index = {}) {
     (cms && (cms.metaDescription || cms.description || cms.intro)) ||
     `${title}. Digital marketing for travel and tourism.`;
 
+  const canonical = canonicalFor(known || path, origin);
+  const isBlogPost = path.startsWith("/blogs/") && path !== "/blogs";
+  const isBlogIndex = path === "/blogs";
+
   return {
     path,
     title: String(title),
     description: String(description).replace(/\s+/g, " ").trim().slice(0, 160),
-    canonical: canonicalFor(known || path, origin),
+    canonical,
     stripFaq: path !== "/",
     noindex: false,
+    jsonLd: isBlogPost
+      ? blogPostingJsonLd(canonical, cms || {})
+      : isBlogIndex
+        ? collectionPageJsonLd(canonical, title, description)
+        : null,
+  };
+}
+
+function isoDate(value) {
+  if (!value) return "";
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? "" : d.toISOString();
+}
+
+/** Minimal BlogPosting for the initial HTML shell (crawlers that skip JS). */
+function blogPostingJsonLd(pageUrl, cms) {
+  const headline = String(cms.seoTitle || cms.title || "").trim();
+  if (!headline) return null;
+  if (cms.schemaMode === "custom" && cms.customSchema) return cms.customSchema;
+  if (cms.generatedSchema && typeof cms.generatedSchema === "object") {
+    return cms.generatedSchema;
+  }
+  const published = isoDate(cms.date);
+  const modified = isoDate(cms.updatedAt) || published;
+  const authorName = String(cms.author || "").trim();
+  const node = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline,
+    description: String(cms.metaDescription || cms.description || "").trim() || undefined,
+    image: String(cms.image || "").trim() || undefined,
+    datePublished: published || undefined,
+    dateModified: modified || undefined,
+    author: authorName
+      ? {
+          "@type": /m[ée]lange digital/i.test(authorName) ? "Organization" : "Person",
+          name: authorName,
+        }
+      : undefined,
+    publisher: {
+      "@type": "Organization",
+      name: "Mélange Digital",
+      url: ORIGIN,
+      logo: `${ORIGIN}/logo.png`,
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+    url: pageUrl,
+  };
+  for (const k of Object.keys(node)) {
+    if (node[k] === undefined) delete node[k];
+  }
+  return node;
+}
+
+function collectionPageJsonLd(pageUrl, name, description) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${pageUrl}#webpage`,
+    url: pageUrl,
+    name,
+    description,
+    isPartOf: { "@type": "WebSite", name: "Mélange Digital", url: ORIGIN },
   };
 }
 
@@ -254,6 +321,10 @@ function applyHead(html, meta) {
       (block) =>
         /"@type"\s*:\s*"FAQPage"/.test(block) ? "" : block,
     );
+  }
+  if (meta.jsonLd) {
+    const block = `\n  <script type="application/ld+json">${JSON.stringify(meta.jsonLd)}</script>`;
+    out = out.replace(/<\/head>/i, `${block}\n</head>`);
   }
   return out;
 }
@@ -303,6 +374,35 @@ if (require.main === module) {
   );
   assert(slug.includes("https://melangedigital.co/work/acme"));
   assert(slug.includes("Acme Case"));
+
+  const blogShell = applyHead(
+    shell,
+    resolveMeta("/blogs/airlines-marketing", {
+      routes: new Set(),
+      byPath: {
+        "/blogs/airlines-marketing": {
+          seoTitle: "Airlines Marketing Guide",
+          metaDescription: "How airlines market destinations.",
+          author: "Mélange Digital",
+          date: "2026-10-01",
+          updatedAt: "2026-10-05T00:00:00.000Z",
+          image: "https://melangedigital.co/logo.png",
+        },
+      },
+      origin: ORIGIN,
+    }),
+  );
+  assert(blogShell.includes('rel="canonical" href="https://melangedigital.co/blogs/airlines-marketing"'));
+  assert(blogShell.includes("Airlines Marketing Guide"));
+  assert(blogShell.includes('"@type":"BlogPosting"'));
+  assert(blogShell.includes("airlines-marketing"));
+
+  const blogsIndex = applyHead(
+    shell,
+    resolveMeta("/blogs", { routes: new Set(["/blogs"]), byPath: {}, origin: ORIGIN }),
+  );
+  assert(blogsIndex.includes('"@type":"CollectionPage"'));
+  assert(blogsIndex.includes("https://melangedigital.co/blogs"));
 
   assert(
     canonicalFor("/work/singapore-tourism-board-stb") ===

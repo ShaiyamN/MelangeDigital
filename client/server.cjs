@@ -207,24 +207,20 @@ app.post("/api/sitemap/clear-cache", (_req, res) => {
   res.json({ ok: true, cleared: true });
 });
 
-// Live sitemap from Firestore (blogs + casestudies). Before static so dist/sitemap.xml is not used.
+// Live sitemap from Firestore (blogs + casestudies). Before static so spa/sitemap.xml is not used.
 app.get("/sitemap.xml", async (req, res) => {
+  res.set("Content-Type", "application/xml; charset=utf-8");
+  res.set("Cache-Control", "public, max-age=60");
   try {
     if (req.query.refresh === "1") {
       clearSitemapCache();
     }
     const xml = await getSitemapXml();
-    res
-      .type("application/xml")
-      .set("Cache-Control", "public, max-age=60")
-      .send(xml);
+    res.send(xml);
   } catch (err) {
     console.error("live sitemap failed, static route list:", err.message);
     const xml = buildXml("https://melangedigital.co", ["/"]);
-    res
-      .type("application/xml")
-      .set("Cache-Control", "public, max-age=60")
-      .send(xml);
+    res.send(xml);
   }
 });
 
