@@ -101,6 +101,15 @@ const Blogs = () => {
           content="Insights, ideas, and stories from the Mélange Digital team."
         />
         <meta property="og:url" content="https://melangedigital.co/blogs" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": "https://melangedigital.co/blogs#webpage",
+          url: "https://melangedigital.co/blogs",
+          name: "Blog & Insights | Mélange Digital",
+          description: "Insights, ideas, and stories from the Mélange Digital team.",
+          isPartOf: { "@type": "WebSite", name: "Mélange Digital", url: "https://melangedigital.co" },
+        })}</script>
       </Helmet>
 
       <Navbar />

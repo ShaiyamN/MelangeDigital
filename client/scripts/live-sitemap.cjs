@@ -2,8 +2,6 @@ const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
-const { initializeApp, getApps } = require("firebase/app");
-const { getFirestore, collection, getDocs } = require("firebase/firestore");
 
 const TTL_MS = 60 * 1000;
 let cache = { xml: null, at: 0, routes: new Set(), byPath: {}, origin: "https://melangedigital.co" };
@@ -55,6 +53,9 @@ function getDb() {
   if (db) return db;
   const cfg = firebaseConfig();
   if (!cfg) return null;
+  // Lazy require so self-checks run without node_modules/firebase installed.
+  const { initializeApp, getApps } = require("firebase/app");
+  const { getFirestore } = require("firebase/firestore");
   const existing = getApps().find((a) => a.name === "live-sitemap");
   const app = existing || initializeApp(cfg, "live-sitemap");
   db = getFirestore(app);
@@ -81,8 +82,51 @@ function metaFor(route) {
   return { changefreq: "monthly", priority: "0.8" };
 }
 
-function buildXml(origin, routes) {
-  const lastmod = new Date().toISOString().slice(0, 10);
+/** YYYY-MM-DD for sitemap protocol, or "" if unparseable. Never invents "today". */
+function toSitemapDate(value) {
+  if (value == null || value === "") return "";
+  if (typeof value === "object" && typeof value.toDate === "function") {
+    try {
+      value = value.toDate();
+    } catch {
+      return "";
+    }
+  }
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? "" : value.toISOString().slice(0, 10);
+  }
+  const s = String(value).trim();
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  const d = new Date(s);
+  return Number.isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 10);
+}
+
+function lastmodForPath(locPath, lastmodByPath) {
+  const meta = lastmodByPath && lastmodByPath[locPath];
+  if (!meta || typeof meta !== "object") return "";
+  return (
+    toSitemapDate(meta.updatedAt) ||
+    toSitemapDate(meta.date) ||
+    toSitemapDate(meta.createdAt) ||
+    ""
+  );
+}
+
+function xmlEscape(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+/**
+ * @param {string} origin
+ * @param {string[]} routes
+ * @param {Record<string, {updatedAt?: string, date?: string, createdAt?: string}>} [lastmodByPath]
+ */
+function buildXml(origin, routes, lastmodByPath = {}) {
   const seen = new Set();
   const urls = [];
 
@@ -92,18 +136,24 @@ function buildXml(origin, routes) {
     seen.add(locPath);
     const { changefreq, priority } = metaFor(locPath);
     const loc = locPath === "/" ? `${origin}/` : `${origin}${locPath}`;
+    const lastmod = lastmodForPath(locPath, lastmodByPath);
     urls.push({ loc, lastmod, changefreq, priority });
   }
 
   const body = urls
-    .map(
-      (u) => `  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`,
-    )
+    .map((u) => {
+      const lines = [
+        "  <url>",
+        `    <loc>${xmlEscape(u.loc)}</loc>`,
+      ];
+      if (u.lastmod) lines.push(`    <lastmod>${xmlEscape(u.lastmod)}</lastmod>`);
+      lines.push(
+        `    <changefreq>${u.changefreq}</changefreq>`,
+        `    <priority>${u.priority}</priority>`,
+        "  </url>",
+      );
+      return lines.join("\n");
+    })
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -114,6 +164,7 @@ ${body}
 }
 
 async function fetchContent(firestore) {
+  const { collection, getDocs } = require("firebase/firestore");
   const byPath = {};
   const paths = [];
   for (const [col, prefix] of [
@@ -123,6 +174,7 @@ async function fetchContent(firestore) {
     const snap = await getDocs(collection(firestore, col));
     snap.forEach((docSnap) => {
       const data = docSnap.data() || {};
+      // No draft/published field in CMS — public site lists every doc with a slug.
       const slug = typeof data.slug === "string" ? data.slug.trim() : "";
       if (!slug) return;
       const loc = `${prefix}${slug}`;
@@ -133,6 +185,14 @@ async function fetchContent(firestore) {
         seoTitle: data.seoTitle,
         metaDescription: data.metaDescription,
         intro: data.intro,
+        image: data.image || data.bannerImage || "",
+        author: data.author || "",
+        date: data.date || "",
+        updatedAt: data.updatedAt || "",
+        createdAt: data.createdAt || "",
+        generatedSchema: data.generatedSchema || null,
+        customSchema: data.customSchema || null,
+        schemaMode: data.schemaMode || "",
       };
     });
   }
@@ -176,7 +236,7 @@ async function refresh() {
   }
 
   const allRoutes = [...routes, ...extra];
-  const xml = buildXml(origin, allRoutes);
+  const xml = buildXml(origin, allRoutes, byPath);
   cache = {
     xml,
     at: Date.now(),
@@ -197,17 +257,37 @@ async function getPageIndex() {
 }
 
 if (require.main === module) {
-  const xml = buildXml("https://example.com", [
-    "/",
-    "/blogs",
-    "/blogs/hello-world",
-    "/work/acme",
-    "/blogs/hello-world",
-  ]);
-  assert(xml.includes("https://example.com/blogs/hello-world"));
-  assert(xml.includes("https://example.com/work/acme"));
-  assert((xml.match(/hello-world/g) || []).length === 1);
+  const withDates = buildXml(
+    "https://example.com",
+    ["/", "/blogs", "/blogs/hello-world", "/work/acme", "/blogs/hello-world", "/blogs/airlines-marketing"],
+    {
+      "/blogs/hello-world": { updatedAt: "2026-10-01T12:00:00.000Z" },
+      "/blogs/airlines-marketing": { date: "2026-10-10" },
+      "/work/acme": { createdAt: "2026-08-01" },
+    },
+  );
+  assert(withDates.includes("https://example.com/blogs/hello-world"));
+  assert(withDates.includes("https://example.com/blogs/airlines-marketing"));
+  assert(withDates.includes("https://example.com/work/acme"));
+  assert((withDates.match(/hello-world/g) || []).length === 1);
+  assert(withDates.includes("<lastmod>2026-10-01</lastmod>"));
+  assert(withDates.includes("<lastmod>2026-10-10</lastmod>"));
+  assert(withDates.includes("<lastmod>2026-08-01</lastmod>"));
+  // Static listing path has no CMS date → no fabricated lastmod
+  const blogsBlock = withDates.split("<loc>https://example.com/blogs</loc>")[1].split("</url>")[0];
+  assert(!blogsBlock.includes("<lastmod>"));
+  assert.equal(toSitemapDate(""), "");
+  assert.equal(toSitemapDate("not a date"), "");
+  assert.equal(xmlEscape("a&b"), "a&amp;b");
   console.log("live-sitemap self-check ok");
 }
 
-module.exports = { getSitemapXml, getPageIndex, buildXml, clearSitemapCache };
+module.exports = {
+  getSitemapXml,
+  getPageIndex,
+  buildXml,
+  clearSitemapCache,
+  toSitemapDate,
+  xmlEscape,
+  lastmodForPath,
+};
