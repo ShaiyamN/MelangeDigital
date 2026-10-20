@@ -111,6 +111,7 @@ app.use((req, res, next) => {
 });
 
 const PERMA_REDIRECTS = {
+  "/work/costa-cruises": "/work/costa-cruises-introducing-luxury-cruising-to-india",
   "/work/singapore-tourism-board-stb": "/work/singapore-tourism-board",
   "/work/GenVR": "/work/genvr",
   "/work/neoTraders": "/work/neotraders",
