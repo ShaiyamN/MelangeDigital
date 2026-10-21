@@ -1,3 +1,5 @@
+import CASE_STUDY_SEO from "./caseStudySeo.json" with { type: "json" };
+
 /**
  * Default work cards configuration for the 4 service blocks on /services.
  * Used as fallback and baseline when custom case study overrides are set from the Admin Panel.
@@ -11,7 +13,7 @@ export const DEFAULT_SERVICE_CARDS = {
       title: "Singapore Tourism Board: #IsThisEvenSingapore",
       slug: "singapore-tourism-board-isthisevensingapore",
       bannerImage: "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1784615757/gfaniul2q2obwsptkqxf.png",
-      caption: "21 creators across five youth subcultures. 190M views. +18% YOY arrivals from India's under-35 cohort.",
+      caption: "21 creators across five youth subcultures. 190M views. Total Indian arrivals grew 18% YoY; under-35 traveller share rose from 31% to 39%.",
     },
     slot2: {
       title: "Hong Kong Tourism Board: #HerHongKong",
@@ -51,7 +53,7 @@ export const DEFAULT_SERVICE_CARDS = {
       title: "Zambia Tourism: OTM Mumbai 2026",
       slug: "zambia-tourism-otm-mumbai-2026",
       bannerImage: "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1784615253/i5bja9epdkwkmty3w92c.png",
-      caption: "A first-time entrant's booth built for experience, not just visibility. 500+ qualified trade connections and a Most Promising Destination award.",
+      caption: "Client-reported results from a one-year mandate: 500+ trade connections, approximately US$3.2M from seven MICE groups (75–700 guests), and 18 influencers.",
     },
   },
   fam: {
@@ -62,7 +64,7 @@ export const DEFAULT_SERVICE_CARDS = {
       title: "Resorts World Sentosa: Go Bananas in Minion Land",
       slug: "resorts-world-sentosa-go-bananas-in-minion-land",
       bannerImage: "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1786617757/cgqyaqyagvgw1vjrl2db.png",
-      caption: "Five regional-language creators on ShareChat and Moj. 56M views. +6.8% lift in consideration to visit.",
+      caption: "Five regional-language creators on ShareChat and Moj. 86M+ views; 4,927 direct bookings reported by Resorts World Sentosa via a tracked booking link.",
     },
     slot2: {
       title: "Hong Kong Tourism Board x Ram Charan: Esquire India Cover",
@@ -72,6 +74,19 @@ export const DEFAULT_SERVICE_CARDS = {
     },
   },
 };
+
+export function applyCaseStudySeo(card) {
+  const caseSeo = CASE_STUDY_SEO[String(card?.slug || "").toLowerCase()];
+  if (!caseSeo) return card;
+  const caption =
+    caseSeo.cardCaption || card.serviceCaption || card.intro || card.caption || "";
+  return {
+    ...card,
+    title: caseSeo.displayTitle || card.title,
+    caption,
+    serviceCaption: caption,
+  };
+}
 
 /**
  * Resolves service slots by combining:
@@ -136,5 +151,5 @@ export function resolveServiceSlots(serviceId, settings, caseStudiesList = null)
     if (slot2) slot2 = enrichSlot(slot2);
   }
 
-  return [slot1, slot2].filter(Boolean);
+  return [slot1, slot2].filter(Boolean).map(applyCaseStudySeo);
 }

@@ -106,7 +106,7 @@ const Career = () => {
                 <h1 className="career-h1">
                   Why build a career with
                   <br />
-                  <span className="career-italic">Melange Digital?</span>
+                  <span className="career-italic">Mélange Digital?</span>
                 </h1>
               </div>
               <div className="career-why__pair">

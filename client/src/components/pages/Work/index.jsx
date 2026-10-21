@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { applyCaseStudySeo } from "../../../constants/serviceCards";
 import {
   MARKETING_ASSET as ASSET,
   MarketingShell,
@@ -9,6 +10,15 @@ import {
   useMarketingBoot,
 } from "../marketingShell";
 import rawMarkup from "./markup.html?raw";
+
+const FEATURED_WORK_ORDER = [
+  "singapore-tourism-board-isthisevensingapore",
+  "hong-kong-tourism-board-herhongkong",
+  "zambia-tourism-otm-mumbai-2026",
+  "resorts-world-sentosa-go-bananas-in-minion-land",
+  "resorts-world-cruises-premium-cruise-launch-dubai",
+];
+const FEATURED_WORK_RANK = new Map(FEATURED_WORK_ORDER.map((slug, index) => [slug, index]));
 
 function esc(str) {
   if (!str) return "";
@@ -21,10 +31,11 @@ function esc(str) {
 
 function renderWorkCardHtml(cs) {
   if (!cs) return "";
-  const href = cs.slug ? (cs.slug.startsWith("/") ? cs.slug : `/work/${cs.slug}`) : "/work";
-  const caption = cs.serviceCaption || cs.intro || cs.caption || "";
-  const title = cs.title || "";
-  const bannerImage = cs.bannerImage || "";
+  const card = applyCaseStudySeo(cs);
+  const href = card.slug ? (card.slug.startsWith("/") ? card.slug : `/work/${card.slug}`) : "/work";
+  const caption = card.serviceCaption || card.intro || card.caption || "";
+  const title = card.title || "";
+  const bannerImage = card.bannerImage || "";
   return `      <a class="svc-project" href="${esc(href)}">
        <div class="svc-project__media">
         <img alt="${esc(title)}" src="${esc(bannerImage)}" width="1200" height="600" style="object-fit: contain; width: 100%; height: 100%;"/>
@@ -37,7 +48,25 @@ function renderWorkCardHtml(cs) {
 }
 
 function buildWorkDynamicMarkup(baseHtml, list) {
-  if (!list || list.length === 0) return baseHtml;
+  if (!list || list.length === 0) {
+    const match = baseHtml.match(/(<div class="svc-projects">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>)/);
+    if (!match) return baseHtml;
+    const cards = match[2].match(/<a class="svc-project"[\s\S]*?<\/a>/g);
+    if (!cards?.length) return baseHtml;
+    const ordered = [...cards].sort((a, b) => {
+      const slugA = a.match(/href="\/work\/([^"]+)"/)?.[1];
+      const slugB = b.match(/href="\/work\/([^"]+)"/)?.[1];
+      const rankA = FEATURED_WORK_RANK.get(String(slugA || "").toLowerCase());
+      const rankB = FEATURED_WORK_RANK.get(String(slugB || "").toLowerCase());
+      if (rankA !== undefined || rankB !== undefined) {
+        if (rankA === undefined) return 1;
+        if (rankB === undefined) return -1;
+        return rankA - rankB;
+      }
+      return 0;
+    });
+    return baseHtml.replace(match[0], `${match[1]}\n${ordered.join("\n")}\n${match[3]}`);
+  }
   const cardsHtml = list.map(renderWorkCardHtml).join("\n");
   const regex = /(<div class="svc-projects">)([\s\S]*?)(<\/div>\s*<\/div>\s*<\/section>)/;
   if (!regex.test(baseHtml)) return baseHtml;
@@ -64,9 +93,9 @@ const COLLECTION = {
   "@type": "CollectionPage",
   "@id": "https://melangedigital.co/work#webpage",
   url: "https://melangedigital.co/work",
-  name: "Our Work | Case Studies | Melange Digital",
+  name: "Our Work | Case Studies | Mélange Digital",
   description:
-    "See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike.",
+    "See how Mélange Digital turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike.",
   isPartOf: { "@type": "WebSite", name: "Mélange Digital", url: "https://melangedigital.co" },
 };
 
@@ -85,6 +114,13 @@ const Work = () => {
         const list = querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 
         const workSorted = [...list].sort((a, b) => {
+          const rankA = FEATURED_WORK_RANK.get(String(a.slug || "").toLowerCase());
+          const rankB = FEATURED_WORK_RANK.get(String(b.slug || "").toLowerCase());
+          if (rankA !== undefined || rankB !== undefined) {
+            if (rankA === undefined) return 1;
+            if (rankB === undefined) return -1;
+            return rankA - rankB;
+          }
           if (a.sortOrder !== undefined && b.sortOrder !== undefined) return a.sortOrder - b.sortOrder;
           if (a.sortOrder !== undefined) return -1;
           if (b.sortOrder !== undefined) return 1;
@@ -139,10 +175,10 @@ const Work = () => {
   return (
     <>
       <Helmet>
-        <title>Our Work | Case Studies | Melange Digital</title>
+        <title>Our Work | Case Studies | Mélange Digital</title>
         <meta
           name="description"
-          content="See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."
+          content="See how Mélange Digital turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."
         />
         <link rel="canonical" href="https://melangedigital.co/work" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -154,10 +190,10 @@ const Work = () => {
         <base href="/destination-marketing-agency/" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://melangedigital.co/work" />
-        <meta property="og:title" content="Our Work | Case Studies | Melange Digital" />
+        <meta property="og:title" content="Our Work | Case Studies | Mélange Digital" />
         <meta
           property="og:description"
-          content="See how Melange turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."
+          content="See how Mélange Digital turns cultural insight into arrivals and sales, for tourism boards, cruise lines, travel brands and global consumer brands alike."
         />
         <meta property="og:image" content="https://melangedigital.co/og-work.jpg" />
         <script type="application/ld+json">{JSON.stringify(BREADCRUMB)}</script>

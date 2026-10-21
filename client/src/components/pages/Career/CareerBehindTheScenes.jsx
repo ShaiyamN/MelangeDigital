@@ -137,7 +137,7 @@ export default function CareerBehindTheScenes() {
       <div ref={padRef} className="career-wrap">
         <div className="career-split">
           <h2 className="career-h2">
-            Behind the Scenes at <span className="career-italic">Melange Digital</span>
+            Behind the Scenes at <span className="career-italic">Mélange Digital</span>
           </h2>
           <p className="career-lede">
             The work on our site starts with a team that likes being around each other, on set, at trade shows, and sometimes after a shoot wraps. We tell other people's stories for a living. Here's a little of&nbsp;ours.

@@ -75,10 +75,10 @@ const FAQ_SCHEMA = {
     },
     {
       "@type": "Question",
-      name: "Does Melange handle influencer marketing in travel and tourism, or only celebrity campaigns?",
+      name: "Does Mélange handle influencer marketing in travel and tourism, or only celebrity campaigns?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Both. Melange's influencer marketing in travel and tourism spans everything from mega-follower celebrities to regional-language creators on platforms like ShareChat and Moj, cast by subculture fit rather than follower count alone.",
+        text: "Both. Mélange's influencer marketing in travel and tourism spans everything from mega-follower celebrities to regional-language creators on platforms like ShareChat and Moj, cast by subculture fit rather than follower count alone.",
       },
     },
     {
@@ -86,15 +86,15 @@ const FAQ_SCHEMA = {
       name: "Is marketing for NTOs different from marketing other travel brands?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. NTO marketing means working within a national tourism organisation's mandate, budget cycles and ministerial reporting lines: categorically different from marketing a private travel brand, and a large part of what Melange specialises in.",
+        text: "Yes. NTO marketing means working within a national tourism organisation's mandate, budget cycles and ministerial reporting lines: categorically different from marketing a private travel brand, and a large part of what Mélange specialises in.",
       },
     },
     {
       "@type": "Question",
-      name: "What does Melange Digital specialise in?",
+      name: "What does Mélange Digital specialise in?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Melange is a travel and tourism marketing agency. We decode the culture, narrate the story, match the creator, and convert emotion into a booking. Success is measured in arrivals, not impressions.",
+        text: "Mélange is a travel and tourism marketing agency. We decode the culture, narrate the story, match the creator, and convert emotion into a booking. Success is measured in arrivals, not impressions.",
       },
     },
     {
@@ -176,10 +176,10 @@ const Services = () => {
   return (
     <>
       <Helmet>
-        <title>Digital Marketing for Travel and Tourism | Melange</title>
+        <title>Digital Marketing for Travel and Tourism | Mélange</title>
         <meta
           name="description"
-          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
+          content="Mélange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
         />
         <link rel="canonical" href="https://melangedigital.co/services" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -190,10 +190,10 @@ const Services = () => {
         />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/services" />
-        <meta property="og:title" content="Digital Marketing for Travel and Tourism | Melange" />
+        <meta property="og:title" content="Digital Marketing for Travel and Tourism | Mélange" />
         <meta
           property="og:description"
-          content="Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
+          content="Mélange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
         />
         <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
         <script type="application/ld+json">
@@ -204,7 +204,7 @@ const Services = () => {
             url: "https://melangedigital.co/services",
             provider: {
               "@type": "Organization",
-              name: "Melange Digital",
+              name: "Mélange Digital",
               url: "https://melangedigital.co",
             },
             description:

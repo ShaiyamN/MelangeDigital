@@ -119,7 +119,7 @@ const Footer = () => (
       </div>
     </div>
     <div className="site-foot__wrap site-foot__legal">
-      <span>&copy; {new Date().getFullYear()} Melange Digital. All rights reserved.</span>
+      <span>&copy; {new Date().getFullYear()} Mélange Digital. All rights reserved.</span>
       <div className="site-foot__legal-links">
         <Link to="/terms-of-service">Terms of Service</Link>
         <Link to="/privacy-policy">Privacy Policy</Link>

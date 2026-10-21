@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded',function(){
            imgSrc: "images/figma/pooja.jpeg"
           },
           {
-           testimonial: "Melange brought genuine cultural access. The voices they chose were not just popular, they were credible to exactly the audience we needed. The repositioning worked.",
+           testimonial: "Mélange brought genuine cultural access. The voices they chose were not just popular, they were credible to exactly the audience we needed. The repositioning worked.",
            by: "Puneet Kumar, Director, South Asia & Middle East, Hong Kong Tourism Board",
            imgSrc: "images/figma/Puneet-Kumar.jpg"
           },

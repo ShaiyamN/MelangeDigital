@@ -30,7 +30,7 @@ const BREADCRUMB = {
 const ABOUT_PAGE = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
-  name: "Best Destination Marketing Agency | Melange Digital",
+  name: "Best Destination Marketing Agency | Mélange Digital",
   url: "https://melangedigital.co/about",
   description:
     "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
@@ -65,10 +65,10 @@ const FAQ_SCHEMA = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "What does Melange Digital do?",
+      name: "What does Mélange Digital do?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Melange Digital is a destination marketing agency specialising in DMO, NTO marketing, that turn cultural insight into travel bookings. We work with national tourism boards, destination brands and travel tech platforms, building campaigns run by people who've worked inside the industry they now serve.",
+        text: "Mélange Digital is a destination marketing agency specialising in DMO, NTO marketing, that turn cultural insight into travel bookings. We work with national tourism boards, destination brands and travel tech platforms, building campaigns run by people who've worked inside the industry they now serve.",
       },
     },
     {
@@ -84,7 +84,7 @@ const FAQ_SCHEMA = {
       name: "What makes a destination marketing agency different from a general marketing agency?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "A general agency serves any industry. A destination marketing agency works exclusively with tourism boards, DMOs, and travel brands, understanding budget cycles, ministerial reporting, and traveller psychology specific to this category. That focus is why boards trust Melange with mandates broader agencies rarely see.",
+        text: "A general agency serves any industry. A destination marketing agency works exclusively with tourism boards, DMOs, and travel brands, understanding budget cycles, ministerial reporting, and traveller psychology specific to this category. That focus is why boards trust Mélange with mandates broader agencies rarely see.",
       },
     },
     {
@@ -92,7 +92,7 @@ const FAQ_SCHEMA = {
       name: "What results can a destination expect from travel advertising?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Real travel advertising is measured in arrivals and bookings, not clicks or views. Melange's campaigns have driven double-digit YOY arrival growth and multi-million-dollar attributed sales for tourism boards and travel brands. Every campaign is built around a specific, trackable outcome agreed before work begins.",
+        text: "Real travel advertising is measured in arrivals and bookings, not clicks or views. Mélange's campaigns have driven double-digit YOY arrival growth and multi-million-dollar attributed sales for tourism boards and travel brands. Every campaign is built around a specific, trackable outcome agreed before work begins.",
       },
     },
     {
@@ -100,7 +100,7 @@ const FAQ_SCHEMA = {
       name: "How much does it cost to work with a travel and tourism marketing agency?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Cost depends on the mandate: a single campaign, a market launch, or an ongoing retainer all price differently. Melange scopes every engagement around the board or brand's specific goals rather than a flat package. The fastest way to get a real number is a strategy call.",
+        text: "Cost depends on the mandate: a single campaign, a market launch, or an ongoing retainer all price differently. Mélange scopes every engagement around the board or brand's specific goals rather than a flat package. The fastest way to get a real number is a strategy call.",
       },
     },
   ],
@@ -139,7 +139,7 @@ const About = () => {
   return (
     <>
       <Helmet>
-        <title>Best Destination Marketing Agency | Melange Digital</title>
+        <title>Best Destination Marketing Agency | Mélange Digital</title>
         <meta
           name="description"
           content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."
@@ -153,7 +153,7 @@ const About = () => {
         />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/about" />
-        <meta property="og:title" content="Best Destination Marketing Agency | Melange Digital" />
+        <meta property="og:title" content="Best Destination Marketing Agency | Mélange Digital" />
         <meta
           property="og:description"
           content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."

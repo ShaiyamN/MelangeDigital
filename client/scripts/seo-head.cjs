@@ -1,4 +1,5 @@
 const assert = require("assert");
+const CASE_STUDY_SEO = require("../src/constants/caseStudySeo.json");
 
 const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
 
@@ -6,9 +7,9 @@ const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
 const PAGE_META = {
   "/": {
     title:
-      "Global Travel & Tourism Marketing Agency | Melange Digital",
+      "Global Travel & Tourism Marketing Agency | Mélange Digital",
     description:
-      "Melange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call.",
+      "Mélange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call.",
   },
   "/work": {
     title: "Our Work & Case Study Portfolio | Mélange Digital",
@@ -21,14 +22,14 @@ const PAGE_META = {
       "Get in touch with Mélange Digital today. Our team is ready to craft the perfect digital marketing strategy to grow your brand globally",
   },
   "/about": {
-    title: "Best Destination Marketing Agency | Melange Digital",
+    title: "Best Destination Marketing Agency | Mélange Digital",
     description:
       "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
   },
   "/services": {
-    title: "Digital Marketing for Travel and Tourism | Melange",
+    title: "Digital Marketing for Travel and Tourism | Mélange",
     description:
-      "Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs.",
+      "Mélange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs.",
   },
   "/services/influencer-marketing": {
     title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
@@ -143,7 +144,7 @@ function normalizePath(p) {
 }
 
 function titleFromPath(p) {
-  const last = p.split("/").filter(Boolean).pop() || "Melange Digital";
+  const last = p.split("/").filter(Boolean).pop() || "Mélange Digital";
   const name = last
     .replace(/[-_]/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
@@ -190,7 +191,9 @@ function resolveMeta(reqPath, index = {}) {
 
   const known = pathKey({ routes, byPath }, path);
   const cms = known ? byPath[known] || byPath[path] : byPath[path];
-  const listed = Boolean(known) || path in PAGE_META;
+  const caseStudySlug = path.match(/^\/work\/([^/]+)$/)?.[1];
+  const caseStudy = caseStudySlug ? CASE_STUDY_SEO[caseStudySlug.toLowerCase()] : null;
+  const listed = Boolean(known) || path in PAGE_META || Boolean(caseStudy);
 
   if (!listed && !cms) {
     return { path, noindex: true, stripFaq: true };
@@ -198,10 +201,13 @@ function resolveMeta(reqPath, index = {}) {
 
   const preset = PAGE_META[path] || PAGE_META[known] || {};
   const title =
+    (caseStudy?.displayTitle &&
+      `${caseStudy.displayTitle} | Mélange Digital's Work`) ||
     preset.title ||
     (cms && (cms.seoTitle || cms.title)) ||
     titleFromPath(path);
   const description =
+    caseStudy?.description ||
     preset.description ||
     (cms && (cms.metaDescription || cms.description || cms.intro)) ||
     `${title}. Digital marketing for travel and tourism.`;
@@ -209,11 +215,14 @@ function resolveMeta(reqPath, index = {}) {
   const canonical = canonicalFor(known || path, origin);
   const isBlogPost = path.startsWith("/blogs/") && path !== "/blogs";
   const isBlogIndex = path === "/blogs";
+  const pageDescription = caseStudy?.description
+    ? String(description).replace(/\s+/g, " ").trim()
+    : String(description).replace(/\s+/g, " ").trim().slice(0, 160);
 
   return {
     path,
     title: String(title),
-    description: String(description).replace(/\s+/g, " ").trim().slice(0, 160),
+    description: pageDescription,
     canonical,
     stripFaq: path !== "/",
     noindex: false,
@@ -419,9 +428,22 @@ if (require.main === module) {
   const svcMeta = resolveMeta("/services", { routes: new Set(["/services"]), byPath: {} });
   assert.strictEqual(
     svcMeta.description,
-    "Melange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
+    "Mélange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
   );
   assert.strictEqual(svcMeta.canonical, "https://melangedigital.co/services");
+
+  for (const [slug, caseSeo] of Object.entries(CASE_STUDY_SEO)) {
+    if (!caseSeo.description) continue;
+    const casePath = `/work/${slug}`;
+    const caseMeta = resolveMeta(casePath, { routes: new Set([casePath]), byPath: {} });
+    assert.strictEqual(caseMeta.description, caseSeo.description.trim());
+    assert(!/\b(cohor|globa|met)$/.test(caseMeta.description));
+    const caseHtml = applyHead(shell, caseMeta);
+    assert(caseHtml.includes(
+      `<meta data-rh="true" name="description" content="${esc(caseMeta.description)}">`,
+    ));
+    assert.strictEqual((caseHtml.match(/name="description"/g) || []).length, 1);
+  }
 
   // Trailing slash normalization test:
   assert.strictEqual(canonicalFor("/services/"), "https://melangedigital.co/services");

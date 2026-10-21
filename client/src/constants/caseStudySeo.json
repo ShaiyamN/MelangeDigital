@@ -1,0 +1,33 @@
+{
+  "singapore-tourism-board-isthisevensingapore": {
+    "cardCaption": "21 creators across five youth subcultures. 190M views. Total Indian arrivals grew 18% YoY; under-35 traveller share rose from 31% to 39%.",
+    "businessImpactHtml": "<p>+18% — YoY growth in total Indian arrivals to Singapore<br>31% → 39% — Share of under-35 travellers from India<br>+24pts — \"Youth-relevant\" brand perception<br>165+ assets created | 175M+ reach | 190M views | 3.58% campaign-wide ER</p>"
+  },
+  "hong-kong-tourism-board-herhongkong": {
+    "displayTitle": "Hong Kong Tourism Board: #HerHongKong",
+    "description": "Hong Kong read as a corporate stopover for Indian travellers. Meanwhile South Indian women were travelling independently for self-discovery, a high-intent cohort no destination had claimed.",
+    "normalizeAverageStayStat": true,
+    "businessImpactHtml": "<p>+22% — YoY growth in South Indian female arrivals<br>Average Length of Stay: 2 nights to 3 nights<br>+15pts — Leisure share of Indian arrivals</p>"
+  },
+  "zambia-tourism-otm-mumbai-2026": {
+    "displayTitle": "Zambia Tourism: OTM Mumbai 2026",
+    "cardCaption": "Client-reported results from a one-year mandate: 500+ trade connections, approximately US$3.2M from seven MICE groups (75–700 guests), and 18 influencers.",
+    "description": "Zambia was a first-time entrant at India's largest travel trade show, unknown in the India market, competing for attention against established African and global destinations with bigger budgets.",
+    "normalizeTradeConnectionsStat": true,
+    "businessImpactHtml": "<ul><li>Won \"Most Promising Destination\" Award</li><li>2 MoU's signed with MICE operators</li><li>500+ trade connections</li></ul>",
+    "clientReportedResults": "Zambia Tourism Authority reported 500+ trade connections over a one-year mandate, approximately US$3.2M from seven MICE groups of 75–700 guests, and 18 influencers."
+  },
+  "resorts-world-sentosa-go-bananas-in-minion-land": {
+    "displayTitle": "Resorts World Sentosa: Go Bananas in Minion Land",
+    "cardCaption": "Five regional-language creators on ShareChat and Moj. 86M+ views; 4,927 direct bookings reported by Resorts World Sentosa via a tracked booking link.",
+    "description": "Resorts World Sentosa, home to Universal Studios Singapore and the new Minion Land, needed to drive travel intent among affluent Indian audiences beyond the metros. The franchise had recognition but no cultural pull in Tier 2 and Tier 3 markets with emerging travel appetite.",
+    "stats": [
+      { "value": "86M+", "label": "views" },
+      { "value": "4,927", "label": "direct bookings" }
+    ],
+    "businessImpactHtml": "<ul><li><strong>86M+ views</strong></li><li><strong>4,927 direct bookings</strong>, reported by Resorts World Sentosa via its tracked booking link.</li></ul>"
+  },
+  "resorts-world-cruises-premium-cruise-launch-dubai": {
+    "displayTitle": "Dream Cruises (campaign ran as Resorts World Cruises): Premium Cruise Launch, Dubai"
+  }
+}
