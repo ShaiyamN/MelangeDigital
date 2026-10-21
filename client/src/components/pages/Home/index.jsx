@@ -144,10 +144,10 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Global Travel & Tourism Marketing Agency | Melange Digital</title>
+        <title>Global Travel & Tourism Marketing Agency | Mélange Digital</title>
         <meta
           name="description"
-          content="Melange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
+          content="Mélange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
         />
         <link rel="canonical" href="https://melangedigital.co/" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -158,10 +158,10 @@ const Home = () => {
         />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co" />
-        <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Melange Digital" />
+        <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Mélange Digital" />
         <meta
           property="og:description"
-          content="Melange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
+          content="Mélange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
         />
         <style type="text/css">{`
           /* Safety: hide leftover Webflow nav if cached markup still has it */

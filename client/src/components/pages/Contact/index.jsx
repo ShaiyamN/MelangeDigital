@@ -86,7 +86,7 @@ const Contact = () => {
   "url": "https://melangedigital.co/contact",
   "description": "Contact Mélange Digital — your dedicated digital growth partner. Book a call, email us, or reach out to our global offices in India, Singapore, the United Arab Emirates, the United Kingdom, and Zambia.",
   "inLanguage": "en",
-  "isPartOf": { "@type": "WebSite", "name": "Melange Digital", "url": "https://melangedigital.co" },
+  "isPartOf": { "@type": "WebSite", "name": "Mélange Digital", "url": "https://melangedigital.co" },
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [

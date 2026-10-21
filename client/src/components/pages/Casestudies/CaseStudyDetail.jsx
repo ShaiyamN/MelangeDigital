@@ -10,6 +10,7 @@ import {
 } from "../../layout";
 import { Helmet } from "react-helmet-async";
 import ReactPlayer from "react-player";
+import CASE_STUDY_SEO from "../../../constants/caseStudySeo.json" with { type: "json" };
 
 const SLUG_ALIASES = {
   "singapore-tourism-board": ["singapore-tourism-board-stb"],
@@ -23,6 +24,15 @@ const CANONICAL_SLUG = {
   "singapore-tourism-board-stb": "singapore-tourism-board",
   "akbar-travels": "mall-activation-for-saudi-tourism",
 };
+
+function truncateMetaDescription(value, maxLength = 160) {
+  const normalized = String(value).replace(/\s+/g, " ").trim();
+  if (normalized.length <= maxLength) return normalized;
+  const lastSpace = normalized.lastIndexOf(" ", maxLength);
+  if (lastSpace > 0) return normalized.slice(0, lastSpace).trimEnd();
+  const nextSpace = normalized.indexOf(" ", maxLength);
+  return nextSpace < 0 ? normalized : normalized.slice(0, nextSpace).trimEnd();
+}
 
 const CaseStudyDetail = () => {
   const { slug: paramSlug } = useParams();
@@ -146,21 +156,47 @@ const CaseStudyDetail = () => {
     );
   }
 
+  const caseSeo = CASE_STUDY_SEO[slug.toLowerCase()] || {};
+  const displayTitle = caseSeo.displayTitle || cs.title;
+  const stats = caseSeo.stats || cs.stats?.map((stat) => {
+    if (caseSeo.normalizeAverageStayStat && /average length of stay/i.test(stat.label || "")) {
+      return { ...stat, value: "2–3 nights", label: "Average Length of Stay" };
+    }
+    if (
+      caseSeo.normalizeTradeConnectionsStat &&
+      /^500\+?$/i.test(String(stat.value || "").trim()) &&
+      /qualified trade (deals|connections|enquiries)/i.test(stat.label || "")
+    ) {
+      return { ...stat, label: "trade connections" };
+    }
+    return stat;
+  });
+  const contentBlocks = caseSeo.businessImpactHtml
+    ? cs.contentBlocks?.map((block) =>
+        block.subheading?.trim().toLowerCase() === "business impact"
+          ? { ...block, paragraph: caseSeo.businessImpactHtml }
+          : block,
+      )
+    : cs.contentBlocks;
+  const pageTitle = `${displayTitle} | Mélange Digital's Work`;
+  const description = caseSeo.description
+    ? caseSeo.description.replace(/\s+/g, " ").trim()
+    : truncateMetaDescription(cs.metaDescription || cs.description || cs.intro || "");
   const breadcrumbs = [
     { displayName: "Home", url: "/" },
     { displayName: "Work", url: "/work" },
-    { displayName: cs.breadcrumbTitle || (cs.title?.length > 40 ? cs.title.substring(0, 40) + '...' : cs.title), url: `/work/${cs.slug}` },
+    { displayName: caseSeo.displayTitle || cs.breadcrumbTitle || (displayTitle?.length > 40 ? displayTitle.substring(0, 40) + '...' : displayTitle), url: `/work/${cs.slug}` },
   ];
 
   return (
     <div>
       <Helmet>
-        <title>{cs.title} | Mélange Digital's Work</title>
-        <meta name="title" content={`${cs.title} | Mélange Digital's Work`} data-react-helmet="true" />
-        <meta name="description" content={cs.intro?.substring(0, 160)} />
+        <title>{pageTitle}</title>
+        <meta name="title" content={pageTitle} data-react-helmet="true" />
+        <meta name="description" content={description} />
         <meta property="og:image" content={cs.bannerImage || ""} />
-        <meta property="og:title" content={`${cs.title} | Mélange Digital's Work`} />
-        <meta property="og:description" content={cs.intro?.substring(0, 160)} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={description} />
         <link rel="canonical" href={`https://melangedigital.co/work/${(CANONICAL_SLUG[slug.toLowerCase()] || (cs && cs.slug) || slug).replace(/\/+$/, "")}`} data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -183,7 +219,7 @@ const CaseStudyDetail = () => {
           <div className="px-5 md:px-16 lg:px-20">
             <div className="mb-10 w-full lg:max-w-[1200px]">
               <h2 className="font-semibold text-hero font-display text-[#0f0330] break-words">
-                {cs.title}
+                {displayTitle}
               </h2>
             </div>
           </div>
@@ -194,7 +230,7 @@ const CaseStudyDetail = () => {
               <img
                 id="videoElement"
                 src={cs.bannerImage}
-                alt={cs.title}
+                alt={displayTitle}
                 className="w-full h-[250px] md:h-[450px] lg:h-[550px] object-cover transition-transform duration-100 ease-out"
                 style={{ transformOrigin: "center center" }}
               />
@@ -207,9 +243,9 @@ const CaseStudyDetail = () => {
           <div className="mb-8 lg:mb-0 lg:mr-8">
             
             {/* Stats (Mobile only) */}
-            {cs.stats && cs.stats.length > 0 && (
+            {stats && stats.length > 0 && (
               <div className="lg:hidden flex flex-wrap gap-3 mb-[45px]">
-                {cs.stats.map((stat, idx) => (
+                {stats.map((stat, idx) => (
                   <div key={idx} className="w-[130px] h-[85px] bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
                     <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-display flex items-center justify-center">
                       {stat.value}
@@ -229,13 +265,18 @@ const CaseStudyDetail = () => {
             <p className="text-lg md:text-xl w-auto lg:w-[90%] leading-relaxed font-body text-slate-700">
               {cs.intro}
             </p>
+            {caseSeo.clientReportedResults && (
+              <p className="mt-4 text-lg md:text-xl w-auto lg:w-[90%] leading-relaxed font-body text-slate-700">
+                {caseSeo.clientReportedResults}
+              </p>
+            )}
           </div>
 
           {/* Services & Stats (Desktop only) */}
           <div>
-            {cs.stats && cs.stats.length > 0 && (
+            {stats && stats.length > 0 && (
               <div className="lg:flex hidden gap-3 mb-[45px] mt-2">
-                {cs.stats.map((stat, idx) => (
+                {stats.map((stat, idx) => (
                   <div key={idx} className="w-[130px] h-[85px] bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
                     <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-display flex items-center justify-center">
                       {stat.value}
@@ -303,10 +344,10 @@ const CaseStudyDetail = () => {
 
 
       {/* Dynamic Content Blocks Section */}
-      {cs.contentBlocks && cs.contentBlocks.length > 0 && (
+      {contentBlocks && contentBlocks.length > 0 && (
         <div className="px-5 md:px-16 lg:px-20 mt-0 md:mt-2 max-container mb-12">
           <div className="space-y-10">
-            {cs.contentBlocks.map((block) => (
+            {contentBlocks.map((block) => (
               <div key={block.id} className="animate-fade-in">
                 
                 {/* TEXT SECTION */}
