@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { applyCaseStudySeo } from "../../../constants/serviceCards";
+import { loadCaseStudies } from "../../../constants/caseStudyData";
 import {
   MARKETING_ASSET as ASSET,
   MarketingShell,
@@ -109,9 +109,8 @@ const Work = () => {
     const loadWorkCaseStudies = async () => {
       try {
         if (!db) return;
-        const querySnapshot = await getDocs(collection(db, "casestudies"));
-        if (!active || querySnapshot.empty) return;
-        const list = querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+        const list = await loadCaseStudies();
+        if (!active || list.length === 0) return;
 
         const workSorted = [...list].sort((a, b) => {
           const rankA = FEATURED_WORK_RANK.get(a.slug);

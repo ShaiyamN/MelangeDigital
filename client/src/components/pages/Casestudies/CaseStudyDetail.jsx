@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { loadCaseStudies } from "../../../constants/caseStudyData";
 import {
   Navbar,
   Footer,
@@ -48,26 +47,14 @@ const CaseStudyDetail = () => {
     const fetchCaseStudy = async () => {
       setLoading(true);
       try {
-        const trySlug = async (s) => {
-          const q = query(collection(db, "casestudies"), where("slug", "==", s));
-          const snap = await getDocs(q);
-          return snap.empty ? null : snap.docs[0].data();
-        };
-        let data = await trySlug(slug);
+        const all = await loadCaseStudies();
+        const candidateSlugs = [slug, ...(SLUG_ALIASES[slug] || [])];
+        let data = candidateSlugs
+          .map((candidate) => all.find((item) => item.slug === candidate))
+          .find(Boolean);
         if (!data) {
-          for (const alt of SLUG_ALIASES[slug] || []) {
-            data = await trySlug(alt);
-            if (data) break;
-          }
-        }
-        if (!data) {
-          // ponytail: case-insensitive scan, ~30 docs; query by lowercased slug if this collection grows
-          const all = await getDocs(collection(db, "casestudies"));
           const lower = slug.toLowerCase();
-          const hit = all.docs.find(
-            (d) => (d.data().slug || "").toLowerCase() === lower,
-          );
-          data = hit ? hit.data() : null;
+          data = all.find((item) => (item.slug || "").toLowerCase() === lower) || null;
         }
         setCs(data);
       } catch (err) {
@@ -138,8 +125,30 @@ const CaseStudyDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0c0c1e] text-white">
-        <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        <main
+          className="max-container px-5 md:px-16 lg:px-20 pt-10 pb-14"
+          aria-busy="true"
+          aria-label="Loading case study"
+        >
+          <span className="sr-only">Loading case study</span>
+          <div className="mb-8 h-5 w-28 animate-pulse rounded bg-slate-200" />
+          <div className="mb-10 h-12 max-w-3xl animate-pulse rounded bg-slate-200 md:h-16" />
+          <div className="h-[250px] animate-pulse rounded-lg bg-slate-100 md:h-[450px] lg:h-[550px]" />
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_470px]">
+            <div>
+              <div className="mb-4 h-9 w-56 animate-pulse rounded bg-slate-200" />
+              <div className="mb-2 h-5 w-full animate-pulse rounded bg-slate-100" />
+              <div className="mb-2 h-5 w-11/12 animate-pulse rounded bg-slate-100" />
+              <div className="h-5 w-3/4 animate-pulse rounded bg-slate-100" />
+            </div>
+            <div className="hidden gap-3 lg:flex">
+              <div className="h-24 w-36 animate-pulse rounded-lg bg-slate-100" />
+              <div className="h-24 w-36 animate-pulse rounded-lg bg-slate-100" />
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
