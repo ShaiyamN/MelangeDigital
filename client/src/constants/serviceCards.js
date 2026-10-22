@@ -53,7 +53,7 @@ export const DEFAULT_SERVICE_CARDS = {
       title: "Zambia Tourism: OTM Mumbai 2026",
       slug: "zambia-tourism-otm-mumbai-2026",
       bannerImage: "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1784615253/i5bja9epdkwkmty3w92c.png",
-      caption: "Client-reported results from a one-year mandate: 500+ trade connections, approximately US$3.2M from seven MICE groups (75–700 guests), and 18 influencers.",
+      caption: "Client-reported results from a one-year mandate: 500+ trade connections, approximately $3.2M from seven MICE groups (75–700 guests), and 18 influencers.",
     },
   },
   fam: {

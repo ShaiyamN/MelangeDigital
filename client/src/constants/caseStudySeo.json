@@ -11,21 +11,24 @@
   },
   "zambia-tourism-otm-mumbai-2026": {
     "displayTitle": "Zambia Tourism: OTM Mumbai 2026",
-    "cardCaption": "Client-reported results from a one-year mandate: 500+ trade connections, approximately US$3.2M from seven MICE groups (75–700 guests), and 18 influencers.",
+    "cardCaption": "Client-reported results from a one-year mandate: 500+ trade connections, approximately $3.2M from seven MICE groups (75–700 guests), and 18 influencers.",
     "description": "Zambia was a first-time entrant at India's largest travel trade show, unknown in the India market, competing for attention against established African and global destinations with bigger budgets.",
     "normalizeTradeConnectionsStat": true,
     "businessImpactHtml": "<ul><li>Won \"Most Promising Destination\" Award</li><li>2 MoU's signed with MICE operators</li><li>500+ trade connections</li></ul>",
-    "clientReportedResults": "Zambia Tourism Authority reported 500+ trade connections over a one-year mandate, approximately US$3.2M from seven MICE groups of 75–700 guests, and 18 influencers."
+    "clientReportedResults": "Zambia Tourism Authority reported 500+ trade connections over a one-year mandate, approximately $3.2M from seven MICE groups of 75–700 guests, and 18 influencers."
   },
   "resorts-world-sentosa-go-bananas-in-minion-land": {
     "displayTitle": "Resorts World Sentosa: Go Bananas in Minion Land",
     "cardCaption": "Five regional-language creators on ShareChat and Moj. 86M+ views; 4,927 direct bookings reported by Resorts World Sentosa via a tracked booking link.",
     "description": "Resorts World Sentosa, home to Universal Studios Singapore and the new Minion Land, needed to drive travel intent among affluent Indian audiences beyond the metros. The franchise had recognition but no cultural pull in Tier 2 and Tier 3 markets with emerging travel appetite.",
     "stats": [
+      { "value": "+6.80%", "label": "Lift in consideration to visit Minion Land" },
+      { "value": "13.7M+", "label": "Reach" },
+      { "value": "4.75%", "label": "Campaign-wide ER" },
       { "value": "86M+", "label": "views" },
       { "value": "4,927", "label": "direct bookings" }
     ],
-    "businessImpactHtml": "<ul><li><strong>86M+ views</strong></li><li><strong>4,927 direct bookings</strong>, reported by Resorts World Sentosa via its tracked booking link.</li></ul>"
+    "businessImpactHtml": "<ul><li><strong>+6.80%</strong> lift in consideration to visit Minion Land</li><li><strong>13.7M+</strong> reach</li><li><strong>4.75%</strong> campaign-wide ER</li><li><strong>86M+ views</strong></li><li><strong>4,927 direct bookings</strong>, reported by Resorts World Sentosa via its tracked booking link.</li></ul>"
   },
   "resorts-world-cruises-premium-cruise-launch-dubai": {
     "displayTitle": "Dream Cruises (campaign ran as Resorts World Cruises): Premium Cruise Launch, Dubai"
