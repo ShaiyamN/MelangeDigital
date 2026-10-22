@@ -11,10 +11,10 @@ const Contact = () => {
   return (
     <div>
       <Helmet>
-        <title>Contact Us & Let's Work Together | Mélange Digital</title>
+        <title>Contact a Tourism Board Marketing Agency in India | Mélange Digital</title>
         <meta
           name="description"
-          content="Get in touch with Mélange Digital today. Our team is ready to craft the perfect digital marketing strategy to grow your brand globally"
+          content="Contact our tourism board marketing agency. We assist DMOs, NTOs, and tourism brands in increasing their organic visibility worldwide. Schedule a call."
         />
         <link rel="canonical" href="https://melangedigital.co/contact" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -82,9 +82,9 @@ const Contact = () => {
           {`{
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Contact Us — Mélange Digital",
+  "name": "Contact a Tourism Board Marketing Agency in India | Mélange Digital",
   "url": "https://melangedigital.co/contact",
-  "description": "Contact Mélange Digital — your dedicated digital growth partner. Book a call, email us, or reach out to our global offices in India, Singapore, the United Arab Emirates, the United Kingdom, and Zambia.",
+  "description": "Contact our tourism board marketing agency. We assist DMOs, NTOs, and tourism brands in increasing their organic visibility worldwide. Schedule a call.",
   "inLanguage": "en",
   "isPartOf": { "@type": "WebSite", "name": "Mélange Digital", "url": "https://melangedigital.co" },
   "breadcrumb": {

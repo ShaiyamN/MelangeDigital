@@ -32,6 +32,14 @@ const navLinks = [
   { to: "/careers", label: "Careers" },
 ];
 
+const serviceNavLinks = [
+  { to: "/services/influencer-marketing", label: "Influencer & Celebrity Marketing" },
+  { to: "/services/branded-content-ips", label: "Branded Content & IPs" },
+  { to: "/services/experiential-marketing", label: "Experiential Marketing" },
+  { to: "/services/fam-trips-pr", label: "FAM Trips + PR" },
+];
+
+/* Keep Services visible first in the mobile nav, with the sub-service list below it. */
 const mobileNavLinksBase = [
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
@@ -39,13 +47,15 @@ const mobileNavLinksBase = [
   { to: "/careers", label: "Careers" },
 ];
 
-const mobileNavLinks = [
+const mobileNavLinksWithServices = [
   ...mobileNavLinksBase,
   { to: "/contact", label: "Book a Strategy Call" },
 ];
 
 const Navbar = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isServicesOpen, setServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [isGlobalOpen, setGlobalOpen] = useState(false);
   const [hoveredCountry, setHoveredCountry] = useState(null);
   const [isMobileGlobalOpen, setMobileGlobalOpen] = useState(false);
@@ -54,6 +64,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
 
   const globalWrapRef = useRef(null);
+  const servicesWrapRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const hoverTimeout = useRef(null);
 
@@ -249,6 +260,122 @@ const Navbar = () => {
         /* The outer wrap covers button + gap + dropdown so mouse never leaves */
         .nb-global-outer {
           position: relative;
+        }
+
+        .nb-services-outer {
+          position: relative;
+        }
+
+        .nb-services-trigger {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .navbar-link .nb-services-trigger {
+          display: inline-flex;
+        }
+
+        .nb-services-chevron {
+          width: 11px;
+          height: 11px;
+          opacity: 0.55;
+          transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .nb-services-trigger[aria-expanded="true"] .nb-services-chevron {
+          transform: rotate(180deg);
+          opacity: 1;
+        }
+
+        .nb-services-dropdown {
+          position: absolute;
+          top: calc(100% + 14px);
+          left: 50%;
+          transform: translateX(-50%);
+          width: 300px;
+          z-index: 300;
+          padding: 8px;
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.98);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+          animation: fadeSlideIn 0.18s ease forwards;
+        }
+
+        .nb-services-dropdown a {
+          display: block;
+          padding: 11px 12px;
+          border-radius: 9px;
+          color: #1a1a1a;
+          font-size: 14px;
+          font-weight: 650;
+          line-height: 1.35;
+          text-decoration: none;
+          transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .nb-services-dropdown a:hover,
+        .nb-services-dropdown a:focus-visible,
+        .nb-services-dropdown a.activePath {
+          color: #a126d8;
+          background: rgba(217, 64, 255, 0.07);
+          outline: none;
+        }
+
+        .nb-services-bridge {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          height: 18px;
+          z-index: 299;
+        }
+
+        .mb-service-list {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          width: 100%;
+          padding: 0 0 8px 16px;
+        }
+
+        .mb-service-list a {
+          display: block;
+          padding: 10px 12px;
+          border-left: 1px solid rgba(26, 26, 26, 0.15);
+          color: #333;
+          font-size: 15px;
+          line-height: 1.35;
+          text-decoration: none;
+        }
+
+        .mb-service-list a.activePath {
+          color: #a126d8;
+          border-left-color: #a126d8;
+        }
+
+        .mb-service-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 44px;
+          margin-left: 8px;
+          border: 0;
+          background: transparent;
+          color: #1a1a1a;
+          cursor: pointer;
+        }
+
+        .mb-service-toggle svg {
+          width: 12px;
+          height: 8px;
+          transition: transform 0.2s ease;
+        }
+
+        .mb-service-toggle[aria-expanded="true"] svg {
+          transform: rotate(180deg);
         }
 
         /* Invisible bridge fills the gap between button and dropdown */
@@ -528,7 +655,7 @@ const Navbar = () => {
             <div className="flex justify-between items-center px-4 md:px-12 lg:px-20 h-16 sm:h-[5.3rem]">
               <div style={{ width: "176px", height: "45px", overflow: "hidden" }}>
                 <Link to="/">
-                  <img src={logo} alt="Logo" className="w-full md:w-auto h-full md:h-auto" />
+                  <img src={logo} alt="Mélange Digital logo" className="w-full md:w-auto h-full md:h-auto" />
                 </Link>
               </div>
 
@@ -610,7 +737,52 @@ const Navbar = () => {
                   )}
                 </div>
 
-                {navLinks.map((link) => (
+                {navLinks.map((link) => link.to === "/services" ? (
+                  <div
+                    key={link.to}
+                    ref={servicesWrapRef}
+                    className="navbar-link nb-services-outer"
+                    onMouseEnter={() => setServicesOpen(true)}
+                    onMouseLeave={() => setServicesOpen(false)}
+                    onFocus={() => setServicesOpen(true)}
+                    onBlur={(event) => {
+                      if (!event.currentTarget.contains(event.relatedTarget)) {
+                        setServicesOpen(false);
+                      }
+                    }}
+                  >
+                    <NavLink
+                      to={link.to}
+                      className={({ isActive }) =>
+                        `nav-link nb-services-trigger ${isActive ? "activePath" : ""}`
+                      }
+                      aria-haspopup="true"
+                      aria-expanded={isServicesOpen}
+                      aria-controls="desktop-service-submenu"
+                    >
+                      {link.label}
+                      <svg className="nb-services-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                        <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </NavLink>
+                    {isServicesOpen && (
+                      <>
+                        <div className="nb-services-bridge" aria-hidden="true" />
+                        <div className="nb-services-dropdown" id="desktop-service-submenu">
+                          {serviceNavLinks.map((serviceLink) => (
+                            <NavLink
+                              key={serviceLink.to}
+                              to={serviceLink.to}
+                              className={({ isActive }) => (isActive ? "activePath" : "")}
+                            >
+                              {serviceLink.label}
+                            </NavLink>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ) : (
                   <div key={link.to || link.href} className="navbar-link cursor-pointer">
                     {link.href ? (
                       <a
@@ -673,7 +845,49 @@ const Navbar = () => {
           }}
         >
           <div className="flex flex-col items-start pt-6 pl-4 pr-4 pb-6 gap-1 font-medium">
-            {mobileNavLinks.map((link) => (
+            {mobileNavLinksWithServices.map((link) => link.to === "/services" ? (
+              <div key={link.to} className="navbar-link" style={{ width: "100%" }}>
+                <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+                  <NavLink
+                    to={link.to}
+                    onClick={() => setMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `nav-link text-title py-3 ${isActive ? "activePath" : ""}`
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
+                  <button
+                    type="button"
+                    className="mb-service-toggle"
+                    aria-label="Toggle service sub-pages"
+                    aria-expanded={isMobileServicesOpen}
+                    aria-controls="mobile-service-submenu"
+                    onClick={() => setMobileServicesOpen((open) => !open)}
+                  >
+                    <svg viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                      <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+                {isMobileServicesOpen && (
+                  <div className="mb-service-list" id="mobile-service-submenu">
+                    {serviceNavLinks.map((serviceLink) => (
+                      <NavLink
+                        key={serviceLink.to}
+                        to={serviceLink.to}
+                        onClick={() => {
+                          setMenuOpen(false);
+                          setMobileServicesOpen(false);
+                        }}
+                      >
+                        {serviceLink.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
               <div key={link.to || link.href} className="navbar-link cursor-pointer">
                 {link.href ? (
                   <a

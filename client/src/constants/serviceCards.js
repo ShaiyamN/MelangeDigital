@@ -53,7 +53,7 @@ export const DEFAULT_SERVICE_CARDS = {
       title: "Zambia Tourism: OTM Mumbai 2026",
       slug: "zambia-tourism-otm-mumbai-2026",
       bannerImage: "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1784615253/i5bja9epdkwkmty3w92c.png",
-      caption: "Client-reported results from a one-year mandate: 500+ trade connections, approximately $3.2M from seven MICE groups (75–700 guests), and 18 influencers.",
+      caption: "Client-reported results from a one-year mandate: 500+ trade connections, approximately US$3.2M from seven MICE groups (75–700 guests), and 18 influencers. The campaign also received a Most Promising Destination award.",
     },
   },
   fam: {
@@ -75,8 +75,37 @@ export const DEFAULT_SERVICE_CARDS = {
   },
 };
 
+const SERVICE_CARD_ALT_TEXT = {
+  "singapore-tourism-board-isthisevensingapore":
+    "Singapore skyline with Marina Bay Sands and Esplanade for the #IsThisEvenSingapore tourism board influencer marketing campaign",
+  "hong-kong-tourism-board-herhongkong":
+    "Four women taking a selfie against the Hong Kong skyline for the #HerHongKong campaign with Cleartrip",
+  "dharma-productions-x-singapore-tourism-board-jigra":
+    "Jigra film shoot in Singapore graphic for the Dharma Productions x Singapore Tourism Board partnership - Film Tourism",
+  "singapore-tourism-board-x-divine-saucy-music-video":
+    "Saucy music video graphic featuring DIVINE and Mouni Roy, a Singapore Tourism Board branded content IP Film Tourism",
+  "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1789710108/dzr088ftu02tfbcjqij4.png":
+    "Riyadh skyline with Kingdom Centre for the mall activation campaign for Saudi Arabia Tourism",
+  "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1784615253/i5bja9epdkwkmty3w92c.png":
+    "Zambia Tourism Board at OTM Mumbai 2026 collage with Victoria Falls, booth performers and delegates",
+  "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1789723131/iufyjxfwguwllsjub9pd.png":
+    "Visitor taking a selfie with traditional Zambian performers, showcasing Zambia's entry at OTM Mumbai",
+  "resorts-world-sentosa-go-bananas-in-minion-land":
+    "Resorts World Sentosa Go Bananas in Minion Land campaign graphic with Minion characters at the theme park",
+  "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1786617757/cgqyaqyagvgw1vjrl2db.png":
+    "Resorts World Sentosa Go Bananas in Minion Land campaign graphic with Minion characters at the theme park",
+  "hong-kong-tourism-board-x-ram-charan-esquire-india-cover":
+    "Hong Kong Tourism Board Marketing x Ram Charan Esquire India cover shoot on a junk boat, a travel PR case study",
+  "https://res.cloudinary.com/dbhrpsnzg/image/upload/v1784620883/b6d6mh1u7ie4kkd7evev.png":
+    "Hong Kong Tourism Board Marketing x Ram Charan Esquire India cover shoot on a junk boat, a travel PR case study",
+};
+
+export function getServiceCardAltText(card) {
+  return SERVICE_CARD_ALT_TEXT[card?.bannerImage] || SERVICE_CARD_ALT_TEXT[card?.slug] || card?.title || "";
+}
+
 export function applyCaseStudySeo(card) {
-  const caseSeo = CASE_STUDY_SEO[String(card?.slug || "").toLowerCase()];
+  const caseSeo = CASE_STUDY_SEO[card?.slug];
   if (!caseSeo) return card;
   const caption =
     caseSeo.cardCaption || card.serviceCaption || card.intro || card.caption || "";

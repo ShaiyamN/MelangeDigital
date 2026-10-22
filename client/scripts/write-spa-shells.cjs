@@ -49,5 +49,11 @@ if (fs.existsSync(careersFormDir)) {
 const spa = path.join(__dirname, "..", "spa");
 fs.rmSync(spa, { recursive: true, force: true });
 fs.cpSync(dist, spa, { recursive: true });
+// Hostinger/Apache may serve spa/sitemap.xml before Node. Express owns GET /sitemap.xml.
+const spaSitemap = path.join(spa, "sitemap.xml");
+if (fs.existsSync(spaSitemap)) {
+  fs.unlinkSync(spaSitemap);
+  console.log("write-spa-shells: removed spa/sitemap.xml (dynamic Express route)");
+}
 console.log("write-spa-shells: synced spa/ for Hostinger");
 console.log(`hostinger-build: ok (${index})`);

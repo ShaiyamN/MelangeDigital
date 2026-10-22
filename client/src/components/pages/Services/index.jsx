@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { DEFAULT_SERVICE_CARDS, resolveServiceSlots } from "../../../constants/serviceCards";
+import { DEFAULT_SERVICE_CARDS, getServiceCardAltText, resolveServiceSlots } from "../../../constants/serviceCards";
 import {
   MARKETING_ASSET as ASSET,
   MarketingShell,
@@ -25,7 +25,7 @@ function renderServiceCardHtml(card) {
   const href = card.slug ? (card.slug.startsWith("/") ? card.slug : `/work/${card.slug}`) : "/work";
   return `      <a class="svc-project" href="${esc(href)}">
        <div class="svc-project__media">
-        <img alt="${esc(card.title)}" src="${esc(card.bannerImage)}" width="1200" height="600" style="object-fit: contain; width: 100%; height: 100%;" />
+        <img alt="${esc(getServiceCardAltText(card))}" src="${esc(card.bannerImage)}" width="1200" height="600" style="object-fit: contain; width: 100%; height: 100%;" />
        </div>
        <div class="svc-project__bar">
         <h3 class="svc-project__title">${esc(card.title)}</h3>
@@ -53,61 +53,7 @@ const CSS = [
 ];
 const SCRIPT_BASES = [`${ASSET}/js/services.js?v=20260824w`];
 
-const FAQ_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What does digital marketing for travel and tourism include?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Digital marketing for travel and tourism includes influencer and celebrity marketing, branded content and IP integrations, experiential activations, FAM trips and PR, all built specifically for destinations, DMOs, NTOs and travel brands, not adapted from retail or FMCG playbooks.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What is digital marketing for DMOs?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Digital marketing for DMOs is the full stack of services we offer specifically for destination marketing organisations. We build campaigns that survive government-level approval chains, prove arrivals rather than impressions, and understand procurement realities a typical ad agency has never worked inside.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Does Mélange handle influencer marketing in travel and tourism, or only celebrity campaigns?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Both. Mélange's influencer marketing in travel and tourism spans everything from mega-follower celebrities to regional-language creators on platforms like ShareChat and Moj, cast by subculture fit rather than follower count alone.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Is marketing for NTOs different from marketing other travel brands?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. NTO marketing means working within a national tourism organisation's mandate, budget cycles and ministerial reporting lines: categorically different from marketing a private travel brand, and a large part of what Mélange specialises in.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What does Mélange Digital specialise in?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Mélange is a travel and tourism marketing agency. We decode the culture, narrate the story, match the creator, and convert emotion into a booking. Success is measured in arrivals, not impressions.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How do you choose creators for a destination campaign?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "We cast for credibility inside a subculture, not follower count. We check the data behind every creator before signing a contract, and casting, negotiation, content and reporting run under one roof.",
-      },
-    },
-  ],
-};
-
+/** JSON-LD for /services is injected into the initial HTML by Express (page-schemas.cjs). */
 const Services = () => {
   const cssReady = useMarketingBoot("svc", CSS, SCRIPT_BASES);
   const [markup, setMarkup] = useState(() => buildDynamicMarkup(rawMarkup, null));
@@ -176,10 +122,10 @@ const Services = () => {
   return (
     <>
       <Helmet>
-        <title>Digital Marketing for Travel and Tourism | Mélange</title>
+        <title>Digital Marketing for Travel and Tourism | Mélange Digital</title>
         <meta
           name="description"
-          content="Mélange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
+          content="Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs."
         />
         <link rel="canonical" href="https://melangedigital.co/services" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -190,47 +136,11 @@ const Services = () => {
         />
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/services" />
-        <meta property="og:title" content="Digital Marketing for Travel and Tourism | Mélange" />
+        <meta property="og:title" content="Digital Marketing for Travel and Tourism | Mélange Digital" />
         <meta
           property="og:description"
-          content="Mélange offers digital marketing services for the travel and tourism industry, from influencer marketing to branding, built for destinations, DMOs, and NTOs."
+          content="Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs."
         />
-        <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            name: "Travel and Tourism Marketing",
-            url: "https://melangedigital.co/services",
-            provider: {
-              "@type": "Organization",
-              name: "Mélange Digital",
-              url: "https://melangedigital.co",
-            },
-            description:
-              "Influencer and celebrity marketing, branded content and IP, experiential activations, and FAM trips plus PR for tourism boards.",
-            hasOfferCatalog: {
-              "@type": "OfferCatalog",
-              name: "Tourism marketing services",
-              itemListElement: [
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Influencer & Celebrity Marketing" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Branded Content & IP's" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "Experiential Marketing" } },
-                { "@type": "Offer", itemOffered: { "@type": "Service", name: "FAM Trips + PR" } },
-              ],
-            },
-          })}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://melangedigital.co/" },
-              { "@type": "ListItem", position: 2, name: "Services", item: "https://melangedigital.co/services" },
-            ],
-          })}
-        </script>
         <style type="text/css">{marketingNavCss("svc")}</style>
       </Helmet>
 

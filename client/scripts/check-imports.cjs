@@ -72,6 +72,7 @@ function resolveCaseSensitive(fromFile, spec) {
 }
 
 const bad = [];
+const omittedLargeMedia = [];
 for (const file of files) {
   const text = fs.readFileSync(file, "utf8");
   let m;
@@ -79,16 +80,28 @@ for (const file of files) {
   while ((m = re.exec(text))) {
     const spec = m[1].replace(/[?#].*$/, "");
     if (!spec.startsWith(".")) continue;
-    if (/\.(mp4|gif)$/i.test(spec)) continue;
     const result = resolveCaseSensitive(file, spec);
     if (result == null) {
-      bad.push({ file: path.relative(root, file), spec, kind: "missing" });
+      const sourcePath = path.relative(root, file).split(path.sep).join("/");
+      const isGitIgnoredMedia =
+        (/\.gif$/i.test(spec) && sourcePath.startsWith("assets/newImages/")) ||
+        (/\.(gif|mp4)$/i.test(spec) && sourcePath.startsWith("assets/video/"));
+      if (isGitIgnoredMedia) {
+        omittedLargeMedia.push({ file: sourcePath, spec });
+      } else {
+        bad.push({ file: sourcePath, spec, kind: "missing" });
+      }
     } else if (result.caseMismatch) {
       bad.push({ file: path.relative(root, file), spec, kind: "case", ...result });
     }
   }
 }
 
+if (omittedLargeMedia.length) {
+  console.warn(
+    `ignored ${omittedLargeMedia.length} source media imports excluded by .gitignore; reachable imports are still validated by Vite.`,
+  );
+}
 console.log(JSON.stringify(bad, null, 2));
 console.log("issues", bad.length);
 if (bad.length) process.exit(1);

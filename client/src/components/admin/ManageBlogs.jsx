@@ -4,6 +4,7 @@ import { auth, db } from "../../firebase";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, deleteField } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import { ArrowLeft, Plus, Trash2, Edit2, X, Sun, Moon, Image as ImageIcon, Calendar, User, AlignLeft, Tag, BookOpen, Check, Table, PlusCircle, LayoutTemplate, Type, FileText, Target, Video, ArrowUp, ArrowDown, Code2 } from "lucide-react";
+import { BLOG_CATEGORY_OPTIONS } from "../../constants/blogCategories";
 import CloudinaryUpload from "./CloudinaryUpload";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -48,6 +49,7 @@ const ManageBlogs = () => {
   const [hasTable, setHasTable] = useState(false);
   const [tableHeaders, setTableHeaders] = useState(["Column 1", "Column 2"]);
   const [tableRows, setTableRows] = useState([["", ""]]);
+  const [tablePosition, setTablePosition] = useState("after-intro");
   const [contentBlocks, setContentBlocks] = useState([]);
   const [schemaMode, setSchemaMode] = useState("auto");
   const [schemaText, setSchemaText] = useState("");
@@ -70,6 +72,10 @@ const ManageBlogs = () => {
     categories,
     focusKeywords,
     contentBlocks,
+    hasTable,
+    tableHeaders,
+    tableRows,
+    tablePosition,
     updatedAt,
   });
 
@@ -175,6 +181,7 @@ const ManageBlogs = () => {
     setHasTable(false);
     setTableHeaders(["Column 1", "Column 2"]);
     setTableRows([["", ""]]);
+    setTablePosition("after-intro");
     setContentBlocks([]);
     setSchemaMode("auto");
     setSchemaError("");
@@ -210,10 +217,16 @@ const ManageBlogs = () => {
     setMetaDescription(blog.metaDescription || "");
     setFocusKeywords(blog.focusKeywords || "");
     setAltText(blog.altText || "");
-    setSections(blog.sections || []);
+    setSections(
+      (blog.sections || []).map((section, index) => ({
+        ...section,
+        id: section.id || `legacy-section-${index}`,
+      })),
+    );
     setHasTable(blog.hasTable || false);
     setTableHeaders(blog.tableHeaders || ["Column 1", "Column 2"]);
     setTableRows(blog.tableRows ? blog.tableRows.map(row => Array.isArray(row) ? row : row.cells || []) : [["", ""]]);
+    setTablePosition(blog.tablePosition || "after-sections");
     setContentBlocks(blog.contentBlocks || []);
     const isCustom = blog.schemaMode === "custom" && blog.customSchema;
     setSchemaMode(isCustom ? "custom" : "auto");
@@ -257,6 +270,7 @@ const ManageBlogs = () => {
       hasTable,
       tableHeaders,
       tableRows: tableRows.map(row => ({ cells: row })),
+      tablePosition,
       contentBlocks,
       updatedAt,
       generatedSchema,
@@ -313,8 +327,11 @@ const ManageBlogs = () => {
 
   const removeSection = (index) => {
     const newSections = [...sections];
-    newSections.splice(index, 1);
+    const [removed] = newSections.splice(index, 1);
     setSections(newSections);
+    if (tablePosition === `after-section:${removed.id}`) {
+      setTablePosition("after-intro");
+    }
   };
 
   const moveSection = (index, direction) => {
@@ -370,21 +387,24 @@ const ManageBlogs = () => {
     if (type === "section") {
       newBlock = { ...newBlock, subheading: "", paragraph: "" };
     } else if (type === "image") {
-      newBlock = { ...newBlock, url: "", imageSize: "medium", imageFit: "contain" };
+      newBlock = { ...newBlock, url: "", altText: "", imageSize: "medium", imageFit: "contain" };
     } else if (type === "video") {
       newBlock = { ...newBlock, url: "" };
     } else if (type === "split") {
-      newBlock = { ...newBlock, subheading: "", paragraph: "", url: "", imagePosition: "right", imageSize: "medium" };
+      newBlock = { ...newBlock, subheading: "", paragraph: "", url: "", altText: "", imagePosition: "right", imageSize: "medium" };
     } else if (type === "image-row") {
-      newBlock = { ...newBlock, images: ["", ""], columns: 2 };
+      newBlock = { ...newBlock, images: ["", ""], altTexts: ["", ""], columns: 2 };
     }
     setContentBlocks([...contentBlocks, newBlock]);
   };
 
   const removeContentBlock = (index) => {
     const copy = [...contentBlocks];
-    copy.splice(index, 1);
+    const [removed] = copy.splice(index, 1);
     setContentBlocks(copy);
+    if (tablePosition === `after-content-block:${removed.id}`) {
+      setTablePosition("after-sections");
+    }
   };
 
   const updateContentBlock = (index, field, value) => {
@@ -401,12 +421,23 @@ const ManageBlogs = () => {
     setContentBlocks(copy);
   };
 
+  const updateImageRowAlt = (blockIdx, imgIdx, value) => {
+    const copy = [...contentBlocks];
+    const altTexts = [...(copy[blockIdx].altTexts || [])];
+    altTexts[imgIdx] = value;
+    copy[blockIdx].altTexts = altTexts;
+    setContentBlocks(copy);
+  };
+
   const setImageRowColumns = (blockIdx, cols) => {
     const copy = [...contentBlocks];
     let imgs = [...(copy[blockIdx].images || [])];
     while (imgs.length < cols) imgs.push("");
     imgs = imgs.slice(0, cols);
     copy[blockIdx].images = imgs;
+    const altTexts = [...(copy[blockIdx].altTexts || [])];
+    while (altTexts.length < cols) altTexts.push("");
+    copy[blockIdx].altTexts = altTexts.slice(0, cols);
     copy[blockIdx].columns = cols;
     setContentBlocks(copy);
   };
@@ -577,6 +608,18 @@ const ManageBlogs = () => {
                       currentImageUrl={image} 
                       onUploadSuccess={setImage} 
                     />
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+                        Banner Image Alt Text
+                      </label>
+                      <input
+                        type="text"
+                        value={altText}
+                        onChange={(e) => setAltText(e.target.value)}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white"
+                        placeholder="Describe the image for screen readers and search engines"
+                      />
+                    </div>
 
                     {/* Live Banner Preview + Display Controls */}
                     {image && (
@@ -712,14 +755,7 @@ const ManageBlogs = () => {
                           <Tag className="w-4 h-4 text-indigo-500" /> Categories
                         </label>
                         <div className="flex flex-wrap gap-4 p-4 bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl">
-                          {[
-                            { id: "content-marketing", label: "Content Marketing" },
-                            { id: "brand-strategy", label: "Brand Strategy" },
-                            { id: "ecommerce-management", label: "E-commerce Management" },
-                            { id: "design-solutions", label: "Design Solutions" },
-                            { id: "performance-marketing", label: "Performance Marketing" },
-                            { id: "website-development-seo", label: "Website Development & SEO" }
-                          ].map(cat => (
+                          {BLOG_CATEGORY_OPTIONS.map(cat => (
                             <label key={cat.id} className="flex items-center gap-2 cursor-pointer group/cb">
                               <div className={`w-5 h-5 flex-shrink-0 rounded flex items-center justify-center border transition-all ${categories.includes(cat.id) ? 'bg-indigo-500 border-indigo-500' : 'border-slate-300 dark:border-slate-600 group-hover/cb:border-indigo-400'}`}>
                                 {categories.includes(cat.id) && <Check className="w-3.5 h-3.5 text-white" />}
@@ -982,6 +1018,31 @@ const ManageBlogs = () => {
                         {hasTable ? "Remove Table" : <><PlusCircle className="w-4 h-4" /> Enable Table</>}
                       </button>
                     </div>
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+                        Insert Table After
+                      </label>
+                      <select
+                        value={tablePosition}
+                        onChange={(e) => setTablePosition(e.target.value)}
+                        disabled={!hasTable}
+                        className="w-full px-4 py-2.5 bg-white dark:bg-black/30 border border-slate-200 dark:border-white/10 rounded-lg text-sm text-slate-900 dark:text-white disabled:opacity-50"
+                      >
+                        <option value="after-intro">Article introduction</option>
+                        {sections.map((section, index) => (
+                          <option key={section.id} value={`after-section:${section.id}`}>
+                            After {section.subheading || `Section ${index + 1}`}
+                          </option>
+                        ))}
+                        <option value="after-sections">All article sections</option>
+                        {contentBlocks.map((block, index) => (
+                          <option key={block.id} value={`after-content-block:${block.id}`}>
+                            After {block.subheading || `${block.type} block ${index + 1}`}
+                          </option>
+                        ))}
+                        <option value="after-content-blocks">All dynamic content blocks</option>
+                      </select>
+                    </div>
                     {hasTable && (
                       <div className="overflow-x-auto custom-scrollbar border border-slate-200 dark:border-white/10 rounded-xl bg-white dark:bg-black/40">
                         <table className="w-full text-left border-collapse">
@@ -1103,6 +1164,13 @@ const ManageBlogs = () => {
                             <div className="space-y-3 pt-4">
                               <div className="text-xs font-bold text-pink-500 flex items-center gap-1 mb-2"><ImageIcon className="w-4 h-4" /> Image Upload</div>
                               <CloudinaryUpload onUploadSuccess={(url) => updateContentBlock(idx, 'url', url)} currentImageUrl={block.url} label="Upload Image Block" />
+                              <input
+                                type="text"
+                                value={block.altText || ''}
+                                onChange={(e) => updateContentBlock(idx, 'altText', e.target.value)}
+                                placeholder="Image alt text (describe what the image shows)"
+                                className="w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white"
+                              />
                               <div className="grid grid-cols-2 gap-3 mt-2">
                                 <div>
                                   <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5">Image Size</label>
@@ -1151,6 +1219,13 @@ const ManageBlogs = () => {
                                   <div key={imgIdx} className="border border-dashed border-rose-200 dark:border-rose-500/30 rounded-xl p-2">
                                     <p className="text-[10px] font-bold text-rose-400 mb-1">Image {imgIdx + 1}</p>
                                     <CloudinaryUpload onUploadSuccess={(url) => updateImageRowSlot(idx, imgIdx, url)} currentImageUrl={imgUrl} label={`Image ${imgIdx + 1}`} />
+                                    <input
+                                      type="text"
+                                      value={block.altTexts?.[imgIdx] || ''}
+                                      onChange={(e) => updateImageRowAlt(idx, imgIdx, e.target.value)}
+                                      placeholder="Image alt text"
+                                      className="mt-2 w-full text-xs px-3 py-2 rounded-lg bg-slate-50 dark:bg-white/10 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white"
+                                    />
                                   </div>
                                 ))}
                               </div>
@@ -1217,6 +1292,13 @@ const ManageBlogs = () => {
                                 </div>
                                 <div className="border border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-3 bg-slate-50/50 dark:bg-white/5 flex flex-col justify-center">
                                   <CloudinaryUpload onUploadSuccess={(url) => updateContentBlock(idx, 'url', url)} currentImageUrl={block.url} label="Upload Image" />
+                                  <input
+                                    type="text"
+                                    value={block.altText || ''}
+                                    onChange={(e) => updateContentBlock(idx, 'altText', e.target.value)}
+                                    placeholder="Image alt text"
+                                    className="mt-2 w-full text-xs px-3 py-2 rounded-lg bg-white dark:bg-black/30 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white"
+                                  />
                                 </div>
                               </div>
                             </div>

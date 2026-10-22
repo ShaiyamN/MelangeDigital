@@ -56,8 +56,8 @@ function buildWorkDynamicMarkup(baseHtml, list) {
     const ordered = [...cards].sort((a, b) => {
       const slugA = a.match(/href="\/work\/([^"]+)"/)?.[1];
       const slugB = b.match(/href="\/work\/([^"]+)"/)?.[1];
-      const rankA = FEATURED_WORK_RANK.get(String(slugA || "").toLowerCase());
-      const rankB = FEATURED_WORK_RANK.get(String(slugB || "").toLowerCase());
+      const rankA = FEATURED_WORK_RANK.get(slugA);
+      const rankB = FEATURED_WORK_RANK.get(slugB);
       if (rankA !== undefined || rankB !== undefined) {
         if (rankA === undefined) return 1;
         if (rankB === undefined) return -1;
@@ -114,8 +114,8 @@ const Work = () => {
         const list = querySnapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 
         const workSorted = [...list].sort((a, b) => {
-          const rankA = FEATURED_WORK_RANK.get(String(a.slug || "").toLowerCase());
-          const rankB = FEATURED_WORK_RANK.get(String(b.slug || "").toLowerCase());
+          const rankA = FEATURED_WORK_RANK.get(a.slug);
+          const rankB = FEATURED_WORK_RANK.get(b.slug);
           if (rankA !== undefined || rankB !== undefined) {
             if (rankA === undefined) return 1;
             if (rankB === undefined) return -1;

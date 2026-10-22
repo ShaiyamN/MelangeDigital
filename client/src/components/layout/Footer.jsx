@@ -12,7 +12,7 @@ const Footer = () => (
         <img
           className="site-foot__logo"
           src={`${IMG}/logo-footer.png`}
-          alt="Mélange Digital"
+          alt="Mélange Digital logo"
           width="220"
           height="40"
         />
@@ -24,7 +24,7 @@ const Footer = () => (
             rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
-            <img src={`${IMG}/si-linkedin.svg`} alt="LinkedIn" />
+            <img src={`${IMG}/si-linkedin.svg`} alt="Mélange Digital on LinkedIn" />
           </a>
           <a
             href="https://www.instagram.com/melangedigital.co"
@@ -32,7 +32,7 @@ const Footer = () => (
             rel="noopener noreferrer"
             aria-label="Instagram @melangedigital.co"
           >
-            <img src={`${IMG}/si-insta.svg`} alt="Instagram" />
+            <img src={`${IMG}/si-insta.svg`} alt="Mélange Digital on Instagram" />
           </a>
         </div>
       </div>

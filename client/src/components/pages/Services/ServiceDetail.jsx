@@ -7,7 +7,7 @@ import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
 import { useBtnAnim } from "../../layout/MelangeCta";
 import { SERVICES_DATA, SERVICE_COLLAGE_TILES } from "../../../constants/servicesData";
-import { resolveServiceSlots } from "../../../constants/serviceCards";
+import { getServiceCardAltText, resolveServiceSlots } from "../../../constants/serviceCards";
 import "./serviceDetail.css";
 
 const CTA_ARROW = "/destination-marketing-agency/images/services/cta-arrow.svg";
@@ -77,9 +77,9 @@ const slotStyle = (slot) => ({
   transform: `rotate(${slot.rotate}deg) scale(0.9)`,
 });
 
-function PillarIcon({ src }) {
+function PillarIcon({ src, alt = "" }) {
   if (!src) return null;
-  return <img className="svc-pillar-icon" src={src} alt="" />;
+  return <img className="svc-pillar-icon" src={src} alt={alt} />;
 }
 
 function AnimCta({ to, className, arrowSrc, children }) {
@@ -211,43 +211,52 @@ export default function ServiceDetail() {
   const manifesto = service.manifesto || {};
   const heroLines = service.hero.subtitleLines || service.hero.descriptionLines || null;
 
-  // Schema.org structured data for SEO
-  const serviceSchema = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: service.name,
-    description: service.seo.description,
-    provider: {
-      "@type": "Organization",
-      name: "Mélange Digital",
-      url: "https://melangedigital.co",
-    },
-    areaServed: "Global",
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: service.name,
-      itemListElement: approachCards.map((card) => ({
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: card.title,
+  // These service-page schemas are injected by Express (page-schemas.cjs).
+  const serverOwnsJsonLd =
+    slug === "influencer-marketing" ||
+    slug === "branded-content-ips" ||
+    slug === "experiential-marketing" ||
+    slug === "fam-trips-pr";
+  const serviceSchema = serverOwnsJsonLd
+    ? null
+    : {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        name: service.name,
+        description: service.seo.description,
+        provider: {
+          "@type": "Organization",
+          name: "Mélange Digital",
+          url: "https://melangedigital.co",
         },
-      })),
-    },
-  };
+        areaServed: "Global",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: service.name,
+          itemListElement: approachCards.map((card) => ({
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: card.title,
+            },
+          })),
+        },
+      };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: service.faqs.items.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
+  const faqSchema = serverOwnsJsonLd
+    ? null
+    : {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: service.faqs.items.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      };
 
   return (
     <div className="svc-detail-page">
@@ -259,8 +268,12 @@ export default function ServiceDetail() {
         <meta property="og:description" content={service.seo.description} />
         <meta property="og:url" content={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} />
         <meta property="og:type" content="website" />
-        <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        {serviceSchema && (
+          <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
+        )}
+        {faqSchema && (
+          <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        )}
       </Helmet>
 
       <Navbar />
@@ -315,7 +328,7 @@ export default function ServiceDetail() {
                     >
                       <img
                         src={tile.src}
-                        alt=""
+                        alt={tile.alt || ""}
                         loading={i < 4 ? "eager" : "lazy"}
                         decoding="async"
                         style={{
@@ -324,6 +337,7 @@ export default function ServiceDetail() {
                         }}
                         onError={(e) => {
                           e.currentTarget.onerror = null;
+                          e.currentTarget.alt = tile.fallbackAlt || "";
                           e.currentTarget.src = `${COLLAGE_BASE}/tile-${(i % 8) + 1}.jpg`;
                         }}
                       />
@@ -378,7 +392,7 @@ export default function ServiceDetail() {
               <div className="svc-pillars-grid">
                 {service.philosophy.pillars.map((pillar, idx) => (
                   <div key={idx} className="svc-pillar-card">
-                    <PillarIcon src={pillar.icon} />
+                    <PillarIcon src={pillar.icon} alt={pillar.iconAlt} />
                     <h4 className="svc-pillar-title">{pillar.title}</h4>
                     <p className="svc-pillar-desc">{pillar.description}</p>
                   </div>
@@ -487,7 +501,7 @@ export default function ServiceDetail() {
                 <Link key={cs.id || cs.slug} to={href} className="svc-project">
                   <div className="svc-project__media">
                     <img
-                      alt={cs.title}
+                      alt={getServiceCardAltText(cs)}
                       src={cs.bannerImage}
                       width="1060"
                       height="530"
