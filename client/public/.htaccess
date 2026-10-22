@@ -3,17 +3,55 @@
   <Files "index.html">
     Header set Cache-Control "no-cache"
   </Files>
+
+  <Files "robots.txt">
+    Header set Content-Type "text/plain; charset=utf-8"
+  </Files>
+
+  <Files "sitemap.xml">
+    Header set Content-Type "application/xml; charset=utf-8"
+  </Files>
 </IfModule>
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
+  # Send known legacy work slugs directly to their final canonical URLs.
+  RewriteRule ^work/GenVR/?$ https://melangedigital.co/work/genvr [R=301,L,NC]
+  RewriteRule ^work/neoTraders/?$ https://melangedigital.co/work/neotraders [R=301,L,NC]
+  RewriteRule ^work/devBoost/?$ https://melangedigital.co/work/devboost [R=301,L,NC]
+  RewriteRule ^work/singapore-tourism-board-stb/?$ https://melangedigital.co/work/singapore-tourism-board [R=301,L,NC]
+  RewriteRule ^work/costa-cruises/?$ https://melangedigital.co/work/costa-cruises-introducing-luxury-cruising-to-india [R=301,L,NC]
+
+  # Canonicalize the public host and scheme before serving the SPA.
+  RewriteCond %{HTTP_HOST} ^www\.melangedigital\.co$ [NC]
+  RewriteRule ^ https://melangedigital.co%{REQUEST_URI} [R=301,L,NE]
+  RewriteCond %{HTTP_HOST} ^melangedigital\.co$ [NC]
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://melangedigital.co%{REQUEST_URI} [R=301,L,NE]
+
   # Tourism landing is SPA home (`/`). Old URLs redirect; assets stay under DMA/.
   DirectorySlash Off
   RewriteRule ^destination-marketing-agency/?$ / [R=301,L]
   RewriteRule ^destination-marketing/?$ / [R=301,L]
   RewriteRule ^tourism/?$ / [R=301,L]
+
+  # Retired SEO URLs from the approved redirect sheet.
+  RewriteRule ^services/brand-strategy/?$ /services/branded-content-ips [R=301,L]
+  RewriteRule ^services/content-strategy-and-production/?$ /services/branded-content-ips [R=301,L]
+  RewriteRule ^services/immersive-brand-storytelling/?$ /services/branded-content-ips [R=301,L]
+  RewriteRule ^singapore/?$ / [R=301,L]
+  RewriteRule ^uae/?$ / [R=301,L]
+  RewriteRule ^india/?$ / [R=301,L]
+  RewriteRule ^blogs/community-first-content-stacks-why-owning-your-audience-is-the-new-moat/?$ /blogs [R=301,L]
+  RewriteRule ^services/pr-and-outreach/?$ /services/fam-trips-pr [R=301,L]
+  RewriteRule ^global/united-kingdom/?$ / [R=301,L]
+  RewriteRule ^services/content-marketing/?$ /services/branded-content-ips [R=301,L]
+  RewriteRule ^services/design-solutions/?$ /services [R=301,L]
+  RewriteRule ^uk/?$ / [R=301,L]
+  RewriteRule ^global/united-arab-emirates/?$ / [R=301,L]
+  RewriteRule ^blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships/?$ /blogs [R=301,L]
 
   # Pretty PDF URL
   RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]

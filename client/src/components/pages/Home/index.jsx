@@ -147,7 +147,7 @@ const Home = () => {
         <title>Global Travel & Tourism Marketing Agency | Mélange Digital</title>
         <meta
           name="description"
-          content="Mélange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
+          content="Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call."
         />
         <link rel="canonical" href="https://melangedigital.co/" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -161,7 +161,7 @@ const Home = () => {
         <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Mélange Digital" />
         <meta
           property="og:description"
-          content="Mélange is a travel and tourism marketing agency in India, turning cultural insight into arrivals for tourism boards and travel brands worldwide. Book a call."
+          content="Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call."
         />
         <style type="text/css">{`
           /* Safety: hide leftover Webflow nav if cached markup still has it */

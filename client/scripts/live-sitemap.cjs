@@ -235,7 +235,10 @@ async function refresh() {
     console.error("firestore sitemap skipped:", err.message);
   }
 
-  const allRoutes = [...routes, ...extra];
+  const indexableStaticRoutes = routes.filter(
+    (route) => !route.startsWith("/work/") || Boolean(byPath[route]),
+  );
+  const allRoutes = [...indexableStaticRoutes, ...extra];
   const xml = buildXml(origin, allRoutes, byPath);
   cache = {
     xml,

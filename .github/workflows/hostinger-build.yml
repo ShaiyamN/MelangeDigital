@@ -43,9 +43,19 @@ jobs:
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
 
+      - name: Configure Chrome for prerender
+        if: env.SECRETS_PRESENT == 'true'
+        run: |
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME_PATH" ]; then
+            echo "::error::Chrome/Chromium is required to generate crawler-readable pages."
+            exit 1
+          fi
+          echo "PUPPETEER_EXECUTABLE_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
+
       - name: Install and build
         if: env.SECRETS_PRESENT == 'true'
-        run: npm ci --no-audit --no-fund --legacy-peer-deps --include=dev && npm run build:full
+        run: npm ci --no-audit --no-fund --legacy-peer-deps --include=dev && npm run build:prerender
         env:
           FORCE_VITE_BUILD: "1"
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}

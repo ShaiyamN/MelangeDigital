@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import { activeBlogSchema } from "../../utils/blogSchema";
 import { linkedin, instagram } from "../../assets/images";
 import ReactPlayer from "react-player";
+import { formatBlogCategory } from "../../constants/blogCategories";
 
 
 const BlogDetail = () => {
@@ -121,27 +122,6 @@ const BlogDetail = () => {
     },
   ];
 
-  // Helper to humanize category label
-  const formatCategory = (cat) => {
-    if (!cat) return "";
-    const categoryMap = {
-      "content-marketing": "Content Marketing",
-      "brand-strategy": "Brand Strategy",
-      "ecommerce-management": "E-commerce Management",
-      "design-solutions": "Design Solutions",
-      "performance-marketing": "Performance Marketing",
-      "website-development-seo": "Website Development & SEO",
-      // Legacy support for older blogs
-      "influencer-marketing": "Influencer Marketing",
-      "design-development": "Design & Development",
-      "content-strategy": "Content Strategy",
-      "ips-pr": "PR, IPs & Outreach",
-      "aeo-seo": "AEO & SEO",
-      "ecommerce": "E-Commerce"
-    };
-    return categoryMap[cat] || cat.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
-  };
-
   // Map imageSize value to CSS classes
   const getImageSizeClass = (imageSize) => {
     switch (imageSize) {
@@ -157,6 +137,48 @@ const BlogDetail = () => {
   // Map imageFit value to object-fit class
   const getImageFitClass = (imageFit) => {
     return imageFit === 'cover' ? 'object-cover' : 'object-contain';
+  };
+
+  const tablePosition = blog.tablePosition || "after-sections";
+  const sectionTablePositionExists = (blog.sections || []).some(
+    (section) => `after-section:${section.id}` === tablePosition,
+  );
+  const contentBlockTablePositionExists = (blog.contentBlocks || []).some(
+    (block) => `after-content-block:${block.id}` === tablePosition,
+  );
+  const shouldRenderTableAfterSections =
+    tablePosition === "after-sections" ||
+    (tablePosition.startsWith("after-section:") && !sectionTablePositionExists) ||
+    (tablePosition.startsWith("after-content-block:") && !contentBlockTablePositionExists);
+
+  const renderComparisonTable = () => {
+    if (!blog.hasTable || !blog.tableHeaders || !blog.tableRows) return null;
+
+    return (
+      <div className="mt-10 overflow-x-auto border border-zinc-200 rounded-xl">
+        <table className="w-full text-left border-collapse min-w-[600px]">
+          <thead className="bg-zinc-50">
+            <tr>
+              {blog.tableHeaders.map((header, idx) => (
+                <th key={idx} className="p-4 font-bold text-zinc-900 border-b border-zinc-200">{header}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {blog.tableRows.map((row, rIdx) => {
+              const cells = row.cells || row;
+              return (
+                <tr key={rIdx} className={rIdx % 2 === 0 ? "bg-white" : "bg-zinc-50/50"}>
+                  {cells.map((cell, cIdx) => (
+                    <td key={cIdx} className="p-4 text-zinc-700 border-b border-zinc-200 whitespace-pre-line">{cell}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
   };
 
   const renderVideo = (url) => {
@@ -205,14 +227,14 @@ const BlogDetail = () => {
         {/* Date and Category */}
         <div className="text-stone-400 text-base font-normal font-nunito">
           {blog.categories && blog.categories.length > 0 
-            ? blog.categories.map(cat => formatCategory(cat)).join(", ")
-            : formatCategory(blog.category)} - {blog.date}
+            ? blog.categories.map(cat => formatBlogCategory(cat)).join(", ")
+            : formatBlogCategory(blog.category)} - {blog.date}
         </div>
 
         {/* Title */}
-        <h2 className="text-display font-display my-[16px] lg:font-semibold font-bold font-nunito mt-4 lg:mt-4">
+        <h1 className="text-display font-display my-[16px] lg:font-semibold font-bold font-nunito mt-4 lg:mt-4">
           {blog.title}
-        </h2>
+        </h1>
 
         {/* Banner image */}
         {blog.image && (() => {
@@ -253,62 +275,43 @@ const BlogDetail = () => {
                 dangerouslySetInnerHTML={{ __html: blog.content }}
               />
             )}
+            {tablePosition === "after-intro" && renderComparisonTable()}
 
             {blog.sections && blog.sections.length > 0 && (
               <div className="mt-8 space-y-8">
                 {blog.sections.map((section, idx) => (
-                  <div key={idx} className="section-block">
-                    {section.subheading && (
-                      section.headingLevel === 'h3' ? (
-                        <h3 className="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">{section.subheading}</h3>
-                      ) : section.headingLevel === 'h4' ? (
-                        <h4 className="text-[18px] md:text-[20px] font-bold text-zinc-900 mb-4">{section.subheading}</h4>
-                      ) : (
-                        <h2 className="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4">{section.subheading}</h2>
-                      )
-                    )}
-                    {section.paragraph && (
-                      <div
-                        className="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"
-                        dangerouslySetInnerHTML={{ __html: section.paragraph }}
-                      />
-                    )}
-                  </div>
+                  <React.Fragment key={section.id || idx}>
+                    <div className="section-block">
+                      {section.subheading && (
+                        section.headingLevel === 'h3' ? (
+                          <h3 className="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">{section.subheading}</h3>
+                        ) : section.headingLevel === 'h4' ? (
+                          <h4 className="text-[18px] md:text-[20px] font-bold text-zinc-900 mb-4">{section.subheading}</h4>
+                        ) : (
+                          <h2 className="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4">{section.subheading}</h2>
+                        )
+                      )}
+                      {section.paragraph && (
+                        <div
+                          className="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"
+                          dangerouslySetInnerHTML={{ __html: section.paragraph }}
+                        />
+                      )}
+                    </div>
+                    {tablePosition === `after-section:${section.id}` && renderComparisonTable()}
+                  </React.Fragment>
                 ))}
               </div>
             )}
 
-            {blog.hasTable && blog.tableHeaders && blog.tableRows && (
-              <div className="mt-10 overflow-x-auto border border-zinc-200 rounded-xl">
-                <table className="w-full text-left border-collapse min-w-[600px]">
-                  <thead className="bg-zinc-50">
-                    <tr>
-                      {blog.tableHeaders.map((header, idx) => (
-                        <th key={idx} className="p-4 font-bold text-zinc-900 border-b border-zinc-200">{header}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {blog.tableRows.map((row, rIdx) => {
-                      const cells = row.cells || row;
-                      return (
-                        <tr key={rIdx} className={rIdx % 2 === 0 ? "bg-white" : "bg-zinc-50/50"}>
-                          {cells.map((cell, cIdx) => (
-                            <td key={cIdx} className="p-4 text-zinc-700 border-b border-zinc-200 whitespace-pre-line">{cell}</td>
-                          ))}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {shouldRenderTableAfterSections && renderComparisonTable()}
 
             {/* Dynamic Content Blocks Section */}
             {blog.contentBlocks && blog.contentBlocks.length > 0 && (
               <div className="mt-10 space-y-10">
-                {blog.contentBlocks.map((block) => (
-                  <div key={block.id} className="animate-fade-in">
+                {blog.contentBlocks.map((block, blockIdx) => (
+                  <React.Fragment key={block.id || blockIdx}>
+                    <div className="animate-fade-in">
                     
                     {/* TEXT SECTION */}
                     {block.type === 'section' && (
@@ -352,7 +355,7 @@ const BlogDetail = () => {
                       <div className="w-full flex justify-center mt-5 mb-5">
                         <img
                           src={block.url}
-                          alt="Blog content"
+                          alt={block.altText || blog.title || ""}
                           className={`${getImageSizeClass(block.imageSize)} ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-2xl shadow-lg ${getImageFitClass(block.imageFit)}`}
                         />
                       </div>
@@ -366,7 +369,7 @@ const BlogDetail = () => {
                             <div key={imgIdx} className="w-full overflow-hidden rounded-2xl shadow-md">
                               <img
                                 src={imgUrl}
-                                alt={`Blog image ${imgIdx + 1}`}
+                                alt={block.altTexts?.[imgIdx] || `${blog.title || "Blog"} image ${imgIdx + 1}`}
                                 className={`w-full h-[220px] md:h-[280px] lg:h-[340px] ${getImageFitClass(block.imageFit || 'cover')}`}
                               />
                             </div>
@@ -418,7 +421,7 @@ const BlogDetail = () => {
                               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-[32px] blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
                               <img
                                 src={block.url}
-                                alt={block.subheading || "Blog split content"}
+                                alt={block.altText || block.subheading || blog.title || ""}
                                 className={`w-full ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-[32px] shadow-2xl object-cover relative z-10 border border-black/5 dark:border-white/10`}
                               />
                             </div>
@@ -427,10 +430,13 @@ const BlogDetail = () => {
                       </div>
                     )}
                     
-                  </div>
+                    </div>
+                    {tablePosition === `after-content-block:${block.id}` && renderComparisonTable()}
+                  </React.Fragment>
                 ))}
               </div>
             )}
+            {tablePosition === "after-content-blocks" && renderComparisonTable()}
 
             {/* Social shares */}
             <div className="mt-10 border-t border-gray-200 pt-6">
@@ -519,7 +525,7 @@ const BlogDetail = () => {
                   Creator Economy
                 </span>
                 <span className="border border-[#1a1a1a] rounded-[8px] px-3 py-1.5 text-xs text-zinc-800">
-                  Brand Strategy
+                  Travel Brand Strategy
                 </span>
               </div>
             </div>

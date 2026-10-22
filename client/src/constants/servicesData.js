@@ -4,14 +4,18 @@
  * for all 4 core services based on the official design & copy document.
  */
 
+import experientialMarketingFaqs from "./experiential-marketing-faqs.json" with { type: "json" };
+import famTripsPrFaqs from "./fam-trips-pr-faqs.json" with { type: "json" };
+
 export const SERVICES_DATA = {
   "influencer-marketing": {
     slug: "influencer-marketing",
     name: "Influencer & Celebrity Marketing",
     seo: {
-      title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
+      // Keep in sync with PAGE_META + influencerMarketingSchemas (PDF pack wording).
+      title: "Influencer Marketing Services | Mélange Digital",
       description:
-        "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
+        "Amplify your brand with Mélange Digital's influencer marketing services. Connect with right influencers to drive authentic engagement & real results",
       canonical: "https://melangedigital.co/services/influencer-marketing",
       h1: "INFLUENCER & CELEBRITY MARKETING IN TRAVEL & TOURISM",
     },
@@ -475,28 +479,7 @@ export const SERVICES_DATA = {
       titlePart1: "",
       titleAccent: "FAQs",
       titlePart2: "",
-      items: [
-        {
-          question: "What does experiential marketing for a tourism board include?",
-          answer:
-            "Experiential marketing for tourism boards includes trade show booths and kiosks, roadshows, mall activations, destination launches, interactive technology such as AR and VR, live performance and on-ground staffing. It can also include lead capture and qualification, so the activation is measured against enquiries and trade connections, not just footfall.",
-        },
-        {
-          question: "Do you design and build the trade show booth, or only the concept?",
-          answer:
-            "Both. Strategy, design, fabrication, installation, staffing and execution can all run through one team. This keeps the destination experience consistent from the first concept through to the final activation.",
-        },
-        {
-          question: "Which travel trade shows in India should a tourism board attend?",
-          answer:
-            "OTM Mumbai and SATTE are major platforms for reaching the Indian travel trade, while roadshows and other targeted activations can reach specific trade networks and consumer audiences. The right mix depends on whether the objective is trade relationships, market entry, consumer demand or lead generation.",
-        },
-        {
-          question: "How do you measure the return on a trade show or mall activation?",
-          answer:
-            "We measure against the outcomes agreed at brief stage: qualified enquiries, trade connections, engagement and campaign results. Footfall matters, but it is an input. The real output is meaningful interaction that can move towards consideration, conversion or arrivals.",
-        },
-      ],
+      items: experientialMarketingFaqs,
     },
     bottomCta: {
       titlePart1: "Every Activation.",
@@ -562,6 +545,7 @@ export const SERVICES_DATA = {
       pillars: [
         {
           icon: "/destination-marketing-agency/images/services/pillars/fam-launch.png",
+          iconAlt: "Rocket icon for launching a new destination or proposition with credibility built through FAM trip",
           title: "LAUNCH",
           description: "Build credibility around a new destination, proposition or entry.",
         },
@@ -647,33 +631,7 @@ export const SERVICES_DATA = {
       titlePart1: "",
       titleAccent: "FAQs",
       titlePart2: "",
-      items: [
-        {
-          question: "What is a FAM trip in tourism marketing?",
-          answer:
-            "A FAM trip, short for familiarisation trip, hosts journalists, travel trade partners or creators in a destination so they can experience it firsthand and describe it in their own words. For tourism boards, it is a high-trust way to generate earned coverage, creator content and trade advocacy around a destination.",
-        },
-        {
-          question: "What is the difference between a media FAM trip and a travel trade FAM trip?",
-          answer:
-            "A media FAM hosts journalists and creators to generate editorial coverage and content. A travel trade FAM hosts tour operators and travel agents so they can experience and sell the destination confidently to their customers. Media FAMs build demand. Trade FAMs build distribution. Many destinations need both.",
-        },
-        {
-          question: "Does a travel PR agency handle crisis communications for a destination?",
-          answer:
-            "Yes. Reputation management and crisis communications can form part of destination PR, particularly when sensitive situations require coordination across local, regional and ministerial communication lines. Our regional teams provide the on-ground presence required to manage these moments carefully.",
-        },
-        {
-          question: "How is earned media value measured for a destination campaign?",
-          answer:
-            "We measure secured coverage against the agreed media valuation framework, alongside reach, publication authority and audience fit. The measurement basis is established with the tourism board before the campaign begins.",
-        },
-        {
-          question: "How does public relations in travel and tourism help a tourism board?",
-          answer:
-            "Public relations in travel and tourism earns a tourism board trust that paid advertising cannot buy. It creates coverage because journalists and creators experienced the destination, not simply because a campaign paid for exposure — turning firsthand experience into credibility and conversation.",
-        },
-      ],
+      items: famTripsPrFaqs,
     },
     bottomCta: {
       titlePart1: "Every Story.",
@@ -690,44 +648,144 @@ SERVICES_DATA["branded-content-ip"] = SERVICES_DATA["branded-content-ips"];
 
 export const SERVICE_COLLAGE_TILES = {
   "influencer-marketing": [
-    { src: "/assets/services/influencer-marketing/%23karankundrra.jpg", position: "center top" },
-    { src: "/assets/services/influencer-marketing/Hebah%20Patel.jpg", position: "center top" },
-    { src: "/assets/services/influencer-marketing/KASHIKA-KAPOOR.jpg", position: "center top" },
-    { src: "/assets/services/influencer-marketing/Kanika.jpg", position: "center top" },
-    { src: "/assets/services/influencer-marketing/Oh%2C%20so%20rare!%20You're%20one%20of%20a%20kind%F0%9F%8C%A0.jpg", position: "center top" },
-    { src: "/assets/services/influencer-marketing/devdutt%20padikkal%20%E2%9D%A4%EF%B8%8F.jpg", position: "center top" },
-    { src: "/assets/services/influencer-marketing/divine.jpg", position: "center top" },
-    { src: "/assets/services/influencer-marketing/download.jpg", position: "center top" },
+    { src: "/assets/services/influencer-marketing/%23karankundrra.jpg", alt: "Karan Kundrra", position: "center top" },
+    { src: "/assets/services/influencer-marketing/Hebah%20Patel.jpg", alt: "Hebah Patel", position: "center top" },
+    {
+      src: "/assets/services/influencer-marketing/KASHIKA-KAPOOR.jpg",
+      fallbackAlt: "Creator pointing at fireworks above a Harry Potter-themed castle, influencer marketing in travel and tourism",
+      position: "center top",
+    },
+    {
+      src: "/assets/services/influencer-marketing/Kanika.jpg",
+      fallbackAlt: "Visitor taking a selfie with traditional performers at the Zambia Tourism pavilion, shareable creator content",
+      position: "center top",
+    },
+    { src: "/assets/services/influencer-marketing/Oh%2C%20so%20rare!%20You're%20one%20of%20a%20kind%F0%9F%8C%A0.jpg", alt: "Mukti Mohan", position: "center top" },
+    { src: "/assets/services/influencer-marketing/devdutt%20padikkal%20%E2%9D%A4%EF%B8%8F.jpg", alt: "Devdutt Padikkal", position: "center top" },
+    { src: "/assets/services/influencer-marketing/divine.jpg", alt: "DIVINE", position: "center top" },
+    { src: "/assets/services/influencer-marketing/download.jpg", alt: "Tejasswi Prakash", position: "center top" },
   ],
   "branded-content-ips": [
-    { src: "/assets/services/branded-content-ips/tile-1.jpg", position: "center 45%" },
-    { src: "/assets/services/branded-content-ips/AP.jpg", position: "center top" },
-    { src: "/assets/services/branded-content-ips/Divine.jpg", position: "center 25%" },
-    { src: "/assets/services/branded-content-ips/Manish-Paul.png", position: "center 15%" },
-    { src: "/assets/services/branded-content-ips/Mouni.jpg", position: "center top" },
-    { src: "/assets/services/branded-content-ips/tile-6.jpg", position: "center 65%" },
-    { src: "/assets/services/branded-content-ips/pratik.jpg", position: "center top" },
-    { src: "/assets/services/branded-content-ips/riar.jpg", position: "center top" },
+    {
+      src: "/assets/services/branded-content-ips/tile-1.jpg",
+      alt: "Film Celebrities seated by the Singapore River with the city skyline behind, a film tourism moment for Singapore",
+      position: "center 45%",
+    },
+    {
+      src: "/assets/services/branded-content-ips/AP.jpg",
+      fallbackAlt: "Celebrity Couple at a dinosaur-themed rainforest attraction with a waterfall, destination storytelling for travel branding",
+      position: "center top",
+    },
+    { src: "/assets/services/branded-content-ips/Divine.jpg", alt: "DIVINE", position: "center 25%" },
+    {
+      src: "/assets/services/branded-content-ips/Manish-Paul.png",
+      fallbackAlt: "Visitor filming a selfie with traditional dancers at a Zambia pavilion, culture-led destination content",
+      position: "center 15%",
+    },
+    {
+      src: "/assets/services/branded-content-ips/Mouni.jpg",
+      alt: "Mouni Roy",
+      fallbackAlt: "Discover Hong Kong creative with four friends taking a selfie against the Hong Kong skyline on a harbour cruise",
+      position: "center top",
+    },
+    {
+      src: "/assets/services/branded-content-ips/tile-6.jpg",
+      alt: "Three artists posing on a Singapore rooftop at night during the Saucy music video shoot",
+      position: "center 65%",
+    },
+    { src: "/assets/services/branded-content-ips/pratik.jpg", alt: "Pratik Gandhi", position: "center top" },
+    { src: "/assets/services/branded-content-ips/riar.jpg", alt: "Riar", position: "center top" },
   ],
   "experiential-marketing": [
-    { src: "/assets/services/experiential-marketing/tile-1.jpg", position: "center center" },
-    { src: "/assets/services/experiential-marketing/tile-2.jpg", position: "center 40%" },
-    { src: "/assets/services/experiential-marketing/tile-3.jpg", position: "center 45%" },
-    { src: "/assets/services/experiential-marketing/tile-4.jpg", position: "center 25%" },
-    { src: "/assets/services/experiential-marketing/tile-5.jpg", position: "center 50%" },
-    { src: "/assets/services/experiential-marketing/tile-6.jpg", position: "center 45%" },
-    { src: "/assets/services/experiential-marketing/tile-7.jpg", position: "center 30%" },
-    { src: "/assets/services/experiential-marketing/tile-8.jpg", position: "center 20%" },
+    {
+      src: "/assets/services/experiential-marketing/tile-1.jpg",
+      alt: "Zambia Tourism pavilion with large 3D ZAMBIA letters and meeting tables on a travel trade show floor",
+      position: "center center",
+    },
+    {
+      src: "/assets/services/experiential-marketing/tile-2.jpg",
+      alt: "Zambia \"Let's Explore\" trade show booth with branded meeting area and Victoria Falls display",
+      position: "center 40%",
+    },
+    {
+      src: "/assets/services/experiential-marketing/tile-3.jpg",
+      alt: "Zambia booth wall showing wildlife and cultural heritage visuals, designed for travel experiential marketing",
+      position: "center 45%",
+    },
+    {
+      src: "/assets/services/experiential-marketing/tile-4.jpg",
+      alt: "Visitor taking a selfie with performers in traditional Zambian attire at a tourism trade show pavilion",
+      position: "center 25%",
+    },
+    {
+      src: "/assets/services/experiential-marketing/tile-5.jpg",
+      alt: "Business meeting inside the Zambia pavilion lounge, converting trade show visits into qualified enquiries",
+      position: "center 50%",
+    },
+    {
+      src: "/assets/services/experiential-marketing/tile-6.jpg",
+      alt: "Traditional Zambian drummers and dancers performing live on the Zambia Tourism stand at a trade show",
+      position: "center 45%",
+    },
+    {
+      src: "/assets/services/experiential-marketing/tile-7.jpg",
+      alt: "Delegates and traditional performers group photo at the Zambia Tourism trade show pavilion",
+      position: "center 30%",
+    },
+    {
+      src: "/assets/services/experiential-marketing/tile-8.jpg",
+      alt: "Visitor posing with a performer in historic warrior costume on a travel trade show floor",
+      position: "center 20%",
+    },
   ],
   "fam-trips-pr": [
-    { src: "/assets/services/fam-trips-pr/tile-1.jpg", position: "center 15%" },
-    { src: "/assets/services/fam-trips-pr/AP.jpg", position: "center top" },
-    { src: "/assets/services/fam-trips-pr/Aanchal.jpg", position: "center top" },
-    { src: "/assets/services/fam-trips-pr/tile-4.jpg", position: "center 20%" },
-    { src: "/assets/services/fam-trips-pr/tile-5.jpg", position: "center 30%" },
-    { src: "/assets/services/fam-trips-pr/Ram%20Charan.jpg", position: "center top" },
-    { src: "/assets/services/fam-trips-pr/samiksha%20sud.jpg", position: "center top" },
-    { src: "/assets/services/fam-trips-pr/tile-8.jpg", position: "center 45%" },
+    {
+      src: "/assets/services/fam-trips-pr/tile-1.jpg",
+      alt: "Man seated on a sunlit city rooftop during an Esquire editorial photoshoot for travel PR coverage",
+      fallbackAlt: "Travel creator filming a coastal destination during a FAM trip",
+      position: "center 15%",
+    },
+    {
+      src: "/assets/services/fam-trips-pr/AP.jpg",
+      alt: "Singer performing on stage during a destination FAM trip",
+      fallbackAlt: "Celebrity Couple posing at a dinosaur-themed rainforest attraction with a waterfall, captured on a destination fam trip",
+      position: "center top",
+    },
+    {
+      src: "/assets/services/fam-trips-pr/Aanchal.jpg",
+      alt: "Woman in a black evening dress seated for a portrait during a destination FAM trip",
+      fallbackAlt: "Woman pointing at fireworks above a Harry Potter-themed castle while experiencing a destination firsthand",
+      position: "center top",
+    },
+    {
+      src: "/assets/services/fam-trips-pr/tile-4.jpg",
+      alt: "Couple reacting with surprise at a stylish bar, sharing a firsthand destination experience during a fam trip",
+      fallbackAlt: "Travel creator taking a selfie with performers at a tourism destination exhibition",
+      position: "center 20%",
+    },
+    {
+      src: "/assets/services/fam-trips-pr/tile-5.jpg",
+      alt: "Esquire editorial shoot of Ram Charan striding through a Hong Kong wet market, travel PR magazine coverage",
+      fallbackAlt: "Four women taking a group selfie against the Hong Kong skyline during a destination FAM trip",
+      position: "center 30%",
+    },
+    {
+      src: "/assets/services/fam-trips-pr/Ram%20Charan.jpg",
+      alt: "Ram Charan",
+      fallbackAlt: "Couple exploring the indoor garden at Singapore's Jewel Changi Airport during a FAM trip",
+      position: "center top",
+    },
+    {
+      src: "/assets/services/fam-trips-pr/samiksha%20sud.jpg",
+      alt: "Samiksha Sud",
+      fallbackAlt: "Two travellers posing at Singapore's Marina Bay waterfront during a destination FAM trip",
+      position: "center top",
+    },
+    {
+      src: "/assets/services/fam-trips-pr/tile-8.jpg",
+      alt: "Ram Charan in a white suit aboard a red-sailed junk boat in Hong Kong harbour for an Esquire India PR shoot",
+      fallbackAlt: "Travel creators posing before the Singapore skyline in a branded destination feature",
+      position: "center 45%",
+    },
   ],
 };
-

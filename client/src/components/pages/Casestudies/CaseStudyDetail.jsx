@@ -156,7 +156,7 @@ const CaseStudyDetail = () => {
     );
   }
 
-  const caseSeo = CASE_STUDY_SEO[slug.toLowerCase()] || {};
+  const caseSeo = CASE_STUDY_SEO[slug] || {};
   const displayTitle = caseSeo.displayTitle || cs.title;
   const stats = caseSeo.stats || cs.stats?.map((stat) => {
     if (caseSeo.normalizeAverageStayStat && /average length of stay/i.test(stat.label || "")) {
@@ -218,9 +218,9 @@ const CaseStudyDetail = () => {
           {/* Title */}
           <div className="px-5 md:px-16 lg:px-20">
             <div className="mb-10 w-full lg:max-w-[1200px]">
-              <h2 className="font-semibold text-hero font-display text-[#0f0330] break-words">
+              <h1 className="font-semibold text-hero font-display text-[#0f0330] break-words">
                 {displayTitle}
-              </h2>
+              </h1>
             </div>
           </div>
 
@@ -246,11 +246,11 @@ const CaseStudyDetail = () => {
             {stats && stats.length > 0 && (
               <div className="lg:hidden flex flex-wrap gap-3 mb-[45px]">
                 {stats.map((stat, idx) => (
-                  <div key={idx} className="w-[130px] h-[85px] bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
-                    <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-display flex items-center justify-center">
+                  <div key={idx} className="w-[145px] min-h-[100px] px-2 py-2 bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
+                    <div className="text-zinc-900 min-h-[44px] text-[30px] font-bold font-display flex items-center justify-center">
                       {stat.value}
                     </div>
-                    <div className="text-center text-black text-xs font-normal font-body px-1 line-clamp-1">
+                    <div className="text-center text-black text-[11px] leading-tight font-normal font-body px-1">
                       {stat.label}
                     </div>
                   </div>
@@ -275,13 +275,13 @@ const CaseStudyDetail = () => {
           {/* Services & Stats (Desktop only) */}
           <div>
             {stats && stats.length > 0 && (
-              <div className="lg:flex hidden flex-wrap gap-3 mb-[45px] mt-2">
+              <div className="lg:flex hidden flex-wrap gap-3 mb-[45px] mt-2 max-w-[470px]">
                 {stats.map((stat, idx) => (
-                  <div key={idx} className="w-[130px] h-[85px] bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
-                    <div className="text-zinc-900 h-[50px] text-[32px] font-bold font-display flex items-center justify-center">
+                  <div key={idx} className="w-[145px] min-h-[100px] px-2 py-2 bg-gradient-to-l flex flex-col justify-center items-center from-blue-200 via-purple-200 to-fuchsia-200 rounded-[8px]">
+                    <div className="text-zinc-900 min-h-[44px] text-[30px] font-bold font-display flex items-center justify-center">
                       {stat.value}
                     </div>
-                    <div className="text-center text-black text-xs font-normal font-body px-1 line-clamp-1">
+                    <div className="text-center text-black text-[11px] leading-tight font-normal font-body px-1">
                       {stat.label}
                     </div>
                   </div>

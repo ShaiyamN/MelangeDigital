@@ -54,16 +54,17 @@ app.get(["/health", "/healthz", "/ping", "/_health", "/api/health"], (_req, res)
   res.status(200).json({ status: "ok", uptime: Math.floor(process.uptime()), timestamp: Date.now() });
 });
 
-// HEAD requests should always succeed without authentication for health check probes
-app.use((req, res, next) => {
-  if (req.method === "HEAD") {
-    return res.status(200).end();
-  }
-  next();
+// HEAD on health probes only — never short-circuit page HEAD (Chrome treats
+// empty HEAD with no Content-Type as a download / blank view-source).
+app.head(["/health", "/healthz", "/ping", "/_health", "/api/health"], (_req, res) => {
+  res.status(200).end();
 });
 
+// Staging basic auth only on the staging host. .env often has STAGING_* locally;
+// applying it on 127.0.0.1 breaks browser View Source (401 empty body).
 const stagingUser = process.env.STAGING_USER;
 const stagingPass = process.env.STAGING_PASS;
+const stagingHost = (process.env.STAGING_HOST || "staging.melangedigital.in").toLowerCase();
 if (stagingUser && stagingPass) {
   const authMiddleware = basicAuth({
     users: { [stagingUser]: stagingPass },
@@ -71,6 +72,11 @@ if (stagingUser && stagingPass) {
     realm: "Melange Digital Staging",
   });
   app.use((req, res, next) => {
+    const host = (req.hostname || "").toLowerCase();
+    if (host !== stagingHost) {
+      return next();
+    }
+
     const userAgent = (req.headers["user-agent"] || "").toLowerCase();
     const isHealthProbe =
       userAgent.includes("health") ||
@@ -80,7 +86,6 @@ if (stagingUser && stagingPass) {
       userAgent.includes("curl") ||
       req.headers["x-health-check"] !== undefined;
 
-    // Exempt SEO, indexing, and health checks from basic auth on staging
     if (
       req.path === "/sitemap.xml" ||
       req.path === "/robots.txt" ||
@@ -97,38 +102,113 @@ if (stagingUser && stagingPass) {
 }
 
 
-// Canonical redirect: normalize trailing slashes on all subpaths (e.g. /services/ -> /services, /contact/ -> /contact)
-app.use((req, res, next) => {
-  if (req.method !== "GET" && req.method !== "HEAD") return next();
-  const rawPath = req.path;
-  if (rawPath.length > 1 && rawPath.endsWith("/")) {
-    const cleanPath = rawPath.replace(/\/+$/, "");
-    const queryIndex = req.originalUrl.indexOf("?");
-    const query = queryIndex !== -1 ? req.originalUrl.slice(queryIndex) : "";
-    return res.redirect(301, cleanPath + query);
-  }
-  next();
-});
-
-const PERMA_REDIRECTS = {
+const SEO_REDIRECTS = {
+  "/services/brand-strategy": "/services/branded-content-ips",
+  "/services/content-strategy-and-production": "/services/branded-content-ips",
+  "/services/immersive-brand-storytelling": "/services/branded-content-ips",
+  "/singapore": "/",
+  "/uae": "/",
+  "/india": "/",
+  "/blogs/community-first-content-stacks-why-owning-your-audience-is-the-new-moat": "/blogs",
+  "/services/pr-and-outreach": "/services/fam-trips-pr",
+  "/global/united-kingdom": "/",
+  "/uk": "/",
+  "/global/united-arab-emirates": "/",
+  "/services/content-marketing": "/services/branded-content-ips",
+  "/services/design-solutions": "/services",
+  "/blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships": "/blogs",
+  "/work/costa-cruises": "/work/costa-cruises-introducing-luxury-cruising-to-india",
   "/work/singapore-tourism-board-stb": "/work/singapore-tourism-board",
+  "/work/genvr": "/work/genvr",
+  "/work/neotraders": "/work/neotraders",
+  "/work/devboost": "/work/devboost",
+  "/blog": "/blogs",
   "/work/GenVR": "/work/genvr",
   "/work/neoTraders": "/work/neotraders",
   "/work/devBoost": "/work/devboost",
-  "/blog": "/blogs",
 };
 
-for (const [from, to] of Object.entries(PERMA_REDIRECTS)) {
-  app.get([from, `${from}/`], (_req, res) => {
-    res.redirect(301, to);
-  });
-}
+// Redirect legacy URLs and normalize work slugs before canonicalizing the host.
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  const rawPath = req.path;
+  const cleanPath = rawPath.replace(/\/+$/, "") || "/";
+  const normalizedPath = cleanPath.startsWith("/work/")
+    ? cleanPath.toLowerCase()
+    : cleanPath;
+  const redirectTarget =
+    SEO_REDIRECTS[rawPath] ||
+    SEO_REDIRECTS[cleanPath] ||
+    SEO_REDIRECTS[normalizedPath] ||
+    normalizedPath;
+  const requestHost = (req.get("host") || "").split(":")[0].toLowerCase();
+  const forwardedProto = (req.get("x-forwarded-proto") || "")
+    .split(",")[0]
+    .trim()
+    .toLowerCase();
+  const requestProto = forwardedProto || (req.secure ? "https" : "http");
+  const redirectHost =
+    requestHost === "www.melangedigital.co" ||
+    (requestHost === "melangedigital.co" && requestProto !== "https");
+  const queryIndex = req.originalUrl.indexOf("?");
+  const query = queryIndex !== -1 ? req.originalUrl.slice(queryIndex) : "";
+
+  if (redirectHost) {
+    return res.redirect(
+      301,
+      `https://melangedigital.co${redirectTarget}${query}`,
+    );
+  }
+  if (redirectTarget !== rawPath) {
+    return res.redirect(301, redirectTarget + query);
+  }
+  next();
+});
 
 app.get(["/blog/:slug", "/blog/:slug/"], (req, res) => {
   res.redirect(301, `/blogs/${req.params.slug}`);
 });
 
+// /home is not a route (hits Coming Soon). Live homepage is /.
+app.get(["/home", "/home/"], (_req, res) => {
+  res.redirect(301, "/");
+});
+
+function getPrerenderedHtml(reqPath) {
+  const route = reqPath === "/" ? "/" : reqPath.replace(/\/+$/, "");
+  const filePath =
+    route === "/" ? INDEX : path.resolve(DIST, `.${route}`, "index.html");
+  const distRoot = path.resolve(DIST);
+  if (
+    filePath !== INDEX &&
+    !filePath.startsWith(`${distRoot}${path.sep}`)
+  ) {
+    return null;
+  }
+  if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+    return null;
+  }
+  const html = filePath === INDEX ? INDEX_HTML : fs.readFileSync(filePath, "utf8");
+  return html.includes(`<!-- prerendered-route:${route} -->`) ? html : null;
+}
+
+function sendHtml(req, res, html) {
+  res.writeHead(200, {
+    "Content-Type": "text/html; charset=utf-8",
+    "Content-Disposition": "inline",
+    "Cache-Control": "no-store, no-cache, must-revalidate",
+    "X-Content-Type-Options": "nosniff",
+  });
+  res.end(req.method === "HEAD" ? undefined : html);
+}
+
 async function sendIndex(req, res) {
+  const prerenderedHtml = getPrerenderedHtml(req.path || "/");
+  if (prerenderedHtml) {
+    sendHtml(req, res, prerenderedHtml);
+    return;
+  }
+
   let meta = { stripFaq: true, noindex: true };
   try {
     const index = await getPageIndex();
@@ -137,9 +217,9 @@ async function sendIndex(req, res) {
     console.error("seo head index failed:", err.message);
     meta = resolveMeta(req.path, { routes: new Set(), byPath: {} });
   }
-  res.setHeader("Cache-Control", "no-cache");
-  res.type("html");
-  res.send(applyHead(INDEX_HTML, meta));
+  if (res.headersSent) return;
+  const html = applyHead(INDEX_HTML, meta);
+  sendHtml(req, res, html);
 }
 
 const DMA = "destination-marketing-agency";
@@ -236,6 +316,46 @@ app.get(["/llms.txt", "/llm.txt"], (_req, res) => {
   }
 });
 
+/**
+ * Serve robots.txt with an explicit UTF-8 plain-text Content-Type.
+ * Keep this route before express.static middleware.
+ */
+app.get("/robots.txt", (_req, res, next) => {
+  const robotsPath = path.join(__dirname, "public", "robots.txt");
+
+  fs.readFile(robotsPath, "utf8", (err, contents) => {
+    if (err) {
+      return next(err);
+    }
+
+    res.status(200);
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.end(contents);
+  });
+});
+
+// write-spa-shells copies index.html into about/, contact/, etc. If static serves those
+ // first, seo-head never runs and View Source shows stale/empty schema. Intercept HTML
+ // navigations before static; leave admin + hashed assets to express.static.
+app.use((req, res, next) => {
+  if (req.method !== "GET" && req.method !== "HEAD") return next();
+  const p = req.path || "/";
+  if (
+    p.startsWith("/admin") ||
+    p.startsWith("/assets/") ||
+    p.startsWith("/destination-marketing-agency") ||
+    p.startsWith("/vcard") ||
+    p.startsWith("/Career") ||
+    p.startsWith("/careers/form") ||
+    p.startsWith("/careers/Apply")
+  ) {
+    return next();
+  }
+  // Real files (js/css/png/…) — not SPA routes
+  if (p !== "/" && /\.[a-zA-Z0-9]+$/.test(p)) return next();
+  return sendIndex(req, res);
+});
+
 app.use(
   express.static(DIST, {
     // Avoid /admin/login → /admin/login/ 301 (breaks behind some Hostinger proxies)
@@ -276,4 +396,3 @@ app.use((req, res) => {
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Melange static server on :${PORT} → ${DIST}`);
 });
-

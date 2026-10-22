@@ -402,10 +402,10 @@ const ContactBody = () => {
                   <span aria-hidden="true"> &gt; </span>
                   <span>Contact Us</span>
                 </nav>
-                <h2 id="contact-heading" className="contact-h1">
+                <h1 id="contact-heading" className="contact-h1">
                   Let&apos;s Connect to Build Your{" "}
                   <em>Brand</em>
-                </h2>
+                </h1>
               </div>
               <div className="contact-glass">
                 <a

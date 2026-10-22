@@ -51,11 +51,16 @@ export const routes = [
   "/work/green-label",
   "/work/maison-luxe",
   "/work/veda-naturals",
-  "/blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships",
-  "/blogs/sustainable-design-and-packaging-why-2025-consumers-judge-before-they-click-buy",
-  "/blogs/community-first-content-stacks-why-owning-your-audience-is-the-new-moat",
-  "/blogs/from-products-to-experiences-how-micro-events-and-community-activations-are-shaping-brand-ip-in-2025",
 ];
 
-/** Puppeteer prerender skips the static DMA folder (already real HTML from sync). */
-export const prerenderRoutes = routes.filter((r) => r !== DESTINATION_LANDING);
+const REDIRECTED_ROUTES = new Set([
+  "/blogs/community-first-content-stacks-why-owning-your-audience-is-the-new-moat",
+  "/blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships",
+]);
+
+export function isPrerenderableRoute(route, cmsPages = {}) {
+  if (route === DESTINATION_LANDING || REDIRECTED_ROUTES.has(route)) return false;
+  return !route.startsWith("/work/") || Boolean(cmsPages[route]);
+}
+
+export const prerenderRoutes = routes.filter(isPrerenderableRoute);

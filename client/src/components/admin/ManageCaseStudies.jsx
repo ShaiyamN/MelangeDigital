@@ -948,7 +948,7 @@ const ManageCaseStudies = () => {
                             rows={2}
                             value={serviceCaption}
                             onChange={(e) => setServiceCaption(e.target.value)}
-                            placeholder="e.g. 21 creators across five youth subcultures. 190M views. +18% YOY arrivals from India's under-35 cohort."
+                            placeholder="e.g. 21 creators across five youth subcultures. 190M views. Total Indian arrivals grew 18% YoY; under-35 traveller share rose from 31% to 39%."
                             className="w-full px-3 py-2 bg-white dark:bg-slate-800 border border-purple-200 dark:border-purple-500/30 rounded-xl text-slate-900 dark:text-white text-xs placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
                           />
                         </div>

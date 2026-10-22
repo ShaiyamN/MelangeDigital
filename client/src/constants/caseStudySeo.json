@@ -1,7 +1,7 @@
 {
   "singapore-tourism-board-isthisevensingapore": {
     "cardCaption": "21 creators across five youth subcultures. 190M views. Total Indian arrivals grew 18% YoY; under-35 traveller share rose from 31% to 39%.",
-    "businessImpactHtml": "<p>+18% — YoY growth in total Indian arrivals to Singapore<br>31% → 39% — Share of under-35 travellers from India<br>+24pts — \"Youth-relevant\" brand perception<br>165+ assets created | 175M+ reach | 190M views | 3.58% campaign-wide ER</p>"
+    "businessImpactHtml": "<p>+18% — YoY growth in Indian arrivals to Singapore<br>31% → 39% — Share of under-35 travellers from India<br>+24pts — \"Youth-relevant\" brand perception<br>165+ assets created | 175M+ reach | 190M views | 3.58% campaign-wide ER</p>"
   },
   "hong-kong-tourism-board-herhongkong": {
     "displayTitle": "Hong Kong Tourism Board: #HerHongKong",
@@ -19,7 +19,7 @@
   },
   "resorts-world-sentosa-go-bananas-in-minion-land": {
     "displayTitle": "Resorts World Sentosa: Go Bananas in Minion Land",
-    "cardCaption": "Five regional-language creators on ShareChat and Moj. 86M+ views; 4,927 direct bookings reported by Resorts World Sentosa via a tracked booking link.",
+    "cardCaption": "Five regional-language creators on ShareChat and Moj. +6.80% lift in consideration to visit Minion Land; 13.7M+ reach; 4.75% campaign-wide ER. 86M+ views; 4,927 direct bookings reported by Resorts World Sentosa via a tracked booking link.",
     "description": "Resorts World Sentosa, home to Universal Studios Singapore and the new Minion Land, needed to drive travel intent among affluent Indian audiences beyond the metros. The franchise had recognition but no cultural pull in Tier 2 and Tier 3 markets with emerging travel appetite.",
     "stats": [
       { "value": "+6.80%", "label": "Lift in consideration to visit Minion Land" },
@@ -28,9 +28,10 @@
       { "value": "86M+", "label": "views" },
       { "value": "4,927", "label": "direct bookings" }
     ],
-    "businessImpactHtml": "<ul><li><strong>+6.80%</strong> lift in consideration to visit Minion Land</li><li><strong>13.7M+</strong> reach</li><li><strong>4.75%</strong> campaign-wide ER</li><li><strong>86M+ views</strong></li><li><strong>4,927 direct bookings</strong>, reported by Resorts World Sentosa via its tracked booking link.</li></ul>"
+    "businessImpactHtml": "<ul><li><strong>+6.80% lift</strong> in consideration to visit Minion Land</li><li><strong>13.7M+ reach</strong></li><li><strong>4.75% campaign-wide ER</strong></li><li><strong>86M+ views</strong></li><li><strong>4,927 direct bookings</strong>, reported by Resorts World Sentosa via its tracked booking link.</li></ul>"
   },
   "resorts-world-cruises-premium-cruise-launch-dubai": {
-    "displayTitle": "Dream Cruises (campaign ran as Resorts World Cruises): Premium Cruise Launch, Dubai"
+    "displayTitle": "Dream Cruises (campaign ran as Resorts World Cruises): Premium Cruise Launch, Dubai",
+    "cardCaption": "$2.3M+ in attributed sales; 90M+ impressions; 250K+ clicks; and 44 creators."
   }
 }

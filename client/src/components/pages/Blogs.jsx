@@ -4,29 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Navbar, Footer, BreadCrumbs, BlogCatg } from "../layout";
-
-const categoryMap = {
-  "content-marketing": "Content Marketing",
-  "brand-strategy": "Brand Strategy",
-  "ecommerce-management": "E-commerce Management",
-  "design-solutions": "Design Solutions",
-  "performance-marketing": "Performance Marketing",
-  "website-development-seo": "Website Development & SEO",
-  "influencer-marketing": "Influencer Marketing",
-  "design-development": "Design & Development",
-  "design-dev": "Design & Development",
-  "content-strategy": "Content Strategy",
-  "storytelling": "Storytelling",
-  "ips-pr": "PR, IPs & Outreach",
-  "pr": "IPs & PR",
-  "aeo-seo": "AEO & SEO",
-  "ecommerce": "E-Commerce",
-};
-
-const formatCategory = (cat) => {
-  if (!cat) return "";
-  return categoryMap[cat] || cat.split("-").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
-};
+import { formatBlogCategory } from "../../constants/blogCategories";
 
 const Blogs = () => {
   const [posts, setPosts] = useState([]);
@@ -161,7 +139,7 @@ const Blogs = () => {
               {visiblePosts.map((post) => {
                 const categoryList = (post.categories || (post.category ? [post.category] : []))
                   .filter(Boolean)
-                  .map(formatCategory);
+                .map(formatBlogCategory);
 
                 return (
                   <article

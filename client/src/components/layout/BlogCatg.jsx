@@ -1,35 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-
-const categoryMap = {
-  "content-marketing": "Content Marketing",
-  "brand-strategy": "Brand Strategy",
-  "ecommerce-management": "E-commerce Management",
-  "design-solutions": "Design Solutions",
-  "performance-marketing": "Performance Marketing",
-  "website-development-seo": "Website Development & SEO",
-  "influencer-marketing": "Influencer Marketing",
-  "design-development": "Design & Development",
-  "design-dev": "Design & Development",
-  "content-strategy": "Content Strategy",
-  "storytelling": "Storytelling",
-  "ips-pr": "PR, IPs & Outreach",
-  "pr": "IPs & PR",
-  "aeo-seo": "AEO & SEO",
-  "ecommerce": "E-Commerce",
-};
-
-const formatCategory = (cat) => {
-  if (!cat) return "";
-  return (
-    categoryMap[cat] ||
-    cat
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ")
-  );
-};
+import { formatBlogCategory } from "../../constants/blogCategories";
 
 const BlogCatg = ({
   categories = [],
@@ -65,7 +37,7 @@ const BlogCatg = ({
   const tags = [
     { label: "All", filter: "all" },
     ...categories.map((cat) => ({
-      label: formatCategory(cat),
+      label: formatBlogCategory(cat),
       filter: cat,
     })),
   ];

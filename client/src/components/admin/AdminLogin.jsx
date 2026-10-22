@@ -154,7 +154,7 @@ const AdminLogin = () => {
         </div>
         
         <p className="text-center text-slate-500 dark:text-slate-500 text-sm mt-8 font-medium">
-          &copy; {new Date().getFullYear()} Melange Digital. All rights reserved.
+          &copy; {new Date().getFullYear()} Mélange Digital. All rights reserved.
         </p>
       </div>
     </div>
