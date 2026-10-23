@@ -13,9 +13,9 @@ export const SERVICES_DATA = {
     name: "Influencer & Celebrity Marketing",
     seo: {
       // Keep in sync with PAGE_META + influencerMarketingSchemas (PDF pack wording).
-      title: "Influencer Marketing Services | Mélange Digital",
+      title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
       description:
-        "Amplify your brand with Mélange Digital's influencer marketing services. Connect with right influencers to drive authentic engagement & real results",
+        "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
       canonical: "https://melangedigital.co/services/influencer-marketing",
       h1: "INFLUENCER & CELEBRITY MARKETING IN TRAVEL & TOURISM",
     },

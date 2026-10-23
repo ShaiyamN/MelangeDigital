@@ -33,9 +33,9 @@ const PAGE_META = {
       "Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs.",
   },
   "/services/influencer-marketing": {
-    title: "Influencer Marketing Services | Mélange Digital",
+    title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
     description:
-      "Amplify your brand with Mélange Digital's influencer marketing services. Connect with right influencers to drive authentic engagement & real results",
+      "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
   },
   "/services/branded-content-ips": {
     title: "Film Tourism Marketing & Branded Content | Mélange Digital",
@@ -566,11 +566,11 @@ if (require.main === module) {
   assert.strictEqual(infMeta.jsonLdBlocks?.length, 6);
   assert.strictEqual(
     infMeta.title,
-    "Influencer Marketing Services | Mélange Digital",
+    "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
   );
   assert.strictEqual(
     infMeta.description,
-    "Amplify your brand with Mélange Digital's influencer marketing services. Connect with right influencers to drive authentic engagement & real results",
+    "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
   );
   assert(
     infMeta.jsonLdBlocks.every(

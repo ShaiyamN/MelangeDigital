@@ -525,10 +525,11 @@ function servicesSchemas(meta = {}) {
 function influencerMarketingSchemas(meta = {}) {
   const path = "/services/influencer-marketing";
   const name =
-    meta.title || "Influencer Marketing Services | Mélange Digital";
+    meta.title ||
+    "Travel Influencer Marketing Agency for tourism boards| Mélange Digital";
   const description =
     meta.description ||
-    "Amplify your brand with Mélange Digital's influencer marketing services. Connect with right influencers to drive authentic engagement & real results";
+    "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.";
   const webpageId = `${ORIGIN}${path}#webpage`;
   const serviceId = `${ORIGIN}${path}#service`;
   const breadcrumbId = `${ORIGIN}${path}#breadcrumb`;
