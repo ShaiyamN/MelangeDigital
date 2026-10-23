@@ -11,6 +11,8 @@ const PAGE_META = {
       "Global Travel & Tourism Marketing Agency | Mélange Digital",
     description:
       "Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call.",
+    image: `${ORIGIN}/og-home.png`,
+    imageAlt: "Mélange Digital — Travel & Tourism Marketing Agency",
   },
   "/work": {
     title: "Our Work & Case Study Portfolio | Mélange Digital",
@@ -219,12 +221,19 @@ function resolveMeta(reqPath, index = {}) {
     title: pageTitle,
     description: pageDescription,
   });
+  const image =
+    preset.image ||
+    String(cms?.image || "").trim() ||
+    undefined;
+  const imageAlt = preset.imageAlt || undefined;
 
   return {
     path,
     title: pageTitle,
     description: pageDescription,
     canonical,
+    image,
+    imageAlt,
     /** Always strip shell JSON-LD; page packs replace it for /, /services, /about. */
     stripShellJsonLd: true,
     noindex: false,
@@ -348,6 +357,49 @@ function applyHead(html, meta) {
       /<link data-rh="true" rel="canonical" href="[^"]*">/,
       `<link data-rh="true" rel="canonical" href="${esc(meta.canonical)}">`,
     );
+  }
+  // Drop shell OG/Twitter tags so a homepage asset never leaks onto other routes.
+  out = out.replace(
+    /<meta\b[^>]*\bproperty=["']og:(?:image(?::[a-z]+)?|type|url|title|description)["'][^>]*>\s*/gi,
+    "",
+  );
+  out = out.replace(
+    /<meta\b[^>]*\bname=["']twitter:(?:card|image)["'][^>]*>\s*/gi,
+    "",
+  );
+  if (meta.image) {
+    const ogTags = [
+      `<meta data-rh="true" property="og:type" content="website">`,
+      meta.canonical
+        ? `<meta data-rh="true" property="og:url" content="${esc(meta.canonical)}">`
+        : "",
+      meta.title
+        ? `<meta data-rh="true" property="og:title" content="${esc(meta.title)}">`
+        : "",
+      meta.description
+        ? `<meta data-rh="true" property="og:description" content="${esc(meta.description)}">`
+        : "",
+      `<meta data-rh="true" property="og:image" content="${esc(meta.image)}">`,
+      `<meta data-rh="true" property="og:image:width" content="1200">`,
+      `<meta data-rh="true" property="og:image:height" content="632">`,
+      meta.imageAlt
+        ? `<meta data-rh="true" property="og:image:alt" content="${esc(meta.imageAlt)}">`
+        : "",
+      `<meta data-rh="true" name="twitter:card" content="summary_large_image">`,
+      `<meta data-rh="true" name="twitter:image" content="${esc(meta.image)}">`,
+    ]
+      .filter(Boolean)
+      .map((t) => `  ${t}`)
+      .join("\n");
+    const metaSectionPattern =
+      /(<!--\s*Meta Tags\s*-->)([\s\S]*?)(<!--\s*End of Meta Tags\s*-->)/i;
+    if (metaSectionPattern.test(out)) {
+      out = out.replace(metaSectionPattern, (_match, start, contents, end) => {
+        return `${start}${contents}\n${ogTags}\n  ${end}`;
+      });
+    } else if (/<\/head>/i.test(out)) {
+      out = out.replace(/<\/head>/i, `${ogTags}\n</head>`);
+    }
   }
   if (meta.stripShellJsonLd || meta.stripFaq) {
     out = out.replace(
@@ -502,6 +554,7 @@ if (require.main === module) {
 
   const homeMeta = resolveMeta("/", { routes: new Set(["/"]), byPath: {} });
   assert.strictEqual(homeMeta.jsonLdBlocks?.length, 6);
+  assert.strictEqual(homeMeta.image, `${ORIGIN}/og-home.png`);
   const homeShell = `<!DOCTYPE html><html><head>
   <meta name="viewport" content="width=device-width">
   <link data-rh="true" rel="canonical" href="https://melangedigital.co/">
@@ -527,6 +580,10 @@ if (require.main === module) {
   assert(!homeHtml.slice(homeHtml.indexOf("</head>")).includes("ld+json"));
   assert(homeHtml.includes("Social media marketing for tourism"));
   assert(!homeHtml.includes("Social Media Marketing for Hotels and Resorts"));
+  assert(
+    homeHtml.includes(`property="og:image" content="${ORIGIN}/og-home.png"`),
+  );
+  assert(homeHtml.includes('name="twitter:card" content="summary_large_image"'));
 
   const aboutMeta = resolveMeta("/about", {
     routes: new Set(["/about"]),
@@ -535,6 +592,7 @@ if (require.main === module) {
   assert.strictEqual(aboutMeta.jsonLdBlocks?.length, 8);
   assert(aboutMeta.jsonLdBlocks.some((b) => b["@type"] === "AboutPage"));
   const aboutHtml = applyHead(homeShell, aboutMeta);
+  assert(!aboutHtml.includes("og-home.png"));
   const aboutMarked = aboutHtml.match(
     /<!--\s*Schema Markup\s*-->([\s\S]*?)<!--\s*End of Schema Markup\s*-->/i,
   );
