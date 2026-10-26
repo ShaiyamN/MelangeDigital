@@ -103,6 +103,8 @@ if (stagingUser && stagingPass) {
 
 
 const SEO_REDIRECTS = {
+  "/destination-marketing-agency": "/",
+  "/destination-marketing-agency/": "/",
   "/services/brand-strategy": "/services/branded-content-ips",
   "/services/content-strategy-and-production": "/services/branded-content-ips",
   "/services/immersive-brand-storytelling": "/services/branded-content-ips",
@@ -310,7 +312,8 @@ app.get(["/llms.txt", "/llm.txt"], (_req, res) => {
   const pubFile = path.join(__dirname, "public", "llms.txt");
   const target = fs.existsSync(spaFile) ? spaFile : pubFile;
   if (fs.existsSync(target)) {
-    res.type("text/plain; charset=utf-8").sendFile(target);
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.sendFile(target);
   } else {
     res.status(404).type("text/plain").send("Not found");
   }
