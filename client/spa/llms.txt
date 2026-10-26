@@ -1,28 +1,31 @@
 # Mélange Digital
 
-> Mélange Digital is a travel and tourism marketing agency that turns cultural insight into measurable arrivals for national tourism boards, DMOs, travel tech brands, and travel companies — combining destination storytelling, influencer marketing, and SEO/AEO execution across India, GCC, and global markets.
-
-Founded and led by Sanket Bolinjkar (15+ years in destination marketing, influencer strategy, and travel-sector SEO/AEO). Headquartered in Goa and Mumbai, India, with team presence in the UK, UAE, Singapore, and Zambia. Clients include national tourism boards (Singapore Tourism Board, Hong Kong Tourism Board, Saudi Tourism Authority, Zambia Tourism Authority) and travel brands (Resorts World Cruises, Costa Cruises). Note: melangedigital.co is mid-transition from a general digital marketing positioning to a travel-and-tourism-only positioning — a few pages on this domain still reflect the prior general-marketing scope and should not be treated as representative of current service focus.
+> Mélange Digital is a travel and tourism marketing agency — turning cultural insight into measurable arrivals for tourism boards, DMOs, NTOs, and travel brands. The agency combines destination storytelling, creator campaigns, branded content, experiential marketing, and travel PR across India and global markets.
 
 ## Company
-- [Homepage](https://melangedigital.co/): Positioning, service summary, proof points, and case study highlights for tourism boards and travel brands.
+- [Homepage](https://melangedigital.co/): Travel and tourism marketing agency overview, campaign outcomes, and destination expertise.
 - [About](https://melangedigital.co/about): Agency background and leadership.
-- [Services](https://melangedigital.co/services): Full service list — brand strategy and planning, influencer marketing, immersive brand storytelling, SEO and AEO, familiarisation trips, content strategy and production, PR/IPs and outreach.
-- [Contact](https://melangedigital.co/contact): Primary conversion page — book a strategy call.
+- [Services](https://melangedigital.co/services): Overview of services for tourism boards and travel brands.
+- [Influencer & Celebrity Marketing](https://melangedigital.co/services/influencer-marketing): Creator and celebrity campaigns for travel and tourism.
+- [Branded Content & IPs](https://melangedigital.co/services/branded-content-ips): Film, music, and editorial partnerships that connect destinations with audiences.
+- [Experiential Marketing](https://melangedigital.co/services/experiential-marketing): Trade shows, roadshows, destination launches, and live activations.
+- [FAM Trips + PR](https://melangedigital.co/services/fam-trips-pr): Familiarisation trips, destination PR, journalist and creator hosting, and travel trade engagement.
+- [Contact](https://melangedigital.co/contact): Contact the team and schedule a strategy call.
 
-## Case Studies
-- [Resorts World Cruises](https://melangedigital.co/work/resorts-world-cruises): GCC market launch — $2.3M in attributed sales across three audiences and three languages, one integrated team.
-- [Costa Cruises](https://melangedigital.co/work/costa-cruises): 9,000+ qualified enquiries generated from a single maiden-voyage campaign.
-- [All case studies](https://melangedigital.co/work): Full portfolio archive, spanning travel/tourism and legacy non-travel work.
+## Selected Case Studies
+- [Resorts World Cruises](https://melangedigital.co/work/resorts-world-cruises-premium-cruise-launch-dubai): GCC market launch that generated $2.3M in attributed sales across three audiences and three languages.
+- [Costa Cruises](https://melangedigital.co/work/costa-cruises-introducing-luxury-cruising-to-india): Maiden-voyage campaign that generated more than 9,000 qualified enquiries.
+- [Singapore Tourism Board](https://melangedigital.co/work/singapore-tourism-board-isthisevensingapore): Tourism campaign reaching Indian families through creators and AR filters.
+- [Her Hong Kong](https://melangedigital.co/work/hong-kong-tourism-board-herhongkong): Influencer-led Hong Kong destination campaign.
+- [Zambia Tourism](https://melangedigital.co/work/zambia-tourism-otm-mumbai-2026): Tourism destination campaign and visitor engagement.
+- [All case studies](https://melangedigital.co/work): Browse the work portfolio.
 
 ## Insights
-- [Destination Marketing in Tourism](https://melangedigital.co/blogs/destination-marketing-in-tourism): What destination marketing means for DMOs and tourism boards, tied to arrivals and visitor spend rather than awareness.
-- [Travel Influencer Marketing](https://melangedigital.co/blogs/travel-influencer-marketing): How tourism boards and travel brands should pick creators and measure ROI against bookings, not views.
-- [Experiential Tourism Guide 2026](https://melangedigital.co/blogs/experiential-tourism-guide): How experiential travel is changing destination choice, and what DMOs need to do next.
-- [All articles](https://melangedigital.co/blogs): Full article archive.
-
-## Research
-- [India Outbound Tourism Trends 2026](https://melangedigital.co/destination-marketing-agency): Survey of 4,200 Indian outbound-eligible travellers on what triggers a destination decision, with a downloadable report.
+- [Destination Marketing in Tourism](https://melangedigital.co/blogs/destination-marketing-in-tourism): What destination marketing means for DMOs and tourism boards, including arrivals and visitor spend.
+- [Travel Influencer Marketing](https://melangedigital.co/blogs/travel-influencer-marketing): How tourism boards and travel brands can select creators and measure campaign outcomes.
+- [Experiential Tourism Guide 2026](https://melangedigital.co/blogs/experiential-tourism-guide): How experiential travel can influence destination choice.
+- [How People Use AI for Travel Planning](https://melangedigital.co/blogs/ai-for-travel-planning): An article about the role of AI in travel planning.
+- [All articles](https://melangedigital.co/blogs): Browse the blog and insights archive.
 
 ## Optional
 - [Careers](https://melangedigital.co/careers)

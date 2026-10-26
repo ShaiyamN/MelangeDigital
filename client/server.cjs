@@ -118,7 +118,14 @@ const SEO_REDIRECTS = {
   "/services/design-solutions": "/services",
   "/blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships": "/blogs",
   "/work/costa-cruises": "/work/costa-cruises-introducing-luxury-cruising-to-india",
-  "/work/singapore-tourism-board-stb": "/work/singapore-tourism-board",
+  "/work/resorts-world-cruises":
+    "/work/resorts-world-cruises-premium-cruise-launch-dubai",
+  "/work/her-hk": "/work/hong-kong-tourism-board-herhongkong",
+  "/work/zambia-tourism": "/work/zambia-tourism-otm-mumbai-2026",
+  "/work/singapore-tourism-board":
+    "/work/singapore-tourism-board-isthisevensingapore",
+  "/work/singapore-tourism-board-stb":
+    "/work/singapore-tourism-board-isthisevensingapore",
   "/work/genvr": "/work/genvr",
   "/work/neotraders": "/work/neotraders",
   "/work/devboost": "/work/devboost",
