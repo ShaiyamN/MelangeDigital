@@ -294,6 +294,13 @@ app.post("/api/sitemap/clear-cache", (_req, res) => {
   res.json({ ok: true, cleared: true });
 });
 
+// CMS image paths (/uploads/<cloudinaryId>.<ext>) are not hosted here; serve them from Cloudinary.
+app.get("/uploads/:file", (req, res) => {
+  const m = /^([A-Za-z0-9_-]+)\.(webp|png|jpe?g|gif|avif)$/i.exec(req.params.file);
+  if (!m) return res.status(404).type("text/plain").send("Not found");
+  res.redirect(302, `https://res.cloudinary.com/dbhrpsnzg/image/upload/${m[1]}.${m[2].toLowerCase()}`);
+});
+
 // Live sitemap from Firestore (blogs + casestudies). Before static so spa/sitemap.xml is not used.
 app.get("/sitemap.xml", async (req, res) => {
   res.set("Content-Type", "application/xml; charset=utf-8");
