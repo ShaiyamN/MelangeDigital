@@ -4,6 +4,10 @@
     Header set Cache-Control "no-cache"
   </Files>
 
+  <Files "llms.txt">
+    Header set Content-Type "text/plain; charset=utf-8"
+  </Files>
+
   <Files "robots.txt">
     Header set Content-Type "text/plain; charset=utf-8"
   </Files>
