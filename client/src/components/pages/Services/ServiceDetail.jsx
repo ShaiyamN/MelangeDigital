@@ -550,11 +550,9 @@ export default function ServiceDetail() {
                     <h3 className="text-block-30">{item.question}</h3>
                     <span className="accordian-icon w-icon-dropdown-toggle" aria-hidden="true" />
                   </button>
-                  {isOpen && (
-                    <div className="dropdown-list">
-                      <div className="text-block-34">{item.answer}</div>
-                    </div>
-                  )}
+                  <div className="dropdown-list" hidden={!isOpen}>
+                    <div className="text-block-34">{item.answer}</div>
+                  </div>
                 </div>
               );
             })}

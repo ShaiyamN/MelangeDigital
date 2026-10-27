@@ -212,7 +212,7 @@ function websiteSchema() {
     "@id": `${ORIGIN}/#website`,
     url: `${ORIGIN}/`,
     name: "Mélange Digital",
-    alternateName: ["Mélange"],
+    alternateName: ["Melange Digital", "Mélange", "Melange"],
     publisher: { "@id": `${ORIGIN}/#organization` },
     inLanguage: "en",
   };
@@ -224,7 +224,7 @@ function organizationSchema() {
     "@type": "Organization",
     "@id": `${ORIGIN}/#organization`,
     name: "Mélange Digital",
-    alternateName: ["Mélange"],
+    alternateName: ["Melange Digital", "Mélange", "Melange"],
     url: `${ORIGIN}/`,
     logo: {
       "@type": "ImageObject",
@@ -238,7 +238,7 @@ function organizationSchema() {
     image: { "@id": `${ORIGIN}/#logo` },
     description:
       "Mélange Digital is a travel and tourism marketing agency that makes destinations irresistible to Indian travellers. We deliver influencer and celebrity marketing, branded content and film IP, experiential marketing, and FAM trips and PR for national tourism boards, DMOs and travel brands across India, UAE, Singapore, UK, US and Zambia.",
-    foundingDate: "2018",
+    foundingDate: "2021",
     founder: {
       "@type": "Person",
       "@id": `${ORIGIN}/#founder`,
@@ -849,10 +849,7 @@ function aboutSchemas(meta = {}) {
       mainEntity: { "@id": `${ORIGIN}/#organization` },
       breadcrumb: { "@id": `${ORIGIN}/about#breadcrumb` },
       publisher: { "@id": `${ORIGIN}/#organization` },
-      hasPart: [
-        { "@id": `${ORIGIN}/about#leadership` },
-        { "@id": `${ORIGIN}/about#faq` },
-      ],
+      hasPart: { "@id": `${ORIGIN}/about#faq` },
       inLanguage: "en",
     },
     {

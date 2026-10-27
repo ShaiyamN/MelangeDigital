@@ -1,5 +1,9 @@
 const assert = require("assert");
-const { schemasForPath } = require("./page-schemas.cjs");
+const {
+  schemasForPath,
+  websiteSchema,
+  organizationSchema,
+} = require("./page-schemas.cjs");
 const CASE_STUDY_SEO = require("../src/constants/caseStudySeo.json");
 
 const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
@@ -401,10 +405,15 @@ function applyHead(html, meta) {
       out = out.replace(/<\/head>/i, `${ogTags}\n</head>`);
     }
   }
-  if (meta.stripShellJsonLd || meta.stripFaq) {
+  if (meta.stripFaq) {
     out = out.replace(
       /<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/gi,
       "",
+    );
+  } else if (meta.stripShellJsonLd) {
+    out = out.replace(
+      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>\s*/gi,
+      (script) => (/\bdata-rh=["']true["']/i.test(script) ? script : ""),
     );
   }
   const blocks = [];
@@ -418,7 +427,7 @@ function applyHead(html, meta) {
     const scripts = blocks
       .map(
         (obj) =>
-          `  <script type="application/ld+json">${JSON.stringify(obj)}</script>`,
+          `  <script type="application/ld+json" data-rh="true" data-seo-route="${esc(meta.path)}">${JSON.stringify(obj)}</script>`,
       )
       .join("\n");
     const section = `  <!-- Schema Markup -->\n${scripts}\n  <!-- End of Schema Markup -->`;
@@ -447,6 +456,24 @@ if (require.main === module) {
   <script type="application/ld+json">{"@type": "FAQPage"}</script>
   <script type="application/ld+json">{"@type": "Organization"}</script>
 </head></html>`;
+
+  const expectedAlternates = ["Melange Digital", "Mélange", "Melange"];
+  assert.deepStrictEqual(websiteSchema().alternateName, expectedAlternates);
+  assert.deepStrictEqual(organizationSchema().alternateName, expectedAlternates);
+  assert.strictEqual(organizationSchema().foundingDate, "2021");
+  assert.deepStrictEqual(
+    schemasForPath("/about").find((schema) => schema["@type"] === "AboutPage").hasPart,
+    { "@id": `${ORIGIN}/about#faq` },
+  );
+  const contactShell = shell.replace(
+    '<script type="application/ld+json">{"@type": "FAQPage"}</script>',
+    '<script type="application/ld+json" data-rh="true">{"@type": "Organization","alternateName":["Melange Digital","Mélange","Melange"]}</script>',
+  );
+  const contactHtml = applyHead(
+    contactShell,
+    resolveMeta("/contact", { routes: new Set(["/contact"]), byPath: {} }),
+  );
+  assert(contactHtml.includes('"alternateName":["Melange Digital","Mélange","Melange"]'));
 
   const work = applyHead(
     shell,
@@ -565,6 +592,10 @@ if (require.main === module) {
   <!-- End of Schema Markup -->
 </head></html>`;
   const homeHtml = applyHead(homeShell, homeMeta);
+  assert(homeHtml.includes('data-rh="true" data-seo-route="/"'));
+  assert(
+    homeHtml.includes('"alternateName":["Melange Digital","Mélange","Melange"]'),
+  );
   assert.strictEqual(
     (homeHtml.match(/application\/ld\+json/g) || []).length,
     6,

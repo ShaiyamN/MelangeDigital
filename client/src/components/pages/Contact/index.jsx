@@ -31,6 +31,7 @@ const Contact = () => {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Mélange Digital",
+  "alternateName": ["Melange Digital", "Mélange", "Melange"],
   "url": "https://melangedigital.co",
   "logo": "https://melangedigital.co/logo.png",
   "description": "Mélange Digital is a global digital marketing agency specializing in travel, tourism, hospitality, and high-growth brands.",

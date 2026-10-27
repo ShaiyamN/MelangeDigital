@@ -6,7 +6,8 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import { useEffect, useLayoutEffect, lazy, Suspense } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, lazy, Suspense } from "react";
+import { Helmet } from "react-helmet-async";
 import useLenis from "./hooks/useLenis";
 import { deorphan } from "./utils/deorphan";
 import gsap from "gsap";
@@ -128,6 +129,80 @@ function BlogSlugRedirect() {
   return <Navigate to={`/blogs/${slug}`} replace />;
 }
 
+function getServerSchemas(pathname) {
+  return Array.from(document.querySelectorAll("script[data-seo-route]"))
+    .filter((script) => script.getAttribute("data-seo-route") === pathname)
+    .flatMap((script) => {
+      try {
+        return [JSON.parse(script.textContent || "")];
+      } catch (error) {
+        console.error(`Invalid server JSON-LD for ${pathname}:`, error);
+        return [];
+      }
+    });
+}
+
+function RouteStructuredData() {
+  const { pathname } = useLocation();
+  const hasSkippedInitialLoad = useRef(false);
+  const [routeData, setRouteData] = useState(() => ({
+    path: pathname,
+    schemas: getServerSchemas(pathname),
+  }));
+  const schemas = routeData.path === pathname ? routeData.schemas : [];
+
+  useEffect(() => {
+    if (window.__PRERENDERING__) return;
+    if (!hasSkippedInitialLoad.current) {
+      hasSkippedInitialLoad.current = true;
+      return;
+    }
+
+    let active = true;
+    fetch(`/api/seo/schema?path=${encodeURIComponent(pathname)}`, {
+      headers: { Accept: "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        if (!Array.isArray(result.schemas)) {
+          throw new Error("Invalid schema response");
+        }
+        if (active) setRouteData({ path: pathname, schemas: result.schemas });
+      })
+      .catch((error) => {
+        if (active) {
+          console.error(`Failed to load JSON-LD for ${pathname}:`, error);
+          setRouteData({ path: pathname, schemas: [] });
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [pathname]);
+
+  if (!schemas.length) return null;
+
+  return (
+    <Helmet>
+      {schemas.map((schema, index) => (
+        <script
+          key={`${pathname}-${index}`}
+          type="application/ld+json"
+          data-seo-route={pathname}
+        >
+          {JSON.stringify(schema)}
+        </script>
+      ))}
+    </Helmet>
+  );
+}
+
 function App() {
   useTabVisibility();
   useLenis();
@@ -136,6 +211,7 @@ function App() {
     <>
       <ScrollToTop />
       <DeorphanCopy />
+      <RouteStructuredData />
       <Suspense fallback={<div className="min-h-screen bg-transparent" aria-hidden="true" />}>
         <Routes>
           {/* Canonical core pages */}

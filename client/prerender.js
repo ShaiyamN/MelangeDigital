@@ -92,6 +92,25 @@ function outputDirectory(root, route) {
   return directory;
 }
 
+function stripAnalyticsFromSnapshot(html) {
+  return html
+    .replace(
+      /<script\b(?=[^>]*\bsrc=["'][^"']*(?:googletagmanager\.com\/gtag\/js|connect\.facebook\.net\/signals\/config|connect\.facebook\.net\/en_US\/fbevents\.js)[^"']*["'])[^>]*>[\s\S]*?<\/script>\s*/gi,
+      "",
+    )
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>\s*/gi, (script) =>
+      /(?:fbq\s*\(\s*["'](?:init|track)["']|gtag\s*\(\s*["']config["'])/i.test(
+        script,
+      )
+        ? ""
+        : script,
+    )
+    .replace(
+      /<noscript\b[^>]*>[\s\S]*?facebook\.com\/tr[\s\S]*?<\/noscript>\s*/gi,
+      "",
+    );
+}
+
 const PORT = 3033;
 const distPath = path.join(__dirname, "dist");
 const spaPath = path.join(__dirname, "spa");
@@ -226,7 +245,10 @@ try {
       });
 
       const routeMeta = resolveMeta(route, pageIndex);
-      let html = applyHead(await page.content(), routeMeta);
+      let html = applyHead(
+        stripAnalyticsFromSnapshot(await page.content()),
+        routeMeta,
+      );
       html = html.replace(/[ \t]+$/gm, "");
       const marker = `<!-- prerendered-route:${route} -->`;
       html = html.replace(/<\/head>/i, `  ${marker}\n</head>`);

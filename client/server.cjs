@@ -231,6 +231,33 @@ async function sendIndex(req, res) {
   sendHtml(req, res, html);
 }
 
+app.get("/api/seo/schema", async (req, res) => {
+  const route = req.query.path;
+  if (
+    typeof route !== "string" ||
+    !route.startsWith("/") ||
+    route.includes("?") ||
+    route.includes("#") ||
+    route.includes("\\")
+  ) {
+    res.status(400).json({ error: "A valid route path is required" });
+    return;
+  }
+
+  try {
+    const index = await getPageIndex();
+    const meta = resolveMeta(route, index);
+    const schemas = [
+      ...(Array.isArray(meta.jsonLdBlocks) ? meta.jsonLdBlocks : []),
+      ...(meta.jsonLd ? [meta.jsonLd] : []),
+    ];
+    res.set("Cache-Control", "no-store").json({ schemas });
+  } catch (err) {
+    console.error("route schema failed:", err.message);
+    res.status(500).json({ error: "Unable to load route schema" });
+  }
+});
+
 const DMA = "destination-marketing-agency";
 
 const CAREERS_FORM_HTML = path.join(DIST, "careers", "form", "index.html");
