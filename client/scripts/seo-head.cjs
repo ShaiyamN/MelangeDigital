@@ -69,6 +69,13 @@ const PAGE_META = {
     title: "Film Tourism Marketing & Branded Content | Mélange Digital",
     description:
       "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.",
+    image: `${ORIGIN}/film-tourism-og.jpg`,
+    imageAlt: "Film Tourism Marketing & Branded Content | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Film Tourism Marketing & Branded Content | Mélange Digital",
+    twitterDescription:
+      "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.",
   },
   "/services/branded-content-ip": {
     title: "Film Tourism Marketing & Branded Content | Mélange Digital",
@@ -709,6 +716,40 @@ if (require.main === module) {
   assert(!influencerHtml.includes("about-og.png"));
   assert(!influencerHtml.includes("services-og.png"));
   assert(!influencerHtml.includes("og-home.png"));
+
+  const brandedContentPath = "/services/branded-content-ips";
+  const brandedContentMeta = resolveMeta(brandedContentPath, {
+    routes: new Set([brandedContentPath]),
+    byPath: {},
+  });
+  assert.strictEqual(brandedContentMeta.title, "Film Tourism Marketing & Branded Content | Mélange Digital");
+  assert.strictEqual(brandedContentMeta.description, "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.");
+  assert.strictEqual(brandedContentMeta.image, `${ORIGIN}/film-tourism-og.jpg`);
+  assert.strictEqual(brandedContentMeta.imageWidth, 1200);
+  assert.strictEqual(brandedContentMeta.imageHeight, 630);
+  assert.strictEqual(brandedContentMeta.imageAlt, brandedContentMeta.title);
+  assert.strictEqual(brandedContentMeta.twitterTitle, brandedContentMeta.title);
+  assert.strictEqual(brandedContentMeta.twitterDescription, brandedContentMeta.description);
+  const brandedContentHtml = applyHead(homeShell, brandedContentMeta);
+  for (const [tag, value] of [
+    ['property="og:title"', brandedContentMeta.title],
+    ['property="og:description"', brandedContentMeta.description],
+    ['property="og:url"', `${ORIGIN}${brandedContentPath}`],
+    ['property="og:image"', `${ORIGIN}/film-tourism-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', brandedContentMeta.title],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', brandedContentMeta.title],
+    ['name="twitter:description"', brandedContentMeta.description],
+    ['name="twitter:image"', `${ORIGIN}/film-tourism-og.jpg`],
+  ]) {
+    assert(brandedContentHtml.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual((brandedContentHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png"]) {
+    assert(!brandedContentHtml.includes(otherImage));
+  }
 
   const aboutMeta = resolveMeta("/about", {
     routes: new Set(["/about"]),

@@ -214,6 +214,15 @@ function sendHtml(req, res, html) {
 async function sendIndex(req, res) {
   const prerenderedHtml = getPrerenderedHtml(req.path || "/");
   if (prerenderedHtml) {
+    const brandedContentPath = "/services/branded-content-ips";
+    if ((req.path || "/").replace(/\/+$/, "") === brandedContentPath) {
+      const meta = resolveMeta(brandedContentPath, {
+        routes: new Set([brandedContentPath]),
+        byPath: {},
+      });
+      sendHtml(req, res, applyHead(prerenderedHtml, meta));
+      return;
+    }
     sendHtml(req, res, prerenderedHtml);
     return;
   }
