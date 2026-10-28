@@ -98,6 +98,15 @@ function AnimCta({ to, className, arrowSrc, children }) {
 export default function ServiceDetail() {
   const { slug } = useParams();
   const service = SERVICES_DATA[slug];
+  const influencerSocialMeta =
+    slug === "influencer-marketing"
+      ? {
+          title: "Travel Influencer Marketing Agency for tourism boards | Mélange Digital",
+          description:
+            "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
+          image: "https://melangedigital.co/influencer-marketing-og.png",
+        }
+      : null;
 
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [faqCollapsed, setFaqCollapsed] = useState(true);
@@ -264,10 +273,22 @@ export default function ServiceDetail() {
         <title>{service.seo.title}</title>
         <meta name="description" content={service.seo.description} />
         <link rel="canonical" href={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} data-rh="true" />
-        <meta property="og:title" content={service.seo.title} />
-        <meta property="og:description" content={service.seo.description} />
+        <meta property="og:title" content={influencerSocialMeta?.title || service.seo.title} />
+        <meta property="og:description" content={influencerSocialMeta?.description || service.seo.description} />
         <meta property="og:url" content={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} />
         <meta property="og:type" content="website" />
+        {influencerSocialMeta && (
+          <>
+            <meta property="og:image" content={influencerSocialMeta.image} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:image:alt" content="Travel Influencer Marketing | Mélange Digital" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={influencerSocialMeta.title} />
+            <meta name="twitter:description" content={influencerSocialMeta.description} />
+            <meta name="twitter:image" content={influencerSocialMeta.image} />
+          </>
+        )}
         {serviceSchema && (
           <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
         )}

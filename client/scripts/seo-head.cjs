@@ -54,7 +54,15 @@ const PAGE_META = {
   },
   "/services/influencer-marketing": {
     title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
+    ogTitle: "Travel Influencer Marketing Agency for tourism boards | Mélange Digital",
     description:
+      "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
+    image: `${ORIGIN}/influencer-marketing-og.png`,
+    imageAlt: "Travel Influencer Marketing | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Travel Influencer Marketing Agency for tourism boards | Mélange Digital",
+    twitterDescription:
       "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
   },
   "/services/branded-content-ips": {
@@ -246,6 +254,7 @@ function resolveMeta(reqPath, index = {}) {
   const imageAlt = preset.imageAlt || undefined;
   const imageWidth = preset.imageWidth || undefined;
   const imageHeight = preset.imageHeight || undefined;
+  const ogTitle = preset.ogTitle || undefined;
   const twitterTitle = preset.twitterTitle || undefined;
   const twitterDescription = preset.twitterDescription || undefined;
 
@@ -258,6 +267,7 @@ function resolveMeta(reqPath, index = {}) {
     imageAlt,
     imageWidth,
     imageHeight,
+    ogTitle,
     twitterTitle,
     twitterDescription,
     /** Always strip shell JSON-LD; page packs replace it for /, /services, /about. */
@@ -405,8 +415,8 @@ function applyHead(html, meta) {
       meta.canonical
         ? `<meta data-rh="true" property="og:url" content="${esc(meta.canonical)}">`
         : "",
-      meta.title
-        ? `<meta data-rh="true" property="og:title" content="${esc(meta.title)}">`
+      meta.ogTitle || meta.title
+        ? `<meta data-rh="true" property="og:title" content="${esc(meta.ogTitle || meta.title)}">`
         : "",
       meta.description
         ? `<meta data-rh="true" property="og:description" content="${esc(meta.description)}">`
@@ -658,6 +668,47 @@ if (require.main === module) {
   assert(homeHtml.includes('property="og:image:height" content="632"'));
   assert(!homeHtml.includes(`${ORIGIN}/about-og.png`));
   assert(homeHtml.includes('name="twitter:card" content="summary_large_image"'));
+
+  const influencerPath = "/services/influencer-marketing";
+  const influencerMeta = resolveMeta(influencerPath, {
+    routes: new Set([influencerPath]),
+    byPath: {},
+  });
+  assert.strictEqual(influencerMeta.ogTitle, "Travel Influencer Marketing Agency for tourism boards | Mélange Digital");
+  assert.strictEqual(influencerMeta.image, `${ORIGIN}/influencer-marketing-og.png`);
+  assert.strictEqual(influencerMeta.imageWidth, 1200);
+  assert.strictEqual(influencerMeta.imageHeight, 630);
+  assert.strictEqual(influencerMeta.imageAlt, "Travel Influencer Marketing | Mélange Digital");
+  assert.strictEqual(influencerMeta.twitterTitle, influencerMeta.ogTitle);
+  assert.strictEqual(influencerMeta.twitterDescription, influencerMeta.description);
+  const influencerHtml = applyHead(homeShell, influencerMeta);
+  assert(influencerHtml.includes(`property="og:title" content="${esc(influencerMeta.ogTitle)}"`));
+  assert(influencerHtml.includes(`property="og:url" content="${ORIGIN}${influencerPath}"`));
+  assert(influencerHtml.includes(`property="og:image" content="${ORIGIN}/influencer-marketing-og.png"`));
+  assert(influencerHtml.includes('property="og:image:width" content="1200"'));
+  assert(influencerHtml.includes('property="og:image:height" content="630"'));
+  assert(influencerHtml.includes('property="og:image:alt" content="Travel Influencer Marketing | Mélange Digital"'));
+  assert(influencerHtml.includes(`name="twitter:title" content="${esc(influencerMeta.twitterTitle)}"`));
+  assert(influencerHtml.includes(`name="twitter:description" content="${esc(influencerMeta.twitterDescription)}"`));
+  assert(influencerHtml.includes(`name="twitter:image" content="${ORIGIN}/influencer-marketing-og.png"`));
+  for (const tag of [
+    'property="og:title"',
+    'property="og:description"',
+    'property="og:image"',
+    'property="og:image:width"',
+    'property="og:image:height"',
+    'property="og:image:alt"',
+    'property="og:url"',
+    'name="twitter:card"',
+    'name="twitter:title"',
+    'name="twitter:description"',
+    'name="twitter:image"',
+  ]) {
+    assert.strictEqual((influencerHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  assert(!influencerHtml.includes("about-og.png"));
+  assert(!influencerHtml.includes("services-og.png"));
+  assert(!influencerHtml.includes("og-home.png"));
 
   const aboutMeta = resolveMeta("/about", {
     routes: new Set(["/about"]),
