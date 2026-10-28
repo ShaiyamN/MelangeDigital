@@ -44,6 +44,17 @@ const About = () => {
           property="og:description"
           content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."
         />
+        <meta property="og:image" content="https://melangedigital.co/about-og.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Destination Marketing Agency | Mélange Digital" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Best Destination Marketing Agency | Mélange Digital" />
+        <meta
+          name="twitter:description"
+          content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."
+        />
+        <meta name="twitter:image" content="https://melangedigital.co/about-og.png" />
         <style type="text/css">{`${marketingNavCss("abt")}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 body.abt-react .section-8 .accordion-toggle .text-block-30{font-size:18px!important;font-weight:500!important;line-height:1.4!important}

@@ -214,6 +214,21 @@ try {
         );
       }
 
+      if (route === "/work") {
+        await page.waitForFunction(
+          () => document.querySelectorAll(".svc-project").length >= 10,
+          { timeout: 15000 },
+        );
+      } else if (route.startsWith("/blogs/")) {
+        await page.waitForFunction(() => {
+          const hasHeadings = document.querySelector(".firstSection h2");
+          return (
+            !hasHeadings ||
+            document.querySelector(".secSection")?.textContent?.includes("Table of Contents")
+          );
+        }, { timeout: 15000 });
+      }
+
       await page.evaluate(() => {
         document.body.classList.add("prerendering");
         const style = document.createElement("style");

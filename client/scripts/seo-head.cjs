@@ -32,6 +32,13 @@ const PAGE_META = {
     title: "Best Destination Marketing Agency | Mélange Digital",
     description:
       "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
+    image: `${ORIGIN}/about-og.png`,
+    imageAlt: "Destination Marketing Agency | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Best Destination Marketing Agency | Mélange Digital",
+    twitterDescription:
+      "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
   },
   "/services": {
     title: "Digital Marketing for Travel and Tourism | Mélange Digital",
@@ -230,6 +237,10 @@ function resolveMeta(reqPath, index = {}) {
     String(cms?.image || "").trim() ||
     undefined;
   const imageAlt = preset.imageAlt || undefined;
+  const imageWidth = preset.imageWidth || undefined;
+  const imageHeight = preset.imageHeight || undefined;
+  const twitterTitle = preset.twitterTitle || undefined;
+  const twitterDescription = preset.twitterDescription || undefined;
 
   return {
     path,
@@ -238,6 +249,10 @@ function resolveMeta(reqPath, index = {}) {
     canonical,
     image,
     imageAlt,
+    imageWidth,
+    imageHeight,
+    twitterTitle,
+    twitterDescription,
     /** Always strip shell JSON-LD; page packs replace it for /, /services, /about. */
     stripShellJsonLd: true,
     noindex: false,
@@ -371,6 +386,12 @@ function applyHead(html, meta) {
     /<meta\b[^>]*\bname=["']twitter:(?:card|image)["'][^>]*>\s*/gi,
     "",
   );
+  if (meta.twitterTitle || meta.twitterDescription) {
+    out = out.replace(
+      /<meta\b[^>]*\bname=["']twitter:(?:title|description)["'][^>]*>\s*/gi,
+      "",
+    );
+  }
   if (meta.image) {
     const ogTags = [
       `<meta data-rh="true" property="og:type" content="website">`,
@@ -384,12 +405,18 @@ function applyHead(html, meta) {
         ? `<meta data-rh="true" property="og:description" content="${esc(meta.description)}">`
         : "",
       `<meta data-rh="true" property="og:image" content="${esc(meta.image)}">`,
-      `<meta data-rh="true" property="og:image:width" content="1200">`,
-      `<meta data-rh="true" property="og:image:height" content="632">`,
+      `<meta data-rh="true" property="og:image:width" content="${meta.imageWidth || 1200}">`,
+      `<meta data-rh="true" property="og:image:height" content="${meta.imageHeight || 632}">`,
       meta.imageAlt
         ? `<meta data-rh="true" property="og:image:alt" content="${esc(meta.imageAlt)}">`
         : "",
       `<meta data-rh="true" name="twitter:card" content="summary_large_image">`,
+      meta.twitterTitle
+        ? `<meta data-rh="true" name="twitter:title" content="${esc(meta.twitterTitle)}">`
+        : "",
+      meta.twitterDescription
+        ? `<meta data-rh="true" name="twitter:description" content="${esc(meta.twitterDescription)}">`
+        : "",
       `<meta data-rh="true" name="twitter:image" content="${esc(meta.image)}">`,
     ]
       .filter(Boolean)
@@ -582,6 +609,7 @@ if (require.main === module) {
   const homeMeta = resolveMeta("/", { routes: new Set(["/"]), byPath: {} });
   assert.strictEqual(homeMeta.jsonLdBlocks?.length, 6);
   assert.strictEqual(homeMeta.image, `${ORIGIN}/og-home.png`);
+  assert.strictEqual(homeMeta.imageHeight, undefined);
   const homeShell = `<!DOCTYPE html><html><head>
   <meta name="viewport" content="width=device-width">
   <link data-rh="true" rel="canonical" href="https://melangedigital.co/">
@@ -614,6 +642,8 @@ if (require.main === module) {
   assert(
     homeHtml.includes(`property="og:image" content="${ORIGIN}/og-home.png"`),
   );
+  assert(homeHtml.includes('property="og:image:height" content="632"'));
+  assert(!homeHtml.includes(`${ORIGIN}/about-og.png`));
   assert(homeHtml.includes('name="twitter:card" content="summary_large_image"'));
 
   const aboutMeta = resolveMeta("/about", {
@@ -622,8 +652,35 @@ if (require.main === module) {
   });
   assert.strictEqual(aboutMeta.jsonLdBlocks?.length, 8);
   assert(aboutMeta.jsonLdBlocks.some((b) => b["@type"] === "AboutPage"));
+  assert.strictEqual(aboutMeta.image, `${ORIGIN}/about-og.png`);
+  assert.strictEqual(aboutMeta.imageWidth, 1200);
+  assert.strictEqual(aboutMeta.imageHeight, 630);
+  assert.strictEqual(aboutMeta.twitterTitle, aboutMeta.title);
+  assert.strictEqual(aboutMeta.twitterDescription, aboutMeta.description);
   const aboutHtml = applyHead(homeShell, aboutMeta);
   assert(!aboutHtml.includes("og-home.png"));
+  assert(aboutHtml.includes(`property="og:url" content="${ORIGIN}/about"`));
+  assert(aboutHtml.includes(`property="og:image" content="${ORIGIN}/about-og.png"`));
+  assert(aboutHtml.includes('property="og:image:width" content="1200"'));
+  assert(aboutHtml.includes('property="og:image:height" content="630"'));
+  assert(aboutHtml.includes('property="og:image:alt" content="Destination Marketing Agency | Mélange Digital"'));
+  assert(aboutHtml.includes(`name="twitter:title" content="${esc(aboutMeta.title)}"`));
+  assert(aboutHtml.includes(`name="twitter:description" content="${esc(aboutMeta.description)}"`));
+  assert(aboutHtml.includes(`name="twitter:image" content="${ORIGIN}/about-og.png"`));
+  for (const tag of [
+    'property="og:title"',
+    'property="og:description"',
+    'property="og:image"',
+    'property="og:image:width"',
+    'property="og:image:height"',
+    'property="og:image:alt"',
+    'name="twitter:card"',
+    'name="twitter:title"',
+    'name="twitter:description"',
+    'name="twitter:image"',
+  ]) {
+    assert.strictEqual((aboutHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
   const aboutMarked = aboutHtml.match(
     /<!--\s*Schema Markup\s*-->([\s\S]*?)<!--\s*End of Schema Markup\s*-->/i,
   );
