@@ -44,6 +44,13 @@ const PAGE_META = {
     title: "Digital Marketing for Travel and Tourism | Mélange Digital",
     description:
       "Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs.",
+    image: `${ORIGIN}/services-og.png`,
+    imageAlt: "Digital Marketing for Travel and Tourism | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Digital Marketing for Travel and Tourism | Mélange Digital",
+    twitterDescription:
+      "Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs.",
   },
   "/services/influencer-marketing": {
     title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
@@ -598,6 +605,12 @@ if (require.main === module) {
     "Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs."
   );
   assert.strictEqual(svcMeta.canonical, "https://melangedigital.co/services");
+  assert.strictEqual(svcMeta.image, `${ORIGIN}/services-og.png`);
+  assert.strictEqual(svcMeta.imageWidth, 1200);
+  assert.strictEqual(svcMeta.imageHeight, 630);
+  assert.strictEqual(svcMeta.imageAlt, "Digital Marketing for Travel and Tourism | Mélange Digital");
+  assert.strictEqual(svcMeta.twitterTitle, svcMeta.title);
+  assert.strictEqual(svcMeta.twitterDescription, svcMeta.description);
   assert.strictEqual(svcMeta.jsonLdBlocks?.length, 6);
   assert(svcMeta.jsonLdBlocks.some((b) => b["@type"] === "CollectionPage"));
   assert(
@@ -695,6 +708,30 @@ if (require.main === module) {
   );
 
   const svcHtml = applyHead(homeShell, svcMeta);
+  assert(svcHtml.includes(`property="og:url" content="${ORIGIN}/services"`));
+  assert(svcHtml.includes(`property="og:image" content="${ORIGIN}/services-og.png"`));
+  assert(svcHtml.includes('property="og:image:width" content="1200"'));
+  assert(svcHtml.includes('property="og:image:height" content="630"'));
+  assert(svcHtml.includes('property="og:image:alt" content="Digital Marketing for Travel and Tourism | Mélange Digital"'));
+  assert(svcHtml.includes(`name="twitter:title" content="${esc(svcMeta.title)}"`));
+  assert(svcHtml.includes(`name="twitter:description" content="${esc(svcMeta.description)}"`));
+  assert(svcHtml.includes(`name="twitter:image" content="${ORIGIN}/services-og.png"`));
+  for (const tag of [
+    'property="og:title"',
+    'property="og:description"',
+    'property="og:image"',
+    'property="og:image:width"',
+    'property="og:image:height"',
+    'property="og:image:alt"',
+    'name="twitter:card"',
+    'name="twitter:title"',
+    'name="twitter:description"',
+    'name="twitter:image"',
+  ]) {
+    assert.strictEqual((svcHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  assert(!svcHtml.includes("about-og.png"));
+  assert(!svcHtml.includes("og-home.png"));
   const svcMarked = svcHtml.match(
     /<!--\s*Schema Markup\s*-->([\s\S]*?)<!--\s*End of Schema Markup\s*-->/i,
   );

@@ -219,6 +219,13 @@ try {
           () => document.querySelectorAll(".svc-project").length >= 10,
           { timeout: 15000 },
         );
+      } else if (route === "/blogs") {
+        await page.waitForFunction(
+          (minimumPosts) =>
+            document.querySelectorAll("article").length >= minimumPosts,
+          { timeout: 30000 },
+          blogRoutes.length,
+        );
       } else if (route.startsWith("/blogs/")) {
         await page.waitForFunction(() => {
           const hasHeadings = document.querySelector(".firstSection h2");

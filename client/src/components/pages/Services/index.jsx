@@ -141,6 +141,17 @@ const Services = () => {
           property="og:description"
           content="Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs."
         />
+        <meta property="og:image" content="https://melangedigital.co/services-og.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Digital Marketing for Travel and Tourism | Mélange Digital" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Digital Marketing for Travel and Tourism | Mélange Digital" />
+        <meta
+          name="twitter:description"
+          content="Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs."
+        />
+        <meta name="twitter:image" content="https://melangedigital.co/services-og.png" />
         <style type="text/css">{marketingNavCss("svc")}</style>
       </Helmet>
 
