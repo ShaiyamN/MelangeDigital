@@ -117,7 +117,18 @@ export default function ServiceDetail() {
           imageAlt: "Tourism Experiential Marketing Agency | Mélange Digital",
         }
       : null;
-  const socialMeta = influencerSocialMeta || experientialSocialMeta;
+  const famTripsSocialMeta =
+    slug === "fam-trips-pr"
+      ? {
+          title: "Travel PR Agency & FAM Trip Management | Mélange Digital",
+          description:
+            "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.",
+          image: "https://melangedigital.co/fam-trips-pr-og.jpg",
+          imageAlt: "Travel PR Agency & FAM Trip – Mélange Digital",
+        }
+      : null;
+  const socialMeta =
+    influencerSocialMeta || experientialSocialMeta || famTripsSocialMeta;
 
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [faqCollapsed, setFaqCollapsed] = useState(true);

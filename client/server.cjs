@@ -217,7 +217,8 @@ async function sendIndex(req, res) {
     const route = (req.path || "/").replace(/\/+$/, "");
     if (
       route === "/services/branded-content-ips" ||
-      route === "/services/experiential-marketing"
+      route === "/services/experiential-marketing" ||
+      route === "/services/fam-trips-pr"
     ) {
       const meta = resolveMeta(route, {
         routes: new Set([route]),

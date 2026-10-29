@@ -98,6 +98,13 @@ const PAGE_META = {
     title: "Travel PR Agency & FAM Trip Management | Mélange Digital",
     description:
       "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.",
+    image: `${ORIGIN}/fam-trips-pr-og.jpg`,
+    imageAlt: "Travel PR Agency & FAM Trip – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Travel PR Agency & FAM Trip Management | Mélange Digital",
+    twitterDescription:
+      "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.",
   },
   "/terms-of-service": {
     title: "Terms of Service | Mélange Digital",
@@ -790,6 +797,42 @@ if (require.main === module) {
   }
   for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png", "film-tourism-og.jpg"]) {
     assert(!experientialHtml.includes(otherImage));
+  }
+
+  const famTripsPath = "/services/fam-trips-pr";
+  const famTripsMeta = resolveMeta(famTripsPath, {
+    routes: new Set([famTripsPath]),
+    byPath: {},
+  });
+  assert.strictEqual(famTripsMeta.title, "Travel PR Agency & FAM Trip Management | Mélange Digital");
+  assert.strictEqual(famTripsMeta.description, "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.");
+  assert.strictEqual(famTripsMeta.canonical, `${ORIGIN}${famTripsPath}`);
+  assert.strictEqual(famTripsMeta.image, `${ORIGIN}/fam-trips-pr-og.jpg`);
+  assert.strictEqual(famTripsMeta.imageWidth, 1200);
+  assert.strictEqual(famTripsMeta.imageHeight, 630);
+  assert.strictEqual(famTripsMeta.imageAlt, "Travel PR Agency & FAM Trip – Mélange Digital");
+  assert.strictEqual(famTripsMeta.twitterTitle, famTripsMeta.title);
+  assert.strictEqual(famTripsMeta.twitterDescription, famTripsMeta.description);
+  const famTripsHtml = applyHead(homeShell, famTripsMeta);
+  for (const [tag, value] of [
+    ['property="og:title"', famTripsMeta.title],
+    ['property="og:description"', famTripsMeta.description],
+    ['property="og:type"', "website"],
+    ['property="og:url"', famTripsMeta.canonical],
+    ['property="og:image"', famTripsMeta.image],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', famTripsMeta.imageAlt],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', famTripsMeta.title],
+    ['name="twitter:description"', famTripsMeta.description],
+    ['name="twitter:image"', famTripsMeta.image],
+  ]) {
+    assert(famTripsHtml.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual((famTripsHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png", "film-tourism-og.jpg", "experiential-marketing-og.jpg"]) {
+    assert(!famTripsHtml.includes(otherImage));
   }
 
   const aboutMeta = resolveMeta("/about", {
