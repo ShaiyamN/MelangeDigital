@@ -14,8 +14,26 @@ const Contact = () => {
         <title>Contact a Tourism Board Marketing Agency in India | Mélange Digital</title>
         <meta
           name="description"
-          content="Contact our tourism board marketing agency. We assist DMOs, NTOs, and tourism brands in increasing their organic visibility worldwide. Schedule a call."
+          content="Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team."
         />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://melangedigital.co/contact" />
+        <meta property="og:title" content="Contact a Tourism Board Marketing Agency in India | Mélange Digital" />
+        <meta
+          property="og:description"
+          content="Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team."
+        />
+        <meta property="og:image" content="https://melangedigital.co/contact-og.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Tourism Board Marketing Agency – Mélange Digital" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact a Tourism Board Marketing Agency in India | Mélange Digital" />
+        <meta
+          name="twitter:description"
+          content="Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team."
+        />
+        <meta name="twitter:image" content="https://melangedigital.co/contact-og.jpg" />
         <link rel="canonical" href="https://melangedigital.co/contact" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

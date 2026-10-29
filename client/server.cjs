@@ -219,7 +219,8 @@ async function sendIndex(req, res) {
       route === "/services/branded-content-ips" ||
       route === "/services/experiential-marketing" ||
       route === "/services/fam-trips-pr" ||
-      route === "/careers"
+      route === "/careers" ||
+      route === "/contact"
     ) {
       const meta = resolveMeta(route, {
         routes: new Set([route]),
