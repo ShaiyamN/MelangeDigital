@@ -107,6 +107,17 @@ export default function ServiceDetail() {
           image: "https://melangedigital.co/influencer-marketing-og.png",
         }
       : null;
+  const experientialSocialMeta =
+    slug === "experiential-marketing"
+      ? {
+          title: "Tourism Experiential Marketing Agency | Mélange Digital",
+          description:
+            "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.",
+          image: "https://melangedigital.co/experiential-marketing-og.jpg",
+          imageAlt: "Tourism Experiential Marketing Agency | Mélange Digital",
+        }
+      : null;
+  const socialMeta = influencerSocialMeta || experientialSocialMeta;
 
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [faqCollapsed, setFaqCollapsed] = useState(true);
@@ -273,20 +284,20 @@ export default function ServiceDetail() {
         <title>{service.seo.title}</title>
         <meta name="description" content={service.seo.description} />
         <link rel="canonical" href={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} data-rh="true" />
-        <meta property="og:title" content={influencerSocialMeta?.title || service.seo.title} />
-        <meta property="og:description" content={influencerSocialMeta?.description || service.seo.description} />
+        <meta property="og:title" content={socialMeta?.title || service.seo.title} />
+        <meta property="og:description" content={socialMeta?.description || service.seo.description} />
         <meta property="og:url" content={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} />
         <meta property="og:type" content="website" />
-        {influencerSocialMeta && (
+        {socialMeta && (
           <>
-            <meta property="og:image" content={influencerSocialMeta.image} />
+            <meta property="og:image" content={socialMeta.image} />
             <meta property="og:image:width" content="1200" />
             <meta property="og:image:height" content="630" />
-            <meta property="og:image:alt" content="Travel Influencer Marketing | Mélange Digital" />
+            <meta property="og:image:alt" content={socialMeta.imageAlt || "Travel Influencer Marketing | Mélange Digital"} />
             <meta name="twitter:card" content="summary_large_image" />
-            <meta name="twitter:title" content={influencerSocialMeta.title} />
-            <meta name="twitter:description" content={influencerSocialMeta.description} />
-            <meta name="twitter:image" content={influencerSocialMeta.image} />
+            <meta name="twitter:title" content={socialMeta.title} />
+            <meta name="twitter:description" content={socialMeta.description} />
+            <meta name="twitter:image" content={socialMeta.image} />
           </>
         )}
         {serviceSchema && (

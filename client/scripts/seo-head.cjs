@@ -86,6 +86,13 @@ const PAGE_META = {
     title: "Tourism Experiential Marketing Agency | Mélange Digital",
     description:
       "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.",
+    image: `${ORIGIN}/experiential-marketing-og.jpg`,
+    imageAlt: "Tourism Experiential Marketing Agency | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Tourism Experiential Marketing Agency | Mélange Digital",
+    twitterDescription:
+      "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.",
   },
   "/services/fam-trips-pr": {
     title: "Travel PR Agency & FAM Trip Management | Mélange Digital",
@@ -749,6 +756,40 @@ if (require.main === module) {
   }
   for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png"]) {
     assert(!brandedContentHtml.includes(otherImage));
+  }
+
+  const experientialPath = "/services/experiential-marketing";
+  const experientialMeta = resolveMeta(experientialPath, {
+    routes: new Set([experientialPath]),
+    byPath: {},
+  });
+  assert.strictEqual(experientialMeta.title, "Tourism Experiential Marketing Agency | Mélange Digital");
+  assert.strictEqual(experientialMeta.description, "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.");
+  assert.strictEqual(experientialMeta.image, `${ORIGIN}/experiential-marketing-og.jpg`);
+  assert.strictEqual(experientialMeta.imageWidth, 1200);
+  assert.strictEqual(experientialMeta.imageHeight, 630);
+  assert.strictEqual(experientialMeta.imageAlt, experientialMeta.title);
+  assert.strictEqual(experientialMeta.twitterTitle, experientialMeta.title);
+  assert.strictEqual(experientialMeta.twitterDescription, experientialMeta.description);
+  const experientialHtml = applyHead(homeShell, experientialMeta);
+  for (const [tag, value] of [
+    ['property="og:title"', experientialMeta.title],
+    ['property="og:description"', experientialMeta.description],
+    ['property="og:url"', `${ORIGIN}${experientialPath}`],
+    ['property="og:image"', `${ORIGIN}/experiential-marketing-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', experientialMeta.title],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', experientialMeta.title],
+    ['name="twitter:description"', experientialMeta.description],
+    ['name="twitter:image"', `${ORIGIN}/experiential-marketing-og.jpg`],
+  ]) {
+    assert(experientialHtml.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual((experientialHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png", "film-tourism-og.jpg"]) {
+    assert(!experientialHtml.includes(otherImage));
   }
 
   const aboutMeta = resolveMeta("/about", {

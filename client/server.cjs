@@ -214,10 +214,13 @@ function sendHtml(req, res, html) {
 async function sendIndex(req, res) {
   const prerenderedHtml = getPrerenderedHtml(req.path || "/");
   if (prerenderedHtml) {
-    const brandedContentPath = "/services/branded-content-ips";
-    if ((req.path || "/").replace(/\/+$/, "") === brandedContentPath) {
-      const meta = resolveMeta(brandedContentPath, {
-        routes: new Set([brandedContentPath]),
+    const route = (req.path || "/").replace(/\/+$/, "");
+    if (
+      route === "/services/branded-content-ips" ||
+      route === "/services/experiential-marketing"
+    ) {
+      const meta = resolveMeta(route, {
+        routes: new Set([route]),
         byPath: {},
       });
       sendHtml(req, res, applyHead(prerenderedHtml, meta));
