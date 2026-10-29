@@ -133,7 +133,14 @@ const PAGE_META = {
   "/careers": {
     title: "Careers: Join Our Global Team | Mélange Digital",
     description:
-      "Join Mélange Digital's global team. Careers in strategy, creative, and growth for travel and tourism brands.",
+      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
+    image: `${ORIGIN}/careers-og.jpg`,
+    imageAlt: "Tourism Marketing Careers – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Careers: Join Our Global Team | Mélange Digital",
+    twitterDescription:
+      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
   },
   "/services/aeo-seo": {
     title: "AEO & SEO Services | Mélange Digital",

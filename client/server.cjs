@@ -218,7 +218,8 @@ async function sendIndex(req, res) {
     if (
       route === "/services/branded-content-ips" ||
       route === "/services/experiential-marketing" ||
-      route === "/services/fam-trips-pr"
+      route === "/services/fam-trips-pr" ||
+      route === "/careers"
     ) {
       const meta = resolveMeta(route, {
         routes: new Set([route]),
