@@ -15,11 +15,11 @@ const CTA_ARROW_GHOST = "/destination-marketing-agency/images/services/cta-arrow
 /* The frame specifies a single WHERE IT WORKS backdrop for every service page.
    servicesData pointed three of them at case-study banners, whose baked-in
    campaign lettering fights the overlay and the card labels. */
-const BAND_BG = "/destination-marketing-agency/images/services/where-it-works-bg.png";
+const BAND_BG = "/destination-marketing-agency/images/services/where-it-works-bg.webp";
 
 /* Likewise the closing band: only the influencer entry carried a bgImage, so
    the other three rendered as a blank white strip. */
-const CTA_BG = "/destination-marketing-agency/images/services/arrivals-banner-bg.png";
+const CTA_BG = "/destination-marketing-agency/images/services/arrivals-banner-bg.webp";
 
 /* Hero collage: 8 Figma slots plus two hand-tuned maps. Photos stay on
    their tile; every 5s they slide into a different slot. */

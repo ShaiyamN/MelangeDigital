@@ -49,7 +49,7 @@ export const SERVICES_DATA = {
       titleAccent: "Trust Does.",
       description:
         "People travel because someone they trust made a place worth seeing. That's the power of influencer marketing for travel brands and tourism boards.",
-      bgImage: "/destination-marketing-agency/images/services/where-it-works-bg.png",
+      bgImage: "/destination-marketing-agency/images/services/where-it-works-bg.webp",
       pillars: [
         {
           icon: "/destination-marketing-agency/images/services/pillars/inf-reposition.png",
@@ -167,7 +167,7 @@ export const SERVICES_DATA = {
       titleAccent: "Arrivals.",
       buttonText: "Get In Touch",
       buttonLink: "/contact",
-      bgImage: "/destination-marketing-agency/images/services/arrivals-banner-bg.png",
+      bgImage: "/destination-marketing-agency/images/services/arrivals-banner-bg.webp",
     },
   },
 
