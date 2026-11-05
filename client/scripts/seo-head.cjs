@@ -151,6 +151,21 @@ const PAGE_META = {
     twitterDescription:
       "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
   },
+  "/blogs/film-induced-tourism": {
+    title: "Film-Induced Tourism: How Screens Drive Travel | Melange",
+    ogTitle: "Film-Induced Tourism: How Screens Drive Travel | Melange",
+    description:
+      "Film-induced tourism turns viewers into travellers. See how OTT, set-jetting and reels shape bookings in India, the GCC and beyond. Read the full guide.",
+    image: `${ORIGIN}/film-induced-tourism-og.jpg`,
+    imageAlt: "Film-Induced Tourism: How Screens Drive Travel | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Film-Induced Tourism: How Screens Drive Travel | Melange",
+    twitterDescription:
+      "Film-induced tourism turns viewers into travellers. See how OTT, set-jetting and reels shape bookings in India, the GCC and beyond. Read the full guide.",
+  },
   "/blogs/what-are-fam-trip": {
     title: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
     ogTitle: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
@@ -1072,6 +1087,71 @@ if (require.main === module) {
   assert(articleFamTripsShell.includes('"headline":"Existing article schema"'));
   assert.strictEqual(
     (articleFamTripsShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
+  const filmTourismPath = "/blogs/film-induced-tourism";
+  const filmTourismTitle =
+    "Film-Induced Tourism: How Screens Drive Travel | Melange";
+  const filmTourismDescription =
+    "Film-induced tourism turns viewers into travellers. See how OTT, set-jetting and reels shape bookings in India, the GCC and beyond. Read the full guide.";
+  const filmTourismMeta = resolveMeta(filmTourismPath, {
+    routes: new Set([filmTourismPath]),
+    byPath: {
+      [filmTourismPath]: {
+        seoTitle: `${filmTourismTitle} `,
+        metaDescription: filmTourismDescription,
+        title: filmTourismTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(filmTourismMeta.title, filmTourismTitle);
+  assert.strictEqual(filmTourismMeta.description, filmTourismDescription);
+  assert.strictEqual(
+    filmTourismMeta.canonical,
+    `${ORIGIN}${filmTourismPath}`,
+  );
+  assert.strictEqual(
+    filmTourismMeta.image,
+    `${ORIGIN}/film-induced-tourism-og.jpg`,
+  );
+  assert.strictEqual(filmTourismMeta.imageWidth, 1200);
+  assert.strictEqual(filmTourismMeta.imageHeight, 630);
+  assert.strictEqual(filmTourismMeta.imageType, "image/jpeg");
+  assert.strictEqual(filmTourismMeta.ogType, "article");
+  assert.strictEqual(filmTourismMeta.twitterTitle, filmTourismTitle);
+  assert.strictEqual(
+    filmTourismMeta.twitterDescription,
+    filmTourismDescription,
+  );
+  const filmTourismShell = applyHead(shell, filmTourismMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${filmTourismPath}`],
+    ['property="og:title"', filmTourismTitle],
+    ['property="og:description"', filmTourismDescription],
+    ['property="og:image"', `${ORIGIN}/film-induced-tourism-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', filmTourismTitle],
+    ['name="twitter:description"', filmTourismDescription],
+    ['name="twitter:image"', `${ORIGIN}/film-induced-tourism-og.jpg`],
+  ]) {
+    assert(filmTourismShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (filmTourismShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(filmTourismShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (filmTourismShell.match(/"@type":"BlogPosting"/g) || []).length,
     1,
   );
 
