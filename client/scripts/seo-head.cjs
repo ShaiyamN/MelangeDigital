@@ -151,6 +151,21 @@ const PAGE_META = {
     twitterDescription:
       "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
   },
+  "/blogs/what-are-fam-trip": {
+    title: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
+    ogTitle: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
+    description:
+      "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings.",
+    image: `${ORIGIN}/what-are-fam-trips-og.jpg`,
+    imageAlt: "What Are Fam Trips? | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
+    twitterDescription:
+      "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings.",
+  },
   "/blogs/cruise-branding": {
     title: "Cruise Branding for New Cruise Lines | Melange Digital",
     ogTitle: "Cruise Branding for New Cruise Lines | Melange Digital",
@@ -992,6 +1007,71 @@ if (require.main === module) {
   assert(cruiseShell.includes('"headline":"Existing article schema"'));
   assert.strictEqual(
     (cruiseShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
+  const articleFamTripsPath = "/blogs/what-are-fam-trip";
+  const articleFamTripsTitle =
+    "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital";
+  const articleFamTripsDescription =
+    "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings.";
+  const articleFamTripsMeta = resolveMeta(articleFamTripsPath, {
+    routes: new Set([articleFamTripsPath]),
+    byPath: {
+      [articleFamTripsPath]: {
+        seoTitle: `${articleFamTripsTitle} `,
+        metaDescription: articleFamTripsDescription,
+        title: articleFamTripsTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(articleFamTripsMeta.title, articleFamTripsTitle);
+  assert.strictEqual(articleFamTripsMeta.description, articleFamTripsDescription);
+  assert.strictEqual(
+    articleFamTripsMeta.canonical,
+    `${ORIGIN}${articleFamTripsPath}`,
+  );
+  assert.strictEqual(
+    articleFamTripsMeta.image,
+    `${ORIGIN}/what-are-fam-trips-og.jpg`,
+  );
+  assert.strictEqual(articleFamTripsMeta.imageWidth, 1200);
+  assert.strictEqual(articleFamTripsMeta.imageHeight, 630);
+  assert.strictEqual(articleFamTripsMeta.imageType, "image/jpeg");
+  assert.strictEqual(articleFamTripsMeta.ogType, "article");
+  assert.strictEqual(articleFamTripsMeta.twitterTitle, articleFamTripsTitle);
+  assert.strictEqual(
+    articleFamTripsMeta.twitterDescription,
+    articleFamTripsDescription,
+  );
+  const articleFamTripsShell = applyHead(shell, articleFamTripsMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${articleFamTripsPath}`],
+    ['property="og:title"', articleFamTripsTitle],
+    ['property="og:description"', articleFamTripsDescription],
+    ['property="og:image"', `${ORIGIN}/what-are-fam-trips-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', articleFamTripsTitle],
+    ['name="twitter:description"', articleFamTripsDescription],
+    ['name="twitter:image"', `${ORIGIN}/what-are-fam-trips-og.jpg`],
+  ]) {
+    assert(articleFamTripsShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (articleFamTripsShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(articleFamTripsShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (articleFamTripsShell.match(/"@type":"BlogPosting"/g) || []).length,
     1,
   );
 
