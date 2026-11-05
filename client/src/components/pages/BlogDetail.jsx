@@ -115,28 +115,40 @@ const BlogDetail = () => {
 
   const isDestinationMarketingStrategies = slug === "destination-marketing-strategies";
   const isTravelMarketingTrends2027 = slug === "7-travel-marketing-trends";
-  const seoTitle = isTravelMarketingTrends2027
-    ? "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital"
-    : isDestinationMarketingStrategies
-      ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
-      : blog.seoTitle || blog.title;
-  const seoDescription = isTravelMarketingTrends2027
-    ? "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for."
-    : isDestinationMarketingStrategies
-      ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
-      : blog.metaDescription || blog.description || "";
-  const seoImage = isTravelMarketingTrends2027
-    ? "https://melangedigital.co/travel-marketing-trends-og.jpg"
-    : isDestinationMarketingStrategies
-      ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
-      : blog.image || "";
-  const seoImageAlt = isTravelMarketingTrends2027
-    ? "Travel Marketing Trends 2027 – Mélange Digital"
-    : isDestinationMarketingStrategies
-      ? "Destination Marketing Strategies – Mélange Digital"
-      : blog.altText;
+  const isChoosingDestinationMarketingAgencyIndia =
+    slug === "how-to-choose-a-destination-marketing-agency-in-india";
+  const seoTitle = isChoosingDestinationMarketingAgencyIndia
+    ? "Choosing a Destination Marketing Agency in India | Blog by Melange"
+    : isTravelMarketingTrends2027
+      ? "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital"
+      : isDestinationMarketingStrategies
+        ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
+        : blog.seoTitle || blog.title;
+  const seoDescription = isChoosingDestinationMarketingAgencyIndia
+    ? "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide"
+    : isTravelMarketingTrends2027
+      ? "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for."
+      : isDestinationMarketingStrategies
+        ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
+        : blog.metaDescription || blog.description || "";
+  const seoImage = isChoosingDestinationMarketingAgencyIndia
+    ? "https://melangedigital.co/choosing-destination-marketing-agency-india-og.jpg"
+    : isTravelMarketingTrends2027
+      ? "https://melangedigital.co/travel-marketing-trends-og.jpg"
+      : isDestinationMarketingStrategies
+        ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
+        : blog.image || "";
+  const seoImageAlt = isChoosingDestinationMarketingAgencyIndia
+    ? "Choosing a Destination Marketing Agency in India | Mélange Digital"
+    : isTravelMarketingTrends2027
+      ? "Travel Marketing Trends 2027 – Mélange Digital"
+      : isDestinationMarketingStrategies
+        ? "Destination Marketing Strategies – Mélange Digital"
+        : blog.altText;
   const hasPageSpecificSocialPreview =
-    isDestinationMarketingStrategies || isTravelMarketingTrends2027;
+    isDestinationMarketingStrategies ||
+    isTravelMarketingTrends2027 ||
+    isChoosingDestinationMarketingAgencyIndia;
   const canonicalUrl = `https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`;
 
   const breadcrumbs = [
@@ -244,6 +256,9 @@ const BlogDetail = () => {
             <meta property="og:url" content={canonicalUrl} data-rh="true" />
             <meta property="og:image:width" content="1200" data-rh="true" />
             <meta property="og:image:height" content="630" data-rh="true" />
+            {isChoosingDestinationMarketingAgencyIndia && (
+              <meta property="og:image:type" content="image/jpeg" data-rh="true" />
+            )}
             <meta name="twitter:card" content="summary_large_image" data-rh="true" />
             <meta name="twitter:title" content={seoTitle} data-rh="true" />
             <meta name="twitter:description" content={seoDescription} data-rh="true" />

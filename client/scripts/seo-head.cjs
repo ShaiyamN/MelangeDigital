@@ -165,6 +165,21 @@ const PAGE_META = {
     twitterDescription:
       "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
   },
+  "/blogs/how-to-choose-a-destination-marketing-agency-in-india": {
+    title: "Choosing a Destination Marketing Agency in India | Blog by Melange",
+    ogTitle: "Choosing a Destination Marketing Agency in India | Blog by Melange",
+    description:
+      "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide",
+    image: `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+    imageAlt: "Choosing a Destination Marketing Agency in India | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Choosing a Destination Marketing Agency in India | Blog by Melange",
+    twitterDescription:
+      "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide",
+  },
   "/careers": {
     title: "Careers: Join Our Global Team | Mélange Digital",
     description:
@@ -317,6 +332,7 @@ function resolveMeta(reqPath, index = {}) {
   const imageAlt = preset.imageAlt || undefined;
   const imageWidth = preset.imageWidth || undefined;
   const imageHeight = preset.imageHeight || undefined;
+  const imageType = preset.imageType || undefined;
   const ogTitle = preset.ogTitle || undefined;
   const ogType = preset.ogType || undefined;
   const twitterTitle = preset.twitterTitle || undefined;
@@ -331,6 +347,7 @@ function resolveMeta(reqPath, index = {}) {
     imageAlt,
     imageWidth,
     imageHeight,
+    imageType,
     ogTitle,
     ogType,
     twitterTitle,
@@ -509,6 +526,9 @@ function applyHead(html, meta) {
       `<meta data-rh="true" property="og:image" content="${esc(meta.image)}">`,
       `<meta data-rh="true" property="og:image:width" content="${meta.imageWidth || 1200}">`,
       `<meta data-rh="true" property="og:image:height" content="${meta.imageHeight || 632}">`,
+      meta.imageType
+        ? `<meta data-rh="true" property="og:image:type" content="${esc(meta.imageType)}">`
+        : "",
       meta.imageAlt
         ? `<meta data-rh="true" property="og:image:alt" content="${esc(meta.imageAlt)}">`
         : "",
@@ -836,6 +856,74 @@ if (require.main === module) {
   ].filter(([, json]) => json.includes('"@type":"BlogPosting"'));
   assert.strictEqual(articleSchemaScripts.length, 1);
   assert(articleSchemaScripts[0][1].includes('"headline":"Existing article schema"'));
+
+  const agencyPath =
+    "/blogs/how-to-choose-a-destination-marketing-agency-in-india";
+  const agencyTitle =
+    "Choosing a Destination Marketing Agency in India | Blog by Melange";
+  const agencyDescription =
+    "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide";
+  const agencyMeta = resolveMeta(agencyPath, {
+    routes: new Set([agencyPath]),
+    byPath: {
+      [agencyPath]: {
+        seoTitle: agencyTitle,
+        metaDescription: agencyDescription,
+        title: agencyTitle,
+        author: "Mélange Digital",
+        date: "2026-11-05",
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(agencyMeta.title, agencyTitle);
+  assert.strictEqual(agencyMeta.description, agencyDescription);
+  assert.strictEqual(agencyMeta.canonical, `${ORIGIN}${agencyPath}`);
+  assert.strictEqual(
+    agencyMeta.image,
+    `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+  );
+  assert.strictEqual(agencyMeta.imageWidth, 1200);
+  assert.strictEqual(agencyMeta.imageHeight, 630);
+  assert.strictEqual(agencyMeta.imageType, "image/jpeg");
+  assert.strictEqual(agencyMeta.ogType, "article");
+  assert.strictEqual(agencyMeta.twitterTitle, agencyTitle);
+  assert.strictEqual(agencyMeta.twitterDescription, agencyDescription);
+  const agencyShell = applyHead(shell, agencyMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${agencyPath}`],
+    ['property="og:title"', agencyTitle],
+    ['property="og:description"', agencyDescription],
+    [
+      'property="og:image"',
+      `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+    ],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', agencyTitle],
+    ['name="twitter:description"', agencyDescription],
+    [
+      'name="twitter:image"',
+      `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+    ],
+  ]) {
+    assert(agencyShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (agencyShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(agencyShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (agencyShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
 
   const blogsIndex = applyHead(
     shell,
