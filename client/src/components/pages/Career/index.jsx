@@ -51,14 +51,31 @@ const Career = () => {
         <title>Careers: Join Our Global Team | Mélange Digital</title>
         <meta
           name="title"
-          content="Careers: Join a Culture of Creativity and Collaboration!"
+          content="Careers: Join Our Global Team | Mélange Digital"
           data-react-helmet="true"
         />
         <meta
           name="description"
           content="Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team."
         />
-        <meta property="og:image" content="https://melangedigital.co/logo.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://melangedigital.co/careers" />
+        <meta property="og:title" content="Careers: Join Our Global Team | Mélange Digital" />
+        <meta
+          property="og:description"
+          content="Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team."
+        />
+        <meta property="og:image" content="https://melangedigital.co/careers-og.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Tourism Marketing Careers – Mélange Digital" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Careers: Join Our Global Team | Mélange Digital" />
+        <meta
+          name="twitter:description"
+          content="Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team."
+        />
+        <meta name="twitter:image" content="https://melangedigital.co/careers-og.jpg" />
         <link rel="canonical" href="https://melangedigital.co/careers" data-rh="true" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

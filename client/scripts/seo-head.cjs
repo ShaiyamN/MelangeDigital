@@ -1,5 +1,9 @@
 const assert = require("assert");
-const { schemasForPath } = require("./page-schemas.cjs");
+const {
+  schemasForPath,
+  websiteSchema,
+  organizationSchema,
+} = require("./page-schemas.cjs");
 const CASE_STUDY_SEO = require("../src/constants/caseStudySeo.json");
 
 const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
@@ -11,6 +15,8 @@ const PAGE_META = {
       "Global Travel & Tourism Marketing Agency | Mélange Digital",
     description:
       "Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call.",
+    image: `${ORIGIN}/og-home.png`,
+    imageAlt: "Mélange Digital — Travel & Tourism Marketing Agency",
   },
   "/work": {
     title: "Our Work & Case Study Portfolio | Mélange Digital",
@@ -20,26 +26,62 @@ const PAGE_META = {
   "/contact": {
     title: "Contact a Tourism Board Marketing Agency in India | Mélange Digital",
     description:
-      "Contact our tourism board marketing agency. We assist DMOs, NTOs, and tourism brands in increasing their organic visibility worldwide. Schedule a call.",
+      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
+    image: `${ORIGIN}/contact-og.jpg`,
+    imageAlt: "Tourism Board Marketing Agency – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Contact a Tourism Board Marketing Agency in India | Mélange Digital",
+    twitterDescription:
+      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
   },
   "/about": {
     title: "Best Destination Marketing Agency | Mélange Digital",
     description:
+      "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
+    image: `${ORIGIN}/about-og.png`,
+    imageAlt: "Destination Marketing Agency | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Best Destination Marketing Agency | Mélange Digital",
+    twitterDescription:
       "We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy.",
   },
   "/services": {
     title: "Digital Marketing for Travel and Tourism | Mélange Digital",
     description:
       "Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs.",
+    image: `${ORIGIN}/services-og.png`,
+    imageAlt: "Digital Marketing for Travel and Tourism | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Digital Marketing for Travel and Tourism | Mélange Digital",
+    twitterDescription:
+      "Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs.",
   },
   "/services/influencer-marketing": {
-    title: "Influencer Marketing Services | Mélange Digital",
+    title: "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
+    ogTitle: "Travel Influencer Marketing Agency for tourism boards | Mélange Digital",
     description:
-      "Amplify your brand with Mélange Digital's influencer marketing services. Connect with right influencers to drive authentic engagement & real results",
+      "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
+    image: `${ORIGIN}/influencer-marketing-og.png`,
+    imageAlt: "Travel Influencer Marketing | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Travel Influencer Marketing Agency for tourism boards | Mélange Digital",
+    twitterDescription:
+      "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
   },
   "/services/branded-content-ips": {
     title: "Film Tourism Marketing & Branded Content | Mélange Digital",
     description:
+      "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.",
+    image: `${ORIGIN}/film-tourism-og.jpg`,
+    imageAlt: "Film Tourism Marketing & Branded Content | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Film Tourism Marketing & Branded Content | Mélange Digital",
+    twitterDescription:
       "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.",
   },
   "/services/branded-content-ip": {
@@ -51,10 +93,24 @@ const PAGE_META = {
     title: "Tourism Experiential Marketing Agency | Mélange Digital",
     description:
       "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.",
+    image: `${ORIGIN}/experiential-marketing-og.jpg`,
+    imageAlt: "Tourism Experiential Marketing Agency | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Tourism Experiential Marketing Agency | Mélange Digital",
+    twitterDescription:
+      "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.",
   },
   "/services/fam-trips-pr": {
     title: "Travel PR Agency & FAM Trip Management | Mélange Digital",
     description:
+      "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.",
+    image: `${ORIGIN}/fam-trips-pr-og.jpg`,
+    imageAlt: "Travel PR Agency & FAM Trip – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Travel PR Agency & FAM Trip Management | Mélange Digital",
+    twitterDescription:
       "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.",
   },
   "/terms-of-service": {
@@ -81,10 +137,90 @@ const PAGE_META = {
     title: "Blog & Insights | Mélange Digital",
     description: "Insights, ideas, and stories from the Mélange Digital team.",
   },
+  "/blogs/destination-marketing-strategies": {
+    title: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
+    ogTitle: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
+    description:
+      "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
+    image: `${ORIGIN}/destination-marketing-strategies-og.jpg`,
+    imageAlt: "Destination Marketing Strategies – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    ogType: "article",
+    twitterTitle: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
+    twitterDescription:
+      "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
+  },
+  "/blogs/what-are-fam-trip": {
+    title: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
+    ogTitle: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
+    description:
+      "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings.",
+    image: `${ORIGIN}/what-are-fam-trips-og.jpg`,
+    imageAlt: "What Are Fam Trips? | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital",
+    twitterDescription:
+      "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings.",
+  },
+  "/blogs/cruise-branding": {
+    title: "Cruise Branding for New Cruise Lines | Melange Digital",
+    ogTitle: "Cruise Branding for New Cruise Lines | Melange Digital",
+    description:
+      "Cruise branding for new and emerging cruise lines: Read how to win traveller trust, work with creators, and keep your brand clear as the fleet grows",
+    image: `${ORIGIN}/cruise-branding-og.jpg`,
+    imageAlt: "Cruise Branding for New Cruise Lines | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Cruise Branding for New Cruise Lines | Melange Digital",
+    twitterDescription:
+      "Cruise branding for new and emerging cruise lines: Read how to win traveller trust, work with creators, and keep your brand clear as the fleet grows",
+  },
+  "/blogs/7-travel-marketing-trends": {
+    title: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+    ogTitle: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+    description:
+      "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+    image: `${ORIGIN}/travel-marketing-trends-og.jpg`,
+    imageAlt: "Travel Marketing Trends 2027 – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    ogType: "article",
+    twitterTitle: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+    twitterDescription:
+      "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+  },
+  "/blogs/how-to-choose-a-destination-marketing-agency-in-india": {
+    title: "Choosing a Destination Marketing Agency in India | Blog by Melange",
+    ogTitle: "Choosing a Destination Marketing Agency in India | Blog by Melange",
+    description:
+      "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide",
+    image: `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+    imageAlt: "Choosing a Destination Marketing Agency in India | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Choosing a Destination Marketing Agency in India | Blog by Melange",
+    twitterDescription:
+      "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide",
+  },
   "/careers": {
     title: "Careers: Join Our Global Team | Mélange Digital",
     description:
-      "Join Mélange Digital's global team. Careers in strategy, creative, and growth for travel and tourism brands.",
+      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
+    image: `${ORIGIN}/careers-og.jpg`,
+    imageAlt: "Tourism Marketing Careers – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    twitterTitle: "Careers: Join Our Global Team | Mélange Digital",
+    twitterDescription:
+      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
   },
   "/services/aeo-seo": {
     title: "AEO & SEO Services | Mélange Digital",
@@ -219,12 +355,33 @@ function resolveMeta(reqPath, index = {}) {
     title: pageTitle,
     description: pageDescription,
   });
+  const image =
+    preset.image ||
+    String(cms?.image || "").trim() ||
+    undefined;
+  const imageAlt = preset.imageAlt || undefined;
+  const imageWidth = preset.imageWidth || undefined;
+  const imageHeight = preset.imageHeight || undefined;
+  const imageType = preset.imageType || undefined;
+  const ogTitle = preset.ogTitle || undefined;
+  const ogType = preset.ogType || undefined;
+  const twitterTitle = preset.twitterTitle || undefined;
+  const twitterDescription = preset.twitterDescription || undefined;
 
   return {
     path,
     title: pageTitle,
     description: pageDescription,
     canonical,
+    image,
+    imageAlt,
+    imageWidth,
+    imageHeight,
+    imageType,
+    ogTitle,
+    ogType,
+    twitterTitle,
+    twitterDescription,
     /** Always strip shell JSON-LD; page packs replace it for /, /services, /about. */
     stripShellJsonLd: true,
     noindex: false,
@@ -304,6 +461,26 @@ function collectionPageJsonLd(pageUrl, name, description) {
   };
 }
 
+function containsArticleSchema(html) {
+  const scripts = [
+    ...html.matchAll(
+      /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi,
+    ),
+  ];
+  return scripts.some(([, json]) =>
+    /"@type"\s*:\s*(?:"(?:BlogPosting|Article)"|\[[^\]]*"(?:BlogPosting|Article)")/.test(
+      json,
+    ),
+  );
+}
+
+function isArticleSchema(schema) {
+  const types = Array.isArray(schema?.["@type"])
+    ? schema["@type"]
+    : [schema?.["@type"]];
+  return types.some((type) => type === "BlogPosting" || type === "Article");
+}
+
 function applyHead(html, meta) {
   let out = html;
   if (meta.title) {
@@ -349,24 +526,97 @@ function applyHead(html, meta) {
       `<link data-rh="true" rel="canonical" href="${esc(meta.canonical)}">`,
     );
   }
-  if (meta.stripShellJsonLd || meta.stripFaq) {
+  // Drop shell OG/Twitter tags so a homepage asset never leaks onto other routes.
+  out = out.replace(
+    /<meta\b[^>]*\bproperty=["']og:(?:image(?::[a-z]+)?|type|url|title|description)["'][^>]*>\s*/gi,
+    "",
+  );
+  out = out.replace(
+    /<meta\b[^>]*\bname=["']twitter:(?:card|image)["'][^>]*>\s*/gi,
+    "",
+  );
+  if (meta.twitterTitle || meta.twitterDescription) {
+    out = out.replace(
+      /<meta\b[^>]*\bname=["']twitter:(?:title|description)["'][^>]*>\s*/gi,
+      "",
+    );
+  }
+  if (meta.image) {
+    const ogTags = [
+      `<meta data-rh="true" property="og:type" content="${esc(meta.ogType || "website")}">`,
+      meta.canonical
+        ? `<meta data-rh="true" property="og:url" content="${esc(meta.canonical)}">`
+        : "",
+      meta.ogTitle || meta.title
+        ? `<meta data-rh="true" property="og:title" content="${esc(meta.ogTitle || meta.title)}">`
+        : "",
+      meta.description
+        ? `<meta data-rh="true" property="og:description" content="${esc(meta.description)}">`
+        : "",
+      `<meta data-rh="true" property="og:image" content="${esc(meta.image)}">`,
+      `<meta data-rh="true" property="og:image:width" content="${meta.imageWidth || 1200}">`,
+      `<meta data-rh="true" property="og:image:height" content="${meta.imageHeight || 632}">`,
+      meta.imageType
+        ? `<meta data-rh="true" property="og:image:type" content="${esc(meta.imageType)}">`
+        : "",
+      meta.imageAlt
+        ? `<meta data-rh="true" property="og:image:alt" content="${esc(meta.imageAlt)}">`
+        : "",
+      `<meta data-rh="true" name="twitter:card" content="summary_large_image">`,
+      meta.twitterTitle
+        ? `<meta data-rh="true" name="twitter:title" content="${esc(meta.twitterTitle)}">`
+        : "",
+      meta.twitterDescription
+        ? `<meta data-rh="true" name="twitter:description" content="${esc(meta.twitterDescription)}">`
+        : "",
+      `<meta data-rh="true" name="twitter:image" content="${esc(meta.image)}">`,
+    ]
+      .filter(Boolean)
+      .map((t) => `  ${t}`)
+      .join("\n");
+    const metaSectionPattern =
+      /(<!--\s*Meta Tags\s*-->)([\s\S]*?)(<!--\s*End of Meta Tags\s*-->)/i;
+    if (metaSectionPattern.test(out)) {
+      out = out.replace(metaSectionPattern, (_match, start, contents, end) => {
+        return `${start}${contents}\n${ogTags}\n  ${end}`;
+      });
+    } else if (/<\/head>/i.test(out)) {
+      out = out.replace(/<\/head>/i, `${ogTags}\n</head>`);
+    }
+  }
+  if (meta.stripFaq) {
     out = out.replace(
       /<script type="application\/ld\+json">[\s\S]*?<\/script>\s*/gi,
       "",
     );
+  } else if (meta.stripShellJsonLd) {
+    out = out.replace(
+      /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>\s*/gi,
+      (script) => (/\bdata-rh=["']true["']/i.test(script) ? script : ""),
+    );
   }
   const blocks = [];
+  let hasArticleSchema = containsArticleSchema(out);
   if (Array.isArray(meta.jsonLdBlocks)) {
     for (const obj of meta.jsonLdBlocks) {
-      if (obj) blocks.push(obj);
+      if (!obj) continue;
+      if (isArticleSchema(obj)) {
+        if (hasArticleSchema) continue;
+        hasArticleSchema = true;
+      }
+      blocks.push(obj);
     }
   }
-  if (meta.jsonLd) blocks.push(meta.jsonLd);
+  if (meta.jsonLd) {
+    if (!isArticleSchema(meta.jsonLd) || !hasArticleSchema) {
+      blocks.push(meta.jsonLd);
+    }
+  }
   if (blocks.length) {
     const scripts = blocks
       .map(
         (obj) =>
-          `  <script type="application/ld+json">${JSON.stringify(obj)}</script>`,
+          `  <script type="application/ld+json" data-rh="true" data-seo-route="${esc(meta.path)}">${JSON.stringify(obj)}</script>`,
       )
       .join("\n");
     const section = `  <!-- Schema Markup -->\n${scripts}\n  <!-- End of Schema Markup -->`;
@@ -395,6 +645,24 @@ if (require.main === module) {
   <script type="application/ld+json">{"@type": "FAQPage"}</script>
   <script type="application/ld+json">{"@type": "Organization"}</script>
 </head></html>`;
+
+  const expectedAlternates = ["Melange Digital", "Mélange", "Melange"];
+  assert.deepStrictEqual(websiteSchema().alternateName, expectedAlternates);
+  assert.deepStrictEqual(organizationSchema().alternateName, expectedAlternates);
+  assert.strictEqual(organizationSchema().foundingDate, "2021");
+  assert.deepStrictEqual(
+    schemasForPath("/about").find((schema) => schema["@type"] === "AboutPage").hasPart,
+    { "@id": `${ORIGIN}/about#faq` },
+  );
+  const contactShell = shell.replace(
+    '<script type="application/ld+json">{"@type": "FAQPage"}</script>',
+    '<script type="application/ld+json" data-rh="true">{"@type": "Organization","alternateName":["Melange Digital","Mélange","Melange"]}</script>',
+  );
+  const contactHtml = applyHead(
+    contactShell,
+    resolveMeta("/contact", { routes: new Set(["/contact"]), byPath: {} }),
+  );
+  assert(contactHtml.includes('"alternateName":["Melange Digital","Mélange","Melange"]'));
 
   const work = applyHead(
     shell,
@@ -467,6 +735,346 @@ if (require.main === module) {
   assert(blogShell.includes('"@type":"BlogPosting"'));
   assert(blogShell.includes("airlines-marketing"));
 
+  const destinationPath = "/blogs/destination-marketing-strategies";
+  const destinationMeta = resolveMeta(destinationPath, {
+    routes: new Set([destinationPath]),
+    byPath: {
+      [destinationPath]: {
+        seoTitle: "Destination Marketing Strategies: How to Choose the Right One for Your Goal",
+        metaDescription:
+          "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery.",
+        author: "Mélange Digital",
+        date: "2026-10-30",
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(destinationMeta.title, "Destination Marketing Strategies by Goal | Blog by Melange Digital");
+  assert.strictEqual(
+    destinationMeta.description,
+    "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
+  );
+  assert.strictEqual(destinationMeta.canonical, `${ORIGIN}${destinationPath}`);
+  assert.strictEqual(destinationMeta.image, `${ORIGIN}/destination-marketing-strategies-og.jpg`);
+  assert.strictEqual(destinationMeta.imageAlt, "Destination Marketing Strategies – Mélange Digital");
+  assert.strictEqual(destinationMeta.imageWidth, 1200);
+  assert.strictEqual(destinationMeta.imageHeight, 630);
+  assert.strictEqual(destinationMeta.ogType, "article");
+  assert.strictEqual(destinationMeta.twitterTitle, destinationMeta.title);
+  assert.strictEqual(destinationMeta.twitterDescription, destinationMeta.description);
+  const destinationShell = applyHead(shell, destinationMeta);
+  assert(
+    destinationShell.includes(
+      `rel="canonical" href="${ORIGIN}${destinationPath}"`,
+    ),
+  );
+  assert.strictEqual((destinationShell.match(/rel="canonical"/g) || []).length, 1);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${destinationPath}`],
+    ['property="og:title"', destinationMeta.title],
+    ['property="og:description"', destinationMeta.description],
+    ['property="og:image"', destinationMeta.image],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', destinationMeta.imageAlt],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', destinationMeta.title],
+    ['name="twitter:description"', destinationMeta.description],
+    ['name="twitter:image"', destinationMeta.image],
+  ]) {
+    assert(destinationShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (destinationShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(destinationShell.includes('"@type":"BlogPosting"'));
+  assert.strictEqual((destinationShell.match(/application\/ld\+json/g) || []).length, 1);
+
+  const travelTrendsPath = "/blogs/7-travel-marketing-trends";
+  const travelTrendsMeta = resolveMeta(travelTrendsPath, {
+    routes: new Set([travelTrendsPath]),
+    byPath: {
+      [travelTrendsPath]: {
+        seoTitle: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+        metaDescription:
+          "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+        author: "Mélange Digital",
+        date: "2026-10-22",
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(
+    travelTrendsMeta.title,
+    "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+  );
+  assert.strictEqual(
+    travelTrendsMeta.description,
+    "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+  );
+  assert.strictEqual(travelTrendsMeta.canonical, `${ORIGIN}${travelTrendsPath}`);
+  assert.strictEqual(
+    travelTrendsMeta.image,
+    `${ORIGIN}/travel-marketing-trends-og.jpg`,
+  );
+  assert.strictEqual(
+    travelTrendsMeta.imageAlt,
+    "Travel Marketing Trends 2027 – Mélange Digital",
+  );
+  assert.strictEqual(travelTrendsMeta.imageWidth, 1200);
+  assert.strictEqual(travelTrendsMeta.imageHeight, 630);
+  assert.strictEqual(travelTrendsMeta.ogType, "article");
+  assert.strictEqual(travelTrendsMeta.twitterTitle, travelTrendsMeta.title);
+  assert.strictEqual(
+    travelTrendsMeta.twitterDescription,
+    travelTrendsMeta.description,
+  );
+  const travelTrendsShell = applyHead(shell, travelTrendsMeta);
+  assert(
+    travelTrendsShell.includes(
+      `rel="canonical" href="${ORIGIN}${travelTrendsPath}"`,
+    ),
+  );
+  assert.strictEqual(
+    (travelTrendsShell.match(/rel="canonical"/g) || []).length,
+    1,
+  );
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${travelTrendsPath}`],
+    ['property="og:title"', travelTrendsMeta.title],
+    ['property="og:description"', travelTrendsMeta.description],
+    ['property="og:image"', travelTrendsMeta.image],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', travelTrendsMeta.imageAlt],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', travelTrendsMeta.title],
+    ['name="twitter:description"', travelTrendsMeta.description],
+    ['name="twitter:image"', travelTrendsMeta.image],
+  ]) {
+    assert(travelTrendsShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (travelTrendsShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(travelTrendsShell.includes('"@type":"BlogPosting"'));
+  assert.strictEqual(
+    (travelTrendsShell.match(/application\/ld\+json/g) || []).length,
+    1,
+  );
+
+  const existingArticleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: "Existing article schema",
+  };
+  const existingArticleShell = shell.replace(
+    "</head>",
+    `  <script type="application/ld+json" data-rh="true">${JSON.stringify(existingArticleSchema)}</script>\n</head>`,
+  );
+  const noDuplicateArticleSchema = applyHead(existingArticleShell, travelTrendsMeta);
+  const articleSchemaScripts = [
+    ...noDuplicateArticleSchema.matchAll(
+      /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+    ),
+  ].filter(([, json]) => json.includes('"@type":"BlogPosting"'));
+  assert.strictEqual(articleSchemaScripts.length, 1);
+  assert(articleSchemaScripts[0][1].includes('"headline":"Existing article schema"'));
+
+  const agencyPath =
+    "/blogs/how-to-choose-a-destination-marketing-agency-in-india";
+  const agencyTitle =
+    "Choosing a Destination Marketing Agency in India | Blog by Melange";
+  const agencyDescription =
+    "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide";
+  const agencyMeta = resolveMeta(agencyPath, {
+    routes: new Set([agencyPath]),
+    byPath: {
+      [agencyPath]: {
+        seoTitle: agencyTitle,
+        metaDescription: agencyDescription,
+        title: agencyTitle,
+        author: "Mélange Digital",
+        date: "2026-11-05",
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(agencyMeta.title, agencyTitle);
+  assert.strictEqual(agencyMeta.description, agencyDescription);
+  assert.strictEqual(agencyMeta.canonical, `${ORIGIN}${agencyPath}`);
+  assert.strictEqual(
+    agencyMeta.image,
+    `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+  );
+  assert.strictEqual(agencyMeta.imageWidth, 1200);
+  assert.strictEqual(agencyMeta.imageHeight, 630);
+  assert.strictEqual(agencyMeta.imageType, "image/jpeg");
+  assert.strictEqual(agencyMeta.ogType, "article");
+  assert.strictEqual(agencyMeta.twitterTitle, agencyTitle);
+  assert.strictEqual(agencyMeta.twitterDescription, agencyDescription);
+  const agencyShell = applyHead(shell, agencyMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${agencyPath}`],
+    ['property="og:title"', agencyTitle],
+    ['property="og:description"', agencyDescription],
+    [
+      'property="og:image"',
+      `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+    ],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', agencyTitle],
+    ['name="twitter:description"', agencyDescription],
+    [
+      'name="twitter:image"',
+      `${ORIGIN}/choosing-destination-marketing-agency-india-og.jpg`,
+    ],
+  ]) {
+    assert(agencyShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (agencyShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(agencyShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (agencyShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
+  const cruisePath = "/blogs/cruise-branding";
+  const cruiseTitle = "Cruise Branding for New Cruise Lines | Melange Digital";
+  const cruiseDescription =
+    "Cruise branding for new and emerging cruise lines: Read how to win traveller trust, work with creators, and keep your brand clear as the fleet grows";
+  const cruiseMeta = resolveMeta(cruisePath, {
+    routes: new Set([cruisePath]),
+    byPath: {
+      [cruisePath]: {
+        seoTitle: `${cruiseTitle} `,
+        metaDescription: cruiseDescription,
+        title: cruiseTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(cruiseMeta.title, cruiseTitle);
+  assert.strictEqual(cruiseMeta.description, cruiseDescription);
+  assert.strictEqual(cruiseMeta.canonical, `${ORIGIN}${cruisePath}`);
+  assert.strictEqual(cruiseMeta.image, `${ORIGIN}/cruise-branding-og.jpg`);
+  assert.strictEqual(cruiseMeta.imageWidth, 1200);
+  assert.strictEqual(cruiseMeta.imageHeight, 630);
+  assert.strictEqual(cruiseMeta.imageType, "image/jpeg");
+  assert.strictEqual(cruiseMeta.ogType, "article");
+  assert.strictEqual(cruiseMeta.twitterTitle, cruiseTitle);
+  assert.strictEqual(cruiseMeta.twitterDescription, cruiseDescription);
+  const cruiseShell = applyHead(shell, cruiseMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${cruisePath}`],
+    ['property="og:title"', cruiseTitle],
+    ['property="og:description"', cruiseDescription],
+    ['property="og:image"', `${ORIGIN}/cruise-branding-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', cruiseTitle],
+    ['name="twitter:description"', cruiseDescription],
+    ['name="twitter:image"', `${ORIGIN}/cruise-branding-og.jpg`],
+  ]) {
+    assert(cruiseShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (cruiseShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(cruiseShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (cruiseShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
+  const articleFamTripsPath = "/blogs/what-are-fam-trip";
+  const articleFamTripsTitle =
+    "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital";
+  const articleFamTripsDescription =
+    "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings.";
+  const articleFamTripsMeta = resolveMeta(articleFamTripsPath, {
+    routes: new Set([articleFamTripsPath]),
+    byPath: {
+      [articleFamTripsPath]: {
+        seoTitle: `${articleFamTripsTitle} `,
+        metaDescription: articleFamTripsDescription,
+        title: articleFamTripsTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(articleFamTripsMeta.title, articleFamTripsTitle);
+  assert.strictEqual(articleFamTripsMeta.description, articleFamTripsDescription);
+  assert.strictEqual(
+    articleFamTripsMeta.canonical,
+    `${ORIGIN}${articleFamTripsPath}`,
+  );
+  assert.strictEqual(
+    articleFamTripsMeta.image,
+    `${ORIGIN}/what-are-fam-trips-og.jpg`,
+  );
+  assert.strictEqual(articleFamTripsMeta.imageWidth, 1200);
+  assert.strictEqual(articleFamTripsMeta.imageHeight, 630);
+  assert.strictEqual(articleFamTripsMeta.imageType, "image/jpeg");
+  assert.strictEqual(articleFamTripsMeta.ogType, "article");
+  assert.strictEqual(articleFamTripsMeta.twitterTitle, articleFamTripsTitle);
+  assert.strictEqual(
+    articleFamTripsMeta.twitterDescription,
+    articleFamTripsDescription,
+  );
+  const articleFamTripsShell = applyHead(shell, articleFamTripsMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${articleFamTripsPath}`],
+    ['property="og:title"', articleFamTripsTitle],
+    ['property="og:description"', articleFamTripsDescription],
+    ['property="og:image"', `${ORIGIN}/what-are-fam-trips-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', articleFamTripsTitle],
+    ['name="twitter:description"', articleFamTripsDescription],
+    ['name="twitter:image"', `${ORIGIN}/what-are-fam-trips-og.jpg`],
+  ]) {
+    assert(articleFamTripsShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (articleFamTripsShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(articleFamTripsShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (articleFamTripsShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
   const blogsIndex = applyHead(
     shell,
     resolveMeta("/blogs", { routes: new Set(["/blogs"]), byPath: {}, origin: ORIGIN }),
@@ -492,6 +1100,12 @@ if (require.main === module) {
     "Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs."
   );
   assert.strictEqual(svcMeta.canonical, "https://melangedigital.co/services");
+  assert.strictEqual(svcMeta.image, `${ORIGIN}/services-og.png`);
+  assert.strictEqual(svcMeta.imageWidth, 1200);
+  assert.strictEqual(svcMeta.imageHeight, 630);
+  assert.strictEqual(svcMeta.imageAlt, "Digital Marketing for Travel and Tourism | Mélange Digital");
+  assert.strictEqual(svcMeta.twitterTitle, svcMeta.title);
+  assert.strictEqual(svcMeta.twitterDescription, svcMeta.description);
   assert.strictEqual(svcMeta.jsonLdBlocks?.length, 6);
   assert(svcMeta.jsonLdBlocks.some((b) => b["@type"] === "CollectionPage"));
   assert(
@@ -502,6 +1116,8 @@ if (require.main === module) {
 
   const homeMeta = resolveMeta("/", { routes: new Set(["/"]), byPath: {} });
   assert.strictEqual(homeMeta.jsonLdBlocks?.length, 6);
+  assert.strictEqual(homeMeta.image, `${ORIGIN}/og-home.png`);
+  assert.strictEqual(homeMeta.imageHeight, undefined);
   const homeShell = `<!DOCTYPE html><html><head>
   <meta name="viewport" content="width=device-width">
   <link data-rh="true" rel="canonical" href="https://melangedigital.co/">
@@ -512,6 +1128,10 @@ if (require.main === module) {
   <!-- End of Schema Markup -->
 </head></html>`;
   const homeHtml = applyHead(homeShell, homeMeta);
+  assert(homeHtml.includes('data-rh="true" data-seo-route="/"'));
+  assert(
+    homeHtml.includes('"alternateName":["Melange Digital","Mélange","Melange"]'),
+  );
   assert.strictEqual(
     (homeHtml.match(/application\/ld\+json/g) || []).length,
     6,
@@ -527,6 +1147,157 @@ if (require.main === module) {
   assert(!homeHtml.slice(homeHtml.indexOf("</head>")).includes("ld+json"));
   assert(homeHtml.includes("Social media marketing for tourism"));
   assert(!homeHtml.includes("Social Media Marketing for Hotels and Resorts"));
+  assert(
+    homeHtml.includes(`property="og:image" content="${ORIGIN}/og-home.png"`),
+  );
+  assert(homeHtml.includes('property="og:image:height" content="632"'));
+  assert(!homeHtml.includes(`${ORIGIN}/about-og.png`));
+  assert(homeHtml.includes('name="twitter:card" content="summary_large_image"'));
+
+  const influencerPath = "/services/influencer-marketing";
+  const influencerMeta = resolveMeta(influencerPath, {
+    routes: new Set([influencerPath]),
+    byPath: {},
+  });
+  assert.strictEqual(influencerMeta.ogTitle, "Travel Influencer Marketing Agency for tourism boards | Mélange Digital");
+  assert.strictEqual(influencerMeta.image, `${ORIGIN}/influencer-marketing-og.png`);
+  assert.strictEqual(influencerMeta.imageWidth, 1200);
+  assert.strictEqual(influencerMeta.imageHeight, 630);
+  assert.strictEqual(influencerMeta.imageAlt, "Travel Influencer Marketing | Mélange Digital");
+  assert.strictEqual(influencerMeta.twitterTitle, influencerMeta.ogTitle);
+  assert.strictEqual(influencerMeta.twitterDescription, influencerMeta.description);
+  const influencerHtml = applyHead(homeShell, influencerMeta);
+  assert(influencerHtml.includes(`property="og:title" content="${esc(influencerMeta.ogTitle)}"`));
+  assert(influencerHtml.includes(`property="og:url" content="${ORIGIN}${influencerPath}"`));
+  assert(influencerHtml.includes(`property="og:image" content="${ORIGIN}/influencer-marketing-og.png"`));
+  assert(influencerHtml.includes('property="og:image:width" content="1200"'));
+  assert(influencerHtml.includes('property="og:image:height" content="630"'));
+  assert(influencerHtml.includes('property="og:image:alt" content="Travel Influencer Marketing | Mélange Digital"'));
+  assert(influencerHtml.includes(`name="twitter:title" content="${esc(influencerMeta.twitterTitle)}"`));
+  assert(influencerHtml.includes(`name="twitter:description" content="${esc(influencerMeta.twitterDescription)}"`));
+  assert(influencerHtml.includes(`name="twitter:image" content="${ORIGIN}/influencer-marketing-og.png"`));
+  for (const tag of [
+    'property="og:title"',
+    'property="og:description"',
+    'property="og:image"',
+    'property="og:image:width"',
+    'property="og:image:height"',
+    'property="og:image:alt"',
+    'property="og:url"',
+    'name="twitter:card"',
+    'name="twitter:title"',
+    'name="twitter:description"',
+    'name="twitter:image"',
+  ]) {
+    assert.strictEqual((influencerHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  assert(!influencerHtml.includes("about-og.png"));
+  assert(!influencerHtml.includes("services-og.png"));
+  assert(!influencerHtml.includes("og-home.png"));
+
+  const brandedContentPath = "/services/branded-content-ips";
+  const brandedContentMeta = resolveMeta(brandedContentPath, {
+    routes: new Set([brandedContentPath]),
+    byPath: {},
+  });
+  assert.strictEqual(brandedContentMeta.title, "Film Tourism Marketing & Branded Content | Mélange Digital");
+  assert.strictEqual(brandedContentMeta.description, "Mélange secures film, music and editorial IP, the core of film tourism marketing, so destinations live inside stories audiences choose to watch.");
+  assert.strictEqual(brandedContentMeta.image, `${ORIGIN}/film-tourism-og.jpg`);
+  assert.strictEqual(brandedContentMeta.imageWidth, 1200);
+  assert.strictEqual(brandedContentMeta.imageHeight, 630);
+  assert.strictEqual(brandedContentMeta.imageAlt, brandedContentMeta.title);
+  assert.strictEqual(brandedContentMeta.twitterTitle, brandedContentMeta.title);
+  assert.strictEqual(brandedContentMeta.twitterDescription, brandedContentMeta.description);
+  const brandedContentHtml = applyHead(homeShell, brandedContentMeta);
+  for (const [tag, value] of [
+    ['property="og:title"', brandedContentMeta.title],
+    ['property="og:description"', brandedContentMeta.description],
+    ['property="og:url"', `${ORIGIN}${brandedContentPath}`],
+    ['property="og:image"', `${ORIGIN}/film-tourism-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', brandedContentMeta.title],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', brandedContentMeta.title],
+    ['name="twitter:description"', brandedContentMeta.description],
+    ['name="twitter:image"', `${ORIGIN}/film-tourism-og.jpg`],
+  ]) {
+    assert(brandedContentHtml.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual((brandedContentHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png"]) {
+    assert(!brandedContentHtml.includes(otherImage));
+  }
+
+  const experientialPath = "/services/experiential-marketing";
+  const experientialMeta = resolveMeta(experientialPath, {
+    routes: new Set([experientialPath]),
+    byPath: {},
+  });
+  assert.strictEqual(experientialMeta.title, "Tourism Experiential Marketing Agency | Mélange Digital");
+  assert.strictEqual(experientialMeta.description, "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.");
+  assert.strictEqual(experientialMeta.image, `${ORIGIN}/experiential-marketing-og.jpg`);
+  assert.strictEqual(experientialMeta.imageWidth, 1200);
+  assert.strictEqual(experientialMeta.imageHeight, 630);
+  assert.strictEqual(experientialMeta.imageAlt, experientialMeta.title);
+  assert.strictEqual(experientialMeta.twitterTitle, experientialMeta.title);
+  assert.strictEqual(experientialMeta.twitterDescription, experientialMeta.description);
+  const experientialHtml = applyHead(homeShell, experientialMeta);
+  for (const [tag, value] of [
+    ['property="og:title"', experientialMeta.title],
+    ['property="og:description"', experientialMeta.description],
+    ['property="og:url"', `${ORIGIN}${experientialPath}`],
+    ['property="og:image"', `${ORIGIN}/experiential-marketing-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', experientialMeta.title],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', experientialMeta.title],
+    ['name="twitter:description"', experientialMeta.description],
+    ['name="twitter:image"', `${ORIGIN}/experiential-marketing-og.jpg`],
+  ]) {
+    assert(experientialHtml.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual((experientialHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png", "film-tourism-og.jpg"]) {
+    assert(!experientialHtml.includes(otherImage));
+  }
+
+  const famTripsPath = "/services/fam-trips-pr";
+  const famTripsMeta = resolveMeta(famTripsPath, {
+    routes: new Set([famTripsPath]),
+    byPath: {},
+  });
+  assert.strictEqual(famTripsMeta.title, "Travel PR Agency & FAM Trip Management | Mélange Digital");
+  assert.strictEqual(famTripsMeta.description, "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.");
+  assert.strictEqual(famTripsMeta.canonical, `${ORIGIN}${famTripsPath}`);
+  assert.strictEqual(famTripsMeta.image, `${ORIGIN}/fam-trips-pr-og.jpg`);
+  assert.strictEqual(famTripsMeta.imageWidth, 1200);
+  assert.strictEqual(famTripsMeta.imageHeight, 630);
+  assert.strictEqual(famTripsMeta.imageAlt, "Travel PR Agency & FAM Trip – Mélange Digital");
+  assert.strictEqual(famTripsMeta.twitterTitle, famTripsMeta.title);
+  assert.strictEqual(famTripsMeta.twitterDescription, famTripsMeta.description);
+  const famTripsHtml = applyHead(homeShell, famTripsMeta);
+  for (const [tag, value] of [
+    ['property="og:title"', famTripsMeta.title],
+    ['property="og:description"', famTripsMeta.description],
+    ['property="og:type"', "website"],
+    ['property="og:url"', famTripsMeta.canonical],
+    ['property="og:image"', famTripsMeta.image],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', famTripsMeta.imageAlt],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', famTripsMeta.title],
+    ['name="twitter:description"', famTripsMeta.description],
+    ['name="twitter:image"', famTripsMeta.image],
+  ]) {
+    assert(famTripsHtml.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual((famTripsHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  for (const otherImage of ["og-home.png", "about-og.png", "services-og.png", "influencer-marketing-og.png", "film-tourism-og.jpg", "experiential-marketing-og.jpg"]) {
+    assert(!famTripsHtml.includes(otherImage));
+  }
 
   const aboutMeta = resolveMeta("/about", {
     routes: new Set(["/about"]),
@@ -534,7 +1305,35 @@ if (require.main === module) {
   });
   assert.strictEqual(aboutMeta.jsonLdBlocks?.length, 8);
   assert(aboutMeta.jsonLdBlocks.some((b) => b["@type"] === "AboutPage"));
+  assert.strictEqual(aboutMeta.image, `${ORIGIN}/about-og.png`);
+  assert.strictEqual(aboutMeta.imageWidth, 1200);
+  assert.strictEqual(aboutMeta.imageHeight, 630);
+  assert.strictEqual(aboutMeta.twitterTitle, aboutMeta.title);
+  assert.strictEqual(aboutMeta.twitterDescription, aboutMeta.description);
   const aboutHtml = applyHead(homeShell, aboutMeta);
+  assert(!aboutHtml.includes("og-home.png"));
+  assert(aboutHtml.includes(`property="og:url" content="${ORIGIN}/about"`));
+  assert(aboutHtml.includes(`property="og:image" content="${ORIGIN}/about-og.png"`));
+  assert(aboutHtml.includes('property="og:image:width" content="1200"'));
+  assert(aboutHtml.includes('property="og:image:height" content="630"'));
+  assert(aboutHtml.includes('property="og:image:alt" content="Destination Marketing Agency | Mélange Digital"'));
+  assert(aboutHtml.includes(`name="twitter:title" content="${esc(aboutMeta.title)}"`));
+  assert(aboutHtml.includes(`name="twitter:description" content="${esc(aboutMeta.description)}"`));
+  assert(aboutHtml.includes(`name="twitter:image" content="${ORIGIN}/about-og.png"`));
+  for (const tag of [
+    'property="og:title"',
+    'property="og:description"',
+    'property="og:image"',
+    'property="og:image:width"',
+    'property="og:image:height"',
+    'property="og:image:alt"',
+    'name="twitter:card"',
+    'name="twitter:title"',
+    'name="twitter:description"',
+    'name="twitter:image"',
+  ]) {
+    assert.strictEqual((aboutHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
   const aboutMarked = aboutHtml.match(
     /<!--\s*Schema Markup\s*-->([\s\S]*?)<!--\s*End of Schema Markup\s*-->/i,
   );
@@ -549,6 +1348,30 @@ if (require.main === module) {
   );
 
   const svcHtml = applyHead(homeShell, svcMeta);
+  assert(svcHtml.includes(`property="og:url" content="${ORIGIN}/services"`));
+  assert(svcHtml.includes(`property="og:image" content="${ORIGIN}/services-og.png"`));
+  assert(svcHtml.includes('property="og:image:width" content="1200"'));
+  assert(svcHtml.includes('property="og:image:height" content="630"'));
+  assert(svcHtml.includes('property="og:image:alt" content="Digital Marketing for Travel and Tourism | Mélange Digital"'));
+  assert(svcHtml.includes(`name="twitter:title" content="${esc(svcMeta.title)}"`));
+  assert(svcHtml.includes(`name="twitter:description" content="${esc(svcMeta.description)}"`));
+  assert(svcHtml.includes(`name="twitter:image" content="${ORIGIN}/services-og.png"`));
+  for (const tag of [
+    'property="og:title"',
+    'property="og:description"',
+    'property="og:image"',
+    'property="og:image:width"',
+    'property="og:image:height"',
+    'property="og:image:alt"',
+    'name="twitter:card"',
+    'name="twitter:title"',
+    'name="twitter:description"',
+    'name="twitter:image"',
+  ]) {
+    assert.strictEqual((svcHtml.match(new RegExp(tag, "g")) || []).length, 1, `${tag} must occur once`);
+  }
+  assert(!svcHtml.includes("about-og.png"));
+  assert(!svcHtml.includes("og-home.png"));
   const svcMarked = svcHtml.match(
     /<!--\s*Schema Markup\s*-->([\s\S]*?)<!--\s*End of Schema Markup\s*-->/i,
   );
@@ -566,11 +1389,11 @@ if (require.main === module) {
   assert.strictEqual(infMeta.jsonLdBlocks?.length, 6);
   assert.strictEqual(
     infMeta.title,
-    "Influencer Marketing Services | Mélange Digital",
+    "Travel Influencer Marketing Agency for tourism boards| Mélange Digital",
   );
   assert.strictEqual(
     infMeta.description,
-    "Amplify your brand with Mélange Digital's influencer marketing services. Connect with right influencers to drive authentic engagement & real results",
+    "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
   );
   assert(
     infMeta.jsonLdBlocks.every(

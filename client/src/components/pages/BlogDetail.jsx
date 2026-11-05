@@ -113,6 +113,64 @@ const BlogDetail = () => {
     );
   }
 
+  const isDestinationMarketingStrategies = slug === "destination-marketing-strategies";
+  const isTravelMarketingTrends2027 = slug === "7-travel-marketing-trends";
+  const isChoosingDestinationMarketingAgencyIndia =
+    slug === "how-to-choose-a-destination-marketing-agency-in-india";
+  const isCruiseBranding = slug === "cruise-branding";
+  const isWhatAreFamTrips = slug === "what-are-fam-trip";
+  const seoTitle = isWhatAreFamTrips
+    ? "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital"
+    : isCruiseBranding
+      ? "Cruise Branding for New Cruise Lines | Melange Digital"
+      : isChoosingDestinationMarketingAgencyIndia
+        ? "Choosing a Destination Marketing Agency in India | Blog by Melange"
+        : isTravelMarketingTrends2027
+          ? "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital"
+          : isDestinationMarketingStrategies
+            ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
+            : blog.seoTitle || blog.title;
+  const seoDescription = isWhatAreFamTrips
+    ? "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings."
+    : isCruiseBranding
+      ? "Cruise branding for new and emerging cruise lines: Read how to win traveller trust, work with creators, and keep your brand clear as the fleet grows"
+      : isChoosingDestinationMarketingAgencyIndia
+        ? "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide"
+        : isTravelMarketingTrends2027
+          ? "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for."
+          : isDestinationMarketingStrategies
+            ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
+            : blog.metaDescription || blog.description || "";
+  const seoImage = isWhatAreFamTrips
+    ? "https://melangedigital.co/what-are-fam-trips-og.jpg"
+    : isCruiseBranding
+      ? "https://melangedigital.co/cruise-branding-og.jpg"
+      : isChoosingDestinationMarketingAgencyIndia
+        ? "https://melangedigital.co/choosing-destination-marketing-agency-india-og.jpg"
+        : isTravelMarketingTrends2027
+          ? "https://melangedigital.co/travel-marketing-trends-og.jpg"
+          : isDestinationMarketingStrategies
+            ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
+            : blog.image || "";
+  const seoImageAlt = isWhatAreFamTrips
+    ? "What Are Fam Trips? | Mélange Digital"
+    : isCruiseBranding
+      ? "Cruise Branding for New Cruise Lines | Mélange Digital"
+      : isChoosingDestinationMarketingAgencyIndia
+        ? "Choosing a Destination Marketing Agency in India | Mélange Digital"
+        : isTravelMarketingTrends2027
+          ? "Travel Marketing Trends 2027 – Mélange Digital"
+          : isDestinationMarketingStrategies
+            ? "Destination Marketing Strategies – Mélange Digital"
+            : blog.altText;
+  const hasPageSpecificSocialPreview =
+    isWhatAreFamTrips ||
+    isCruiseBranding ||
+    isDestinationMarketingStrategies ||
+    isTravelMarketingTrends2027 ||
+    isChoosingDestinationMarketingAgencyIndia;
+  const canonicalUrl = `https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`;
+
   const breadcrumbs = [
     { displayName: "Home", url: "/" },
     { displayName: "Blogs", url: "/blogs" },
@@ -204,15 +262,32 @@ const BlogDetail = () => {
   return (
     <div>
       <Helmet>
-        <title>{blog.seoTitle || blog.title}</title>
-        <meta name="title" content={`${blog.seoTitle || blog.title}`} data-rh="true" />
-        <meta name="description" content={blog.metaDescription || blog.description || ""} data-rh="true" />
+        <title>{seoTitle}</title>
+        <meta name="title" content={seoTitle} data-rh="true" />
+        <meta name="description" content={seoDescription} data-rh="true" />
         {blog.focusKeywords && <meta name="keywords" content={blog.focusKeywords} data-rh="true" />}
-        <meta property="og:image" content={blog.image || ""} data-rh="true" />
-        {blog.altText && <meta property="og:image:alt" content={blog.altText} data-rh="true" />}
-        <meta property="og:title" content={blog.seoTitle || blog.title} data-rh="true" />
-        <meta property="og:description" content={blog.metaDescription || blog.description || ""} data-rh="true" />
-        <link rel="canonical" href={`https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`} data-rh="true" />
+        <meta property="og:image" content={seoImage} data-rh="true" />
+        {seoImageAlt && <meta property="og:image:alt" content={seoImageAlt} data-rh="true" />}
+        <meta property="og:title" content={seoTitle} data-rh="true" />
+        <meta property="og:description" content={seoDescription} data-rh="true" />
+        {hasPageSpecificSocialPreview && (
+          <>
+            <meta property="og:type" content="article" data-rh="true" />
+            <meta property="og:url" content={canonicalUrl} data-rh="true" />
+            <meta property="og:image:width" content="1200" data-rh="true" />
+            <meta property="og:image:height" content="630" data-rh="true" />
+            {(isWhatAreFamTrips ||
+              isCruiseBranding ||
+              isChoosingDestinationMarketingAgencyIndia) && (
+              <meta property="og:image:type" content="image/jpeg" data-rh="true" />
+            )}
+            <meta name="twitter:card" content="summary_large_image" data-rh="true" />
+            <meta name="twitter:title" content={seoTitle} data-rh="true" />
+            <meta name="twitter:description" content={seoDescription} data-rh="true" />
+            <meta name="twitter:image" content={seoImage} data-rh="true" />
+          </>
+        )}
+        <link rel="canonical" href={canonicalUrl} data-rh="true" />
         <script type="application/ld+json">{JSON.stringify(activeBlogSchema(blog))}</script>
       </Helmet>
 

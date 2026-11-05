@@ -157,12 +157,22 @@ const Home = () => {
           rel="stylesheet"
         />
         <base href="/destination-marketing-agency/" />
-        <meta property="og:url" content="https://melangedigital.co" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://melangedigital.co/" />
         <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Mélange Digital" />
         <meta
           property="og:description"
           content="Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call."
         />
+        <meta property="og:image" content="https://melangedigital.co/og-home.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="632" />
+        <meta
+          property="og:image:alt"
+          content="Mélange Digital — Travel & Tourism Marketing Agency"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://melangedigital.co/og-home.png" />
         <style type="text/css">{`
           /* Safety: hide leftover Webflow nav if cached markup still has it */
           body.dma-react .div-block-47,

@@ -15,11 +15,11 @@ const CTA_ARROW_GHOST = "/destination-marketing-agency/images/services/cta-arrow
 /* The frame specifies a single WHERE IT WORKS backdrop for every service page.
    servicesData pointed three of them at case-study banners, whose baked-in
    campaign lettering fights the overlay and the card labels. */
-const BAND_BG = "/destination-marketing-agency/images/services/where-it-works-bg.png";
+const BAND_BG = "/destination-marketing-agency/images/services/where-it-works-bg.webp";
 
 /* Likewise the closing band: only the influencer entry carried a bgImage, so
    the other three rendered as a blank white strip. */
-const CTA_BG = "/destination-marketing-agency/images/services/arrivals-banner-bg.png";
+const CTA_BG = "/destination-marketing-agency/images/services/arrivals-banner-bg.webp";
 
 /* Hero collage: 8 Figma slots plus two hand-tuned maps. Photos stay on
    their tile; every 5s they slide into a different slot. */
@@ -98,6 +98,37 @@ function AnimCta({ to, className, arrowSrc, children }) {
 export default function ServiceDetail() {
   const { slug } = useParams();
   const service = SERVICES_DATA[slug];
+  const influencerSocialMeta =
+    slug === "influencer-marketing"
+      ? {
+          title: "Travel Influencer Marketing Agency for tourism boards | Mélange Digital",
+          description:
+            "Mélange casts influencers & celebrities for tourism boards, DMOs, travel brands by trust, not follower count. Connect now for travel influencer marketing.",
+          image: "https://melangedigital.co/influencer-marketing-og.png",
+        }
+      : null;
+  const experientialSocialMeta =
+    slug === "experiential-marketing"
+      ? {
+          title: "Tourism Experiential Marketing Agency | Mélange Digital",
+          description:
+            "Mélange runs tourism experiential marketing: trade show booths, roadshows and mall activations built to capture qualified leads, not footfall.",
+          image: "https://melangedigital.co/experiential-marketing-og.jpg",
+          imageAlt: "Tourism Experiential Marketing Agency | Mélange Digital",
+        }
+      : null;
+  const famTripsSocialMeta =
+    slug === "fam-trips-pr"
+      ? {
+          title: "Travel PR Agency & FAM Trip Management | Mélange Digital",
+          description:
+            "Mélange runs familiarisation trips & destination PR for tourism boards: journalist and creator FAMs, trade hosting and much more across the GCC.",
+          image: "https://melangedigital.co/fam-trips-pr-og.jpg",
+          imageAlt: "Travel PR Agency & FAM Trip – Mélange Digital",
+        }
+      : null;
+  const socialMeta =
+    influencerSocialMeta || experientialSocialMeta || famTripsSocialMeta;
 
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [faqCollapsed, setFaqCollapsed] = useState(true);
@@ -264,10 +295,22 @@ export default function ServiceDetail() {
         <title>{service.seo.title}</title>
         <meta name="description" content={service.seo.description} />
         <link rel="canonical" href={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} data-rh="true" />
-        <meta property="og:title" content={service.seo.title} />
-        <meta property="og:description" content={service.seo.description} />
+        <meta property="og:title" content={socialMeta?.title || service.seo.title} />
+        <meta property="og:description" content={socialMeta?.description || service.seo.description} />
         <meta property="og:url" content={`https://melangedigital.co/services/${(service.slug || "").replace(/\/+$/, "")}`} />
         <meta property="og:type" content="website" />
+        {socialMeta && (
+          <>
+            <meta property="og:image" content={socialMeta.image} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+            <meta property="og:image:alt" content={socialMeta.imageAlt || "Travel Influencer Marketing | Mélange Digital"} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={socialMeta.title} />
+            <meta name="twitter:description" content={socialMeta.description} />
+            <meta name="twitter:image" content={socialMeta.image} />
+          </>
+        )}
         {serviceSchema && (
           <script type="application/ld+json">{JSON.stringify(serviceSchema)}</script>
         )}
@@ -550,11 +593,9 @@ export default function ServiceDetail() {
                     <h3 className="text-block-30">{item.question}</h3>
                     <span className="accordian-icon w-icon-dropdown-toggle" aria-hidden="true" />
                   </button>
-                  {isOpen && (
-                    <div className="dropdown-list">
-                      <div className="text-block-34">{item.answer}</div>
-                    </div>
-                  )}
+                  <div className="dropdown-list" hidden={!isOpen}>
+                    <div className="text-block-34">{item.answer}</div>
+                  </div>
                 </div>
               );
             })}

@@ -120,7 +120,14 @@ const SEO_REDIRECTS = {
   "/services/design-solutions": "/services",
   "/blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships": "/blogs",
   "/work/costa-cruises": "/work/costa-cruises-introducing-luxury-cruising-to-india",
-  "/work/singapore-tourism-board-stb": "/work/singapore-tourism-board",
+  "/work/resorts-world-cruises":
+    "/work/resorts-world-cruises-premium-cruise-launch-dubai",
+  "/work/her-hk": "/work/hong-kong-tourism-board-herhongkong",
+  "/work/zambia-tourism": "/work/zambia-tourism-otm-mumbai-2026",
+  "/work/singapore-tourism-board":
+    "/work/singapore-tourism-board-isthisevensingapore",
+  "/work/singapore-tourism-board-stb":
+    "/work/singapore-tourism-board-isthisevensingapore",
   "/work/genvr": "/work/genvr",
   "/work/neotraders": "/work/neotraders",
   "/work/devboost": "/work/devboost",
@@ -207,6 +214,21 @@ function sendHtml(req, res, html) {
 async function sendIndex(req, res) {
   const prerenderedHtml = getPrerenderedHtml(req.path || "/");
   if (prerenderedHtml) {
+    const route = (req.path || "/").replace(/\/+$/, "");
+    if (
+      route === "/services/branded-content-ips" ||
+      route === "/services/experiential-marketing" ||
+      route === "/services/fam-trips-pr" ||
+      route === "/careers" ||
+      route === "/contact"
+    ) {
+      const meta = resolveMeta(route, {
+        routes: new Set([route]),
+        byPath: {},
+      });
+      sendHtml(req, res, applyHead(prerenderedHtml, meta));
+      return;
+    }
     sendHtml(req, res, prerenderedHtml);
     return;
   }
@@ -223,6 +245,33 @@ async function sendIndex(req, res) {
   const html = applyHead(INDEX_HTML, meta);
   sendHtml(req, res, html);
 }
+
+app.get("/api/seo/schema", async (req, res) => {
+  const route = req.query.path;
+  if (
+    typeof route !== "string" ||
+    !route.startsWith("/") ||
+    route.includes("?") ||
+    route.includes("#") ||
+    route.includes("\\")
+  ) {
+    res.status(400).json({ error: "A valid route path is required" });
+    return;
+  }
+
+  try {
+    const index = await getPageIndex();
+    const meta = resolveMeta(route, index);
+    const schemas = [
+      ...(Array.isArray(meta.jsonLdBlocks) ? meta.jsonLdBlocks : []),
+      ...(meta.jsonLd ? [meta.jsonLd] : []),
+    ];
+    res.set("Cache-Control", "no-store").json({ schemas });
+  } catch (err) {
+    console.error("route schema failed:", err.message);
+    res.status(500).json({ error: "Unable to load route schema" });
+  }
+});
 
 const DMA = "destination-marketing-agency";
 
@@ -287,6 +336,13 @@ app.get(
 app.post("/api/sitemap/clear-cache", (_req, res) => {
   clearSitemapCache();
   res.json({ ok: true, cleared: true });
+});
+
+// CMS image paths (/uploads/<cloudinaryId>.<ext>) are not hosted here; serve them from Cloudinary.
+app.get("/uploads/:file", (req, res) => {
+  const m = /^([A-Za-z0-9_-]+)\.(webp|png|jpe?g|gif|avif)$/i.exec(req.params.file);
+  if (!m) return res.status(404).type("text/plain").send("Not found");
+  res.redirect(302, `https://res.cloudinary.com/dbhrpsnzg/image/upload/${m[1]}.${m[2].toLowerCase()}`);
 });
 
 // Live sitemap from Firestore (blogs + casestudies). Before static so spa/sitemap.xml is not used.

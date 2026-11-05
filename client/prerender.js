@@ -92,6 +92,25 @@ function outputDirectory(root, route) {
   return directory;
 }
 
+function stripAnalyticsFromSnapshot(html) {
+  return html
+    .replace(
+      /<script\b(?=[^>]*\bsrc=["'][^"']*(?:googletagmanager\.com\/gtag\/js|connect\.facebook\.net\/signals\/config|connect\.facebook\.net\/en_US\/fbevents\.js)[^"']*["'])[^>]*>[\s\S]*?<\/script>\s*/gi,
+      "",
+    )
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>\s*/gi, (script) =>
+      /(?:fbq\s*\(\s*["'](?:init|track)["']|gtag\s*\(\s*["']config["'])/i.test(
+        script,
+      )
+        ? ""
+        : script,
+    )
+    .replace(
+      /<noscript\b[^>]*>[\s\S]*?facebook\.com\/tr[\s\S]*?<\/noscript>\s*/gi,
+      "",
+    );
+}
+
 const PORT = 3033;
 const distPath = path.join(__dirname, "dist");
 const spaPath = path.join(__dirname, "spa");
@@ -195,6 +214,28 @@ try {
         );
       }
 
+      if (route === "/work") {
+        await page.waitForFunction(
+          () => document.querySelectorAll(".svc-project").length >= 10,
+          { timeout: 15000 },
+        );
+      } else if (route === "/blogs") {
+        await page.waitForFunction(
+          (minimumPosts) =>
+            document.querySelectorAll("article").length >= minimumPosts,
+          { timeout: 30000 },
+          blogRoutes.length,
+        );
+      } else if (route.startsWith("/blogs/")) {
+        await page.waitForFunction(() => {
+          const hasHeadings = document.querySelector(".firstSection h2");
+          return (
+            !hasHeadings ||
+            document.querySelector(".secSection")?.textContent?.includes("Table of Contents")
+          );
+        }, { timeout: 15000 });
+      }
+
       await page.evaluate(() => {
         document.body.classList.add("prerendering");
         const style = document.createElement("style");
@@ -226,7 +267,10 @@ try {
       });
 
       const routeMeta = resolveMeta(route, pageIndex);
-      let html = applyHead(await page.content(), routeMeta);
+      let html = applyHead(
+        stripAnalyticsFromSnapshot(await page.content()),
+        routeMeta,
+      );
       html = html.replace(/[ \t]+$/gm, "");
       const marker = `<!-- prerendered-route:${route} -->`;
       html = html.replace(/<\/head>/i, `  ${marker}\n</head>`);
