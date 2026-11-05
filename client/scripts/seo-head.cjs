@@ -137,6 +137,20 @@ const PAGE_META = {
     title: "Blog & Insights | Mélange Digital",
     description: "Insights, ideas, and stories from the Mélange Digital team.",
   },
+  "/blogs/destination-marketing-strategies": {
+    title: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
+    ogTitle: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
+    description:
+      "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
+    image: `${ORIGIN}/destination-marketing-strategies-og.jpg`,
+    imageAlt: "Destination Marketing Strategies – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    ogType: "article",
+    twitterTitle: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
+    twitterDescription:
+      "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
+  },
   "/careers": {
     title: "Careers: Join Our Global Team | Mélange Digital",
     description:
@@ -290,6 +304,7 @@ function resolveMeta(reqPath, index = {}) {
   const imageWidth = preset.imageWidth || undefined;
   const imageHeight = preset.imageHeight || undefined;
   const ogTitle = preset.ogTitle || undefined;
+  const ogType = preset.ogType || undefined;
   const twitterTitle = preset.twitterTitle || undefined;
   const twitterDescription = preset.twitterDescription || undefined;
 
@@ -303,6 +318,7 @@ function resolveMeta(reqPath, index = {}) {
     imageWidth,
     imageHeight,
     ogTitle,
+    ogType,
     twitterTitle,
     twitterDescription,
     /** Always strip shell JSON-LD; page packs replace it for /, /services, /about. */
@@ -446,7 +462,7 @@ function applyHead(html, meta) {
   }
   if (meta.image) {
     const ogTags = [
-      `<meta data-rh="true" property="og:type" content="website">`,
+      `<meta data-rh="true" property="og:type" content="${esc(meta.ogType || "website")}">`,
       meta.canonical
         ? `<meta data-rh="true" property="og:url" content="${esc(meta.canonical)}">`
         : "",
@@ -624,6 +640,64 @@ if (require.main === module) {
   assert(blogShell.includes("Airlines Marketing Guide"));
   assert(blogShell.includes('"@type":"BlogPosting"'));
   assert(blogShell.includes("airlines-marketing"));
+
+  const destinationPath = "/blogs/destination-marketing-strategies";
+  const destinationMeta = resolveMeta(destinationPath, {
+    routes: new Set([destinationPath]),
+    byPath: {
+      [destinationPath]: {
+        seoTitle: "Destination Marketing Strategies: How to Choose the Right One for Your Goal",
+        metaDescription:
+          "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery.",
+        author: "Mélange Digital",
+        date: "2026-10-30",
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(destinationMeta.title, "Destination Marketing Strategies by Goal | Blog by Melange Digital");
+  assert.strictEqual(
+    destinationMeta.description,
+    "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
+  );
+  assert.strictEqual(destinationMeta.canonical, `${ORIGIN}${destinationPath}`);
+  assert.strictEqual(destinationMeta.image, `${ORIGIN}/destination-marketing-strategies-og.jpg`);
+  assert.strictEqual(destinationMeta.imageAlt, "Destination Marketing Strategies – Mélange Digital");
+  assert.strictEqual(destinationMeta.imageWidth, 1200);
+  assert.strictEqual(destinationMeta.imageHeight, 630);
+  assert.strictEqual(destinationMeta.ogType, "article");
+  assert.strictEqual(destinationMeta.twitterTitle, destinationMeta.title);
+  assert.strictEqual(destinationMeta.twitterDescription, destinationMeta.description);
+  const destinationShell = applyHead(shell, destinationMeta);
+  assert(
+    destinationShell.includes(
+      `rel="canonical" href="${ORIGIN}${destinationPath}"`,
+    ),
+  );
+  assert.strictEqual((destinationShell.match(/rel="canonical"/g) || []).length, 1);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${destinationPath}`],
+    ['property="og:title"', destinationMeta.title],
+    ['property="og:description"', destinationMeta.description],
+    ['property="og:image"', destinationMeta.image],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', destinationMeta.imageAlt],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', destinationMeta.title],
+    ['name="twitter:description"', destinationMeta.description],
+    ['name="twitter:image"', destinationMeta.image],
+  ]) {
+    assert(destinationShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (destinationShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(destinationShell.includes('"@type":"BlogPosting"'));
+  assert.strictEqual((destinationShell.match(/application\/ld\+json/g) || []).length, 1);
 
   const blogsIndex = applyHead(
     shell,
