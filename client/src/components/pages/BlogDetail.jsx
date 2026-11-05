@@ -114,18 +114,29 @@ const BlogDetail = () => {
   }
 
   const isDestinationMarketingStrategies = slug === "destination-marketing-strategies";
-  const seoTitle = isDestinationMarketingStrategies
-    ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
-    : blog.seoTitle || blog.title;
-  const seoDescription = isDestinationMarketingStrategies
-    ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
-    : blog.metaDescription || blog.description || "";
-  const seoImage = isDestinationMarketingStrategies
-    ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
-    : blog.image || "";
-  const seoImageAlt = isDestinationMarketingStrategies
-    ? "Destination Marketing Strategies – Mélange Digital"
-    : blog.altText;
+  const isTravelMarketingTrends2027 = slug === "7-travel-marketing-trends";
+  const seoTitle = isTravelMarketingTrends2027
+    ? "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital"
+    : isDestinationMarketingStrategies
+      ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
+      : blog.seoTitle || blog.title;
+  const seoDescription = isTravelMarketingTrends2027
+    ? "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for."
+    : isDestinationMarketingStrategies
+      ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
+      : blog.metaDescription || blog.description || "";
+  const seoImage = isTravelMarketingTrends2027
+    ? "https://melangedigital.co/travel-marketing-trends-og.jpg"
+    : isDestinationMarketingStrategies
+      ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
+      : blog.image || "";
+  const seoImageAlt = isTravelMarketingTrends2027
+    ? "Travel Marketing Trends 2027 – Mélange Digital"
+    : isDestinationMarketingStrategies
+      ? "Destination Marketing Strategies – Mélange Digital"
+      : blog.altText;
+  const hasPageSpecificSocialPreview =
+    isDestinationMarketingStrategies || isTravelMarketingTrends2027;
   const canonicalUrl = `https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`;
 
   const breadcrumbs = [
@@ -227,7 +238,7 @@ const BlogDetail = () => {
         {seoImageAlt && <meta property="og:image:alt" content={seoImageAlt} data-rh="true" />}
         <meta property="og:title" content={seoTitle} data-rh="true" />
         <meta property="og:description" content={seoDescription} data-rh="true" />
-        {isDestinationMarketingStrategies && (
+        {hasPageSpecificSocialPreview && (
           <>
             <meta property="og:type" content="article" data-rh="true" />
             <meta property="og:url" content={canonicalUrl} data-rh="true" />

@@ -151,6 +151,20 @@ const PAGE_META = {
     twitterDescription:
       "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
   },
+  "/blogs/7-travel-marketing-trends": {
+    title: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+    ogTitle: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+    description:
+      "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+    image: `${ORIGIN}/travel-marketing-trends-og.jpg`,
+    imageAlt: "Travel Marketing Trends 2027 – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    ogType: "article",
+    twitterTitle: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+    twitterDescription:
+      "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+  },
   "/careers": {
     title: "Careers: Join Our Global Team | Mélange Digital",
     description:
@@ -400,6 +414,26 @@ function collectionPageJsonLd(pageUrl, name, description) {
   };
 }
 
+function containsArticleSchema(html) {
+  const scripts = [
+    ...html.matchAll(
+      /<script\b(?=[^>]*\btype=["']application\/ld\+json["'])[^>]*>([\s\S]*?)<\/script>/gi,
+    ),
+  ];
+  return scripts.some(([, json]) =>
+    /"@type"\s*:\s*(?:"(?:BlogPosting|Article)"|\[[^\]]*"(?:BlogPosting|Article)")/.test(
+      json,
+    ),
+  );
+}
+
+function isArticleSchema(schema) {
+  const types = Array.isArray(schema?.["@type"])
+    ? schema["@type"]
+    : [schema?.["@type"]];
+  return types.some((type) => type === "BlogPosting" || type === "Article");
+}
+
 function applyHead(html, meta) {
   let out = html;
   if (meta.title) {
@@ -512,12 +546,22 @@ function applyHead(html, meta) {
     );
   }
   const blocks = [];
+  let hasArticleSchema = containsArticleSchema(out);
   if (Array.isArray(meta.jsonLdBlocks)) {
     for (const obj of meta.jsonLdBlocks) {
-      if (obj) blocks.push(obj);
+      if (!obj) continue;
+      if (isArticleSchema(obj)) {
+        if (hasArticleSchema) continue;
+        hasArticleSchema = true;
+      }
+      blocks.push(obj);
     }
   }
-  if (meta.jsonLd) blocks.push(meta.jsonLd);
+  if (meta.jsonLd) {
+    if (!isArticleSchema(meta.jsonLd) || !hasArticleSchema) {
+      blocks.push(meta.jsonLd);
+    }
+  }
   if (blocks.length) {
     const scripts = blocks
       .map(
@@ -698,6 +742,100 @@ if (require.main === module) {
   }
   assert(destinationShell.includes('"@type":"BlogPosting"'));
   assert.strictEqual((destinationShell.match(/application\/ld\+json/g) || []).length, 1);
+
+  const travelTrendsPath = "/blogs/7-travel-marketing-trends";
+  const travelTrendsMeta = resolveMeta(travelTrendsPath, {
+    routes: new Set([travelTrendsPath]),
+    byPath: {
+      [travelTrendsPath]: {
+        seoTitle: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+        metaDescription:
+          "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+        author: "Mélange Digital",
+        date: "2026-10-22",
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(
+    travelTrendsMeta.title,
+    "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
+  );
+  assert.strictEqual(
+    travelTrendsMeta.description,
+    "Travel marketing trends 2027: AI search, creator partnerships, hybrid FAM trips, film tourism and arrivals-led measurement. Read what to plan for.",
+  );
+  assert.strictEqual(travelTrendsMeta.canonical, `${ORIGIN}${travelTrendsPath}`);
+  assert.strictEqual(
+    travelTrendsMeta.image,
+    `${ORIGIN}/travel-marketing-trends-og.jpg`,
+  );
+  assert.strictEqual(
+    travelTrendsMeta.imageAlt,
+    "Travel Marketing Trends 2027 – Mélange Digital",
+  );
+  assert.strictEqual(travelTrendsMeta.imageWidth, 1200);
+  assert.strictEqual(travelTrendsMeta.imageHeight, 630);
+  assert.strictEqual(travelTrendsMeta.ogType, "article");
+  assert.strictEqual(travelTrendsMeta.twitterTitle, travelTrendsMeta.title);
+  assert.strictEqual(
+    travelTrendsMeta.twitterDescription,
+    travelTrendsMeta.description,
+  );
+  const travelTrendsShell = applyHead(shell, travelTrendsMeta);
+  assert(
+    travelTrendsShell.includes(
+      `rel="canonical" href="${ORIGIN}${travelTrendsPath}"`,
+    ),
+  );
+  assert.strictEqual(
+    (travelTrendsShell.match(/rel="canonical"/g) || []).length,
+    1,
+  );
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${travelTrendsPath}`],
+    ['property="og:title"', travelTrendsMeta.title],
+    ['property="og:description"', travelTrendsMeta.description],
+    ['property="og:image"', travelTrendsMeta.image],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:alt"', travelTrendsMeta.imageAlt],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', travelTrendsMeta.title],
+    ['name="twitter:description"', travelTrendsMeta.description],
+    ['name="twitter:image"', travelTrendsMeta.image],
+  ]) {
+    assert(travelTrendsShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (travelTrendsShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(travelTrendsShell.includes('"@type":"BlogPosting"'));
+  assert.strictEqual(
+    (travelTrendsShell.match(/application\/ld\+json/g) || []).length,
+    1,
+  );
+
+  const existingArticleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: "Existing article schema",
+  };
+  const existingArticleShell = shell.replace(
+    "</head>",
+    `  <script type="application/ld+json" data-rh="true">${JSON.stringify(existingArticleSchema)}</script>\n</head>`,
+  );
+  const noDuplicateArticleSchema = applyHead(existingArticleShell, travelTrendsMeta);
+  const articleSchemaScripts = [
+    ...noDuplicateArticleSchema.matchAll(
+      /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+    ),
+  ].filter(([, json]) => json.includes('"@type":"BlogPosting"'));
+  assert.strictEqual(articleSchemaScripts.length, 1);
+  assert(articleSchemaScripts[0][1].includes('"headline":"Existing article schema"'));
 
   const blogsIndex = applyHead(
     shell,
