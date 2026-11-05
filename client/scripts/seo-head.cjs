@@ -151,6 +151,21 @@ const PAGE_META = {
     twitterDescription:
       "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery",
   },
+  "/blogs/cruise-branding": {
+    title: "Cruise Branding for New Cruise Lines | Melange Digital",
+    ogTitle: "Cruise Branding for New Cruise Lines | Melange Digital",
+    description:
+      "Cruise branding for new and emerging cruise lines: Read how to win traveller trust, work with creators, and keep your brand clear as the fleet grows",
+    image: `${ORIGIN}/cruise-branding-og.jpg`,
+    imageAlt: "Cruise Branding for New Cruise Lines | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Cruise Branding for New Cruise Lines | Melange Digital",
+    twitterDescription:
+      "Cruise branding for new and emerging cruise lines: Read how to win traveller trust, work with creators, and keep your brand clear as the fleet grows",
+  },
   "/blogs/7-travel-marketing-trends": {
     title: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
     ogTitle: "7 Key Travel Marketing Trends 2027 | Blog by Melange Digital",
@@ -922,6 +937,61 @@ if (require.main === module) {
   assert(agencyShell.includes('"headline":"Existing article schema"'));
   assert.strictEqual(
     (agencyShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
+  const cruisePath = "/blogs/cruise-branding";
+  const cruiseTitle = "Cruise Branding for New Cruise Lines | Melange Digital";
+  const cruiseDescription =
+    "Cruise branding for new and emerging cruise lines: Read how to win traveller trust, work with creators, and keep your brand clear as the fleet grows";
+  const cruiseMeta = resolveMeta(cruisePath, {
+    routes: new Set([cruisePath]),
+    byPath: {
+      [cruisePath]: {
+        seoTitle: `${cruiseTitle} `,
+        metaDescription: cruiseDescription,
+        title: cruiseTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(cruiseMeta.title, cruiseTitle);
+  assert.strictEqual(cruiseMeta.description, cruiseDescription);
+  assert.strictEqual(cruiseMeta.canonical, `${ORIGIN}${cruisePath}`);
+  assert.strictEqual(cruiseMeta.image, `${ORIGIN}/cruise-branding-og.jpg`);
+  assert.strictEqual(cruiseMeta.imageWidth, 1200);
+  assert.strictEqual(cruiseMeta.imageHeight, 630);
+  assert.strictEqual(cruiseMeta.imageType, "image/jpeg");
+  assert.strictEqual(cruiseMeta.ogType, "article");
+  assert.strictEqual(cruiseMeta.twitterTitle, cruiseTitle);
+  assert.strictEqual(cruiseMeta.twitterDescription, cruiseDescription);
+  const cruiseShell = applyHead(shell, cruiseMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${cruisePath}`],
+    ['property="og:title"', cruiseTitle],
+    ['property="og:description"', cruiseDescription],
+    ['property="og:image"', `${ORIGIN}/cruise-branding-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', cruiseTitle],
+    ['name="twitter:description"', cruiseDescription],
+    ['name="twitter:image"', `${ORIGIN}/cruise-branding-og.jpg`],
+  ]) {
+    assert(cruiseShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (cruiseShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(cruiseShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (cruiseShell.match(/"@type":"BlogPosting"/g) || []).length,
     1,
   );
 
