@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../../../firebase";
 import { DEFAULT_SERVICE_CARDS, getServiceCardAltText, resolveServiceSlots } from "../../../constants/serviceCards";
 import {
   MARKETING_ASSET as ASSET,
@@ -10,6 +8,7 @@ import {
   useMarketingBoot,
 } from "../marketingShell";
 import rawMarkup from "./markup.html?raw";
+import { cardSignature, optimizeCardImages, prerenderedMarkup } from "../../../utils/cardImages";
 
 function esc(str) {
   if (!str) return "";
@@ -56,13 +55,22 @@ const SCRIPT_BASES = [`${ASSET}/js/services.js?v=20260824w`];
 /** JSON-LD for /services is injected into the initial HTML by Express (page-schemas.cjs). */
 const Services = () => {
   const cssReady = useMarketingBoot("svc", CSS, SCRIPT_BASES);
-  const [markup, setMarkup] = useState(() => buildDynamicMarkup(rawMarkup, null));
+  // Prerendered loads start from the snapshot (already has CMS cards + resized images).
+  const [markup, setMarkup] = useState(
+    () => prerenderedMarkup(".svc-react-root") ?? optimizeCardImages(buildDynamicMarkup(rawMarkup, null)),
+  );
 
   useEffect(() => {
     let active = true;
+    let idleHandle;
     const loadServiceCards = async () => {
       try {
-        if (!db) return;
+        // Firebase is ~400KB of JS; keep it out of the page's critical path.
+        const [{ db }, { doc, getDoc, collection, getDocs }] = await Promise.all([
+          import("../../../firebase"),
+          import("firebase/firestore"),
+        ]);
+        if (!active || !db) return;
         const [snap, csSnap] = await Promise.all([
           getDoc(doc(db, "settings", "service_cards")).catch(() => null),
           getDocs(collection(db, "casestudies")).catch(() => null),
@@ -73,16 +81,23 @@ const Services = () => {
           ? csSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
           : null;
         if (settingsData || caseStudiesList) {
-          setMarkup(buildDynamicMarkup(rawMarkup, settingsData, caseStudiesList));
+          const next = optimizeCardImages(buildDynamicMarkup(rawMarkup, settingsData, caseStudiesList));
+          // Skip the full re-render when the prerendered cards already match the CMS.
+          setMarkup((current) => (cardSignature(current) === cardSignature(next) ? current : next));
         }
       } catch (err) {
         console.warn("Could not load dynamic service cards:", err);
       }
     };
 
-    loadServiceCards();
+    if (window.__PRERENDERING__ || !("requestIdleCallback" in window)) {
+      loadServiceCards();
+    } else {
+      idleHandle = window.requestIdleCallback(loadServiceCards, { timeout: 4000 });
+    }
     return () => {
       active = false;
+      if (idleHandle) window.cancelIdleCallback(idleHandle);
     };
   }, []);
 
@@ -128,12 +143,7 @@ const Services = () => {
           content="Mélange Digital offers travel and tourism marketing services, from influencer marketing to branding for destinations, DMOs, and NTOs."
         />
         <link rel="canonical" href="https://melangedigital.co/services" data-rh="true" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
+        {/* Fonts come from the shared non-blocking <link> in index.html. */}
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/services" />
         <meta property="og:title" content="Digital Marketing for Travel and Tourism | Mélange Digital" />
