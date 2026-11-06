@@ -113,6 +113,7 @@ const BlogDetail = () => {
     );
   }
 
+  const isAirlinesMarketing = slug === "airlines-marketing";
   const isDestinationMarketingStrategies = slug === "destination-marketing-strategies";
   const isTravelMarketingTrends2027 = slug === "7-travel-marketing-trends";
   const isChoosingDestinationMarketingAgencyIndia =
@@ -120,8 +121,10 @@ const BlogDetail = () => {
   const isCruiseBranding = slug === "cruise-branding";
   const isWhatAreFamTrips = slug === "what-are-fam-trip";
   const isFilmInducedTourism = slug === "film-induced-tourism";
-  const seoTitle = isFilmInducedTourism
-    ? "Film-Induced Tourism: How Screens Drive Travel | Melange"
+  const seoTitle = isAirlinesMarketing
+    ? "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones"
+    : isFilmInducedTourism
+      ? "Film-Induced Tourism: How Screens Drive Travel | Melange"
     : isWhatAreFamTrips
       ? "What Are Fam Trips? A Guide for Destinations | blog by Melange Digital"
       : isCruiseBranding
@@ -133,8 +136,10 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
               : blog.seoTitle || blog.title;
-  const seoDescription = isFilmInducedTourism
-    ? "Film-induced tourism turns viewers into travellers. See how OTT, set-jetting and reels shape bookings in India, the GCC and beyond. Read the full guide."
+  const seoDescription = isAirlinesMarketing
+    ? "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign."
+    : isFilmInducedTourism
+      ? "Film-induced tourism turns viewers into travellers. See how OTT, set-jetting and reels shape bookings in India, the GCC and beyond. Read the full guide."
     : isWhatAreFamTrips
       ? "What is a fam trip in tourism? Discover what a fam trip usually involves, who to invite and how destinations turn hosted visits into bookings."
       : isCruiseBranding
@@ -146,8 +151,10 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
               : blog.metaDescription || blog.description || "";
-  const seoImage = isFilmInducedTourism
-    ? "https://melangedigital.co/film-induced-tourism-og.jpg"
+  const seoImage = isAirlinesMarketing
+    ? "https://melangedigital.co/airlines-marketing-og.jpg"
+    : isFilmInducedTourism
+      ? "https://melangedigital.co/film-induced-tourism-og.jpg"
     : isWhatAreFamTrips
       ? "https://melangedigital.co/what-are-fam-trips-og.jpg"
       : isCruiseBranding
@@ -159,8 +166,10 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
               : blog.image || "";
-  const seoImageAlt = isFilmInducedTourism
-    ? "Film-Induced Tourism: How Screens Drive Travel | Mélange Digital"
+  const seoImageAlt = isAirlinesMarketing
+    ? "Airlines Marketing – Mélange Digital"
+    : isFilmInducedTourism
+      ? "Film-Induced Tourism: How Screens Drive Travel | Mélange Digital"
     : isWhatAreFamTrips
       ? "What Are Fam Trips? | Mélange Digital"
       : isCruiseBranding
@@ -173,6 +182,7 @@ const BlogDetail = () => {
               ? "Destination Marketing Strategies – Mélange Digital"
               : blog.altText;
   const hasPageSpecificSocialPreview =
+    isAirlinesMarketing ||
     isFilmInducedTourism ||
     isWhatAreFamTrips ||
     isCruiseBranding ||
@@ -286,7 +296,8 @@ const BlogDetail = () => {
             <meta property="og:url" content={canonicalUrl} data-rh="true" />
             <meta property="og:image:width" content="1200" data-rh="true" />
             <meta property="og:image:height" content="630" data-rh="true" />
-            {(isFilmInducedTourism ||
+            {(isAirlinesMarketing ||
+              isFilmInducedTourism ||
               isWhatAreFamTrips ||
               isCruiseBranding ||
               isChoosingDestinationMarketingAgencyIndia) && (

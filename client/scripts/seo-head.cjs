@@ -137,6 +137,24 @@ const PAGE_META = {
     title: "Blog & Insights | Mélange Digital",
     description: "Insights, ideas, and stories from the Mélange Digital team.",
   },
+  "/blogs/airlines-marketing": {
+    title:
+      "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones",
+    ogTitle:
+      "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones",
+    description:
+      "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign.",
+    image: `${ORIGIN}/airlines-marketing-og.jpg`,
+    imageAlt: "Airlines Marketing – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle:
+      "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones",
+    twitterDescription:
+      "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign.",
+  },
   "/blogs/destination-marketing-strategies": {
     title: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
     ogTitle: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
@@ -1152,6 +1170,62 @@ if (require.main === module) {
   assert(filmTourismShell.includes('"headline":"Existing article schema"'));
   assert.strictEqual(
     (filmTourismShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
+  const airlinesPath = "/blogs/airlines-marketing";
+  const airlinesTitle =
+    "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones";
+  const airlinesDescription =
+    "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign.";
+  const airlinesMeta = resolveMeta(airlinesPath, {
+    routes: new Set([airlinesPath]),
+    byPath: {
+      [airlinesPath]: {
+        seoTitle: airlinesTitle,
+        metaDescription: airlinesDescription,
+        title: airlinesTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(airlinesMeta.title, airlinesTitle);
+  assert.strictEqual(airlinesMeta.description, airlinesDescription);
+  assert.strictEqual(airlinesMeta.canonical, `${ORIGIN}${airlinesPath}`);
+  assert.strictEqual(airlinesMeta.image, `${ORIGIN}/airlines-marketing-og.jpg`);
+  assert.strictEqual(airlinesMeta.imageWidth, 1200);
+  assert.strictEqual(airlinesMeta.imageHeight, 630);
+  assert.strictEqual(airlinesMeta.imageType, "image/jpeg");
+  assert.strictEqual(airlinesMeta.ogType, "article");
+  assert.strictEqual(airlinesMeta.twitterTitle, airlinesTitle);
+  assert.strictEqual(airlinesMeta.twitterDescription, airlinesDescription);
+  const airlinesShell = applyHead(shell, airlinesMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${airlinesPath}`],
+    ['property="og:title"', airlinesTitle],
+    ['property="og:description"', airlinesDescription],
+    ['property="og:image"', `${ORIGIN}/airlines-marketing-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', airlinesTitle],
+    ['name="twitter:description"', airlinesDescription],
+    ['name="twitter:image"', `${ORIGIN}/airlines-marketing-og.jpg`],
+  ]) {
+    assert(airlinesShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (airlinesShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(airlinesShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (airlinesShell.match(/"@type":"BlogPosting"/g) || []).length,
     1,
   );
 
