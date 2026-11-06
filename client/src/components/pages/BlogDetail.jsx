@@ -113,6 +113,8 @@ const BlogDetail = () => {
     );
   }
 
+  const isAIForTravelPlanning = slug === "ai-for-travel-planning";
+  const isTravelInfluencerMarketing = slug === "travel-influencer-marketing";
   const isAirlinesMarketing = slug === "airlines-marketing";
   const isDestinationMarketingStrategies = slug === "destination-marketing-strategies";
   const isTravelMarketingTrends2027 = slug === "7-travel-marketing-trends";
@@ -121,8 +123,12 @@ const BlogDetail = () => {
   const isCruiseBranding = slug === "cruise-branding";
   const isWhatAreFamTrips = slug === "what-are-fam-trip";
   const isFilmInducedTourism = slug === "film-induced-tourism";
-  const seoTitle = isAirlinesMarketing
-    ? "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones"
+  const seoTitle = isAIForTravelPlanning
+    ? "How People Use AI for Travel Planning | Blog by Melange Digital"
+    : isTravelInfluencerMarketing
+      ? "A Guide to Travel Influencer Marketing | Blog by Melange Digital"
+      : isAirlinesMarketing
+        ? "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones"
     : isFilmInducedTourism
       ? "Film-Induced Tourism: How Screens Drive Travel | Melange"
     : isWhatAreFamTrips
@@ -136,8 +142,12 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
               : blog.seoTitle || blog.title;
-  const seoDescription = isAirlinesMarketing
-    ? "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign."
+  const seoDescription = isAIForTravelPlanning
+    ? "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning."
+    : isTravelInfluencerMarketing
+      ? "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!"
+      : isAirlinesMarketing
+        ? "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign."
     : isFilmInducedTourism
       ? "Film-induced tourism turns viewers into travellers. See how OTT, set-jetting and reels shape bookings in India, the GCC and beyond. Read the full guide."
     : isWhatAreFamTrips
@@ -151,8 +161,12 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
               : blog.metaDescription || blog.description || "";
-  const seoImage = isAirlinesMarketing
-    ? "https://melangedigital.co/airlines-marketing-og.jpg"
+  const seoImage = isAIForTravelPlanning
+    ? "https://melangedigital.co/ai-for-travel-planning-og.jpg"
+    : isTravelInfluencerMarketing
+      ? "https://melangedigital.co/travel-influencer-marketing-og.jpg"
+      : isAirlinesMarketing
+        ? "https://melangedigital.co/airlines-marketing-og.jpg"
     : isFilmInducedTourism
       ? "https://melangedigital.co/film-induced-tourism-og.jpg"
     : isWhatAreFamTrips
@@ -166,8 +180,12 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
               : blog.image || "";
-  const seoImageAlt = isAirlinesMarketing
-    ? "Airlines Marketing – Mélange Digital"
+  const seoImageAlt = isAIForTravelPlanning
+    ? "AI for Travel Planning – Mélange Digital"
+    : isTravelInfluencerMarketing
+      ? "Travel Influencer Marketing – Mélange Digital"
+      : isAirlinesMarketing
+        ? "Airlines Marketing – Mélange Digital"
     : isFilmInducedTourism
       ? "Film-Induced Tourism: How Screens Drive Travel | Mélange Digital"
     : isWhatAreFamTrips
@@ -182,6 +200,8 @@ const BlogDetail = () => {
               ? "Destination Marketing Strategies – Mélange Digital"
               : blog.altText;
   const hasPageSpecificSocialPreview =
+    isAIForTravelPlanning ||
+    isTravelInfluencerMarketing ||
     isAirlinesMarketing ||
     isFilmInducedTourism ||
     isWhatAreFamTrips ||
@@ -296,7 +316,9 @@ const BlogDetail = () => {
             <meta property="og:url" content={canonicalUrl} data-rh="true" />
             <meta property="og:image:width" content="1200" data-rh="true" />
             <meta property="og:image:height" content="630" data-rh="true" />
-            {(isAirlinesMarketing ||
+            {(isAIForTravelPlanning ||
+              isTravelInfluencerMarketing ||
+              isAirlinesMarketing ||
               isFilmInducedTourism ||
               isWhatAreFamTrips ||
               isCruiseBranding ||

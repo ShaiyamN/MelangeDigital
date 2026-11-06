@@ -137,6 +137,36 @@ const PAGE_META = {
     title: "Blog & Insights | Mélange Digital",
     description: "Insights, ideas, and stories from the Mélange Digital team.",
   },
+  "/blogs/ai-for-travel-planning": {
+    title: "How People Use AI for Travel Planning | Blog by Melange Digital",
+    ogTitle: "How People Use AI for Travel Planning | Blog by Melange Digital",
+    description:
+      "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning.",
+    image: `${ORIGIN}/ai-for-travel-planning-og.jpg`,
+    imageAlt: "AI for Travel Planning – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "How People Use AI for Travel Planning | Blog by Melange Digital",
+    twitterDescription:
+      "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning.",
+  },
+  "/blogs/travel-influencer-marketing": {
+    title: "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+    ogTitle: "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+    description:
+      "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!",
+    image: `${ORIGIN}/travel-influencer-marketing-og.jpg`,
+    imageAlt: "Travel Influencer Marketing – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+    twitterDescription:
+      "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!",
+  },
   "/blogs/airlines-marketing": {
     title:
       "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones",
@@ -1228,6 +1258,73 @@ if (require.main === module) {
     (airlinesShell.match(/"@type":"BlogPosting"/g) || []).length,
     1,
   );
+
+  for (const [articlePath, articleTitle, articleDescription, imageName] of [
+    [
+      "/blogs/ai-for-travel-planning",
+      "How People Use AI for Travel Planning | Blog by Melange Digital",
+      "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning.",
+      "ai-for-travel-planning-og.jpg",
+    ],
+    [
+      "/blogs/travel-influencer-marketing",
+      "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+      "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!",
+      "travel-influencer-marketing-og.jpg",
+    ],
+  ]) {
+    const articleImage = `${ORIGIN}/${imageName}`;
+    const articleMeta = resolveMeta(articlePath, {
+      routes: new Set([articlePath]),
+      byPath: {
+        [articlePath]: {
+          seoTitle: articleTitle,
+          metaDescription: articleDescription,
+          title: articleTitle,
+          schemaMode: "custom",
+          customSchema: existingArticleSchema,
+        },
+      },
+      origin: ORIGIN,
+    });
+    assert.strictEqual(articleMeta.title, articleTitle);
+    assert.strictEqual(articleMeta.description, articleDescription);
+    assert.strictEqual(articleMeta.canonical, `${ORIGIN}${articlePath}`);
+    assert.strictEqual(articleMeta.image, articleImage);
+    assert.strictEqual(articleMeta.imageWidth, 1200);
+    assert.strictEqual(articleMeta.imageHeight, 630);
+    assert.strictEqual(articleMeta.imageType, "image/jpeg");
+    assert.strictEqual(articleMeta.ogType, "article");
+    assert.strictEqual(articleMeta.twitterTitle, articleTitle);
+    assert.strictEqual(articleMeta.twitterDescription, articleDescription);
+    const articleShell = applyHead(shell, articleMeta);
+    for (const [tag, value] of [
+      ['property="og:type"', "article"],
+      ['property="og:url"', `${ORIGIN}${articlePath}`],
+      ['property="og:title"', articleTitle],
+      ['property="og:description"', articleDescription],
+      ['property="og:image"', articleImage],
+      ['property="og:image:width"', "1200"],
+      ['property="og:image:height"', "630"],
+      ['property="og:image:type"', "image/jpeg"],
+      ['name="twitter:card"', "summary_large_image"],
+      ['name="twitter:title"', articleTitle],
+      ['name="twitter:description"', articleDescription],
+      ['name="twitter:image"', articleImage],
+    ]) {
+      assert(articleShell.includes(`${tag} content="${esc(value)}"`));
+      assert.strictEqual(
+        (articleShell.match(new RegExp(tag, "g")) || []).length,
+        1,
+        `${tag} must occur once for ${articlePath}`,
+      );
+    }
+    assert(articleShell.includes('"headline":"Existing article schema"'));
+    assert.strictEqual(
+      (articleShell.match(/"@type":"BlogPosting"/g) || []).length,
+      1,
+    );
+  }
 
   const blogsIndex = applyHead(
     shell,
