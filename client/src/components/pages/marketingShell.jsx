@@ -88,21 +88,6 @@ export function afterWindowLoad() {
   return new Promise((resolve) => window.addEventListener("load", () => resolve(), { once: true }));
 }
 
-// Exception: Webflow's IX3 runtime (scroll colour-reveal SplitText headings on Home) only
-// initialises if its scripts arrive before `load`. One painted frame after React renders is
-// still before `load` on a first visit, and inserting them then keeps `load` pending.
-export function afterNextPaint() {
-  return new Promise((resolve) => {
-    const fallback = setTimeout(resolve, 100); // rAF is paused in background tabs
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        clearTimeout(fallback);
-        resolve();
-      }),
-    );
-  });
-}
-
 export function useMarketingBoot(slug, css, scripts) {
   const bootId = useRef(0);
   const [cssReady, setCssReady] = useState(() => stylesheetsApplied(css));

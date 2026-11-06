@@ -9,7 +9,7 @@ import {
   storePendingReport,
 } from "../../../constants/reportLead";
 import markup from "./markup.html?raw";
-import { afterNextPaint, afterWindowLoad, stylesheetsApplied } from "../marketingShell";
+import { afterWindowLoad, stylesheetsApplied } from "../marketingShell";
 import "./report-form.css";
 
 const ASSET = "/destination-marketing-agency";
@@ -19,18 +19,18 @@ const CSS = [
   `${ASSET}/css/melange.css?v=20260915t`,
 ];
 
-// Webflow runtime + its GSAP plugins: must start before `load` (see afterNextPaint).
-const WEBFLOW_SCRIPT_BASES = [
+// Execution order matters. The GSAP plugins must run before site-home.js: once the document is
+// complete, site-home registers its Webflow IX3 interactions immediately, and without SplitText
+// present the scroll colour-reveal headings never split. (Before `load` it waited for
+// readystatechange, which hid this ordering dependency.)
+const SCRIPT_BASES = [
   `${ASSET}/js/jquery.js?site=6a2fe655a827b7d915b35c60`,
   `${ASSET}/js/melange.schunk.36b8fb49256177c8.js`,
   `${ASSET}/js/melange.schunk.435a162c7a78ae40.js`,
-  `${ASSET}/js/site-home.js`,
   `${ASSET}/js/gsap.min.js`,
   `${ASSET}/js/splittext.min.js`,
   `${ASSET}/js/scrolltrigger.min.js`,
-];
-// Widgets (stat counters, creator sphere, testimonials) initialise fine after `load`.
-const WIDGET_SCRIPT_BASES = [
+  `${ASSET}/js/site-home.js`,
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
   "/about/network-sphere.js?v=20260902f",
   `${ASSET}/js/melange.js?v=20260915r`,
@@ -117,24 +117,19 @@ const Home = () => {
       setCssReady(true);
       showBootLoader(false);
 
+      await afterWindowLoad();
+      if (cancelled || bootId.current !== id) return;
+
       const bust = `dma=${id}`;
-      // Insert a group at once: async=false scripts still execute in insertion order, but
-      // download in parallel instead of a request waterfall.
-      const loadGroup = (bases) =>
-        Promise.all(
-          bases.map((base) => {
+      try {
+        // Insert all at once: async=false scripts still execute in insertion order, but
+        // download in parallel instead of a 10-request waterfall.
+        await Promise.all(
+          SCRIPT_BASES.map((base) => {
             const sep = base.includes("?") ? "&" : "?";
             return loadScript(`${base}${sep}${bust}`);
           }),
         );
-      try {
-        await afterNextPaint();
-        if (cancelled || bootId.current !== id) return;
-        await loadGroup(WEBFLOW_SCRIPT_BASES);
-
-        await afterWindowLoad();
-        if (cancelled || bootId.current !== id) return;
-        await loadGroup(WIDGET_SCRIPT_BASES);
       } catch (err) {
         if (!cancelled) console.error("[Home]", err);
       }
