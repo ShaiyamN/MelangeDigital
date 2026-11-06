@@ -8,28 +8,83 @@ import {
 
 import { useEffect, useLayoutEffect, useRef, useState, lazy, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
-import useLenis from "./hooks/useLenis";
+import useLenis, { getScrollTrigger } from "./hooks/useLenis";
 import { deorphan } from "./utils/deorphan";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Primary navigation pages stay eager for instant navigation without Suspense flashes
-import Home from "./components/pages/Home";
 import Error from "./components/pages/Error";
-import Services from "./components/pages/Services";
-import Works from "./components/pages/Work";
-import About from "./components/pages/About";
-import Contact from "./components/pages/Contact";
-import Career from "./components/pages/Career";
 
-// Secondary content & dynamic routes: load on demand
-const Blogs = lazy(() => import("./components/pages/Blogs"));
-const BlogDetail = lazy(() => import("./components/pages/BlogDetail"));
-const ServiceDetail = lazy(() => import("./components/pages/Services/ServiceDetail"));
-const CaseStudyDetail = lazy(() => import("./components/pages/Casestudies/CaseStudyDetail"));
+// Route pages are split into their own chunks so a visit only downloads the page it
+// shows. `preload()` lets main.jsx fetch the current route's chunk before the first
+// render, and link intent warm the next one, so neither path flashes a Suspense fallback.
+function lazyPage(load) {
+  let Loaded = null;
+  const preload = () =>
+    load().then((module) => {
+      Loaded = module.default;
+      return module;
+    });
+  const LazyPage = lazy(preload);
+  function Page(props) {
+    // Pick once per mount: switching component type mid-life would remount the page.
+    const [Component] = useState(() => Loaded || LazyPage);
+    return <Component {...props} />;
+  }
+  Page.preload = preload;
+  return Page;
+}
+
+const Home = lazyPage(() => import("./components/pages/Home"));
+const Services = lazyPage(() => import("./components/pages/Services"));
+const Works = lazyPage(() => import("./components/pages/Work"));
+const About = lazyPage(() => import("./components/pages/About"));
+const Contact = lazyPage(() => import("./components/pages/Contact"));
+const Career = lazyPage(() => import("./components/pages/Career"));
+const Blogs = lazyPage(() => import("./components/pages/Blogs"));
+const BlogDetail = lazyPage(() => import("./components/pages/BlogDetail"));
+const ServiceDetail = lazyPage(() => import("./components/pages/Services/ServiceDetail"));
+const CaseStudyDetail = lazyPage(() => import("./components/pages/Casestudies/CaseStudyDetail"));
 const Location = lazy(() => import("./components/pages/Location"));
+
+const PAGE_FOR_PATH = {
+  "/": Home,
+  "/services": Services,
+  "/work": Works,
+  "/about": About,
+  "/contact": Contact,
+  "/careers": Career,
+  "/blogs": Blogs,
+};
+const PAGE_FOR_PREFIX = [
+  ["/blogs/", BlogDetail],
+  ["/services/", ServiceDetail],
+  ["/work/", CaseStudyDetail],
+];
+
+/** Fetch the chunk for `pathname` (no-op for routes without a split page). */
+export function preloadRoute(pathname) {
+  const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  const page = PAGE_FOR_PATH[path] || PAGE_FOR_PREFIX.find(([prefix]) => path.startsWith(prefix))?.[1];
+  return page ? page.preload() : Promise.resolve();
+}
+
+function usePreloadOnLinkIntent() {
+  useEffect(() => {
+    const onIntent = (event) => {
+      const link = event.target?.closest?.("a[href]");
+      if (!link || link.origin !== window.location.origin) return;
+      preloadRoute(link.pathname).catch(() => {});
+    };
+    const opts = { passive: true, capture: true };
+    document.addEventListener("pointerover", onIntent, opts);
+    document.addEventListener("touchstart", onIntent, opts);
+    document.addEventListener("focusin", onIntent, opts);
+    return () => {
+      document.removeEventListener("pointerover", onIntent, opts);
+      document.removeEventListener("touchstart", onIntent, opts);
+      document.removeEventListener("focusin", onIntent, opts);
+    };
+  }, []);
+}
 
 // Legal / Policy routes
 const TermsofService = lazy(() => import("./components/pages/TermsofService"));
@@ -77,7 +132,7 @@ function ScrollToTop() {
 
   useLayoutEffect(() => {
     // Drop pin-spacers / scrub state left behind by the previous page
-    ScrollTrigger.getAll().forEach((st) => st.kill());
+    getScrollTrigger()?.getAll().forEach((st) => st.kill());
 
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
@@ -92,7 +147,7 @@ function ScrollToTop() {
 
   useEffect(() => {
     const t = window.setTimeout(() => {
-      ScrollTrigger.refresh(true);
+      getScrollTrigger()?.refresh(true);
       window.__melangeLenis?.resize();
     }, 80);
     return () => window.clearTimeout(t);
@@ -206,6 +261,7 @@ function RouteStructuredData() {
 function App() {
   useTabVisibility();
   useLenis();
+  usePreloadOnLinkIntent();
 
   return (
     <>

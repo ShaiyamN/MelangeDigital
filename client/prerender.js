@@ -11,7 +11,7 @@ const { getPageIndex } = require("./scripts/live-sitemap.cjs");
 const { applyHead, resolveMeta } = require("./scripts/seo-head.cjs");
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-function startServer(distPath, port) {
+function startServer(distPath, port, shellHtml) {
   return new Promise((resolve, reject) => {
     const server = createServer((req, res) => {
       let urlPath;
@@ -48,6 +48,15 @@ function startServer(distPath, port) {
           return;
         }
         filePath = path.join(distRoot, "index.html");
+      }
+
+      // "/" is prerendered first and overwrites dist/index.html. Every route must boot
+      // from the pristine Vite shell, or later snapshots inherit the home page's
+      // stylesheets and scripts.
+      if (filePath === path.join(distRoot, "index.html")) {
+        res.setHeader("Content-Type", "text/html");
+        res.end(shellHtml);
+        return;
       }
 
       const mimeTypes = {
@@ -136,6 +145,10 @@ if (!fs.existsSync(path.join(distPath, "index.html"))) {
 if (!fs.existsSync(spaPath)) {
   throw new Error("Missing spa/ directory. Run npm run build:full before prerendering.");
 }
+const shellHtml = fs.readFileSync(path.join(distPath, "index.html"), "utf8");
+if (shellHtml.includes("<!-- prerendered-route:")) {
+  throw new Error("dist/index.html is already a prerendered snapshot. Run npm run build:full before prerendering.");
+}
 
 const pageIndex = await getPageIndex();
 const routes = [...pageIndex.routes]
@@ -156,7 +169,7 @@ if (!blogRoutes.length) {
 let server;
 let browser;
 try {
-  server = await startServer(distPath, PORT);
+  server = await startServer(distPath, PORT, shellHtml);
   browser = await puppeteer.launch({
     executablePath: chromePath,
     headless: true,
@@ -173,6 +186,28 @@ try {
       });
       await page.evaluateOnNewDocument(() => {
         window.__PRERENDERING__ = true;
+      });
+      // Marketing pages append their vanilla scripts (SplitText, sphere, testimonial stagger…)
+      // at runtime. Whether they finished before the snapshot used to depend on boot speed,
+      // so snapshots randomly baked in hundreds of split-letter spans and eager images.
+      // Serve them empty here: the <script> tags still land in the snapshot and run for
+      // real visitors, but the snapshot is always the clean React markup.
+      await page.setRequestInterception(true);
+      page.on("request", (request) => {
+        const url = new URL(request.url());
+        if (
+          request.resourceType() === "script" &&
+          url.port === String(PORT) &&
+          url.pathname.startsWith("/destination-marketing-agency/js/")
+        ) {
+          request.respond({
+            status: 200,
+            contentType: "application/javascript",
+            body: "/* skipped during prerender */",
+          });
+        } else {
+          request.continue();
+        }
       });
       const response = await page.goto(`http://localhost:${PORT}${route}`, {
         waitUntil: "domcontentloaded",
@@ -263,6 +298,10 @@ try {
       await page.evaluate(() => {
         document.body.classList.remove("prerendering");
         document.querySelector("style[data-prerender-freeze]")?.remove();
+        // The font sheet flipped itself to media="all" on load; snapshot it non-blocking again.
+        document.querySelectorAll("link[data-nonblocking-css]").forEach((link) => {
+          link.media = "print";
+        });
         delete window.__PRERENDERING__;
       });
 

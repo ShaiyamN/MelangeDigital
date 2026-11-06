@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Helmet } from "react-helmet-async";
-import { Navbar, Footer } from "../../layout";
+import Navbar from "../../layout/Navbar";
+import Footer from "../../layout/Footer";
 import ReportLeadForm from "../../layout/ReportLeadForm";
 import {
   readReportParam,

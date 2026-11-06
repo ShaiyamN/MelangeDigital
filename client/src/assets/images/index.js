@@ -1,4 +1,4 @@
-import logo from "./mainLogo.png";
+import logo from "./mainLogo.webp";
 import melangeAbout from "./melange_about.svg";
 import rightArrow from "./rightsidearrow.png";
 import image1 from "./image1.webp";

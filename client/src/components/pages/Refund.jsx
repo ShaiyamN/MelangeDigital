@@ -2,7 +2,8 @@
 
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { Footer, Navbar } from "../layout";
+import Navbar from "../layout/Navbar";
+import Footer from "../layout/Footer";
 import { Link } from "react-router-dom";
 
 const Refund = () => {

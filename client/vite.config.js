@@ -176,6 +176,11 @@ export default defineConfig({
     emptyOutDir: true,
     // ponytail: Hostinger shared builds OOM above ~512MB heap; skip gzip size pass
     reportCompressedSize: false,
+    // Firebase (~470KB) is only needed after first paint. Don't let Vite's preload helper
+    // fetch it at high priority, or bake that preload into prerendered snapshots.
+    modulePreload: {
+      resolveDependencies: (_filename, deps) => deps.filter((dep) => !/(^|\/)firebase-[\w-]+\.js$/.test(dep)),
+    },
     rollupOptions: {
       maxParallelFileOps: 2,
     },

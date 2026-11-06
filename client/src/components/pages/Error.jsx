@@ -1,5 +1,6 @@
 import React from "react";
-import { Footer, Navbar } from "../layout";
+import Navbar from "../layout/Navbar";
+import Footer from "../layout/Footer";
 import { Link } from "react-router-dom";
 
 const Error = () => {

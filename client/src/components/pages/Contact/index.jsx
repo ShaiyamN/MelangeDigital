@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { Navbar, Footer } from "../../layout";
+import Navbar from "../../layout/Navbar";
+import Footer from "../../layout/Footer";
 import { Helmet } from "react-helmet-async";
 import ContactBody from "./ContactBody";
 

@@ -11,10 +11,12 @@ const Footer = () => (
       <div className="site-foot__brand">
         <img
           className="site-foot__logo"
-          src={`${IMG}/logo-footer.png`}
+          src={`${IMG}/logo-footer.webp`}
           alt="Mélange Digital logo"
           width="220"
           height="40"
+          loading="lazy"
+          decoding="async"
         />
         <p className="site-foot__follow">Follow us</p>
         <div className="site-foot__social">

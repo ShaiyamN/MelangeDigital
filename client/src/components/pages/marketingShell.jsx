@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Navbar, Footer } from "../layout";
+import Navbar from "../layout/Navbar";
+import Footer from "../layout/Footer";
 
 // Shared plumbing for marketing pages mounted from extracted markup.
 // Namespaced by `slug` so pages never clash over stylesheets, scripts, or <base>.
@@ -72,12 +73,20 @@ export const marketingNavCss = (slug) => `
   }
 `;
 
+// Prerendered pages already ship these stylesheets in <head>; when they're applied,
+// there's nothing to wait for, so don't blank the page behind the boot loader.
+function stylesheetsApplied(css) {
+  if (typeof document === "undefined") return false;
+  return css.every((href) => Boolean(document.querySelector(`link[href="${href}"]`)?.sheet));
+}
+
 export function useMarketingBoot(slug, css, scripts) {
   const bootId = useRef(0);
-  const [cssReady, setCssReady] = useState(false);
+  const [cssReady, setCssReady] = useState(() => stylesheetsApplied(css));
 
   useLayoutEffect(() => {
-    showBootLoader(true);
+    if (!stylesheetsApplied(css)) showBootLoader(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -107,7 +116,7 @@ export function useMarketingBoot(slug, css, scripts) {
 
     (async () => {
       teardown();
-      setCssReady(false);
+      if (!stylesheetsApplied(css)) setCssReady(false);
       await Promise.all(css.map((href) => loadCss(href, cssAttr)));
       if (cancelled || bootId.current !== id) return;
       setCssReady(true);
