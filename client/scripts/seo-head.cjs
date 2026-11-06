@@ -137,6 +137,84 @@ const PAGE_META = {
     title: "Blog & Insights | Mélange Digital",
     description: "Insights, ideas, and stories from the Mélange Digital team.",
   },
+  "/blogs/destination-marketing-in-tourism": {
+    title: "Destination Marketing in Tourism: What It Is & Why It Matters",
+    ogTitle: "Destination Marketing in Tourism: What It Is & Why It Matters",
+    description:
+      "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next",
+    image: `${ORIGIN}/destination-marketing-in-tourism-og.jpg`,
+    imageAlt: "Destination Marketing in Tourism – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Destination Marketing in Tourism: What It Is & Why It Matters",
+    twitterDescription:
+      "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next",
+  },
+  "/blogs/experiential-tourism-guide": {
+    title: "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+    ogTitle: "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+    description:
+      "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next",
+    image: `${ORIGIN}/experiential-tourism-og.jpg`,
+    imageAlt: "Experiential Tourism – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+    twitterDescription:
+      "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next",
+  },
+  "/blogs/ai-for-travel-planning": {
+    title: "How People Use AI for Travel Planning | Blog by Melange Digital",
+    ogTitle: "How People Use AI for Travel Planning | Blog by Melange Digital",
+    description:
+      "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning.",
+    image: `${ORIGIN}/ai-for-travel-planning-og.jpg`,
+    imageAlt: "AI for Travel Planning – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "How People Use AI for Travel Planning | Blog by Melange Digital",
+    twitterDescription:
+      "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning.",
+  },
+  "/blogs/travel-influencer-marketing": {
+    title: "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+    ogTitle: "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+    description:
+      "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!",
+    image: `${ORIGIN}/travel-influencer-marketing-og.jpg`,
+    imageAlt: "Travel Influencer Marketing – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+    twitterDescription:
+      "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!",
+  },
+  "/blogs/airlines-marketing": {
+    title:
+      "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones",
+    ogTitle:
+      "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones",
+    description:
+      "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign.",
+    image: `${ORIGIN}/airlines-marketing-og.jpg`,
+    imageAlt: "Airlines Marketing – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle:
+      "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones",
+    twitterDescription:
+      "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign.",
+  },
   "/blogs/destination-marketing-strategies": {
     title: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
     ogTitle: "Destination Marketing Strategies by Goal | Blog by Melange Digital",
@@ -1154,6 +1232,141 @@ if (require.main === module) {
     (filmTourismShell.match(/"@type":"BlogPosting"/g) || []).length,
     1,
   );
+
+  const airlinesPath = "/blogs/airlines-marketing";
+  const airlinesTitle =
+    "Airlines Marketing and Tourism Boards: Why Joint Campaigns Outperform Solo Ones";
+  const airlinesDescription =
+    "Airlines marketing works best paired with a tourism board, not run solo. See real 2026 partnerships and what to check before signing a joint campaign.";
+  const airlinesMeta = resolveMeta(airlinesPath, {
+    routes: new Set([airlinesPath]),
+    byPath: {
+      [airlinesPath]: {
+        seoTitle: airlinesTitle,
+        metaDescription: airlinesDescription,
+        title: airlinesTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(airlinesMeta.title, airlinesTitle);
+  assert.strictEqual(airlinesMeta.description, airlinesDescription);
+  assert.strictEqual(airlinesMeta.canonical, `${ORIGIN}${airlinesPath}`);
+  assert.strictEqual(airlinesMeta.image, `${ORIGIN}/airlines-marketing-og.jpg`);
+  assert.strictEqual(airlinesMeta.imageWidth, 1200);
+  assert.strictEqual(airlinesMeta.imageHeight, 630);
+  assert.strictEqual(airlinesMeta.imageType, "image/jpeg");
+  assert.strictEqual(airlinesMeta.ogType, "article");
+  assert.strictEqual(airlinesMeta.twitterTitle, airlinesTitle);
+  assert.strictEqual(airlinesMeta.twitterDescription, airlinesDescription);
+  const airlinesShell = applyHead(shell, airlinesMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${airlinesPath}`],
+    ['property="og:title"', airlinesTitle],
+    ['property="og:description"', airlinesDescription],
+    ['property="og:image"', `${ORIGIN}/airlines-marketing-og.jpg`],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', airlinesTitle],
+    ['name="twitter:description"', airlinesDescription],
+    ['name="twitter:image"', `${ORIGIN}/airlines-marketing-og.jpg`],
+  ]) {
+    assert(airlinesShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (airlinesShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+  assert(airlinesShell.includes('"headline":"Existing article schema"'));
+  assert.strictEqual(
+    (airlinesShell.match(/"@type":"BlogPosting"/g) || []).length,
+    1,
+  );
+
+  for (const [articlePath, articleTitle, articleDescription, imageName] of [
+    [
+      "/blogs/destination-marketing-in-tourism",
+      "Destination Marketing in Tourism: What It Is & Why It Matters",
+      "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next",
+      "destination-marketing-in-tourism-og.jpg",
+    ],
+    [
+      "/blogs/experiential-tourism-guide",
+      "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+      "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next",
+      "experiential-tourism-og.jpg",
+    ],
+    [
+      "/blogs/ai-for-travel-planning",
+      "How People Use AI for Travel Planning | Blog by Melange Digital",
+      "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning.",
+      "ai-for-travel-planning-og.jpg",
+    ],
+    [
+      "/blogs/travel-influencer-marketing",
+      "A Guide to Travel Influencer Marketing | Blog by Melange Digital",
+      "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!",
+      "travel-influencer-marketing-og.jpg",
+    ],
+  ]) {
+    const articleImage = `${ORIGIN}/${imageName}`;
+    const articleMeta = resolveMeta(articlePath, {
+      routes: new Set([articlePath]),
+      byPath: {
+        [articlePath]: {
+          seoTitle: articleTitle,
+          metaDescription: articleDescription,
+          title: articleTitle,
+          schemaMode: "custom",
+          customSchema: existingArticleSchema,
+        },
+      },
+      origin: ORIGIN,
+    });
+    assert.strictEqual(articleMeta.title, articleTitle);
+    assert.strictEqual(articleMeta.description, articleDescription);
+    assert.strictEqual(articleMeta.canonical, `${ORIGIN}${articlePath}`);
+    assert.strictEqual(articleMeta.image, articleImage);
+    assert.strictEqual(articleMeta.imageWidth, 1200);
+    assert.strictEqual(articleMeta.imageHeight, 630);
+    assert.strictEqual(articleMeta.imageType, "image/jpeg");
+    assert.strictEqual(articleMeta.ogType, "article");
+    assert.strictEqual(articleMeta.twitterTitle, articleTitle);
+    assert.strictEqual(articleMeta.twitterDescription, articleDescription);
+    const articleShell = applyHead(shell, articleMeta);
+    for (const [tag, value] of [
+      ['property="og:type"', "article"],
+      ['property="og:url"', `${ORIGIN}${articlePath}`],
+      ['property="og:title"', articleTitle],
+      ['property="og:description"', articleDescription],
+      ['property="og:image"', articleImage],
+      ['property="og:image:width"', "1200"],
+      ['property="og:image:height"', "630"],
+      ['property="og:image:type"', "image/jpeg"],
+      ['name="twitter:card"', "summary_large_image"],
+      ['name="twitter:title"', articleTitle],
+      ['name="twitter:description"', articleDescription],
+      ['name="twitter:image"', articleImage],
+    ]) {
+      assert(articleShell.includes(`${tag} content="${esc(value)}"`));
+      assert.strictEqual(
+        (articleShell.match(new RegExp(tag, "g")) || []).length,
+        1,
+        `${tag} must occur once for ${articlePath}`,
+      );
+    }
+    assert(articleShell.includes('"headline":"Existing article schema"'));
+    assert.strictEqual(
+      (articleShell.match(/"@type":"BlogPosting"/g) || []).length,
+      1,
+    );
+  }
 
   const blogsIndex = applyHead(
     shell,
