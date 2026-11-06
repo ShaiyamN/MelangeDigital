@@ -302,6 +302,13 @@ try {
         document.querySelectorAll("link[data-nonblocking-css]").forEach((link) => {
           link.media = "print";
         });
+        // Classic scripts in the snapshot were injected at runtime (marketing jQuery/GSAP
+        // bundles, form validators). Left in the HTML they block the parser before first
+        // paint, then run against DOM that React replaces, and React's boot loads them again.
+        // Every injector re-adds its script on mount, so the snapshot ships none of them.
+        document.querySelectorAll('script[src]:not([type="module"])').forEach((script) => {
+          script.remove();
+        });
         delete window.__PRERENDERING__;
       });
 

@@ -9,6 +9,7 @@ import {
   storePendingReport,
 } from "../../../constants/reportLead";
 import markup from "./markup.html?raw";
+import { afterNextPaint, afterWindowLoad, stylesheetsApplied } from "../marketingShell";
 import "./report-form.css";
 
 const ASSET = "/destination-marketing-agency";
@@ -18,7 +19,8 @@ const CSS = [
   `${ASSET}/css/melange.css?v=20260915t`,
 ];
 
-const SCRIPT_BASES = [
+// Webflow runtime + its GSAP plugins: must start before `load` (see afterNextPaint).
+const WEBFLOW_SCRIPT_BASES = [
   `${ASSET}/js/jquery.js?site=6a2fe655a827b7d915b35c60`,
   `${ASSET}/js/melange.schunk.36b8fb49256177c8.js`,
   `${ASSET}/js/melange.schunk.435a162c7a78ae40.js`,
@@ -26,6 +28,9 @@ const SCRIPT_BASES = [
   `${ASSET}/js/gsap.min.js`,
   `${ASSET}/js/splittext.min.js`,
   `${ASSET}/js/scrolltrigger.min.js`,
+];
+// Widgets (stat counters, creator sphere, testimonials) initialise fine after `load`.
+const WIDGET_SCRIPT_BASES = [
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
   "/about/network-sphere.js?v=20260902f",
   `${ASSET}/js/melange.js?v=20260915r`,
@@ -80,12 +85,13 @@ function teardownDmaAssets() {
 const Home = () => {
   const rootRef = useRef(null);
   const bootId = useRef(0);
-  const [cssReady, setCssReady] = useState(false);
+  // The prerendered page already has these sheets applied: start visible, don't blank it.
+  const [cssReady, setCssReady] = useState(() => stylesheetsApplied(CSS));
   const [formMount, setFormMount] = useState(null);
 
   // Before paint, or the markup's first frame is a blank gated page and the spinner returns late.
   useLayoutEffect(() => {
-    showBootLoader(true);
+    if (!stylesheetsApplied(CSS)) showBootLoader(true);
   }, []);
 
   useEffect(() => {
@@ -105,19 +111,30 @@ const Home = () => {
 
     (async () => {
       teardownDmaAssets();
-      setCssReady(false);
+      if (!stylesheetsApplied(CSS)) setCssReady(false);
       await Promise.all(CSS.map(loadCss));
       if (cancelled || bootId.current !== id) return;
       setCssReady(true);
       showBootLoader(false);
 
       const bust = `dma=${id}`;
+      // Insert a group at once: async=false scripts still execute in insertion order, but
+      // download in parallel instead of a request waterfall.
+      const loadGroup = (bases) =>
+        Promise.all(
+          bases.map((base) => {
+            const sep = base.includes("?") ? "&" : "?";
+            return loadScript(`${base}${sep}${bust}`);
+          }),
+        );
       try {
-        for (const base of SCRIPT_BASES) {
-          if (cancelled || bootId.current !== id) return;
-          const sep = base.includes("?") ? "&" : "?";
-          await loadScript(`${base}${sep}${bust}`);
-        }
+        await afterNextPaint();
+        if (cancelled || bootId.current !== id) return;
+        await loadGroup(WEBFLOW_SCRIPT_BASES);
+
+        await afterWindowLoad();
+        if (cancelled || bootId.current !== id) return;
+        await loadGroup(WIDGET_SCRIPT_BASES);
       } catch (err) {
         if (!cancelled) console.error("[Home]", err);
       }
@@ -151,12 +168,7 @@ const Home = () => {
           content="Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call."
         />
         <link rel="canonical" href="https://melangedigital.co/" data-rh="true" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Lato:wght@400;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
+        {/* Fonts come from the shared non-blocking <link> in index.html. */}
         <base href="/destination-marketing-agency/" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://melangedigital.co/" />

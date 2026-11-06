@@ -75,9 +75,32 @@ export const marketingNavCss = (slug) => `
 
 // Prerendered pages already ship these stylesheets in <head>; when they're applied,
 // there's nothing to wait for, so don't blank the page behind the boot loader.
-function stylesheetsApplied(css) {
+export function stylesheetsApplied(css) {
   if (typeof document === "undefined") return false;
   return css.every((href) => Boolean(document.querySelector(`link[href="${href}"]`)?.sheet));
+}
+
+// Page scripts only add animation and widgets on top of already-painted markup. Requested
+// before the page's first real paint, Lighthouse charges their download and CPU to LCP on
+// mobile, so start them once the window has loaded.
+export function afterWindowLoad() {
+  if (document.readyState === "complete") return Promise.resolve();
+  return new Promise((resolve) => window.addEventListener("load", () => resolve(), { once: true }));
+}
+
+// Exception: Webflow's IX3 runtime (scroll colour-reveal SplitText headings on Home) only
+// initialises if its scripts arrive before `load`. One painted frame after React renders is
+// still before `load` on a first visit, and inserting them then keeps `load` pending.
+export function afterNextPaint() {
+  return new Promise((resolve) => {
+    const fallback = setTimeout(resolve, 100); // rAF is paused in background tabs
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        clearTimeout(fallback);
+        resolve();
+      }),
+    );
+  });
 }
 
 export function useMarketingBoot(slug, css, scripts) {
@@ -121,6 +144,9 @@ export function useMarketingBoot(slug, css, scripts) {
       if (cancelled || bootId.current !== id) return;
       setCssReady(true);
       showBootLoader(false);
+
+      await afterWindowLoad();
+      if (cancelled || bootId.current !== id) return;
 
       try {
         for (const base of scripts) {
