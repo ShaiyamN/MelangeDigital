@@ -137,6 +137,36 @@ const PAGE_META = {
     title: "Blog & Insights | Mélange Digital",
     description: "Insights, ideas, and stories from the Mélange Digital team.",
   },
+  "/blogs/destination-marketing-in-tourism": {
+    title: "Destination Marketing in Tourism: What It Is & Why It Matters",
+    ogTitle: "Destination Marketing in Tourism: What It Is & Why It Matters",
+    description:
+      "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next",
+    image: `${ORIGIN}/destination-marketing-in-tourism-og.jpg`,
+    imageAlt: "Destination Marketing in Tourism – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Destination Marketing in Tourism: What It Is & Why It Matters",
+    twitterDescription:
+      "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next",
+  },
+  "/blogs/experiential-tourism-guide": {
+    title: "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+    ogTitle: "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+    description:
+      "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next",
+    image: `${ORIGIN}/experiential-tourism-og.jpg`,
+    imageAlt: "Experiential Tourism – Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+    twitterDescription:
+      "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next",
+  },
   "/blogs/ai-for-travel-planning": {
     title: "How People Use AI for Travel Planning | Blog by Melange Digital",
     ogTitle: "How People Use AI for Travel Planning | Blog by Melange Digital",
@@ -1260,6 +1290,18 @@ if (require.main === module) {
   );
 
   for (const [articlePath, articleTitle, articleDescription, imageName] of [
+    [
+      "/blogs/destination-marketing-in-tourism",
+      "Destination Marketing in Tourism: What It Is & Why It Matters",
+      "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next",
+      "destination-marketing-in-tourism-og.jpg",
+    ],
+    [
+      "/blogs/experiential-tourism-guide",
+      "Experiential Tourism Guide 2026 | Blog by Melange Digital",
+      "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next",
+      "experiential-tourism-og.jpg",
+    ],
     [
       "/blogs/ai-for-travel-planning",
       "How People Use AI for Travel Planning | Blog by Melange Digital",

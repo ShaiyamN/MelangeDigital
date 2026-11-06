@@ -113,6 +113,9 @@ const BlogDetail = () => {
     );
   }
 
+  const isDestinationMarketingInTourism =
+    slug === "destination-marketing-in-tourism";
+  const isExperientialTourismGuide = slug === "experiential-tourism-guide";
   const isAIForTravelPlanning = slug === "ai-for-travel-planning";
   const isTravelInfluencerMarketing = slug === "travel-influencer-marketing";
   const isAirlinesMarketing = slug === "airlines-marketing";
@@ -123,8 +126,12 @@ const BlogDetail = () => {
   const isCruiseBranding = slug === "cruise-branding";
   const isWhatAreFamTrips = slug === "what-are-fam-trip";
   const isFilmInducedTourism = slug === "film-induced-tourism";
-  const seoTitle = isAIForTravelPlanning
-    ? "How People Use AI for Travel Planning | Blog by Melange Digital"
+  const seoTitle = isDestinationMarketingInTourism
+    ? "Destination Marketing in Tourism: What It Is & Why It Matters"
+    : isExperientialTourismGuide
+      ? "Experiential Tourism Guide 2026 | Blog by Melange Digital"
+      : isAIForTravelPlanning
+        ? "How People Use AI for Travel Planning | Blog by Melange Digital"
     : isTravelInfluencerMarketing
       ? "A Guide to Travel Influencer Marketing | Blog by Melange Digital"
       : isAirlinesMarketing
@@ -142,8 +149,12 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
               : blog.seoTitle || blog.title;
-  const seoDescription = isAIForTravelPlanning
-    ? "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning."
+  const seoDescription = isDestinationMarketingInTourism
+    ? "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next"
+    : isExperientialTourismGuide
+      ? "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next"
+      : isAIForTravelPlanning
+        ? "Travellers now ask an AI chatbot where to go & when to visit before they open a search engine. Here's what's actually changed about AI for travel planning."
     : isTravelInfluencerMarketing
       ? "Travel influencer marketing drives real bookings, not just views. See how travel brands or tourism boards pick creators, measure ROI, and much more!"
       : isAirlinesMarketing
@@ -161,8 +172,12 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
               : blog.metaDescription || blog.description || "";
-  const seoImage = isAIForTravelPlanning
-    ? "https://melangedigital.co/ai-for-travel-planning-og.jpg"
+  const seoImage = isDestinationMarketingInTourism
+    ? "https://melangedigital.co/destination-marketing-in-tourism-og.jpg"
+    : isExperientialTourismGuide
+      ? "https://melangedigital.co/experiential-tourism-og.jpg"
+      : isAIForTravelPlanning
+        ? "https://melangedigital.co/ai-for-travel-planning-og.jpg"
     : isTravelInfluencerMarketing
       ? "https://melangedigital.co/travel-influencer-marketing-og.jpg"
       : isAirlinesMarketing
@@ -180,8 +195,12 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
               : blog.image || "";
-  const seoImageAlt = isAIForTravelPlanning
-    ? "AI for Travel Planning – Mélange Digital"
+  const seoImageAlt = isDestinationMarketingInTourism
+    ? "Destination Marketing in Tourism – Mélange Digital"
+    : isExperientialTourismGuide
+      ? "Experiential Tourism – Mélange Digital"
+      : isAIForTravelPlanning
+        ? "AI for Travel Planning – Mélange Digital"
     : isTravelInfluencerMarketing
       ? "Travel Influencer Marketing – Mélange Digital"
       : isAirlinesMarketing
@@ -200,6 +219,8 @@ const BlogDetail = () => {
               ? "Destination Marketing Strategies – Mélange Digital"
               : blog.altText;
   const hasPageSpecificSocialPreview =
+    isDestinationMarketingInTourism ||
+    isExperientialTourismGuide ||
     isAIForTravelPlanning ||
     isTravelInfluencerMarketing ||
     isAirlinesMarketing ||
@@ -316,7 +337,9 @@ const BlogDetail = () => {
             <meta property="og:url" content={canonicalUrl} data-rh="true" />
             <meta property="og:image:width" content="1200" data-rh="true" />
             <meta property="og:image:height" content="630" data-rh="true" />
-            {(isAIForTravelPlanning ||
+            {(isDestinationMarketingInTourism ||
+              isExperientialTourismGuide ||
+              isAIForTravelPlanning ||
               isTravelInfluencerMarketing ||
               isAirlinesMarketing ||
               isFilmInducedTourism ||
