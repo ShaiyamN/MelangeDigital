@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { logo } from "../../assets/images";
+import DiwaliLogoFx from "./DiwaliLogoFx";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { NavLink, Link } from "react-router-dom";
 import { GLOBAL_NAV_COUNTRIES } from "../../constants/officeGmb";
@@ -653,10 +654,13 @@ const Navbar = () => {
         <div className="bg-white shadow-md">
           <div className="max-w-[1440px] mx-auto">
             <div className="flex justify-between items-center px-4 md:px-12 lg:px-20 h-16 sm:h-[5.3rem]">
-              <div style={{ width: "176px", height: "45px", overflow: "hidden" }}>
-                <Link to="/">
-                  <img src={logo} alt="Mélange Digital logo" className="w-full md:w-auto h-full md:h-auto" />
-                </Link>
+              <div style={{ position: "relative", isolation: "isolate", width: "176px", height: "45px" }}>
+                <div style={{ width: "176px", height: "45px", overflow: "hidden" }}>
+                  <Link to="/">
+                    <img src={logo} alt="Mélange Digital logo" className="w-full md:w-auto h-full md:h-auto" />
+                  </Link>
+                </div>
+                <DiwaliLogoFx />
               </div>
 
               {/* Hamburger — mobile only */}
