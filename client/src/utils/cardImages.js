@@ -30,6 +30,27 @@ export function optimizeCardImages(html, { eagerFirst = false } = {}) {
   });
 }
 
+const CARD_SRC = /^(?:(https:\/\/res\.cloudinary\.com\/[^"/]+\/image\/upload\/)(.+)|\/uploads\/([A-Za-z0-9_-]+\.(?:webp|png|jpe?g|gif|avif)))$/i;
+
+/**
+ * Same resizing as optimizeCardImages, for cards rendered as JSX: returns
+ * { src, srcSet, sizes } for Cloudinary / CMS-upload URLs, or just { src } otherwise.
+ */
+export function cardImageProps(src) {
+  const m = typeof src === "string" ? src.match(CARD_SRC) : null;
+  if (!m) return { src };
+  const [, cloudinaryBase, cloudinaryRest, uploadFile] = m;
+  const base = cloudinaryBase || CLOUDINARY_UPLOAD_BASE;
+  const rest = cloudinaryRest || uploadFile.replace(/\.[^.]+$/, (ext) => ext.toLowerCase());
+  if (/^[a-z]{1,3}_[^/]*\//.test(rest)) return { src };
+  const url = (w) => `${base}f_auto,q_auto,c_limit,w_${w}/${rest}`;
+  return {
+    src: url(800),
+    srcSet: CARD_WIDTHS.map((w) => `${url(w)} ${w}w`).join(", "),
+    sizes: CARD_SIZES,
+  };
+}
+
 /** The card links in rendered markup, for skipping no-op CMS re-renders. */
 export const cardHrefs = (html) =>
   [...html.matchAll(/<a class="svc-project" href="([^"]+)"/g)].map((m) => m[1]).join("|");

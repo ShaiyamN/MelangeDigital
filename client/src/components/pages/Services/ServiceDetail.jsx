@@ -1,14 +1,42 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { db } from "../../../firebase";
 import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
 import { useBtnAnim } from "../../layout/MelangeCta";
 import { SERVICES_DATA, SERVICE_COLLAGE_TILES } from "../../../constants/servicesData";
 import { getServiceCardAltText, resolveServiceSlots } from "../../../constants/serviceCards";
+import { cardImageProps } from "../../../utils/cardImages";
 import "./serviceDetail.css";
+
+/* The two full-bleed bands sit below the fold but their ~480KB of background
+   art used to download alongside the page's JS (inline styles start fetching on
+   first render). Attach the image only when the band nears the viewport. */
+function useLazyBackground(url) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    // Keep the url out of prerendered snapshots, or the HTML would fetch it eagerly again.
+    if (!el || visible || window.__PRERENDERING__) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [visible]);
+  return [ref, visible ? { backgroundImage: `url(${url})` } : undefined];
+}
 
 const CTA_ARROW = "/destination-marketing-agency/images/services/cta-arrow.svg";
 const CTA_ARROW_GHOST = "/destination-marketing-agency/images/services/cta-arrow-ghost.svg";
@@ -69,17 +97,130 @@ const shuffle = (arr) => {
   return next;
 };
 
+/* Position with translate (in container-width units; the box is 573 x 546) rather
+   than left/top: the 5s shuffle animated left/top, and every frame of that
+   counted as a layout shift (CLS). Same placement, same easing. */
+const COLLAGE_RATIO = 546 / 573;
 const slotStyle = (slot) => ({
-  left: `${slot.left}%`,
-  top: `${slot.top}%`,
+  left: 0,
+  top: 0,
   width: `${slot.width}%`,
   height: `${slot.height}%`,
-  transform: `rotate(${slot.rotate}deg) scale(0.9)`,
+  transform: `translate(${slot.left}cqw, ${(slot.top * COLLAGE_RATIO).toFixed(3)}cqw) rotate(${slot.rotate}deg) scale(0.9)`,
 });
+
+const FIRST_INTERACTION_EVENTS = ["pointermove", "pointerdown", "touchstart", "wheel", "scroll", "keydown"];
+
+/* Scattered creator collage. Photos stay on their tile; every 5s they slide into a
+   different slot. The shuffle starts on the visitor's first interaction rather than
+   on load: a collage that keeps rearranging while the page is still settling never
+   reaches a "visually complete" frame, which held mobile Speed Index at ~5s.
+   Own component so the 5s state change re-renders the collage, not the whole page. */
+function HeroCollage({ tiles, folder }) {
+  const [collage, setCollage] = useState({ layout: 0, order: COLLAGE_IDENTITY });
+  const paused = useRef(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let id;
+    const start = () => {
+      if (id) return;
+      FIRST_INTERACTION_EVENTS.forEach((type) => window.removeEventListener(type, start));
+      id = setInterval(() => {
+        if (document.hidden || paused.current) return;
+        setCollage((prev) => ({
+          layout: (prev.layout + 1) % COLLAGE_LAYOUTS.length,
+          order: shuffle(prev.order),
+        }));
+      }, 5000);
+    };
+    FIRST_INTERACTION_EVENTS.forEach((type) => window.addEventListener(type, start, { passive: true }));
+    return () => {
+      FIRST_INTERACTION_EVENTS.forEach((type) => window.removeEventListener(type, start));
+      clearInterval(id);
+    };
+  }, []);
+
+  return (
+    <div
+      className={`svc-collage svc-collage--${folder}`}
+      onMouseEnter={() => {
+        paused.current = true;
+      }}
+      onMouseLeave={() => {
+        paused.current = false;
+      }}
+    >
+      {tiles.map((tile, i) => (
+        <div
+          key={`${folder}-${i}`}
+          className={`svc-collage__tile svc-collage__tile--${i + 1}`}
+          style={slotStyle(COLLAGE_LAYOUTS[collage.layout][collage.order[i]])}
+        >
+          <img
+            src={tile.src}
+            alt={tile.alt || ""}
+            loading={i < 4 ? "eager" : "lazy"}
+            decoding="async"
+            style={{
+              objectPosition: tile.position || "center 25%",
+              objectFit: tile.fit || "cover",
+            }}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.alt = tile.fallbackAlt || "";
+              e.currentTarget.src = `${COLLAGE_BASE}/tile-${(i % 8) + 1}.jpg`;
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* Auto-advancing process steps; own component so the 3s tick doesn't re-render the page. */
+function ProcessStepper({ steps }) {
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    setActiveStep(0);
+    if (!steps?.length) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const n = steps.length;
+    let wrapTimer;
+    const id = setInterval(() => {
+      setActiveStep((i) => {
+        if (i === n - 1) {
+          wrapTimer = setTimeout(() => setActiveStep(0), 320);
+          return -1;
+        }
+        return i + 1;
+      });
+    }, 3000);
+    return () => {
+      clearInterval(id);
+      clearTimeout(wrapTimer);
+    };
+  }, [steps]);
+
+  return (
+    <div className="svc-stepper-container" style={{ "--svc-steps": steps.length }}>
+      <div className="svc-stepper-line" aria-hidden="true" />
+      {steps.map((step, idx) => (
+        <div key={idx} className={`svc-step-node${idx === activeStep ? " is-active" : ""}`}>
+          <div className="svc-step-badge">{step.number}</div>
+          <div className="svc-step-content">
+            <h3 className="svc-step-title">{step.title}</h3>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function PillarIcon({ src, alt = "" }) {
   if (!src) return null;
-  return <img className="svc-pillar-icon" src={src} alt={alt} />;
+  return <img className="svc-pillar-icon" src={src} alt={alt} loading="lazy" decoding="async" />;
 }
 
 function AnimCta({ to, className, arrowSrc, children }) {
@@ -133,10 +274,6 @@ export default function ServiceDetail() {
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [faqCollapsed, setFaqCollapsed] = useState(true);
 
-  const [activeStep, setActiveStep] = useState(0);
-  const [collage, setCollage] = useState({ layout: 0, order: COLLAGE_IDENTITY });
-  const collagePaused = useRef(false);
-
   const serviceKey =
     slug === "influencer-marketing"
       ? "influencer"
@@ -161,7 +298,6 @@ export default function ServiceDetail() {
   const [cards, setCards] = useState(() => resolveServiceSlots(serviceKey));
 
   useEffect(() => {
-    setActiveStep(0);
     setOpenFaqIndex(0);
     setFaqCollapsed(true);
   }, [serviceKey]);
@@ -173,61 +309,50 @@ export default function ServiceDetail() {
     }
     setCards(resolveServiceSlots(serviceKey));
     let active = true;
-    if (db) {
-      Promise.all([
-        getDoc(doc(db, "settings", "service_cards")).catch(() => null),
-        getDocs(collection(db, "casestudies")).catch(() => null),
-      ])
-        .then(([snap, csSnap]) => {
-          if (!active) return;
-          const settingsData = snap && snap.exists() ? snap.data() : null;
-          const caseStudiesList = csSnap && !csSnap.empty
-            ? csSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
-            : null;
-          if (settingsData || caseStudiesList) {
-            setCards(resolveServiceSlots(serviceKey, settingsData, caseStudiesList));
-          }
-        })
-        .catch((err) => {
-          console.warn("Could not load dynamic service cards for detail:", err);
-        });
+    let idleHandle;
+    const loadCards = async () => {
+      try {
+        // Firebase is ~500KB of JS; keep it off the critical path (same as /services).
+        // Firestore only: this page never signs anyone in, so skip booting Auth.
+        const [{ db }, { doc, getDoc, collection, getDocs }] = await Promise.all([
+          import("../../../firebaseDb"),
+          import("firebase/firestore"),
+        ]);
+        if (!active || !db) return;
+        const [snap, csSnap] = await Promise.all([
+          getDoc(doc(db, "settings", "service_cards")).catch(() => null),
+          getDocs(collection(db, "casestudies")).catch(() => null),
+        ]);
+        if (!active) return;
+        const settingsData = snap && snap.exists() ? snap.data() : null;
+        const caseStudiesList = csSnap && !csSnap.empty
+          ? csSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
+          : null;
+        if (settingsData || caseStudiesList) {
+          const next = resolveServiceSlots(serviceKey, settingsData, caseStudiesList);
+          // Skip the re-render when the CMS agrees with what is already on screen.
+          setCards((current) => {
+            const sig = (list) => list.map((c) => [c.slug, c.title, c.caption, c.bannerImage].join("~")).join("|");
+            return sig(current) === sig(next) ? current : next;
+          });
+        }
+      } catch (err) {
+        console.warn("Could not load dynamic service cards for detail:", err);
+      }
+    };
+    if (window.__PRERENDERING__ || !("requestIdleCallback" in window)) {
+      loadCards();
+    } else {
+      idleHandle = window.requestIdleCallback(loadCards, { timeout: 4000 });
     }
     return () => {
       active = false;
+      if (idleHandle) window.cancelIdleCallback(idleHandle);
     };
   }, [serviceKey]);
 
-  useEffect(() => {
-    if (!service?.process?.steps?.length) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const n = service.process.steps.length;
-    let wrapTimer;
-    const id = setInterval(() => {
-      setActiveStep((i) => {
-        if (i === n - 1) {
-          wrapTimer = setTimeout(() => setActiveStep(0), 320);
-          return -1;
-        }
-        return i + 1;
-      });
-    }, 3000);
-    return () => {
-      clearInterval(id);
-      clearTimeout(wrapTimer);
-    };
-  }, [service]);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = setInterval(() => {
-      if (document.hidden || collagePaused.current) return;
-      setCollage((prev) => ({
-        layout: (prev.layout + 1) % COLLAGE_LAYOUTS.length,
-        order: shuffle(prev.order),
-      }));
-    }, 5000);
-    return () => clearInterval(id);
-  }, []);
+  const [bandRef, bandBgStyle] = useLazyBackground(BAND_BG);
+  const [ctaBgRef, ctaBgStyle] = useLazyBackground(service?.bottomCta?.bgImage || CTA_BG);
 
   // If slug doesn't match any known service, fallback to services index
   if (!service) {
@@ -354,39 +479,7 @@ export default function ServiceDetail() {
 
             {/* Scattered creator collage */}
             <div className="svc-hero-right" aria-hidden="true">
-              <div
-                className={`svc-collage svc-collage--${serviceFolder}`}
-                onMouseEnter={() => {
-                  collagePaused.current = true;
-                }}
-                onMouseLeave={() => {
-                  collagePaused.current = false;
-                }}
-              >
-                {collageTiles.map((tile, i) => (
-                    <div
-                      key={`${serviceFolder}-${i}`}
-                      className={`svc-collage__tile svc-collage__tile--${i + 1}`}
-                      style={slotStyle(COLLAGE_LAYOUTS[collage.layout][collage.order[i]])}
-                    >
-                      <img
-                        src={tile.src}
-                        alt={tile.alt || ""}
-                        loading={i < 4 ? "eager" : "lazy"}
-                        decoding="async"
-                        style={{
-                          objectPosition: tile.position || "center 25%",
-                          objectFit: tile.fit || "cover",
-                        }}
-                        onError={(e) => {
-                          e.currentTarget.onerror = null;
-                          e.currentTarget.alt = tile.fallbackAlt || "";
-                          e.currentTarget.src = `${COLLAGE_BASE}/tile-${(i % 8) + 1}.jpg`;
-                        }}
-                      />
-                    </div>
-                ))}
-              </div>
+              <HeroCollage tiles={collageTiles} folder={serviceFolder} />
             </div>
           </div>
         </section>
@@ -426,8 +519,9 @@ export default function ServiceDetail() {
 
           {/* WHERE IT WORKS band */}
           <div
+            ref={bandRef}
             className="svc-philosophy-banner"
-            style={{ backgroundImage: `url(${BAND_BG})` }}
+            style={bandBgStyle}
           >
             <div className="svc-philosophy-overlay" aria-hidden="true" />
             <div className="svc-philosophy-banner-inner">
@@ -510,20 +604,7 @@ export default function ServiceDetail() {
             <p className="svc-process-desc">{service.process.description}</p>
           </div>
 
-          <div
-            className="svc-stepper-container"
-            style={{ "--svc-steps": service.process.steps.length }}
-          >
-            <div className="svc-stepper-line" aria-hidden="true" />
-            {service.process.steps.map((step, idx) => (
-              <div key={idx} className={`svc-step-node${idx === activeStep ? " is-active" : ""}`}>
-                <div className="svc-step-badge">{step.number}</div>
-                <div className="svc-step-content">
-                  <h3 className="svc-step-title">{step.title}</h3>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProcessStepper steps={service.process.steps} />
         </section>
 
         <hr className="svc-rule" />
@@ -545,10 +626,11 @@ export default function ServiceDetail() {
                   <div className="svc-project__media">
                     <img
                       alt={getServiceCardAltText(cs)}
-                      src={cs.bannerImage}
+                      {...cardImageProps(cs.bannerImage)}
                       width="1060"
                       height="530"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="svc-project__bar">
@@ -618,8 +700,9 @@ export default function ServiceDetail() {
         {/* 7. BOTTOM CTA BAND */}
         <section className="svc-bottom-cta-section" aria-label="Call to Action">
           <div
+            ref={ctaBgRef}
             className="svc-bottom-cta-bg"
-            style={{ backgroundImage: `url(${service.bottomCta.bgImage || CTA_BG})` }}
+            style={ctaBgStyle}
             aria-hidden="true"
           />
           <div className="svc-bottom-cta-inner">

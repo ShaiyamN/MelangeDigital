@@ -1,1 +1,0 @@
-import{g as a,c as s}from"./index.esm-BaoAufDY.js";import{d as r}from"./firebase-DaiaoKRB.js";const n=6e4;let e,i=0;function m(){return r?((!e||Date.now()-i>=n)&&(i=Date.now(),e=a(s(r,"casestudies")).then(t=>t.docs.map(o=>({id:o.id,...o.data()}))).catch(t=>{throw e=void 0,i=0,t})),e):Promise.reject(new Error("Firebase is not initialized."))}export{m as loadCaseStudies};
