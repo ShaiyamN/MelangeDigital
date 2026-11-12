@@ -254,6 +254,8 @@
   position: relative;
   width: 100%;
   aspect-ratio: 573 / 546;
+  /* Tiles are placed with translate(...cqw) — see slotStyle in ServiceDetail.jsx */
+  container-type: inline-size;
 }
 
 .svc-collage__tile {
