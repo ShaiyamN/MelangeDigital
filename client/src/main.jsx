@@ -5,18 +5,33 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import { HelmetProvider } from "react-helmet-async";
 
-// gtag + the Meta pixel are ~400KB of third-party JS. Fetching them during first load
-// competes with the LCP image on mobile, so the scripts are appended once the page has
-// loaded and gone idle. The stubs below queue calls immediately, so nothing is lost.
-function appendWhenIdle(script) {
-  const append = () => document.head.appendChild(script);
-  const schedule = () =>
-    "requestIdleCallback" in window
-      ? window.requestIdleCallback(append, { timeout: 3000 })
-      : window.setTimeout(append, 1500);
-  if (document.readyState === "complete") schedule();
-  else window.addEventListener("load", schedule, { once: true });
+// gtag + the Meta pixel are ~400KB of third-party JS. Run during first load, their long
+// tasks (~400ms on PageSpeed desktop) land inside the Total Blocking Time window, and an
+// "on idle" start is too early on fast loads. So they start on the visitor's first
+// interaction, or 15s after load for visitors who never interact. The stubs below queue
+// calls immediately (incl. the PageView), so nothing is lost once the scripts arrive.
+const THIRD_PARTY_TRIGGERS = ["pointerdown", "pointermove", "keydown", "touchstart", "wheel"];
+const pendingThirdParty = [];
+let thirdPartyStarted = false;
+
+function startThirdParty() {
+  if (thirdPartyStarted) return;
+  thirdPartyStarted = true;
+  THIRD_PARTY_TRIGGERS.forEach((type) => window.removeEventListener(type, startThirdParty));
+  pendingThirdParty.splice(0).forEach((script) => document.head.appendChild(script));
 }
+
+function appendWhenIdle(script) {
+  if (thirdPartyStarted) document.head.appendChild(script);
+  else pendingThirdParty.push(script);
+}
+
+THIRD_PARTY_TRIGGERS.forEach((type) =>
+  window.addEventListener(type, startThirdParty, { once: true, passive: true }),
+);
+const startThirdPartyFallback = () => window.setTimeout(startThirdParty, 15000);
+if (document.readyState === "complete") startThirdPartyFallback();
+else window.addEventListener("load", startThirdPartyFallback, { once: true });
 
 function loadAnalytics() {
   if (window.__PRERENDERING__ || window.__melangeAnalyticsLoaded) return;

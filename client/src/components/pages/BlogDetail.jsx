@@ -12,11 +12,20 @@ import { linkedin, instagram } from "../../assets/images";
 import ReactPlayer from "react-player";
 import { formatBlogCategory } from "../../constants/blogCategories";
 import { cloudinaryUrl, cloudinarySrcSet } from "../../utils/cloudinaryImage";
+import { runQuery } from "../../utils/firestoreRest";
 
 // prerender.js snapshots the page after Firestore loads. The blog data is saved in
 // <head> as JSON so the first client render can reuse it instead of replacing the
 // prerendered article with a spinner while Firestore loads (that delay was the LCP).
 const PRERENDER_DATA_ID = "__blog_prerender_data__";
+
+// JSON with sorted keys: REST and the prerendered snapshot list fields in different orders.
+const stableJson = (value) =>
+  JSON.stringify(value, (_key, v) =>
+    v && typeof v === "object" && !Array.isArray(v)
+      ? Object.fromEntries(Object.keys(v).sort().map((k) => [k, v[k]]))
+      : v,
+  );
 
 function readPrerenderedBlog(slug) {
   if (typeof document === "undefined") return null;
@@ -83,33 +92,25 @@ const BlogDetail = () => {
 
     const fetchBlogAndInsights = async () => {
       try {
-        // Firestore is ~500KB of JS; load it lazily (Firestore only, no Auth) so the
-        // prerendered article can render without waiting for it.
-        const [{ db }, { collection, query, where, getDocs, limit }] = await Promise.all([
-          import("../../firebaseDb"),
-          import("firebase/firestore"),
-        ]);
-        if (!active || !db) return;
-        // Query current blog
-        const q = query(collection(db, "blogs"), where("slug", "==", slug));
-        const querySnapshot = await getDocs(q);
+        // Firestore REST (one fetch per query) instead of the SDK: no ~500KB of JS, and no
+        // streaming connection left open after the read.
+        const docs = await runQuery("blogs", { where: { field: "slug", equals: slug } });
         if (!active) return;
 
-        if (!querySnapshot.empty) {
-          const blogData = querySnapshot.docs[0].data();
+        if (docs.length) {
+          const blogData = docs[0].data;
           // Skip the re-render when the CMS agrees with the prerendered article.
           setBlog((current) =>
-            current && JSON.stringify(current) === JSON.stringify(blogData) ? current : blogData,
+            current && stableJson(current) === stableJson(blogData) ? current : blogData,
           );
-          
+
           // Query 3 other blogs for related insights
-          const insightsQuery = query(collection(db, "blogs"), limit(4));
-          const insightsSnapshot = await getDocs(insightsQuery);
+          const insightDocs = await runQuery("blogs", { limit: 4 });
           if (!active) return;
-          const rawInsights = insightsSnapshot.docs
+          const rawInsights = insightDocs
             .map((doc) => ({
               id: doc.id,
-              ...doc.data()
+              ...doc.data
             }))
             .filter((item) => item.slug !== slug) // Exclude current blog
             .slice(0, 3); // Take top 3
