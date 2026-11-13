@@ -1,21 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { collection, query, where, getDocs, limit } from "firebase/firestore";
-import { db } from "../../firebase";
-import { Navbar, Footer, BreadCrumbs, Insights } from "../layout";
+// Direct imports: the ../layout barrel also pulls in OpeningPositions, which loads
+// Firebase Auth + Firestore up front on every blog page.
+import Navbar from "../layout/Navbar";
+import Footer from "../layout/Footer";
+import BreadCrumbs from "../layout/BreadCrumbs";
 
 import { Helmet } from "react-helmet-async";
 import { activeBlogSchema } from "../../utils/blogSchema";
 import { linkedin, instagram } from "../../assets/images";
 import ReactPlayer from "react-player";
 import { formatBlogCategory } from "../../constants/blogCategories";
+import { cloudinaryUrl, cloudinarySrcSet } from "../../utils/cloudinaryImage";
 
+// prerender.js snapshots the page after Firestore loads. The blog data is saved in
+// <head> as JSON so the first client render can reuse it instead of replacing the
+// prerendered article with a spinner while Firestore loads (that delay was the LCP).
+const PRERENDER_DATA_ID = "__blog_prerender_data__";
+
+function readPrerenderedBlog(slug) {
+  if (typeof document === "undefined") return null;
+  const el = document.getElementById(PRERENDER_DATA_ID);
+  if (!el) return null;
+  try {
+    const data = JSON.parse(el.textContent || "");
+    return data && data.slug === slug && data.blog ? data : null;
+  } catch {
+    return null;
+  }
+}
 
 const BlogDetail = () => {
   const { slug } = useParams();
-  const [blog, setBlog] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [insights, setInsights] = useState([]);
+  const [prerendered] = useState(() => readPrerenderedBlog(slug));
+  const [blog, setBlog] = useState(() => prerendered?.blog ?? null);
+  const [loading, setLoading] = useState(() => !prerendered);
+  const [insights, setInsights] = useState(() => prerendered?.insights ?? []);
   const [toc, setToc] = useState([]);
 
   useEffect(() => {
@@ -49,20 +69,43 @@ const BlogDetail = () => {
   };
 
   useEffect(() => {
-    const fetchBlogAndInsights = async () => {
+    let active = true;
+    let idleHandle;
+    // Prerendered data for this slug: show it now, refresh from Firestore quietly.
+    const cached = readPrerenderedBlog(slug);
+    if (cached) {
+      setBlog(cached.blog);
+      setInsights(cached.insights ?? []);
+      setLoading(false);
+    } else {
       setLoading(true);
+    }
+
+    const fetchBlogAndInsights = async () => {
       try {
+        // Firestore is ~500KB of JS; load it lazily (Firestore only, no Auth) so the
+        // prerendered article can render without waiting for it.
+        const [{ db }, { collection, query, where, getDocs, limit }] = await Promise.all([
+          import("../../firebaseDb"),
+          import("firebase/firestore"),
+        ]);
+        if (!active || !db) return;
         // Query current blog
         const q = query(collection(db, "blogs"), where("slug", "==", slug));
         const querySnapshot = await getDocs(q);
-        
+        if (!active) return;
+
         if (!querySnapshot.empty) {
           const blogData = querySnapshot.docs[0].data();
-          setBlog(blogData);
+          // Skip the re-render when the CMS agrees with the prerendered article.
+          setBlog((current) =>
+            current && JSON.stringify(current) === JSON.stringify(blogData) ? current : blogData,
+          );
           
           // Query 3 other blogs for related insights
           const insightsQuery = query(collection(db, "blogs"), limit(4));
           const insightsSnapshot = await getDocs(insightsQuery);
+          if (!active) return;
           const rawInsights = insightsSnapshot.docs
             .map((doc) => ({
               id: doc.id,
@@ -86,12 +129,34 @@ const BlogDetail = () => {
       } catch (err) {
         console.error("Error fetching blog details:", err);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
-    fetchBlogAndInsights();
+    // With prerendered data on screen, wait for idle so Firestore stays off the
+    // critical path (same as /services). Otherwise fetch now: the page needs the data.
+    if (cached && !window.__PRERENDERING__ && "requestIdleCallback" in window) {
+      idleHandle = window.requestIdleCallback(fetchBlogAndInsights, { timeout: 4000 });
+    } else {
+      fetchBlogAndInsights();
+    }
+    return () => {
+      active = false;
+      if (idleHandle !== undefined) window.cancelIdleCallback?.(idleHandle);
+    };
   }, [slug]);
+
+  useEffect(() => {
+    if (!blog || typeof window === "undefined" || !window.__PRERENDERING__) return;
+    let el = document.getElementById(PRERENDER_DATA_ID);
+    if (!el) {
+      el = document.createElement("script");
+      el.type = "application/json";
+      el.id = PRERENDER_DATA_ID;
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify({ slug, blog, insights }).replace(/</g, "\\u003c");
+  }, [slug, blog, insights]);
 
   if (loading) {
     return (
@@ -392,7 +457,11 @@ const BlogDetail = () => {
             <div className="w-full mt-5">
               <picture>
                 <img
-                  src={blog.image}
+                  src={cloudinaryUrl(blog.image, 1280)}
+                  srcSet={cloudinarySrcSet(blog.image, [640, 960, 1280, 1600])}
+                  sizes="(min-width: 1440px) 1280px, (min-width: 1024px) calc(100vw - 160px), calc(100vw - 40px)"
+                  fetchpriority="high"
+                  decoding="async"
                   alt={blog.altText || blog.title}
                   className="w-full lg:rounded-[30px] rounded-xl shadow-md"
                   style={{
@@ -496,7 +565,9 @@ const BlogDetail = () => {
                     {block.type === 'image' && block.url && (
                       <div className="w-full flex justify-center mt-5 mb-5">
                         <img
-                          src={block.url}
+                          src={cloudinaryUrl(block.url, 1200)}
+                          loading="lazy"
+                          decoding="async"
                           alt={block.altText || blog.title || ""}
                           className={`${getImageSizeClass(block.imageSize)} ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-2xl shadow-lg ${getImageFitClass(block.imageFit)}`}
                         />
@@ -510,7 +581,9 @@ const BlogDetail = () => {
                           imgUrl ? (
                             <div key={imgIdx} className="w-full overflow-hidden rounded-2xl shadow-md">
                               <img
-                                src={imgUrl}
+                                src={cloudinaryUrl(imgUrl, 800)}
+                                loading="lazy"
+                                decoding="async"
                                 alt={block.altTexts?.[imgIdx] || `${blog.title || "Blog"} image ${imgIdx + 1}`}
                                 className={`w-full h-[220px] md:h-[280px] lg:h-[340px] ${getImageFitClass(block.imageFit || 'cover')}`}
                               />
@@ -562,7 +635,9 @@ const BlogDetail = () => {
                             <div className={`relative group ${getImageSizeClass(block.imageSize)}`}>
                               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-[32px] blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
                               <img
-                                src={block.url}
+                                src={cloudinaryUrl(block.url, 1000)}
+                                loading="lazy"
+                                decoding="async"
                                 alt={block.altText || block.subheading || blog.title || ""}
                                 className={`w-full ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-[32px] shadow-2xl object-cover relative z-10 border border-black/5 dark:border-white/10`}
                               />

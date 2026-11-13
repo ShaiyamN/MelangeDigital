@@ -320,7 +320,12 @@ try {
       html = html.replace(/[ \t]+$/gm, "");
       // These pages import Firestore on idle, but the snapshot ran that import and kept
       // Vite's modulepreload for it: ~500KB fetched at high priority on every load.
-      if (route === "/work" || route === "/services" || route.startsWith("/services/")) {
+      if (
+        route === "/work" ||
+        route === "/services" ||
+        route.startsWith("/services/") ||
+        route.startsWith("/blogs/")
+      ) {
         html = html.replace(/\s*<link rel="modulepreload"[^>]*href="\/assets\/index\.esm-[^"]+\.js"[^>]*>/g, "");
       }
       const marker = `<!-- prerendered-route:${route} -->`;
