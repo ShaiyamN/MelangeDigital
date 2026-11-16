@@ -322,9 +322,11 @@ try {
       // Vite's modulepreload for it: ~500KB fetched at high priority on every load.
       if (
         route === "/work" ||
+        route === "/blogs" ||
         route === "/services" ||
         route.startsWith("/services/") ||
-        route.startsWith("/blogs/")
+        route.startsWith("/blogs/") ||
+        route.startsWith("/work/")
       ) {
         html = html.replace(/\s*<link rel="modulepreload"[^>]*href="\/assets\/index\.esm-[^"]+\.js"[^>]*>/g, "");
       }

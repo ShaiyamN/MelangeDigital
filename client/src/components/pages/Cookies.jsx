@@ -10,13 +10,14 @@ const CookiePolicy = () => {
     <>
       <Helmet>
         <title>Cookie Policy | Mélange Digital</title>
+        <meta name="description" content="Cookie Policy for Mélange Digital to understand our use of cookies." />
         <link rel="canonical" href="https://melangedigital.co/cookie-policy" data-rh="true" />
       </Helmet>
       <Navbar />
       <div className="container font-nunito mx-auto text-[#1a1a1a] xxl:px-[100px] bg-white pt-[100px] lg:pt-[120px] pb-[50px] lg:pb-[100px] px-4  lg:px-[80px]">
-        <h2 className="text-display font-display font-semibold mb-6">
+        <h1 className="text-display font-display font-semibold mb-6">
           Cookie Policy
-        </h2>
+        </h1>
 
         <p className="mb-6 text-[18px] lg:text-[20px]">
           Welcome to Mélange Digital! This Cookie Policy is designed to inform

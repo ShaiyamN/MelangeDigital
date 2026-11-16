@@ -11,13 +11,14 @@ const Refund = () => {
     <>
       <Helmet>
         <title>Cancellation & Refund Policy | Mélange Digital</title>
+        <meta name="description" content="Cancellation and Refund Policy for Mélange Digital services." />
         <link rel="canonical" href="https://melangedigital.co/cancellation-and-refund-policy" data-rh="true" />
       </Helmet>
       <Navbar />
       <div className="container font-nunito mx-auto text-[#1a1a1a] xxl:px-[100px] bg-white pt-[100px] lg:pt-[120px] pb-[50px] lg:pb-[100px] px-4 lg:px-[80px]">
-        <h2 className="text-display font-display whitespace-nowrap font-semibold mb-6">
+        <h1 className="text-display font-display whitespace-nowrap font-semibold mb-6">
           Cancellation & Refund Policy
-        </h2>
+        </h1>
 
         <h2 className="text-xl font-bold mb-2 text-black">
           1. Cancellation Policy

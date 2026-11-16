@@ -1,15 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
-import { loadCaseStudies } from "../../../constants/caseStudyData";
-import {
-  Navbar,
-  Footer,
-  BreadCrumbs,
-  WorkSummaryForServicesPage,
-} from "../../layout";
+import { useParams, Link, useLocation } from "react-router-dom";
+// Direct imports: the ../layout barrel also pulls in OpeningPositions, which loads
+// Firebase Auth + Firestore up front.
+import Navbar from "../../layout/Navbar";
+import Footer from "../../layout/Footer";
+import BreadCrumbs from "../../layout/BreadCrumbs";
 import { Helmet } from "react-helmet-async";
 import ReactPlayer from "react-player";
 import CASE_STUDY_SEO from "../../../constants/caseStudySeo.json" with { type: "json" };
+import { runQuery } from "../../../utils/firestoreRest";
+
+// prerender.js snapshots the page after the CMS loads. The case study is saved in <head>
+// as JSON so the first client render reuses it. Without it, React replaced the
+// prerendered article with a loading skeleton (no H1, ~13 words) until Firestore
+// answered, and crawlers that run JS indexed the skeleton.
+const PRERENDER_DATA_ID = "__case_study_prerender_data__";
+
+// JSON with sorted keys: REST and the prerendered snapshot list fields in different orders.
+const stableJson = (value) =>
+  JSON.stringify(value, (_key, v) =>
+    v && typeof v === "object" && !Array.isArray(v)
+      ? Object.fromEntries(Object.keys(v).sort().map((k) => [k, v[k]]))
+      : v,
+  );
+
+function readPrerenderedCaseStudy(slug) {
+  if (typeof document === "undefined") return null;
+  const el = document.getElementById(PRERENDER_DATA_ID);
+  if (!el) return null;
+  try {
+    const data = JSON.parse(el.textContent || "");
+    return data && data.slug === slug && data.cs ? data.cs : null;
+  } catch {
+    return null;
+  }
+}
 
 const SLUG_ALIASES = {
   "singapore-tourism-board": ["singapore-tourism-board-stb"],
@@ -39,15 +64,27 @@ const CaseStudyDetail = () => {
   // Fallback: React Router v6 prioritises literal routes over /:slug,
   // so useParams may return {} for hardcoded routes. Extract from URL instead.
   const slug = (paramSlug || location.pathname.replace(/^\/work\/?/, "")).replace(/\/+$/, "");
-  const [cs, setCs] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const [cs, setCs] = useState(() => readPrerenderedCaseStudy(slug));
+  const [loading, setLoading] = useState(() => !readPrerenderedCaseStudy(slug));
 
   useEffect(() => {
-    const fetchCaseStudy = async () => {
+    let active = true;
+    let idleHandle;
+    // Prerendered data for this slug: show it now, refresh from Firestore quietly.
+    const cached = readPrerenderedCaseStudy(slug);
+    if (cached) {
+      setCs(cached);
+      setLoading(false);
+    } else {
       setLoading(true);
+    }
+
+    const fetchCaseStudy = async () => {
       try {
-        const all = await loadCaseStudies();
+        // Firestore REST (one fetch) instead of the SDK: no ~500KB of JS, and no
+        // streaming connection left open after the read.
+        const all = (await runQuery("casestudies")).map((doc) => ({ id: doc.id, ...doc.data }));
+        if (!active) return;
         const candidateSlugs = [slug, ...(SLUG_ALIASES[slug] || [])];
         let data = candidateSlugs
           .map((candidate) => all.find((item) => item.slug === candidate))
@@ -56,16 +93,41 @@ const CaseStudyDetail = () => {
           const lower = slug.toLowerCase();
           data = all.find((item) => (item.slug || "").toLowerCase() === lower) || null;
         }
-        setCs(data);
+        // Skip the re-render when the CMS agrees with the prerendered case study.
+        setCs((current) =>
+          current && data && stableJson(current) === stableJson(data) ? current : data,
+        );
       } catch (err) {
         console.error("Error fetching case study:", err);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     };
 
-    fetchCaseStudy();
+    // With prerendered data on screen, wait for idle so Firestore stays off the
+    // critical path. Otherwise fetch now: the page needs the data.
+    if (cached && !window.__PRERENDERING__ && "requestIdleCallback" in window) {
+      idleHandle = window.requestIdleCallback(fetchCaseStudy, { timeout: 4000 });
+    } else {
+      fetchCaseStudy();
+    }
+    return () => {
+      active = false;
+      if (idleHandle !== undefined) window.cancelIdleCallback?.(idleHandle);
+    };
   }, [slug]);
+
+  useEffect(() => {
+    if (!cs || typeof window === "undefined" || !window.__PRERENDERING__) return;
+    let el = document.getElementById(PRERENDER_DATA_ID);
+    if (!el) {
+      el = document.createElement("script");
+      el.type = "application/json";
+      el.id = PRERENDER_DATA_ID;
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify({ slug, cs }).replace(/</g, "\\u003c");
+  }, [slug, cs]);
 
   useEffect(() => {
     const handleScroll = () => {

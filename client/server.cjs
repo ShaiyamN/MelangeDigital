@@ -132,6 +132,11 @@ const SEO_REDIRECTS = {
   "/work/neotraders": "/work/neotraders",
   "/work/devboost": "/work/devboost",
   "/blog": "/blogs",
+  // Old URLs that served the homepage shell (SEO audit 2026-11-16).
+  "/destination-marketing-in-tourism": "/blogs/destination-marketing-in-tourism",
+  "/blogs/influencer-marketing-for-the-unreachable": "/blogs/travel-influencer-marketing",
+  "/influencer-marketing-for-the-unreachable": "/blogs/travel-influencer-marketing",
+  "/work/make-my-trip": "/work",
   "/work/GenVR": "/work/genvr",
   "/work/neoTraders": "/work/neotraders",
   "/work/devBoost": "/work/devboost",

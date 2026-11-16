@@ -1,31 +1,89 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
-import { Navbar, Footer, BreadCrumbs, BlogCatg } from "../layout";
+// Direct imports: the ../layout barrel also pulls in OpeningPositions, which loads
+// Firebase Auth + Firestore up front.
+import Navbar from "../layout/Navbar";
+import Footer from "../layout/Footer";
+import BreadCrumbs from "../layout/BreadCrumbs";
+import BlogCatg from "../layout/BlogCatg";
 import { formatBlogCategory } from "../../constants/blogCategories";
+import { runQuery } from "../../utils/firestoreRest";
+
+// prerender.js snapshots the list after the CMS loads. The cards' data is saved in <head>
+// as JSON so the first client render reuses it. Without it, React replaced the
+// prerendered post links with a skeleton until Firestore answered, and crawlers that
+// run JS saw /blogs with no links to the posts.
+const PRERENDER_DATA_ID = "__blogs_prerender_data__";
+const CARD_FIELDS = ["id", "slug", "title", "image", "altText", "categories", "category", "date", "datePublished", "description"];
+
+function toCard(post) {
+  return Object.fromEntries(CARD_FIELDS.filter((k) => post[k] !== undefined).map((k) => [k, post[k]]));
+}
+
+function readPrerenderedPosts() {
+  if (typeof document === "undefined") return null;
+  const el = document.getElementById(PRERENDER_DATA_ID);
+  if (!el) return null;
+  try {
+    const data = JSON.parse(el.textContent || "");
+    return Array.isArray(data) && data.length ? data : null;
+  } catch {
+    return null;
+  }
+}
 
 const Blogs = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState(() => readPrerenderedPosts() ?? []);
+  const [loading, setLoading] = useState(() => !readPrerenderedPosts());
   const [selectedCategory, setSelectedCategory] = useState(null);
   const contentRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setLoading(true);
-    getDocs(collection(db, "blogs"))
-      .then((snapshot) => {
-        setPosts(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      })
-      .catch((error) => {
-        console.error("Error loading blogs:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    let active = true;
+    let idleHandle;
+    const cached = readPrerenderedPosts();
+    const fetchPosts = () =>
+      runQuery("blogs")
+        .then((docs) => {
+          if (!active) return;
+          const fresh = docs.map((doc) => toCard({ id: doc.id, ...doc.data }));
+          setPosts((current) =>
+            JSON.stringify(current) === JSON.stringify(fresh) ? current : fresh,
+          );
+        })
+        .catch((error) => {
+          console.error("Error loading blogs:", error);
+        })
+        .finally(() => {
+          if (active) setLoading(false);
+        });
+
+    // With prerendered cards on screen, refresh on idle so Firestore stays off the
+    // critical path. Otherwise fetch now: the page needs the data.
+    if (cached && !window.__PRERENDERING__ && "requestIdleCallback" in window) {
+      idleHandle = window.requestIdleCallback(fetchPosts, { timeout: 4000 });
+    } else {
+      fetchPosts();
+    }
+    return () => {
+      active = false;
+      if (idleHandle !== undefined) window.cancelIdleCallback?.(idleHandle);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!posts.length || typeof window === "undefined" || !window.__PRERENDERING__) return;
+    let el = document.getElementById(PRERENDER_DATA_ID);
+    if (!el) {
+      el = document.createElement("script");
+      el.type = "application/json";
+      el.id = PRERENDER_DATA_ID;
+      document.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify(posts).replace(/</g, "\\u003c");
+  }, [posts]);
 
   const availableCategories = useMemo(() => {
     const catSet = new Set();

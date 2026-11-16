@@ -26,14 +26,14 @@ const PAGE_META = {
   "/contact": {
     title: "Contact a Tourism Board Marketing Agency in India | Mélange Digital",
     description:
-      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
+      "Contact our tourism board marketing agency. We assist DMOs, NTOs, and tourism brands in increasing their organic visibility worldwide. Schedule a call.",
     image: `${ORIGIN}/contact-og.jpg`,
     imageAlt: "Tourism Board Marketing Agency – Mélange Digital",
     imageWidth: 1200,
     imageHeight: 630,
     twitterTitle: "Contact a Tourism Board Marketing Agency in India | Mélange Digital",
     twitterDescription:
-      "Ready to grow your career in digital marketing? Explore exciting opportunities at Mélange Digital. Join a creative, ambitious & globally driven team.",
+      "Contact our tourism board marketing agency. We assist DMOs, NTOs, and tourism brands in increasing their organic visibility worldwide. Schedule a call.",
   },
   "/about": {
     title: "Best Destination Marketing Agency | Mélange Digital",

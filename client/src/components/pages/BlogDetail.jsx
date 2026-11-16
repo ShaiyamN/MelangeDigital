@@ -104,16 +104,25 @@ const BlogDetail = () => {
             current && stableJson(current) === stableJson(blogData) ? current : blogData,
           );
 
-          // Query 3 other blogs for related insights
-          const insightDocs = await runQuery("blogs", { limit: 4 });
+          // 3 related posts. Same-category posts first, then the next posts after this one
+          // in slug order (wrapping), so every post gets linked from some other post.
+          const insightDocs = await runQuery("blogs");
           if (!active) return;
-          const rawInsights = insightDocs
-            .map((doc) => ({
-              id: doc.id,
-              ...doc.data
-            }))
-            .filter((item) => item.slug !== slug) // Exclude current blog
-            .slice(0, 3); // Take top 3
+          const catsOf = (item) =>
+            (item.categories || (item.category ? [item.category] : [])).filter(Boolean);
+          const ownCats = new Set(catsOf(blogData));
+          const all = insightDocs
+            .map((doc) => ({ id: doc.id, ...doc.data }))
+            .filter((item) => item.slug)
+            .sort((a, b) => a.slug.localeCompare(b.slug));
+          const start = all.findIndex((item) => item.slug === slug);
+          const rotated = [...all.slice(start + 1), ...all.slice(0, Math.max(start, 0))]
+            .filter((item) => item.slug !== slug);
+          const shared = (item) => catsOf(item).some((c) => ownCats.has(c));
+          const rawInsights = [
+            ...rotated.filter(shared),
+            ...rotated.filter((item) => !shared(item)),
+          ].slice(0, 3);
 
           // Map insights to component format
           const formattedInsights = rawInsights.map((item) => ({
@@ -655,6 +664,35 @@ const BlogDetail = () => {
               </div>
             )}
             {tablePosition === "after-content-blocks" && renderComparisonTable()}
+
+            {/* Related articles: crawlable internal links to other posts */}
+            {insights.length > 0 && (
+              <nav aria-labelledby="related-articles" className="mt-12 border-t border-gray-200 pt-8">
+                <h2 id="related-articles" className="text-black lg:text-[28px] text-2xl font-bold leading-tight mb-6">
+                  Related articles
+                </h2>
+                <ul className="grid gap-6 sm:grid-cols-3">
+                  {insights.map((item) => (
+                    <li key={item.link}>
+                      <Link to={item.link} className="group block">
+                        {item.image && (
+                          <img
+                            src={cloudinaryUrl(item.image, 480)}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full aspect-video object-cover rounded-xl mb-3"
+                          />
+                        )}
+                        <span className="block text-zinc-900 text-base font-semibold leading-snug group-hover:text-[#3858ff] transition-colors">
+                          {item.title}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
 
             {/* Social shares */}
             <div className="mt-10 border-t border-gray-200 pt-6">
