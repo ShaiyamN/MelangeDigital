@@ -31,12 +31,8 @@ const About = () => {
           content="We're a destination marketing agency for DMOs, NTOs, and tourism boards, built by people who've worked inside one. Meet the team driving the strategy."
         />
         <link rel="canonical" href="https://melangedigital.co/about" data-rh="true" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&family=Lato:wght@400;500;600;700;800;900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
+        {/* Fonts come from the non-blocking font <link> in index.html (a superset of
+            what this page uses); a second, blocking copy here delayed first paint. */}
         <base href="/destination-marketing-agency/" />
         <meta property="og:url" content="https://melangedigital.co/about" />
         <meta property="og:title" content="Best Destination Marketing Agency | Mélange Digital" />

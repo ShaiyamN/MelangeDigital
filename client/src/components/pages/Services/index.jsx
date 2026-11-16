@@ -65,20 +65,17 @@ const Services = () => {
     let idleHandle;
     const loadServiceCards = async () => {
       try {
-        // Firebase is ~400KB of JS; keep it out of the page's critical path.
-        const [{ db }, { doc, getDoc, collection, getDocs }] = await Promise.all([
-          import("../../../firebase"),
-          import("firebase/firestore"),
-        ]);
-        if (!active || !db) return;
-        const [snap, csSnap] = await Promise.all([
-          getDoc(doc(db, "settings", "service_cards")).catch(() => null),
-          getDocs(collection(db, "casestudies")).catch(() => null),
+        // Firestore REST, not the SDK: no ~400KB of JS (and no Auth), and no streaming
+        // connection left open, which kept PageSpeed tracing (and counting analytics).
+        const { getDocument, runQuery } = await import("../../../utils/firestoreRest");
+        if (!active) return;
+        const [settingsData, csDocs] = await Promise.all([
+          getDocument("settings/service_cards").catch(() => null),
+          runQuery("casestudies").catch(() => null),
         ]);
         if (!active) return;
-        const settingsData = snap && snap.exists() ? snap.data() : null;
-        const caseStudiesList = csSnap && !csSnap.empty
-          ? csSnap.docs.map((d) => ({ id: d.id, ...d.data() }))
+        const caseStudiesList = csDocs && csDocs.length
+          ? csDocs.map((d) => ({ id: d.id, ...d.data }))
           : null;
         if (settingsData || caseStudiesList) {
           const next = optimizeCardImages(buildDynamicMarkup(rawMarkup, settingsData, caseStudiesList));

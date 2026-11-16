@@ -115,13 +115,11 @@ const Work = () => {
 
     const loadWorkCaseStudies = async () => {
       try {
-        // Firebase is ~400KB of JS; keep it out of the page's critical path.
-        const [{ db }, { loadCaseStudies }] = await Promise.all([
-          import("../../../firebase"),
-          import("../../../constants/caseStudyData"),
-        ]);
-        if (!active || !db) return;
-        const list = await loadCaseStudies();
+        // Firestore REST, not the SDK: no ~400KB of JS (and no Auth), and no streaming
+        // connection left open, which kept PageSpeed tracing (and counting analytics).
+        const { runQuery } = await import("../../../utils/firestoreRest");
+        if (!active) return;
+        const list = (await runQuery("casestudies")).map((d) => ({ id: d.id, ...d.data }));
         if (!active || list.length === 0) return;
 
         const workSorted = [...list].sort((a, b) => {

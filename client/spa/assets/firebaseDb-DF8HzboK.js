@@ -1,0 +1,1 @@
+import{g as e}from"./index.esm-CLbQ0Qzn.js";import{g as o}from"./firebaseApp-2AuGttyk.js";let t=null;try{const r=o();r&&(t=e(r))}catch(r){console.error("Firestore initialization failed:",r)}export{t as db};

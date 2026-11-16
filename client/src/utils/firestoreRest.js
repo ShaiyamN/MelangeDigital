@@ -24,6 +24,18 @@ function decodeFields(fields) {
   return out;
 }
 
+/** Fetch one document by path (e.g. "settings/service_cards"); null when it does not exist. */
+export async function getDocument(path) {
+  if (!PROJECT_ID || !API_KEY) throw new Error("Firebase config missing");
+  const res = await fetch(
+    `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/${path}?key=${API_KEY}`,
+  );
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Firestore get failed: ${res.status}`);
+  const doc = await res.json();
+  return decodeFields(doc.fields || {});
+}
+
 /**
  * Run a structured query against a top-level collection.
  * Returns [{ id, data }] like querySnapshot.docs, or throws on HTTP errors.
