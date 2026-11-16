@@ -89,7 +89,6 @@ function usePreloadOnLinkIntent() {
 // Legal / Policy routes
 const TermsofService = lazy(() => import("./components/pages/TermsofService"));
 const PrivatePolicy = lazy(() => import("./components/pages/PrivatePolicy"));
-const Refund = lazy(() => import("./components/pages/Refund"));
 const Cookies = lazy(() => import("./components/pages/Cookies"));
 
 // Admin components
@@ -279,14 +278,14 @@ function App() {
 
           <Route exact path="/work" Component={Works} />
           {/* Legacy case study redirects */}
-          <Route exact path="/singapore-tourism" element={<Navigate to="/work/singapore-tourism-board" replace />} />
-          <Route exact path="/singapore-tourism-aeo-seo" element={<Navigate to="/work/singapore-tourism-board" replace />} />
-          <Route exact path="/siam-malls" element={<Navigate to="/work/siam-malls" replace />} />
-          <Route exact path="/ganga-fashion" element={<Navigate to="/work/ganga-fashions" replace />} />
-          <Route exact path="/work/GenVR" element={<Navigate to="/work/genvr" replace />} />
-          <Route exact path="/work/neoTraders" element={<Navigate to="/work/neotraders" replace />} />
-          <Route exact path="/work/devBoost" element={<Navigate to="/work/devboost" replace />} />
-          <Route exact path="/work/singapore-tourism-board-stb" element={<Navigate to="/work/singapore-tourism-board" replace />} />
+          <Route exact path="/singapore-tourism" element={<Navigate to="/work/singapore-tourism-board-isthisevensingapore" replace />} />
+          <Route exact path="/singapore-tourism-aeo-seo" element={<Navigate to="/work/singapore-tourism-board-isthisevensingapore" replace />} />
+          <Route exact path="/siam-malls" element={<Navigate to="/work" replace />} />
+          <Route exact path="/ganga-fashion" element={<Navigate to="/work" replace />} />
+          <Route exact path="/work/GenVR" element={<Navigate to="/work" replace />} />
+          <Route exact path="/work/neoTraders" element={<Navigate to="/work" replace />} />
+          <Route exact path="/work/devBoost" element={<Navigate to="/work" replace />} />
+          <Route exact path="/work/singapore-tourism-board-stb" element={<Navigate to="/work/singapore-tourism-board-isthisevensingapore" replace />} />
 
           {/* Dynamic work case studies */}
           <Route exact path="/work/:slug" Component={CaseStudyDetail} />
@@ -308,7 +307,7 @@ function App() {
           {/* Legal / Policy pages */}
           <Route exact path="/terms-of-service" Component={TermsofService} />
           <Route exact path="/privacy-policy" Component={PrivatePolicy} />
-          <Route exact path="/cancellation-and-refund-policy" Component={Refund} />
+          <Route exact path="/cancellation-and-refund-policy" element={<Navigate to="/terms-of-service" replace />} />
           <Route exact path="/cookie-policy" Component={Cookies} />
 
           {/* Admin routes */}

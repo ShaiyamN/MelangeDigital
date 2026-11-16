@@ -6,7 +6,6 @@ export { default as Works } from "./Work";
 export { default as Error } from "./Error";
 export { default as TermsofService } from "./TermsofService";
 export { default as PrivatePolicy } from "./PrivatePolicy";
-export { default as Refund } from "./Refund";
 export { default as Cookies } from "./Cookies";
 export { default as Career } from "./Career";
 export { default as Blogs } from "./Blogs";

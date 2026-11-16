@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../layout/Navbar";
 import Footer from "../layout/Footer";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const Error = () => {
   return (
@@ -25,21 +26,25 @@ const Error = () => {
           }
         `}</style>
 
+        <Helmet>
+          <title>Page Not Found | Mélange Digital</title>
+          <meta name="robots" content="noindex, follow" />
+        </Helmet>
+
         {/* Heading */}
         <h1 className="text-[3rem] md:text-[4rem] font-bold multiverse-text mb-4">
-          Coming Soon
+          404
         </h1>
 
         {/* Sub heading */}
         <h2 className="text-[1.5rem] md:text-[2rem] font-semibold text-black mb-3">
-          This Page Is Currently Under Development
+          Page Not Found
         </h2>
 
         {/* Description */}
         <p className="max-w-[600px] text-gray-600 text-[1rem] md:text-[1.1rem]">
-          We're working hard to bring this page to life. It will be available
-          soon as part of our expanding global presence. Stay tuned while we
-          finish building something great.
+          The page you're looking for doesn't exist or has been moved. Check
+          the address, or head back to the homepage.
         </p>
 
         {/* Button */}

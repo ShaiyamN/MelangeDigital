@@ -123,11 +123,6 @@ const PAGE_META = {
     description:
       "Privacy Policy for Mélange Digital. Learn how we collect, use, and protect your personal information.",
   },
-  "/cancellation-and-refund-policy": {
-    title: "Cancellation & Refund Policy | Mélange Digital",
-    description:
-      "Cancellation and Refund Policy for Mélange Digital services.",
-  },
   "/cookie-policy": {
     title: "Cookie Policy | Mélange Digital",
     description:
@@ -421,7 +416,7 @@ function resolveMeta(reqPath, index = {}) {
   const listed = Boolean(known) || path in PAGE_META || Boolean(caseStudy);
 
   if (!listed && !cms) {
-    return { path, noindex: true, stripFaq: true };
+    return { path, noindex: true, stripFaq: true, notFound: true };
   }
 
   const preset = PAGE_META[path] || PAGE_META[known] || {};

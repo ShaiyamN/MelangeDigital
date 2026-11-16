@@ -128,18 +128,31 @@ const SEO_REDIRECTS = {
     "/work/singapore-tourism-board-isthisevensingapore",
   "/work/singapore-tourism-board-stb":
     "/work/singapore-tourism-board-isthisevensingapore",
-  "/work/genvr": "/work/genvr",
-  "/work/neotraders": "/work/neotraders",
-  "/work/devboost": "/work/devboost",
   "/blog": "/blogs",
   // Old URLs that served the homepage shell (SEO audit 2026-11-16).
   "/destination-marketing-in-tourism": "/blogs/destination-marketing-in-tourism",
   "/blogs/influencer-marketing-for-the-unreachable": "/blogs/travel-influencer-marketing",
   "/influencer-marketing-for-the-unreachable": "/blogs/travel-influencer-marketing",
-  "/work/make-my-trip": "/work",
-  "/work/GenVR": "/work/genvr",
-  "/work/neoTraders": "/work/neotraders",
-  "/work/devBoost": "/work/devboost",
+  // Case studies removed from the CMS. Mixed-case variants (/work/GenVR) are
+  // lower-cased by the middleware below before this lookup.
+  ...Object.fromEntries(
+    [
+      "zee5", "kalon", "duvon", "make-my-trip", "sportz-village", "sportz-village-xp",
+      "active-club", "kunal-rathod", "proportunity", "dhruvak", "travel-stop", "genvr",
+      "rock-highland", "aartech-solonics", "enerqual", "ganga-fashions", "siam-malls",
+      "versailles-dental-clinic", "healthy-mithai", "jewel-houze", "neotraders", "devboost",
+      "navi-savi", "green-label", "maison-luxe", "veda-naturals",
+    ].map((slug) => [`/work/${slug}`, "/work"]),
+  ),
+  "/siam-malls": "/work",
+  "/ganga-fashion": "/work",
+  "/singapore-tourism": "/work/singapore-tourism-board-isthisevensingapore",
+  "/singapore-tourism-aeo-seo": "/work/singapore-tourism-board-isthisevensingapore",
+  // Retired pages.
+  "/cancellation-and-refund-policy": "/terms-of-service",
+  // Public duplicate of the Zoho job form; the Careers page embeds /careers/form.
+  "/careers/Apply_Now_and_Become_a_Part_of_Our_Team": "/careers",
+  "/careers/Apply_Now_and_Become_a_Part_of_Our_Team/index.html": "/careers",
 };
 
 // Redirect legacy URLs and normalize work slugs before canonicalizing the host.
@@ -206,8 +219,8 @@ function getPrerenderedHtml(reqPath) {
   return html.includes(`<!-- prerendered-route:${route} -->`) ? html : null;
 }
 
-function sendHtml(req, res, html) {
-  res.writeHead(200, {
+function sendHtml(req, res, html, status = 200) {
+  res.writeHead(status, {
     "Content-Type": "text/html; charset=utf-8",
     "Content-Disposition": "inline",
     "Cache-Control": "no-store, no-cache, must-revalidate",
@@ -239,16 +252,20 @@ async function sendIndex(req, res) {
   }
 
   let meta = { stripFaq: true, noindex: true };
+  // Only answer 404 once the CMS list loaded; otherwise a Firestore outage
+  // would 404 every blog post and case study.
+  let cmsLoaded = false;
   try {
     const index = await getPageIndex();
     meta = resolveMeta(req.path, index);
+    cmsLoaded = Object.keys(index.byPath || {}).length > 0;
   } catch (err) {
     console.error("seo head index failed:", err.message);
     meta = resolveMeta(req.path, { routes: new Set(), byPath: {} });
   }
   if (res.headersSent) return;
   const html = applyHead(INDEX_HTML, meta);
-  sendHtml(req, res, html);
+  sendHtml(req, res, html, meta.notFound && cmsLoaded ? 404 : 200);
 }
 
 app.get("/api/seo/schema", async (req, res) => {

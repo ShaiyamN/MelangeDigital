@@ -22,9 +22,11 @@
   RewriteBase /
 
   # Send known legacy work slugs directly to their final canonical URLs.
-  RewriteRule ^work/GenVR/?$ https://melangedigital.co/work/genvr [R=301,L,NC]
-  RewriteRule ^work/neoTraders/?$ https://melangedigital.co/work/neotraders [R=301,L,NC]
-  RewriteRule ^work/devBoost/?$ https://melangedigital.co/work/devboost [R=301,L,NC]
+  # Case studies removed from the CMS → Work page.
+  RewriteRule ^work/(zee5|kalon|duvon|make-my-trip|sportz-village|sportz-village-xp|active-club|kunal-rathod|proportunity|dhruvak|travel-stop|genvr|rock-highland|aartech-solonics|enerqual|ganga-fashions|siam-malls|versailles-dental-clinic|healthy-mithai|jewel-houze|neotraders|devboost|navi-savi|green-label|maison-luxe|veda-naturals)/?$ https://melangedigital.co/work [R=301,L,NC]
+  RewriteRule ^(siam-malls|ganga-fashion)/?$ https://melangedigital.co/work [R=301,L,NC]
+  RewriteRule ^cancellation-and-refund-policy/?$ https://melangedigital.co/terms-of-service [R=301,L,NC]
+  RewriteRule ^careers/Apply_Now_and_Become_a_Part_of_Our_Team(/|/index\.html)?$ https://melangedigital.co/careers [R=301,L,NC]
   RewriteRule ^work/singapore-tourism-board-stb/?$ https://melangedigital.co/work/singapore-tourism-board [R=301,L,NC]
   RewriteRule ^work/costa-cruises/?$ https://melangedigital.co/work/costa-cruises-introducing-luxury-cruising-to-india [R=301,L,NC]
 
