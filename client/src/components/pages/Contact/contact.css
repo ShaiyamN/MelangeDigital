@@ -703,6 +703,9 @@
     grid-row: auto;
     margin-top: auto;
     width: 100%;
+    /* Final height on phones (360-430px wide). Without it the box renders ~24px
+       shorter in the fallback font and grows when the web font swaps in (CLS). */
+    min-height: 163px;
   }
   .contact-hero__form {
     grid-column: auto;
@@ -723,8 +726,9 @@
     inset: 0;
     z-index: -1;
     border-radius: 21px;
-    /* 800px WebP (~70KB) instead of the 1.7MB PNG; preloaded for phones in index.jsx. */
-    background: url("/contact/hero-800.webp") center 42% / cover no-repeat;
+    /* 720px WebP (~43KB, phone width x ~1.75 DPR) instead of the 1.7MB PNG;
+       preloaded for phones in index.jsx. */
+    background: url("/contact/hero-720.webp") center 42% / cover no-repeat;
   }
   .contact-h1 {
     font-size: clamp(32px, 8vw, 42px);

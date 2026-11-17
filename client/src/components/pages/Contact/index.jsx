@@ -43,7 +43,7 @@ const Contact = () => {
         <link
           rel="preload"
           as="image"
-          href="/contact/hero-800.webp"
+          href="/contact/hero-720.webp"
           type="image/webp"
           media="(max-width: 767px)"
           fetchpriority="high"
