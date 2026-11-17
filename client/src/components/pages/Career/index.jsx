@@ -77,12 +77,8 @@ const Career = () => {
         />
         <meta name="twitter:image" content="https://melangedigital.co/careers-og.jpg" />
         <link rel="canonical" href="https://melangedigital.co/careers" data-rh="true" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Baskervville:ital@1&family=Libre+Baskerville:ital@1&family=Lato:wght@400;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
+        {/* Fonts come from the non-blocking font <link> in index.html (a superset of
+            what this page uses); a second, blocking copy here delayed first paint. */}
         <script type="application/ld+json">
           {`{
             "@context": "https://schema.org",
@@ -128,7 +124,7 @@ const Career = () => {
               </div>
               <div className="career-why__pair">
                 <div className="career-why__photo">
-                  <img src={`${IMG}/why-01.png`} alt="" width="321" height="246" />
+                  <img src={`${IMG}/why-01.webp`} alt="" width="321" height="246" />
                 </div>
                 <WhyCard
                   n="01"
@@ -147,7 +143,8 @@ const Career = () => {
                   cls="career-why__card--2"
                 />
                 <div className="career-why__photo">
-                  <img src={`${IMG}/why-02.jpg`} alt="" width="341" height="246" />
+                  {/* Mobile LCP image. */}
+                  <img fetchpriority="high" src={`${IMG}/why-02.jpg`} alt="" width="341" height="246" />
                 </div>
               </div>
             </div>
@@ -178,13 +175,15 @@ const Career = () => {
         <CareerForm ref={formRef} selectedPosition={selectedPosition} openPositions={openPositions} />
 
         <section className="career-wander">
+          {/* `loading` before `src`: React 18 sets attributes in prop order. */}
           <img
+            loading="lazy"
+            decoding="async"
             className="career-wander__bg"
-            src="/assets/Footers/Careers footer.png"
+            src="/assets/Footers/Careers footer.webp"
             alt=""
             width="1437"
             height="290"
-            loading="lazy"
           />
           <h2 className="career-h2">
             Your Next Role <span className="career-italic">Starts Here.</span>

@@ -38,10 +38,24 @@ const SLIDES = [
   ],
 ];
 
-function Tile({ tile, cls }) {
+function Tile({ tile, cls, show }) {
   return (
     <div className={cls}>
-      <img src={tile.src} alt="" draggable={false} style={{ objectPosition: tile.pos }} />
+      {/* 24 photos, all below the fold. Rendered only once the gallery nears the
+          viewport (see LifeGallery): native lazy-loading starts ~1250px early, which
+          pulled ~1.3MB in ahead of the page's LCP image on mobile. The tile box is
+          sized by its class, so nothing shifts when the photo appears.
+          `loading` before `src`: React 18 sets attributes in prop order. */}
+      {show && (
+        <img
+          loading="lazy"
+          decoding="async"
+          src={tile.src}
+          alt=""
+          draggable={false}
+          style={{ objectPosition: tile.pos }}
+        />
+      )}
     </div>
   );
 }
@@ -50,6 +64,27 @@ function LifeGallery({ padRef }) {
   const scrollerRef = useRef(null);
   const metrics = useRef({ pad: 104, slideW: 1105 });
   const [pad, setPad] = useState(104);
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    if (!("IntersectionObserver" in window)) {
+      setNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const box = padRef.current;
@@ -116,12 +151,12 @@ function LifeGallery({ padRef }) {
         <div key={i} className="career-bts__slide" aria-label={`${i + 1} / ${SLIDES.length}`} role="group">
           <div className="career-bts__row career-bts__row--top">
             {srcs.slice(0, 4).map((t, j) => (
-              <Tile key={t.src} tile={t} cls={TOP_CLS[j]} />
+              <Tile key={t.src} tile={t} cls={TOP_CLS[j]} show={near} />
             ))}
           </div>
           <div className="career-bts__row career-bts__row--bot">
             {srcs.slice(4, 8).map((t, j) => (
-              <Tile key={t.src} tile={t} cls={BOT_CLS[j]} />
+              <Tile key={t.src} tile={t} cls={BOT_CLS[j]} show={near} />
             ))}
           </div>
         </div>

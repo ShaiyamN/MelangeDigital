@@ -99,6 +99,10 @@ const CareerForm = forwardRef(({ selectedPosition, openPositions = [] }, ref) =>
     }
 
     const iframe = document.createElement("iframe");
+    // Lazy, and set before src: the form sits at the bottom of /careers but was
+    // loading (with its own CSS/JS/fonts) during first paint. Its height is fixed,
+    // and it posts CAREER_FORM_READY when it loads, which re-syncs the position.
+    iframe.loading = "lazy";
     iframe.src = buildZohoSrc(selectedPositionRef.current);
     iframe.style.border = "none";
     iframe.style.width = "90%";

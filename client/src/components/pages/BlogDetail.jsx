@@ -575,9 +575,9 @@ const BlogDetail = () => {
                     {block.type === 'image' && block.url && (
                       <div className="w-full flex justify-center mt-5 mb-5">
                         <img
-                          src={cloudinaryUrl(block.url, 1200)}
                           loading="lazy"
                           decoding="async"
+                          src={cloudinaryUrl(block.url, 1200)}
                           alt={block.altText || blog.title || ""}
                           className={`${getImageSizeClass(block.imageSize)} ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-2xl shadow-lg ${getImageFitClass(block.imageFit)}`}
                         />
@@ -591,9 +591,9 @@ const BlogDetail = () => {
                           imgUrl ? (
                             <div key={imgIdx} className="w-full overflow-hidden rounded-2xl shadow-md">
                               <img
-                                src={cloudinaryUrl(imgUrl, 800)}
                                 loading="lazy"
                                 decoding="async"
+                                src={cloudinaryUrl(imgUrl, 800)}
                                 alt={block.altTexts?.[imgIdx] || `${blog.title || "Blog"} image ${imgIdx + 1}`}
                                 className={`w-full h-[220px] md:h-[280px] lg:h-[340px] ${getImageFitClass(block.imageFit || 'cover')}`}
                               />
@@ -645,9 +645,9 @@ const BlogDetail = () => {
                             <div className={`relative group ${getImageSizeClass(block.imageSize)}`}>
                               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-[32px] blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100"></div>
                               <img
-                                src={cloudinaryUrl(block.url, 1000)}
                                 loading="lazy"
                                 decoding="async"
+                                src={cloudinaryUrl(block.url, 1000)}
                                 alt={block.altText || block.subheading || blog.title || ""}
                                 className={`w-full ${block.imageSize === 'large' ? 'max-h-[600px]' : 'max-h-[480px]'} rounded-[32px] shadow-2xl object-cover relative z-10 border border-black/5 dark:border-white/10`}
                               />
@@ -677,10 +677,10 @@ const BlogDetail = () => {
                       <Link to={item.link} className="group block">
                         {item.image && (
                           <img
-                            src={cloudinaryUrl(item.image, 480)}
-                            alt=""
                             loading="lazy"
                             decoding="async"
+                            src={cloudinaryUrl(item.image, 480)}
+                            alt=""
                             className="w-full aspect-video object-cover rounded-xl mb-3"
                           />
                         )}

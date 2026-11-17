@@ -9,14 +9,15 @@ const Footer = () => (
   <footer className="site-foot">
     <div className="site-foot__wrap site-foot__grid">
       <div className="site-foot__brand">
+        {/* `loading` before `src`: React 18 sets attributes in prop order. */}
         <img
+          loading="lazy"
+          decoding="async"
           className="site-foot__logo"
           src={`${IMG}/logo-footer.webp`}
           alt="Mélange Digital logo"
           width="220"
           height="40"
-          loading="lazy"
-          decoding="async"
         />
         <p className="site-foot__follow">Follow us</p>
         <div className="site-foot__social">

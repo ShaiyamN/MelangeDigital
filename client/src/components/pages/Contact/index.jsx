@@ -36,11 +36,17 @@ const Contact = () => {
         />
         <meta name="twitter:image" content="https://melangedigital.co/contact-og.jpg" />
         <link rel="canonical" href="https://melangedigital.co/contact" data-rh="true" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Fonts come from the non-blocking font <link> in index.html (a superset of
+            what this page uses); a second, blocking copy here delayed first paint. */}
+        {/* On phones the hero photo is a CSS background (the <img> is hidden), which the
+            browser only finds after parsing CSS. It is the mobile LCP, so fetch it early. */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:ital@1&family=Lato:wght@400;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
-          rel="stylesheet"
+          rel="preload"
+          as="image"
+          href="/contact/hero-800.webp"
+          type="image/webp"
+          media="(max-width: 767px)"
+          fetchpriority="high"
         />
         {/* End of Meta Tags */}
 

@@ -388,7 +388,9 @@ const ContactBody = () => {
         <section className="contact-hero" aria-labelledby="contact-heading">
           <img
             className="contact-hero__bg"
-            src="/contact/hero.png"
+            src="/contact/hero-1368.webp"
+            srcSet="/contact/hero-800.webp 800w, /contact/hero-1368.webp 1368w"
+            sizes="(max-width: 1440px) 90vw, 1300px"
             alt=""
             width="1243"
             height="739"

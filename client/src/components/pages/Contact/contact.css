@@ -709,6 +709,10 @@
     grid-row: auto;
     height: auto;
     display: block;
+    /* The desktop `align-self: end` right-aligned the form and sized it to its
+       content in this column layout; when the phone field re-rendered, the form
+       jumped 22px sideways (CLS). Full width matches the hero card above. */
+    align-self: stretch;
   }
   .contact-hero__form .leadform-card {
     height: auto !important;
@@ -719,7 +723,8 @@
     inset: 0;
     z-index: -1;
     border-radius: 21px;
-    background: url("/contact/hero.png") center 42% / cover no-repeat;
+    /* 800px WebP (~70KB) instead of the 1.7MB PNG; preloaded for phones in index.jsx. */
+    background: url("/contact/hero-800.webp") center 42% / cover no-repeat;
   }
   .contact-h1 {
     font-size: clamp(32px, 8vw, 42px);

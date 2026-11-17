@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
+import { runQuery } from "../../utils/firestoreRest";
 import { closeBtn } from "../../assets/images";
 import MelangeCta from "./MelangeCta";
 
@@ -9,11 +8,12 @@ const OpeningPositions = ({ scrollToForm, onApply, onJobsLoaded }) => {
   const [selectedJob, setSelectedJob] = useState(null);
 
   useEffect(() => {
-    if (!db) return;
-    getDocs(collection(db, "jobs"))
-      .then((snapshot) => {
-        const loadedJobs = snapshot.docs
-          .map((doc) => ({ id: doc.id, ...doc.data() }))
+    // Firestore REST, not the SDK (+ Auth): one request, no streaming connection left
+    // open. The open stream kept PageSpeed tracing for 45s on /careers.
+    runQuery("jobs")
+      .then((docs) => {
+        const loadedJobs = docs
+          .map((doc) => ({ id: doc.id, ...doc.data }))
           .filter((job) => job.active !== false);
         setJobs(loadedJobs);
         if (onJobsLoaded) onJobsLoaded(loadedJobs);
