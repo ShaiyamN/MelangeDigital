@@ -157,7 +157,7 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Global Travel & Tourism Marketing Agency | Mélange Digital</title>
+        <title>Global Travel & Tourism Marketing Agency, Goa | Mélange Digital</title>
         <meta
           name="description"
           content="Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call."
@@ -167,7 +167,7 @@ const Home = () => {
         <base href="/destination-marketing-agency/" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://melangedigital.co/" />
-        <meta property="og:title" content="Global Travel & Tourism Marketing Agency | Mélange Digital" />
+        <meta property="og:title" content="Global Travel & Tourism Marketing Agency, Goa | Mélange Digital" />
         <meta
           property="og:description"
           content="Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call."

@@ -12,7 +12,7 @@ const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
 const PAGE_META = {
   "/": {
     title:
-      "Global Travel & Tourism Marketing Agency | Mélange Digital",
+      "Global Travel & Tourism Marketing Agency, Goa | Mélange Digital",
     description:
       "Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call.",
     image: `${ORIGIN}/og-home.png`,
