@@ -256,7 +256,7 @@ export const SERVICES_DATA = {
           step: "01",
           title: "We secure the IP's",
           tag: "Production Rights",
-          description: "We identify and secure the production of the track.",
+          description: "We identify and secure the film, music and series IP behind your branded content.",
           icon: "/assets/services/secure IP.png",
         },
         {
@@ -264,7 +264,7 @@ export const SERVICES_DATA = {
           step: "02",
           title: "Story First",
           tag: "Script Integration",
-          description: "The destination lives inside the narrative, never bolted on top.",
+          description: "Film tourism starts in the narrative, never bolted on top.",
           icon: "/assets/services/story first.png",
         },
         {
