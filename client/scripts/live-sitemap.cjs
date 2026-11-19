@@ -2,13 +2,21 @@ const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
-/** route → YYYY-MM-DD for code-built pages, kept by update-static-lastmod.mjs (build:full). */
-const STATIC_LASTMOD = Object.fromEntries(
-  Object.entries(require("./static-lastmod.json").pages || {}).map(([route, v]) => [
-    route,
-    v && v.lastmod,
-  ]),
-);
+/**
+ * route → YYYY-MM-DD for code-built pages, kept by update-static-lastmod.mjs (build:full).
+ * Read on every sitemap refresh (not cached by require) so a running server picks up new dates.
+ */
+function loadStaticLastmod() {
+  try {
+    const json = JSON.parse(fs.readFileSync(path.join(__dirname, "static-lastmod.json"), "utf8"));
+    return Object.fromEntries(
+      Object.entries(json.pages || {}).map(([route, v]) => [route, v && v.lastmod]),
+    );
+  } catch (err) {
+    console.error("static-lastmod.json unreadable:", err.message);
+    return {};
+  }
+}
 
 const TTL_MS = 60 * 1000;
 let cache = { xml: null, at: 0, routes: new Set(), byPath: {}, origin: "https://melangedigital.co" };
@@ -108,7 +116,7 @@ function toSitemapDate(value) {
   return Number.isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 10);
 }
 
-function lastmodForPath(locPath, lastmodByPath, staticLastmod = STATIC_LASTMOD) {
+function lastmodForPath(locPath, lastmodByPath, staticLastmod = loadStaticLastmod()) {
   const meta = lastmodByPath && lastmodByPath[locPath];
   const cmsDate =
     meta && typeof meta === "object"
@@ -134,7 +142,7 @@ function xmlEscape(s) {
  * @param {string[]} routes
  * @param {Record<string, {updatedAt?: string, date?: string, createdAt?: string}>} [lastmodByPath]
  */
-function buildXml(origin, routes, lastmodByPath = {}, staticLastmod = STATIC_LASTMOD) {
+function buildXml(origin, routes, lastmodByPath = {}, staticLastmod = loadStaticLastmod()) {
   const seen = new Set();
   const urls = [];
 
@@ -300,7 +308,9 @@ if (require.main === module) {
     "2026-10-10",
   );
   assert.equal(lastmodForPath("/about", {}, {}), "");
-  for (const [route, value] of Object.entries(STATIC_LASTMOD)) {
+  const staticDates = loadStaticLastmod();
+  assert(Object.keys(staticDates).length > 0, "static-lastmod.json has no pages");
+  for (const [route, value] of Object.entries(staticDates)) {
     assert(/^\d{4}-\d{2}-\d{2}$/.test(value || ""), `static-lastmod.json: bad date for ${route}`);
   }
   assert.equal(toSitemapDate(""), "");
