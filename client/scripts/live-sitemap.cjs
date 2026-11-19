@@ -2,6 +2,7 @@ const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
+const STATIC_LASTMOD = require("./static-lastmod.json");
 
 const TTL_MS = 60 * 1000;
 let cache = { xml: null, at: 0, routes: new Set(), byPath: {}, origin: "https://melangedigital.co" };
@@ -101,15 +102,16 @@ function toSitemapDate(value) {
   return Number.isNaN(d.getTime()) ? "" : d.toISOString().slice(0, 10);
 }
 
-function lastmodForPath(locPath, lastmodByPath) {
+function lastmodForPath(locPath, lastmodByPath, staticLastmod = STATIC_LASTMOD) {
   const meta = lastmodByPath && lastmodByPath[locPath];
-  if (!meta || typeof meta !== "object") return "";
-  return (
-    toSitemapDate(meta.updatedAt) ||
-    toSitemapDate(meta.date) ||
-    toSitemapDate(meta.createdAt) ||
-    ""
-  );
+  const cmsDate =
+    meta && typeof meta === "object"
+      ? toSitemapDate(meta.updatedAt) ||
+        toSitemapDate(meta.date) ||
+        toSitemapDate(meta.createdAt)
+      : "";
+  // Code-built pages have no CMS doc; use the hand-kept date from static-lastmod.json.
+  return cmsDate || toSitemapDate(staticLastmod[locPath]) || "";
 }
 
 function xmlEscape(s) {
@@ -279,6 +281,17 @@ if (require.main === module) {
   // Static listing path has no CMS date → no fabricated lastmod
   const blogsBlock = withDates.split("<loc>https://example.com/blogs</loc>")[1].split("</url>")[0];
   assert(!blogsBlock.includes("<lastmod>"));
+  // Code-built pages take their date from static-lastmod.json; CMS dates win.
+  assert.equal(lastmodForPath("/services/x", {}, { "/services/x": "2026-11-19" }), "2026-11-19");
+  assert.equal(
+    lastmodForPath("/blogs/y", { "/blogs/y": { date: "2026-10-10" } }, { "/blogs/y": "2026-11-19" }),
+    "2026-10-10",
+  );
+  assert.equal(lastmodForPath("/about", {}, {}), "");
+  for (const [route, value] of Object.entries(STATIC_LASTMOD)) {
+    if (route.startsWith("_")) continue;
+    assert(/^\d{4}-\d{2}-\d{2}$/.test(value), `static-lastmod.json: bad date for ${route}`);
+  }
   assert.equal(toSitemapDate(""), "");
   assert.equal(toSitemapDate("not a date"), "");
   assert.equal(xmlEscape("a&b"), "a&amp;b");
