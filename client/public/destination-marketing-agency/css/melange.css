@@ -11086,6 +11086,28 @@ a.svc-project:focus-visible .svc-project__media img {
   transform: scale(1.03);
 }
 
+/* Work cards all match the Zambia card: the bar grows so every card in a row is the same height. */
+.wrk-page .svc-project {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrk-page .svc-project__media {
+  flex: none;
+}
+
+.wrk-page .svc-project__bar {
+  flex: 1 0 auto;
+}
+
+@media (max-width: 767px) {
+  /* One card per row: reserve 2 title lines and 4 caption lines so every card is the same height. */
+  .wrk-page .svc-project__title,
+  .wrk-page .svc-project__caption {
+    min-height: 64px;
+  }
+}
+
 .wrk-page .about-report {
   --report-header-gap: 40px;
   --report-card-pad-y: 36px;
