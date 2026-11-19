@@ -19,6 +19,50 @@ const FEATURED_WORK_ORDER = [
 ];
 const FEATURED_WORK_RANK = new Map(FEATURED_WORK_ORDER.map((slug, index) => [slug, index]));
 
+/** Work-page-only card copy; overrides the CMS title/caption. Services cards are unaffected. */
+const WORK_CARD_TEXT = {
+  "singapore-tourism-board-isthisevensingapore": {
+    title: "Singapore Tourism Board: #IsThisEvenSingapore",
+    caption: "21 creators across five youth subcultures drove 190M views and an 18% YoY rise in Indian arrivals, and grew the under-35 traveller share from 31% to 39%.",
+  },
+  "hong-kong-tourism-board-herhongkong": {
+    title: "Hong Kong Tourism Board: #HerHongKong",
+    caption: "Four South Indian actresses recast Hong Kong for women travellers, lifting female arrivals 22% YoY and leisure share by 15 points as stays grew to three nights.",
+  },
+  "zambia-tourism-otm-mumbai-2026": {
+    title: "Zambia Tourism: OTM Mumbai 2026",
+    caption: "Client-reported results from a one-year mandate include 500+ trade connections, approximately $3.2M from seven MICE groups (75–700 guests) and 18 influencers.",
+  },
+  "resorts-world-sentosa-go-bananas-in-minion-land": {
+    title: "Resorts World Sentosa: Go Bananas in Minion Land",
+    caption: "Five regional-language creators on ShareChat and Moj drove 86M+ views, 13.7M+ reach, 4.75% engagement, a 6.80% consideration lift and 4,927 tracked bookings.",
+  },
+  "resorts-world-cruises-premium-cruise-launch-dubai": {
+    title: "Dream Cruises: Premium Cruise Launch, Dubai",
+    caption: "Run as Resorts World Cruises, this Dubai launch with 44 creators drove $2.3M+ in attributed sales, 90M+ impressions and 250K+ clicks.",
+  },
+  "hong-kong-tourism-board-x-ram-charan-esquire-india-cover": {
+    title: "Ram Charan x Hong Kong: Esquire India Cover",
+    caption: "A 16+ page Esquire India cover built Hong Kong’s luxury appeal in South India without a celebrity talent fee, delivering ~10X ROI and $2.5M earned media value.",
+  },
+  "singapore-tourism-board-x-divine-saucy-music-video": {
+    title: "Singapore x DIVINE: Saucy Music Video",
+    caption: "DIVINE’s Saucy music video, shot at Singapore landmarks, kept the city culturally relevant to India’s under-35 and lifted youth travel affinity by 21 points.",
+  },
+  "dharma-productions-x-singapore-tourism-board-jigra": {
+    title: "Dharma Productions x Singapore: Jigra",
+    caption: "Over 50% of the Bollywood film Jigra was shot in Singapore, establishing it as a filming destination and sparking 6+ follow-on production conversations.",
+  },
+  "mall-activation-for-saudi-tourism": {
+    title: "Saudi Tourism: Mall Activation",
+    caption: "A 4-day mall activation shifted Indian views of Saudi Arabia from religious to leisure, with 4,100+ walk-in signups, 2.1M+ radio reach and 1,200+ packages sold.",
+  },
+  "costa-cruises-introducing-luxury-cruising-to-india": {
+    title: "Costa Cruises: India’s Luxury Cruise Launch",
+    caption: "Costa Cruises launched its maiden Italy-to-India voyage in a market with no prior cruise category awareness or behavioural precedent drove $430K+ in attributed sales.",
+  },
+};
+
 function esc(str) {
   if (!str) return "";
   return String(str)
@@ -39,8 +83,9 @@ function renderWorkCardHtml(cs) {
   if (!cs) return "";
   const card = applyCaseStudySeo(cs);
   const href = card.slug ? (card.slug.startsWith("/") ? card.slug : `/work/${card.slug}`) : "/work";
-  const caption = card.serviceCaption || card.intro || card.caption || "";
-  const title = card.title || "";
+  const workText = WORK_CARD_TEXT[card.slug];
+  const caption = workText?.caption || card.serviceCaption || card.intro || card.caption || "";
+  const title = workText?.title || card.title || "";
   const bannerImage = card.bannerImage || "";
   return `      <a class="svc-project" href="${esc(href)}">
        <div class="svc-project__media">
@@ -81,7 +126,7 @@ function buildWorkDynamicMarkup(baseHtml, list) {
 
 const CSS = [
   `${ASSET}/css/melange-shared.css?v=20260724e`,
-  `${ASSET}/css/melange.css?v=20260915t`,
+  `${ASSET}/css/melange.css?v=20261119a`,
 ];
 const SCRIPT_BASES = [`${ASSET}/js/about.js?v=20260915b`];
 
