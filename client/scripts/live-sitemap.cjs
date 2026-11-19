@@ -2,7 +2,13 @@ const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
-const STATIC_LASTMOD = require("./static-lastmod.json");
+/** route → YYYY-MM-DD for code-built pages, kept by update-static-lastmod.mjs (build:full). */
+const STATIC_LASTMOD = Object.fromEntries(
+  Object.entries(require("./static-lastmod.json").pages || {}).map(([route, v]) => [
+    route,
+    v && v.lastmod,
+  ]),
+);
 
 const TTL_MS = 60 * 1000;
 let cache = { xml: null, at: 0, routes: new Set(), byPath: {}, origin: "https://melangedigital.co" };
@@ -128,7 +134,7 @@ function xmlEscape(s) {
  * @param {string[]} routes
  * @param {Record<string, {updatedAt?: string, date?: string, createdAt?: string}>} [lastmodByPath]
  */
-function buildXml(origin, routes, lastmodByPath = {}) {
+function buildXml(origin, routes, lastmodByPath = {}, staticLastmod = STATIC_LASTMOD) {
   const seen = new Set();
   const urls = [];
 
@@ -138,7 +144,7 @@ function buildXml(origin, routes, lastmodByPath = {}) {
     seen.add(locPath);
     const { changefreq, priority } = metaFor(locPath);
     const loc = locPath === "/" ? `${origin}/` : `${origin}${locPath}`;
-    const lastmod = lastmodForPath(locPath, lastmodByPath);
+    const lastmod = lastmodForPath(locPath, lastmodByPath, staticLastmod);
     urls.push({ loc, lastmod, changefreq, priority });
   }
 
@@ -270,6 +276,7 @@ if (require.main === module) {
       "/blogs/airlines-marketing": { date: "2026-10-10" },
       "/work/acme": { createdAt: "2026-08-01" },
     },
+    {},
   );
   assert(withDates.includes("https://example.com/blogs/hello-world"));
   assert(withDates.includes("https://example.com/blogs/airlines-marketing"));
@@ -282,6 +289,11 @@ if (require.main === module) {
   const blogsBlock = withDates.split("<loc>https://example.com/blogs</loc>")[1].split("</url>")[0];
   assert(!blogsBlock.includes("<lastmod>"));
   // Code-built pages take their date from static-lastmod.json; CMS dates win.
+  const withStatic = buildXml("https://example.com", ["/services/x", "/about"], {}, {
+    "/services/x": "2026-11-19",
+  });
+  assert(withStatic.includes("<lastmod>2026-11-19</lastmod>"));
+  assert(!withStatic.split("<loc>https://example.com/about</loc>")[1].includes("<lastmod>"));
   assert.equal(lastmodForPath("/services/x", {}, { "/services/x": "2026-11-19" }), "2026-11-19");
   assert.equal(
     lastmodForPath("/blogs/y", { "/blogs/y": { date: "2026-10-10" } }, { "/blogs/y": "2026-11-19" }),
@@ -289,8 +301,7 @@ if (require.main === module) {
   );
   assert.equal(lastmodForPath("/about", {}, {}), "");
   for (const [route, value] of Object.entries(STATIC_LASTMOD)) {
-    if (route.startsWith("_")) continue;
-    assert(/^\d{4}-\d{2}-\d{2}$/.test(value), `static-lastmod.json: bad date for ${route}`);
+    assert(/^\d{4}-\d{2}-\d{2}$/.test(value || ""), `static-lastmod.json: bad date for ${route}`);
   }
   assert.equal(toSitemapDate(""), "");
   assert.equal(toSitemapDate("not a date"), "");

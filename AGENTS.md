@@ -30,7 +30,7 @@ client/src/  →  (local Vite build)  →  client/dist/  →  (copy)  →  clien
    FORCE_VITE_BUILD=1 npm run build:full            # macOS/Linux
    cd ..
    ```
-5. **Always commit `client/spa/` changes** in the same commit or push as source changes.
+5. **Always commit `client/spa/` changes** in the same commit or push as source changes, together with `client/scripts/static-lastmod.json` (build:full updates its sitemap lastmod dates).
 6. **Always run verification** before pushing:
    ```
    cd client && npm run verify:hostinger && npm run verify:dist
