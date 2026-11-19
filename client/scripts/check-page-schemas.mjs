@@ -21,7 +21,7 @@ function get(path) {
 }
 
 const expected = {
-  "/": 6,
+  "/": 1,
   "/services": 6,
   "/about": 8,
   "/services/influencer-marketing": 6,
@@ -97,8 +97,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   brandedSchemas.slice(0, 2),
-  (schemasByPath.get("/") || []).slice(0, 2),
-  "Branded Content must reuse the homepage WebSite and Organization schemas",
+  (schemasByPath.get("/about") || []).slice(0, 2),
+  "Branded Content must reuse the shared WebSite and Organization schemas",
 );
 
 const webpage = brandedSchemas[2];
@@ -187,8 +187,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   experientialSchemas.slice(0, 2),
-  (schemasByPath.get("/") || []).slice(0, 2),
-  "Experiential Marketing must reuse the homepage WebSite and Organization schemas",
+  (schemasByPath.get("/about") || []).slice(0, 2),
+  "Experiential Marketing must reuse the shared WebSite and Organization schemas",
 );
 
 const experientialPage = experientialSchemas[2];
@@ -315,8 +315,8 @@ assert.deepEqual(
 );
 assert.deepEqual(
   famTripsSchemas.slice(0, 2),
-  (schemasByPath.get("/") || []).slice(0, 2),
-  "FAM Trips + PR must reuse the homepage WebSite and Organization schemas",
+  (schemasByPath.get("/about") || []).slice(0, 2),
+  "FAM Trips + PR must reuse the shared WebSite and Organization schemas",
 );
 
 const famTripsPage = famTripsSchemas[2];

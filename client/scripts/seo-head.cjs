@@ -1403,7 +1403,18 @@ if (require.main === module) {
   );
 
   const homeMeta = resolveMeta("/", { routes: new Set(["/"]), byPath: {} });
-  assert.strictEqual(homeMeta.jsonLdBlocks?.length, 6);
+  assert.strictEqual(homeMeta.jsonLdBlocks?.length, 1);
+  assert.deepStrictEqual(
+    homeMeta.jsonLdBlocks[0]["@graph"].map((n) => n["@id"]),
+    [
+      "https://melangedigital.co/#organization",
+      "https://melangedigital.co/#logo",
+      "https://melangedigital.co/#founder",
+      "https://melangedigital.co/#localbusiness-goa",
+      "https://melangedigital.co/#localbusiness-mumbai",
+      "https://melangedigital.co/indian-outbound-tourism-report#report",
+    ],
+  );
   assert.strictEqual(homeMeta.image, `${ORIGIN}/og-home.png`);
   assert.strictEqual(homeMeta.imageHeight, undefined);
   const homeShell = `<!DOCTYPE html><html><head>
@@ -1418,11 +1429,11 @@ if (require.main === module) {
   const homeHtml = applyHead(homeShell, homeMeta);
   assert(homeHtml.includes('data-rh="true" data-seo-route="/"'));
   assert(
-    homeHtml.includes('"alternateName":["Melange Digital","Mélange","Melange"]'),
+    homeHtml.includes('"alternateName":["Melange Digital","MelangeDigital","Mélange Digital Goa"'),
   );
   assert.strictEqual(
     (homeHtml.match(/application\/ld\+json/g) || []).length,
-    6,
+    1,
   );
   const marked = homeHtml.match(
     /<!--\s*Schema Markup\s*-->([\s\S]*?)<!--\s*End of Schema Markup\s*-->/i,
@@ -1430,10 +1441,11 @@ if (require.main === module) {
   assert(marked, "homepage schemas must sit between Schema Markup markers");
   assert.strictEqual(
     (marked[1].match(/application\/ld\+json/g) || []).length,
-    6,
+    1,
   );
   assert(!homeHtml.slice(homeHtml.indexOf("</head>")).includes("ld+json"));
-  assert(homeHtml.includes("Social media marketing for tourism"));
+  assert(!homeHtml.includes("FAQPage"));
+  assert(homeHtml.includes("Tourism market research"));
   assert(!homeHtml.includes("Social Media Marketing for Hotels and Resorts"));
   assert(
     homeHtml.includes(`property="og:image" content="${ORIGIN}/og-home.png"`),

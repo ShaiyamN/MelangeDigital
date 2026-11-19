@@ -6,6 +6,7 @@
 const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
 const EXPERIENTIAL_MARKETING_FAQS = require("../src/constants/experiential-marketing-faqs.json");
 const FAM_TRIPS_PR_FAQS = require("../src/constants/fam-trips-pr-faqs.json");
+const HOME_SCHEMA_GRAPH = require("./home-schema.json");
 
 /** Four hub services — names/@id match homepage Organization catalog + Services ItemList. */
 const HUB_SERVICES = [
@@ -424,38 +425,13 @@ function faqSchema(faqs, { id, url, isPartOf }) {
   };
 }
 
-function homeSchemas(meta = {}) {
-  const name =
-    meta.title ||
-    "Global Travel & Tourism Marketing Agency, Goa | Mélange Digital";
-  const description =
-    meta.description ||
-    "Mélange Digital helps tourism boards and travel brands worldwide turn cultural insight into arrivals through travel marketing. Book a call.";
-  return [
-    websiteSchema(),
-    organizationSchema(),
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": `${ORIGIN}/#webpage`,
-      url: `${ORIGIN}/`,
-      name,
-      description,
-      isPartOf: { "@id": `${ORIGIN}/#website` },
-      about: { "@id": `${ORIGIN}/#organization` },
-      publisher: { "@id": `${ORIGIN}/#organization` },
-      primaryImageOfPage: { "@id": `${ORIGIN}/#logo` },
-      hasPart: { "@id": `${ORIGIN}/#faq` },
-      inLanguage: "en",
-    },
-    officeGoaSchema(),
-    officeMumbaiSchema(),
-    faqSchema(HOME_FAQS, {
-      id: `${ORIGIN}/#faq`,
-      url: `${ORIGIN}/`,
-      isPartOf: `${ORIGIN}/#webpage`,
-    }),
-  ];
+/**
+ * Homepage JSON-LD: one @graph block (Organization, logo, founder, Goa and Mumbai
+ * offices, report). Edit scripts/home-schema.json, not here. Other pages keep
+ * their own schemas and may reference these nodes by @id.
+ */
+function homeSchemas() {
+  return [HOME_SCHEMA_GRAPH];
 }
 
 function servicesSchemas(meta = {}) {

@@ -1,0 +1,182 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://melangedigital.co/#organization",
+      "name": "Mélange Digital",
+      "alternateName": [
+        "Melange Digital",
+        "MelangeDigital",
+        "Mélange Digital Goa",
+        "Melange Digital Goa",
+        "Melange Goa",
+        "Mélange Goa",
+        "Melange Digital Mumbai",
+        "Melange Digital India"
+      ],
+      "url": "https://melangedigital.co/",
+      "description": "Mélange Digital is a travel and tourism marketing agency headquartered in Panaji, Goa, with an office in Mumbai. We make destinations irresistible to Indian travellers through influencer and celebrity marketing, branded content and film IP, experiential marketing, and FAM trips and PR for national tourism boards, DMOs and travel brands.",
+      "disambiguatingDescription": "Goa-based travel and tourism marketing agency for tourism boards and travel brands targeting Indian travellers.",
+      "slogan": "India Is Choosing. Be the Choice.",
+      "foundingDate": "2021",
+      "foundingLocation": { "@type": "Place", "name": "Goa, India" },
+      "email": "hello@melangedigital.co",
+      "telephone": "+91-9372567722",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "7th Floor, Silvio Heights, B12, St Inez Rd, Santa Inez",
+        "addressLocality": "Panaji",
+        "addressRegion": "Goa",
+        "postalCode": "403001",
+        "addressCountry": "IN"
+      },
+      "logo": { "@id": "https://melangedigital.co/#logo" },
+      "image": { "@id": "https://melangedigital.co/#logo" },
+      "founder": { "@id": "https://melangedigital.co/#founder" },
+      "location": [
+        { "@id": "https://melangedigital.co/#localbusiness-goa" },
+        { "@id": "https://melangedigital.co/#localbusiness-mumbai" }
+      ],
+      "areaServed": [
+        { "@type": "Country", "name": "India" },
+        { "@type": "Country", "name": "United Arab Emirates" },
+        { "@type": "Country", "name": "Singapore" },
+        { "@type": "Country", "name": "United Kingdom" },
+        { "@type": "Country", "name": "United States" },
+        { "@type": "Country", "name": "Zambia" }
+      ],
+      "knowsAbout": [
+        "Travel and tourism marketing",
+        "Destination marketing",
+        "Tourism board (NTO/DMO) marketing",
+        "Indian outbound travel market",
+        "Travel influencer marketing",
+        "Celebrity marketing for tourism",
+        "Film tourism",
+        "Branded content and film IP",
+        "Experiential marketing for tourism",
+        "Travel trade shows and roadshows",
+        "FAM trips",
+        "Travel public relations",
+        "Tourism market research"
+      ],
+      "award": [
+        "Most impactful full-service marketing agency 2025",
+        "Outstanding professional achievement and contribution towards nation building",
+        "Best use of AI in marketing"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91-9372567722",
+          "contactType": "sales",
+          "availableLanguage": ["English", "Hindi"],
+          "areaServed": ["IN", "AE", "SG", "GB", "US", "ZM"]
+        },
+        {
+          "@type": "ContactPoint",
+          "email": "hello@melangedigital.co",
+          "contactType": "customer support",
+          "availableLanguage": ["English"]
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Travel and Tourism Marketing Services",
+        "url": "https://melangedigital.co/services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://melangedigital.co/services/influencer-marketing#service", "name": "Influencer Marketing", "url": "https://melangedigital.co/services/influencer-marketing", "provider": { "@id": "https://melangedigital.co/#organization" } } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://melangedigital.co/services/branded-content-ips#service", "name": "Branded Content and IPs", "url": "https://melangedigital.co/services/branded-content-ips", "provider": { "@id": "https://melangedigital.co/#organization" } } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://melangedigital.co/services/experiential-marketing#service", "name": "Experiential Marketing", "url": "https://melangedigital.co/services/experiential-marketing", "provider": { "@id": "https://melangedigital.co/#organization" } } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "@id": "https://melangedigital.co/services/fam-trips-pr#service", "name": "FAM Trips and Travel PR", "url": "https://melangedigital.co/services/fam-trips-pr", "provider": { "@id": "https://melangedigital.co/#organization" } } }
+        ]
+      },
+      "subjectOf": { "@id": "https://melangedigital.co/indian-outbound-tourism-report#report" },
+      "sameAs": [
+        "https://www.linkedin.com/company/melangedigital/",
+        "https://www.instagram.com/melangedigital.co",
+        "https://www.designrush.com/agency/profile/melange-digital"
+      ]
+    },
+    {
+      "@type": "ImageObject",
+      "@id": "https://melangedigital.co/#logo",
+      "url": "https://melangedigital.co/logo.png",
+      "contentUrl": "https://melangedigital.co/logo.png",
+      "width": 774,
+      "height": 192,
+      "caption": "Mélange Digital"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://melangedigital.co/#founder",
+      "name": "Sanket Bolinjkar",
+      "jobTitle": "Founder and CEO",
+      "worksFor": { "@id": "https://melangedigital.co/#organization" },
+      "url": "https://melangedigital.co/about"
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://melangedigital.co/#localbusiness-goa",
+      "name": "Mélange Digital",
+      "parentOrganization": { "@id": "https://melangedigital.co/#organization" },
+      "url": "https://melangedigital.co/",
+      "image": "https://melangedigital.co/logo.png",
+      "telephone": "+91-9372567722",
+      "email": "hello@melangedigital.co",
+      "priceRange": "₹₹",
+      "hasMap": "https://maps.app.goo.gl/FSfiMEP7C4n4CMQTA",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "7th Floor, Silvio Heights, B12, St Inez Rd, Santa Inez",
+        "addressLocality": "Panaji",
+        "addressRegion": "Goa",
+        "postalCode": "403001",
+        "addressCountry": "IN"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 15.489123, "longitude": 73.819111 },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "10:00",
+        "closes": "19:00"
+      }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://melangedigital.co/#localbusiness-mumbai",
+      "name": "Mélange Digital",
+      "parentOrganization": { "@id": "https://melangedigital.co/#organization" },
+      "url": "https://melangedigital.co/",
+      "image": "https://melangedigital.co/logo.png",
+      "telephone": "+91-7700974123",
+      "email": "hello@melangedigital.co",
+      "priceRange": "₹₹",
+      "hasMap": "https://www.google.com/maps/place/The+Trees/@19.0922452,72.9186822,17z",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "L-302, The Trees Godrej, Vikhroli East",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "400079",
+        "addressCountry": "IN"
+      },
+      "geo": { "@type": "GeoCoordinates", "latitude": 19.0922401, "longitude": 72.9212571 },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "10:00",
+        "closes": "19:00"
+      }
+    },
+    {
+      "@type": "Report",
+      "@id": "https://melangedigital.co/indian-outbound-tourism-report#report",
+      "name": "The Indian Outbound Inspiration Report 2026",
+      "url": "https://melangedigital.co/indian-outbound-tourism-report",
+      "publisher": { "@id": "https://melangedigital.co/#organization" },
+      "about": "Indian outbound travel market"
+    }
+  ]
+}
