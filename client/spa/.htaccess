@@ -59,6 +59,12 @@
   RewriteRule ^global/united-arab-emirates/?$ / [R=301,L]
   RewriteRule ^blogs/the-rise-of-creator-storefronts-and-how-they-are-reshaping-brand-influencer-partnerships/?$ /blogs [R=301,L]
 
+  # Dead URLs from the SEO audit (2026-11-20).
+  RewriteRule ^blogs/destination-marketing-agency-benefits/?$ /blogs/how-to-choose-a-destination-marketing-agency-in-india [R=301,L]
+  RewriteRule ^work/akbar-travels/?$ /work/mall-activation-for-saudi-tourism [R=301,L,NC]
+  # Any /services/<slug> that isn't a live service page goes to the services hub.
+  RewriteRule ^services/(?!(?:influencer-marketing|branded-content-ips|experiential-marketing|fam-trips-pr)/?$)[^/]+/?$ /services [R=301,L]
+
   # Pretty PDF URL
   RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]
 

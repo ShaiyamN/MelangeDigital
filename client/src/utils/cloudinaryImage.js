@@ -2,8 +2,8 @@ const CLOUDINARY_BASE = `https://res.cloudinary.com/${
   import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dbhrpsnzg"
 }/image/upload`;
 
-// CMS images are stored as /uploads/<id>.<ext> (server.cjs redirects them to the
-// Cloudinary original) or as full Cloudinary upload URLs. Originals can be 3MB+,
+// CMS images are stored as /uploads/<id>.<ext> (server.cjs redirects them to a resized
+// Cloudinary copy) or as full Cloudinary upload URLs. Originals can be 3MB+,
 // so request a resized, auto-format/quality version straight from Cloudinary.
 function cloudinaryPublicPath(src) {
   if (typeof src !== "string") return null;

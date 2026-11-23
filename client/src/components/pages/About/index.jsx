@@ -12,9 +12,9 @@ const CSS = [
   `${ASSET}/css/melange.css?v=20260904s`,
 ];
 const SCRIPT_BASES = [
-  "/about/network-sphere.js?v=20260902f",
+  "/about/network-sphere.js?v=20261123a",
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
-  `${ASSET}/js/melange.js?v=20260902c`,
+  `${ASSET}/js/melange.js?v=20261123a`,
   `${ASSET}/js/about.js?v=20260915b`,
 ];
 

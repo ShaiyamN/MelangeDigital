@@ -133,7 +133,6 @@
     modal.innerHTML =
       '<div class="network-sphere-modal__card">' +
       '  <div class="network-sphere-modal__media">' +
-      '    <img alt="" />' +
       '    <button type="button" class="network-sphere-modal__close" aria-label="Close">' +
       '      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.3 5.7a1 1 0 0 0-1.4 0L12 10.6 7.1 5.7a1 1 0 0 0-1.4 1.4l4.9 4.9-4.9 4.9a1 1 0 1 0 1.4 1.4l4.9-4.9 4.9 4.9a1 1 0 0 0 1.4-1.4L13.4 12l4.9-4.9a1 1 0 0 0 0-1.4z"/></svg>' +
       "    </button>" +
@@ -187,7 +186,8 @@
     root.appendChild(stage);
 
     var modal = createModal();
-    var modalImg = modal.querySelector(".network-sphere-modal__media img");
+    // Added on first open: an <img> with no src is reported as a broken image.
+    var modalImg = document.createElement("img");
     var modalTitle = modal.querySelector(".network-sphere-modal__title");
     var modalDesc = modal.querySelector(".network-sphere-modal__desc");
     var modalClose = modal.querySelector(".network-sphere-modal__close");
@@ -196,6 +196,7 @@
     function openModal(image) {
       modalImg.src = encodeURI(image.src);
       modalImg.alt = image.alt || "";
+      if (!modalImg.parentNode) modalClose.parentNode.insertBefore(modalImg, modalClose);
       modalTitle.textContent = image.title || "";
       modalDesc.textContent = image.description || "";
       modalTitle.hidden = !image.title;

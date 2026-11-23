@@ -269,7 +269,7 @@ const BlogDetail = () => {
             ? "https://melangedigital.co/travel-marketing-trends-og.jpg"
             : isDestinationMarketingStrategies
               ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
-              : blog.image || "";
+              : cloudinaryUrl(blog.image || "", 1200);
   const seoImageAlt = isDestinationMarketingInTourism
     ? "Destination Marketing in Tourism – Mélange Digital"
     : isExperientialTourismGuide

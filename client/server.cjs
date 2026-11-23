@@ -153,7 +153,21 @@ const SEO_REDIRECTS = {
   // Public duplicate of the Zoho job form; the Careers page embeds /careers/form.
   "/careers/Apply_Now_and_Become_a_Part_of_Our_Team": "/careers",
   "/careers/Apply_Now_and_Become_a_Part_of_Our_Team/index.html": "/careers",
+  // Dead URLs from the SEO audit (2026-11-20), sent to the nearest live page.
+  "/blogs/destination-marketing-agency-benefits":
+    "/blogs/how-to-choose-a-destination-marketing-agency-in-india",
+  "/services/website-development-seo": "/services",
+  "/work/akbar-travels": "/work/mall-activation-for-saudi-tourism",
 };
+
+// Service detail pages that exist. Any other /services/<slug> is a retired page
+// Google still has, so it goes to the services hub instead of a 404.
+const LIVE_SERVICE_SLUGS = new Set([
+  "influencer-marketing",
+  "branded-content-ips",
+  "experiential-marketing",
+  "fam-trips-pr",
+]);
 
 // Redirect legacy URLs and normalize work slugs before canonicalizing the host.
 app.use((req, res, next) => {
@@ -163,11 +177,15 @@ app.use((req, res, next) => {
   const normalizedPath = cleanPath.startsWith("/work/")
     ? cleanPath.toLowerCase()
     : cleanPath;
-  const redirectTarget =
+  let redirectTarget =
     SEO_REDIRECTS[rawPath] ||
     SEO_REDIRECTS[cleanPath] ||
     SEO_REDIRECTS[normalizedPath] ||
     normalizedPath;
+  const serviceSlug = /^\/services\/([^/]+)$/.exec(redirectTarget);
+  if (serviceSlug && !LIVE_SERVICE_SLUGS.has(serviceSlug[1])) {
+    redirectTarget = "/services";
+  }
   const requestHost = (req.get("host") || "").split(":")[0].toLowerCase();
   const forwardedProto = (req.get("x-forwarded-proto") || "")
     .split(",")[0]
@@ -361,10 +379,11 @@ app.post("/api/sitemap/clear-cache", (_req, res) => {
 });
 
 // CMS image paths (/uploads/<cloudinaryId>.<ext>) are not hosted here; serve them from Cloudinary.
+// Originals are often 3-9MB, so send a resized, compressed copy (same format, max 1200px wide).
 app.get("/uploads/:file", (req, res) => {
   const m = /^([A-Za-z0-9_-]+)\.(webp|png|jpe?g|gif|avif)$/i.exec(req.params.file);
   if (!m) return res.status(404).type("text/plain").send("Not found");
-  res.redirect(302, `https://res.cloudinary.com/dbhrpsnzg/image/upload/${m[1]}.${m[2].toLowerCase()}`);
+  res.redirect(302, `https://res.cloudinary.com/dbhrpsnzg/image/upload/q_auto,c_limit,w_1200/${m[1]}.${m[2].toLowerCase()}`);
 });
 
 // Live sitemap from Firestore (blogs + casestudies). Before static so spa/sitemap.xml is not used.

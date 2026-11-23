@@ -3,8 +3,8 @@
 const CARD_WIDTHS = [400, 640, 800, 1200];
 // Measured: cards are viewport - 48px on mobile and ~508px wide in the desktop two-column grid.
 const CARD_SIZES = "(max-width: 767px) calc(100vw - 48px), (max-width: 1100px) 45vw, 520px";
-// CMS banners are stored as /uploads/<cloudinaryId>.<ext>, which server.cjs 302-redirects to
-// the full-size Cloudinary original. Point straight at Cloudinary to skip that uncached hop.
+// CMS banners are stored as /uploads/<cloudinaryId>.<ext>, which server.cjs 302-redirects to a
+// resized Cloudinary copy. Point straight at Cloudinary to skip that uncached hop.
 const CLOUDINARY_UPLOAD_BASE = `https://res.cloudinary.com/${
   import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "dbhrpsnzg"
 }/image/upload/`;

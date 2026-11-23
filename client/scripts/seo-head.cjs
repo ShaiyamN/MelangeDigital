@@ -8,6 +8,22 @@ const CASE_STUDY_SEO = require("../src/constants/caseStudySeo.json");
 
 const ORIGIN = process.env.SITE_ORIGIN || "https://melangedigital.co";
 
+/**
+ * CMS images are Cloudinary originals (/uploads/<id>.<ext> or a full upload URL),
+ * often 3-9MB. Point og:image and schema at a resized, compressed copy instead.
+ * Same mapping as src/utils/cloudinaryImage.js.
+ */
+function compressedCmsImage(src) {
+  const value = String(src || "").trim();
+  if (!value) return undefined;
+  const local = /^\/uploads\/([A-Za-z0-9_-]+)\.(webp|png|jpe?g|gif|avif)$/i.exec(value);
+  const remote = /^https:\/\/res\.cloudinary\.com\/[^/]+\/image\/upload\/(?:v\d+\/)?([^,\s?#/]+\.(?:webp|png|jpe?g|gif|avif))$/i.exec(value);
+  const file = local ? `${local[1]}.${local[2].toLowerCase()}` : remote ? remote[1] : null;
+  return file
+    ? `https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_1200/${file}`
+    : value;
+}
+
 /** Titles/descriptions must match Helmet on these pages. */
 const PAGE_META = {
   "/": {
@@ -443,10 +459,7 @@ function resolveMeta(reqPath, index = {}) {
     title: pageTitle,
     description: pageDescription,
   });
-  const image =
-    preset.image ||
-    String(cms?.image || "").trim() ||
-    undefined;
+  const image = preset.image || compressedCmsImage(cms?.image);
   const imageAlt = preset.imageAlt || undefined;
   const imageWidth = preset.imageWidth || undefined;
   const imageHeight = preset.imageHeight || undefined;
@@ -513,7 +526,7 @@ function blogPostingJsonLd(pageUrl, cms) {
     "@type": "BlogPosting",
     headline,
     description: String(cms.metaDescription || cms.description || "").trim() || undefined,
-    image: String(cms.image || "").trim() || undefined,
+    image: compressedCmsImage(cms.image),
     datePublished: published || undefined,
     dateModified: modified || undefined,
     author: authorName

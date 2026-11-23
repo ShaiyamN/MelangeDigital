@@ -32,8 +32,8 @@ const SCRIPT_BASES = [
   `${ASSET}/js/scrolltrigger.min.js`,
   `${ASSET}/js/site-home.js`,
   "https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js",
-  "/about/network-sphere.js?v=20260902f",
-  `${ASSET}/js/melange.js?v=20260915r`,
+  "/about/network-sphere.js?v=20261123a",
+  `${ASSET}/js/melange.js?v=20261123a`,
 ];
 
 function loadCss(href) {
