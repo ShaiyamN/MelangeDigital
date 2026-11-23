@@ -106,10 +106,47 @@
         transform: rotate(360deg);
       }
     }
+
+    /* Intro loader (public/intro/melange-intro.js). This cover holds the screen from the first
+       paint until the animation's own overlay lands on top of it. */
+    html.mlg-intro {
+      overflow: hidden;
+    }
+
+    html.mlg-intro::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: #FBF9FF;
+    }
   </style>
+  <script>
+    /* Intro loader: the paper-fan logo plays on the first page of a visit only. Never for
+       crawlers, the prerender snapshot, reduced motion or /admin. If the animation file is slow
+       or fails, the cover lifts and the page shows as normal. */
+    (function () {
+      try {
+        var d = document.documentElement, n = navigator;
+        if (window.__PRERENDERING__ || n.webdriver) return;
+        if (/bot|crawl|spider|slurp|facebookexternalhit|preview|headless/i.test(n.userAgent)) return;
+        if (/^\/admin/.test(location.pathname)) return;
+        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (sessionStorage.getItem("mlg-intro")) return;
+        sessionStorage.setItem("mlg-intro", "1");
+        d.classList.add("mlg-intro");
+        var s = document.createElement("script");
+        s.src = "/intro/melange-intro.js?v=20261123c";
+        s.async = true;
+        s.onerror = function () { d.classList.remove("mlg-intro"); };
+        document.head.appendChild(s);
+        setTimeout(function () { if (!window.__mlgIntro) d.classList.remove("mlg-intro"); }, 1500);
+      } catch (e) {}
+    })();
+  </script>
   <script type="module" crossorigin="" src="/assets/index-DUZ6zX2o.js"></script>
   <link rel="stylesheet" crossorigin="" href="/assets/index-Cv-9gA4b.css">
-<link rel="modulepreload" as="script" crossorigin="" href="/assets/CaseStudyDetail-DM6MgUQO.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/BreadCrumbs-DxXmOcaP.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/index-BcaZUcQW.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/caseStudySeo-BpWQVN79.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/firestoreRest-CJaoeS0a.js"><link rel="canonical" href="https://melangedigital.co/work/hong-kong-tourism-board-herhongkong" data-rh="true"><link rel="preconnect" href="https://fonts.googleapis.com" data-rh="true"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" data-rh="true"><link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&amp;family=Baskervville:ital@1&amp;family=Libre+Baskerville:ital@1&amp;family=Lato:wght@400;600;700;800&amp;display=swap" rel="stylesheet" data-rh="true"><meta name="title" content="Hong Kong Tourism Board: #HerHongKong | Mélange Digital's Work" data-react-helmet="true" data-rh="true"><script type="application/json" id="__case_study_prerender_data__">{"slug":"hong-kong-tourism-board-herhongkong","cs":{"id":"UJc3fGLhd0MWzpbVncX9","breadcrumbTitle":"","intro":"Hong Kong read as a corporate stopover for Indian travellers. Meanwhile South Indian women were travelling independently for self-discovery, a high-intent cohort no destination had claimed.","createdAt":"2026-07-21T06:22:10.664Z","slug":"hong-kong-tourism-board-herhongkong","results":[],"approach":[],"stats":[],"title":"Hong Kong Tourism Board: #HerHongKong","filters":["all","filter2"],"services":["Influencer Marketing","Content Strategy"],"showOnHome":true,"sortOrder":3,"homeOrder":3,"contentBlocks":[{"subheading":"The Insight","paragraph":"\u003cp>52% of South Indian female travellers travel to feel part of something bigger, seeking shared passions and a sense of belonging, not just sightseeing.\u003c/p>","id":"1784614855368","type":"section"},{"type":"section","subheading":"Our Solution","paragraph":"\u003cp>We launched #HerHongKong, a celebrity-driven campaign repositioning Hong Kong through the authentic voices of four South Indian female celebrities, showcasing the city as a space where women live out every version of themselves: bold, curious, free and unstoppable. We cast four South Indian actresses, Hebah Patel (Luxury + Fashion), Gehna Sippy (Culture + Culinary), Kathy Davison (Calm + Wellness) and Rashi Singh (Adventure + Safety), to showcase various shades of Hong Kong through a multi-format content ecosystem, including 2 long-form YouTube films and 130 social media assets.\u003c/p>","id":"1784614859461"},{"subheading":"Business Impact","isList":true,"paragraph":"\u003cp>+22% — YoY growth in South Indian female arrivals 2N → 3N — Average length of stay +15pts — Leisure share of Indian arrivals\u003c/p>","id":"1784614864308","type":"section"}],"showOnService":true,"serviceId":"influencer","serviceSlot":2,"serviceCaption":"Hong Kong read as a corporate stopover for Indian travellers. Meanwhile South Indian women were travelling independently for self-discovery, a high-intent cohort no destination had claimed.","bannerImage":"/uploads/nmrojqm5r7wsizy11qxz.webp"}}</script>  <!-- prerendered-route:/work/hong-kong-tourism-board-herhongkong -->
+<link rel="modulepreload" as="script" crossorigin="" href="/assets/CaseStudyDetail-DM6MgUQO.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/BreadCrumbs-DxXmOcaP.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/index-BcaZUcQW.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/caseStudySeo-BpWQVN79.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/firestoreRest-CJaoeS0a.js"><script type="application/json" id="__case_study_prerender_data__">{"slug":"hong-kong-tourism-board-herhongkong","cs":{"id":"UJc3fGLhd0MWzpbVncX9","breadcrumbTitle":"","intro":"Hong Kong read as a corporate stopover for Indian travellers. Meanwhile South Indian women were travelling independently for self-discovery, a high-intent cohort no destination had claimed.","createdAt":"2026-07-21T06:22:10.664Z","slug":"hong-kong-tourism-board-herhongkong","results":[],"approach":[],"stats":[],"title":"Hong Kong Tourism Board: #HerHongKong","filters":["all","filter2"],"services":["Influencer Marketing","Content Strategy"],"showOnHome":true,"sortOrder":3,"homeOrder":3,"contentBlocks":[{"subheading":"The Insight","paragraph":"\u003cp>52% of South Indian female travellers travel to feel part of something bigger, seeking shared passions and a sense of belonging, not just sightseeing.\u003c/p>","id":"1784614855368","type":"section"},{"type":"section","subheading":"Our Solution","paragraph":"\u003cp>We launched #HerHongKong, a celebrity-driven campaign repositioning Hong Kong through the authentic voices of four South Indian female celebrities, showcasing the city as a space where women live out every version of themselves: bold, curious, free and unstoppable. We cast four South Indian actresses, Hebah Patel (Luxury + Fashion), Gehna Sippy (Culture + Culinary), Kathy Davison (Calm + Wellness) and Rashi Singh (Adventure + Safety), to showcase various shades of Hong Kong through a multi-format content ecosystem, including 2 long-form YouTube films and 130 social media assets.\u003c/p>","id":"1784614859461"},{"subheading":"Business Impact","isList":true,"paragraph":"\u003cp>+22% — YoY growth in South Indian female arrivals 2N → 3N — Average length of stay +15pts — Leisure share of Indian arrivals\u003c/p>","id":"1784614864308","type":"section"}],"showOnService":true,"serviceId":"influencer","serviceSlot":2,"serviceCaption":"Hong Kong read as a corporate stopover for Indian travellers. Meanwhile South Indian women were travelling independently for self-discovery, a high-intent cohort no destination had claimed.","bannerImage":"/uploads/nmrojqm5r7wsizy11qxz.webp"}}</script><link rel="canonical" href="https://melangedigital.co/work/hong-kong-tourism-board-herhongkong" data-rh="true"><link rel="preconnect" href="https://fonts.googleapis.com" data-rh="true"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" data-rh="true"><link href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&amp;family=Baskervville:ital@1&amp;family=Libre+Baskerville:ital@1&amp;family=Lato:wght@400;600;700;800&amp;display=swap" rel="stylesheet" data-rh="true"><meta name="title" content="Hong Kong Tourism Board: #HerHongKong | Mélange Digital's Work" data-react-helmet="true" data-rh="true">  <!-- prerendered-route:/work/hong-kong-tourism-board-herhongkong -->
 </head>
 
 <body class="">

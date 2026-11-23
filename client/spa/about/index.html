@@ -111,7 +111,44 @@
         transform: rotate(360deg);
       }
     }
+
+    /* Intro loader (public/intro/melange-intro.js). This cover holds the screen from the first
+       paint until the animation's own overlay lands on top of it. */
+    html.mlg-intro {
+      overflow: hidden;
+    }
+
+    html.mlg-intro::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: #FBF9FF;
+    }
   </style>
+  <script>
+    /* Intro loader: the paper-fan logo plays on the first page of a visit only. Never for
+       crawlers, the prerender snapshot, reduced motion or /admin. If the animation file is slow
+       or fails, the cover lifts and the page shows as normal. */
+    (function () {
+      try {
+        var d = document.documentElement, n = navigator;
+        if (window.__PRERENDERING__ || n.webdriver) return;
+        if (/bot|crawl|spider|slurp|facebookexternalhit|preview|headless/i.test(n.userAgent)) return;
+        if (/^\/admin/.test(location.pathname)) return;
+        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (sessionStorage.getItem("mlg-intro")) return;
+        sessionStorage.setItem("mlg-intro", "1");
+        d.classList.add("mlg-intro");
+        var s = document.createElement("script");
+        s.src = "/intro/melange-intro.js?v=20261123c";
+        s.async = true;
+        s.onerror = function () { d.classList.remove("mlg-intro"); };
+        document.head.appendChild(s);
+        setTimeout(function () { if (!window.__mlgIntro) d.classList.remove("mlg-intro"); }, 1500);
+      } catch (e) {}
+    })();
+  </script>
   <script type="module" crossorigin="" src="/assets/index-DUZ6zX2o.js"></script>
   <link rel="stylesheet" crossorigin="" href="/assets/index-Cv-9gA4b.css">
 <link rel="modulepreload" as="script" crossorigin="" href="/assets/index-CRmtobPL.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/marketingShell-DipdirPE.js"><base href="/destination-marketing-agency/" data-rh="true"><link rel="canonical" href="https://melangedigital.co/about" data-rh="true"><style type="text/css" data-rh="true">
