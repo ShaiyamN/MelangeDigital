@@ -152,6 +152,15 @@ const SEO_REDIRECTS = {
     "/blogs/how-to-choose-a-destination-marketing-agency-in-india",
   "/services/website-development-seo": "/services",
   "/work/akbar-travels": "/work/mall-activation-for-saudi-tourism",
+  // Redirects sheet (2026-11-24).
+  "/blogs/influencer-marketing-for-the-unreachable-winning-hearts-offline":
+    "/blogs/travel-influencer-marketing",
+  "/blogs/from-products-to-experiences-how-micro-events-and-community-activations-are-shaping-brand-ip-in-2025":
+    "/blogs",
+  "/blogs/sustainable-design-and-packaging-why-2025-consumers-judge-before-they-click-buy":
+    "/blogs",
+  "/blogs/using-user-generated-content-to-build-authentic-brand-narratives": "/blogs",
+  "/green-label": "/",
 };
 
 // Service detail pages that exist. Any other /services/<slug> is a retired page

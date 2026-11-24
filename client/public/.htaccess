@@ -62,6 +62,12 @@
   # Dead URLs from the SEO audit (2026-11-20).
   RewriteRule ^blogs/destination-marketing-agency-benefits/?$ /blogs/how-to-choose-a-destination-marketing-agency-in-india [R=301,L]
   RewriteRule ^work/akbar-travels/?$ /work/mall-activation-for-saudi-tourism [R=301,L,NC]
+  # Redirects sheet (2026-11-24).
+  RewriteRule ^blogs/influencer-marketing-for-the-unreachable-winning-hearts-offline/?$ /blogs/travel-influencer-marketing [R=301,L]
+  RewriteRule ^blogs/from-products-to-experiences-how-micro-events-and-community-activations-are-shaping-brand-ip-in-2025/?$ /blogs [R=301,L]
+  RewriteRule ^blogs/sustainable-design-and-packaging-why-2025-consumers-judge-before-they-click-buy/?$ /blogs [R=301,L]
+  RewriteRule ^blogs/using-user-generated-content-to-build-authentic-brand-narratives/?$ /blogs [R=301,L]
+  RewriteRule ^green-label/?$ / [R=301,L,NC]
   # Any /services/<slug> that isn't a live service page goes to the services hub.
   RewriteRule ^services/(?!(?:influencer-marketing|branded-content-ips|experiential-marketing|fam-trips-pr)/?$)[^/]+/?$ /services [R=301,L]
 
