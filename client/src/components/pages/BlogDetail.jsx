@@ -201,7 +201,10 @@ const BlogDetail = () => {
   const isCruiseBranding = slug === "cruise-branding";
   const isWhatAreFamTrips = slug === "what-are-fam-trip";
   const isFilmInducedTourism = slug === "film-induced-tourism";
-  const seoTitle = isDestinationMarketingInTourism
+  const isHotelInfluencerMarketing = slug === "hotel-influencer-marketing";
+  const seoTitle = isHotelInfluencerMarketing
+    ? "Influencer Marketing for Hotels: A Bookings Guide | Melange"
+    : isDestinationMarketingInTourism
     ? "Destination Marketing in Tourism: What It Is & Why It Matters"
     : isExperientialTourismGuide
       ? "Experiential Tourism Guide 2026 | Blog by Melange Digital"
@@ -224,7 +227,9 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
               : blog.seoTitle || blog.title;
-  const seoDescription = isDestinationMarketingInTourism
+  const seoDescription = isHotelInfluencerMarketing
+    ? "Influencer marketing for hotels that fills rooms: choosing creators, barter vs paid, contracts, disclosure rules, and tracking bookings. Read the guide"
+    : isDestinationMarketingInTourism
     ? "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next"
     : isExperientialTourismGuide
       ? "Discover how Experiential tourism is changing how travellers pick their destinations, travel trends for 2026, and what DMOs, travel brands need to do next"
@@ -247,7 +252,9 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
               : blog.metaDescription || blog.description || "";
-  const seoImage = isDestinationMarketingInTourism
+  const seoImage = isHotelInfluencerMarketing
+    ? "https://melangedigital.co/hotel-influencer-marketing-og.jpg"
+    : isDestinationMarketingInTourism
     ? "https://melangedigital.co/destination-marketing-in-tourism-og.jpg"
     : isExperientialTourismGuide
       ? "https://melangedigital.co/experiential-tourism-og.jpg"
@@ -270,7 +277,9 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
               : cloudinaryUrl(blog.image || "", 1200);
-  const seoImageAlt = isDestinationMarketingInTourism
+  const seoImageAlt = isHotelInfluencerMarketing
+    ? "Influencer Marketing for Hotels: A Bookings Guide | Mélange Digital"
+    : isDestinationMarketingInTourism
     ? "Destination Marketing in Tourism – Mélange Digital"
     : isExperientialTourismGuide
       ? "Experiential Tourism – Mélange Digital"
@@ -304,7 +313,8 @@ const BlogDetail = () => {
     isCruiseBranding ||
     isDestinationMarketingStrategies ||
     isTravelMarketingTrends2027 ||
-    isChoosingDestinationMarketingAgencyIndia;
+    isChoosingDestinationMarketingAgencyIndia ||
+    isHotelInfluencerMarketing;
   const canonicalUrl = `https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`;
 
   const breadcrumbs = [
@@ -420,7 +430,8 @@ const BlogDetail = () => {
               isFilmInducedTourism ||
               isWhatAreFamTrips ||
               isCruiseBranding ||
-              isChoosingDestinationMarketingAgencyIndia) && (
+              isChoosingDestinationMarketingAgencyIndia ||
+              isHotelInfluencerMarketing) && (
               <meta property="og:image:type" content="image/jpeg" data-rh="true" />
             )}
             <meta name="twitter:card" content="summary_large_image" data-rh="true" />
