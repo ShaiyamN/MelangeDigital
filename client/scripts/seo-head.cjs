@@ -314,6 +314,21 @@ const PAGE_META = {
     twitterDescription:
       "Hiring a destination marketing agency in India? Six criteria, RFP questions and red flags for tourism boards and DMOs choosing a partner. Read the guide",
   },
+  "/blogs/hotel-influencer-marketing": {
+    title: "Influencer Marketing for Hotels: A Bookings Guide | Melange",
+    ogTitle: "Influencer Marketing for Hotels: A Bookings Guide | Melange",
+    description:
+      "Influencer marketing for hotels that fills rooms: choosing creators, barter vs paid, contracts, disclosure rules, and tracking bookings. Read the guide",
+    image: `${ORIGIN}/hotel-influencer-marketing-og.jpg`,
+    imageAlt: "Influencer Marketing for Hotels: A Bookings Guide | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "Influencer Marketing for Hotels: A Bookings Guide | Melange",
+    twitterDescription:
+      "Influencer marketing for hotels that fills rooms: choosing creators, barter vs paid, contracts, disclosure rules, and tracking bookings. Read the guide",
+  },
   "/careers": {
     title: "Careers: Join Our Global Team | Mélange Digital",
     description:
@@ -1240,6 +1255,57 @@ if (require.main === module) {
     (filmTourismShell.match(/"@type":"BlogPosting"/g) || []).length,
     1,
   );
+
+  const hotelInfluencerPath = "/blogs/hotel-influencer-marketing";
+  const hotelInfluencerTitle =
+    "Influencer Marketing for Hotels: A Bookings Guide | Melange";
+  const hotelInfluencerDescription =
+    "Influencer marketing for hotels that fills rooms: choosing creators, barter vs paid, contracts, disclosure rules, and tracking bookings. Read the guide";
+  const hotelInfluencerImage = `${ORIGIN}/hotel-influencer-marketing-og.jpg`;
+  const hotelInfluencerMeta = resolveMeta(hotelInfluencerPath, {
+    routes: new Set([hotelInfluencerPath]),
+    byPath: {
+      [hotelInfluencerPath]: {
+        seoTitle: hotelInfluencerTitle,
+        metaDescription: `${hotelInfluencerDescription}.`,
+        title: hotelInfluencerTitle,
+        schemaMode: "custom",
+        customSchema: existingArticleSchema,
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(hotelInfluencerMeta.title, hotelInfluencerTitle);
+  assert.strictEqual(hotelInfluencerMeta.description, hotelInfluencerDescription);
+  assert.strictEqual(hotelInfluencerMeta.image, hotelInfluencerImage);
+  assert.strictEqual(hotelInfluencerMeta.imageType, "image/jpeg");
+  assert.strictEqual(hotelInfluencerMeta.ogType, "article");
+  const hotelInfluencerShell = applyHead(shell, hotelInfluencerMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${hotelInfluencerPath}`],
+    ['property="og:title"', hotelInfluencerTitle],
+    ['property="og:description"', hotelInfluencerDescription],
+    ['property="og:image"', hotelInfluencerImage],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    [
+      'property="og:image:alt"',
+      "Influencer Marketing for Hotels: A Bookings Guide | Mélange Digital",
+    ],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', hotelInfluencerTitle],
+    ['name="twitter:description"', hotelInfluencerDescription],
+    ['name="twitter:image"', hotelInfluencerImage],
+  ]) {
+    assert(hotelInfluencerShell.includes(`${tag} content="${esc(value)}"`));
+    assert.strictEqual(
+      (hotelInfluencerShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
 
   const airlinesPath = "/blogs/airlines-marketing";
   const airlinesTitle =
