@@ -40,6 +40,7 @@ const ENTRY_FOR_ROUTE = {
   "/terms-of-service": "TermsofService.jsx",
   "/privacy-policy": "PrivatePolicy.jsx",
   "/cookie-policy": "Cookies.jsx",
+  "/indian-outbound-tourism-report": "ReportLanding.jsx",
 };
 const SERVICE_DETAIL_ENTRY = "Services/ServiceDetail.jsx";
 

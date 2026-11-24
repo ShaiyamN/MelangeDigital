@@ -19,6 +19,7 @@ export const routes = [
   "/terms-of-service",
   "/privacy-policy",
   "/cookie-policy",
+  "/indian-outbound-tourism-report",
   "/work/costa-cruises",
   "/work/resorts-world-cruises",
   "/work/singapore-tourism-board",

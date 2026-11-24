@@ -7,7 +7,8 @@
   "reports": {
     "indian-outbound-2026": {
       "title": "The Indian Outbound Inspiration Report 2026",
-      "path": "/indian-outbound-tourism-report"
+      "path": "/indian-outbound-tourism-report",
+      "pdf": "/assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf"
     }
   }
 }

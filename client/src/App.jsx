@@ -44,6 +44,7 @@ const BlogDetail = lazyPage(() => import("./components/pages/BlogDetail"));
 const ServiceDetail = lazyPage(() => import("./components/pages/Services/ServiceDetail"));
 const CaseStudyDetail = lazyPage(() => import("./components/pages/Casestudies/CaseStudyDetail"));
 const Location = lazy(() => import("./components/pages/Location"));
+const ReportLanding = lazyPage(() => import("./components/pages/ReportLanding"));
 
 const PAGE_FOR_PATH = {
   "/": Home,
@@ -53,6 +54,7 @@ const PAGE_FOR_PATH = {
   "/contact": Contact,
   "/careers": Career,
   "/blogs": Blogs,
+  "/indian-outbound-tourism-report": ReportLanding,
 };
 const PAGE_FOR_PREFIX = [
   ["/blogs/", BlogDetail],
@@ -309,6 +311,7 @@ function App() {
           <Route exact path="/privacy-policy" Component={PrivatePolicy} />
           <Route exact path="/cancellation-and-refund-policy" element={<Navigate to="/terms-of-service" replace />} />
           <Route exact path="/cookie-policy" Component={Cookies} />
+          <Route exact path="/indian-outbound-tourism-report" Component={ReportLanding} />
 
           {/* Admin routes */}
           <Route exact path="/admin" element={<Navigate to="/admin/login" replace />} />

@@ -11,7 +11,7 @@
 (function () {
   var KEY = "pending-report";
   var DEFAULT = "indian-outbound-2026";
-  var REPORTS = {"indian-outbound-2026":{"title":"The Indian Outbound Inspiration Report 2026","path":"/indian-outbound-tourism-report"}};
+  var REPORTS = {"indian-outbound-2026":{"title":"The Indian Outbound Inspiration Report 2026","path":"/indian-outbound-tourism-report","pdf":"/assets/reports/The%20Indian%20Outbound%20Inspiration%20report%202026.pdf"}};
   var slug = DEFAULT;
   try {
     var stored = sessionStorage.getItem(KEY);
@@ -19,7 +19,9 @@
     sessionStorage.removeItem(KEY);
   } catch (e) {}
   var entry = REPORTS[slug] || REPORTS[DEFAULT];
-  if (entry && entry.path) location.replace(entry.path);
+  // After the report form, open the PDF itself; entry.path is the report's landing page.
+  var target = entry && (entry.pdf || entry.path);
+  if (target) location.replace(target);
   else document.body.textContent = "Report not found.";
 })();
 </script>

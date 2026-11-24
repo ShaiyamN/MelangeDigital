@@ -26,7 +26,9 @@ function reportDownloadHtml() {
     sessionStorage.removeItem(KEY);
   } catch (e) {}
   var entry = REPORTS[slug] || REPORTS[DEFAULT];
-  if (entry && entry.path) location.replace(entry.path);
+  // After the report form, open the PDF itself; entry.path is the report's landing page.
+  var target = entry && (entry.pdf || entry.path);
+  if (target) location.replace(target);
   else document.body.textContent = "Report not found.";
 })();
 </script>
