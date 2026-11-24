@@ -106,19 +106,83 @@
     });
   });
 
-  var done = false;
-  function finish() {
-    if (done) return;
-    done = true;
-    removeEventListener("keydown", finish);
-    root.classList.remove("mlg-intro");
-    // Logo lifts away first, then the background dissolves into the page.
+  // The artwork's box in logo units, so it can be lined up with the navbar logo's artwork.
+  var artPts = pts(G.vtip);
+  G.rays.forEach(function (r) { artPts = artPts.concat(pts(r.dark), pts(r.light)); });
+  G.words.forEach(function (w) { artPts.push([w.x, w.y], [w.x1, w.y1]); });
+  var art = bbox(artPts);
+  // Where the artwork sits inside the navbar's mainLogo.webp (480 x 119): measured from the file.
+  var NAV_ART = { x0: 21 / 480, y0: 7 / 119, x1: 458 / 480, y1: 115 / 119 };
+
+  function navLogo() {
+    var imgs = document.querySelectorAll('img[alt="Mélange Digital logo"]');
+    for (var i = 0; i < imgs.length; i++) {
+      // Only a loaded, visible logo: landing on a blank or hidden one would leave a gap.
+      if (!imgs[i].complete || !imgs[i].naturalWidth) continue;
+      if (imgs[i].checkVisibility && !imgs[i].checkVisibility({ opacityProperty: true, visibilityProperty: true })) continue;
+      var r = imgs[i].getBoundingClientRect();
+      if (r.width > 20 && r.height > 5 && r.top >= 0 && r.top < innerHeight / 3 && r.left < innerWidth / 2) return imgs[i];
+    }
+    return null;
+  }
+
+  function removeOverlay() { if (el.parentNode) el.parentNode.removeChild(el); }
+
+  // Fallback when the navbar logo isn't on screen: lift the logo away, then dissolve the background.
+  function fadeOut() {
     inner.animate([{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateY(-3%) scale(.985)" }],
       { duration: 450, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
     var bg = el.animate([{ opacity: 1 }, { opacity: 0 }], { delay: 180, duration: 550, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
+    bg.onfinish = removeOverlay;
+  }
+
+  // The logo shrinks and glides into the navbar logo while the page appears behind it, then hands
+  // over to the real navbar logo with a short crossfade.
+  function flyHome(target, fast) {
+    var t = target.getBoundingClientRect(), box = el.querySelector(".mi-logo").getBoundingClientRect();
+    var k = box.width / LW;
+    var tx0 = t.left + NAV_ART.x0 * t.width, ty0 = t.top + NAV_ART.y0 * t.height;
+    var sx = ((NAV_ART.x1 - NAV_ART.x0) * t.width) / ((art[2] - art[0]) * k);
+    var sy = ((NAV_ART.y1 - NAV_ART.y0) * t.height) / ((art[3] - art[1]) * k);
+    var dx = tx0 - box.left - art[0] * k * sx, dy = ty0 - box.top - art[1] * k * sy;
+    var dur = fast ? 550 : 1000;
+    var prevOpacity = target.style.opacity;
+    target.style.opacity = "0";
+    inner.style.transformOrigin = "0 0";
+    var fly = inner.animate(
+      [{ transform: "translate(0px,0px) scale(1,1)" }, { transform: "translate(" + dx + "px," + dy + "px) scale(" + sx + "," + sy + ")" }],
+      { duration: dur, easing: "cubic-bezier(.65,0,.35,1)", fill: "forwards" }
+    );
+    el.style.background = "transparent";
+    var bg = document.createElement("div");
+    bg.style.cssText = "position:absolute;inset:0;background:#FBF9FF";
+    el.insertBefore(bg, el.firstChild);
+    bg.animate([{ opacity: 1 }, { opacity: 0 }], { delay: dur * 0.3, duration: dur * 0.6, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
+    fly.onfinish = function () {
+      target.style.transition = "opacity .2s ease";
+      target.style.opacity = prevOpacity || "";
+      var out = inner.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: "ease", fill: "forwards" });
+      out.onfinish = function () {
+        removeOverlay();
+        setTimeout(function () { target.style.transition = ""; }, 250);
+      };
+    };
+    setTimeout(function () { target.style.opacity = prevOpacity || ""; removeOverlay(); }, dur + 1200);
+  }
+
+  var done = false;
+  function finish(e) {
+    if (done) return;
+    done = true;
+    removeEventListener("keydown", finish);
     el.style.pointerEvents = "none";
-    bg.onfinish = function () { if (el.parentNode) el.parentNode.removeChild(el); };
-    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 1500);
+    // Drop the scroll lock first, so the page (and the navbar logo) is in its final position.
+    root.classList.remove("mlg-intro");
+    var fast = !!(e && e.type);
+    var target = navLogo();
+    if (target) flyHome(target, fast);
+    else fadeOut();
+    setTimeout(removeOverlay, 3000);
   }
   el.addEventListener("pointerdown", finish);
   addEventListener("keydown", finish);
