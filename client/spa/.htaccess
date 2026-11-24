@@ -65,9 +65,6 @@
   # Any /services/<slug> that isn't a live service page goes to the services hub.
   RewriteRule ^services/(?!(?:influencer-marketing|branded-content-ips|experiential-marketing|fam-trips-pr)/?$)[^/]+/?$ /services [R=301,L]
 
-  # Pretty PDF URL
-  RewriteRule ^indian-outbound-tourism-report/?$ assets/reports/The\ Indian\ Outbound\ Inspiration\ report\ 2026.pdf [L]
-
   # Missing /assets/* → real 404 (not SPA html)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^assets/ - [R=404,L]

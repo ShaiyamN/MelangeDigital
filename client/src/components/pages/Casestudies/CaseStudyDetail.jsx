@@ -249,7 +249,10 @@ const CaseStudyDetail = () => {
           : block,
       )
     : cs.contentBlocks;
-  const pageTitle = `${displayTitle} | Mélange Digital's Work`;
+  // Same rule as resolveMeta in scripts/seo-head.cjs, so the server title and this one match.
+  const pageTitle = caseSeo.displayTitle
+    ? `${caseSeo.displayTitle} | Mélange Digital's Work`
+    : String(cs.seoTitle || "").trim() || `${String(cs.title || "").trim()} | Mélange Digital's Work`;
   const description = caseSeo.description
     ? caseSeo.description.replace(/\s+/g, " ").trim()
     : truncateMetaDescription(cs.metaDescription || cs.description || cs.intro || "");

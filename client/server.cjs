@@ -7,12 +7,6 @@ const path = require("path");
 const DIST = path.join(__dirname, "spa");
 const PORT = Number(process.env.PORT) || 3000;
 const INDEX = path.join(DIST, "index.html");
-const REPORT_PDF = path.join(
-  DIST,
-  "assets",
-  "reports",
-  "The Indian Outbound Inspiration report 2026.pdf"
-);
 
 if (!fs.existsSync(INDEX)) {
   console.error(`Missing ${INDEX} — run npm run build first`);
@@ -356,21 +350,8 @@ app.get(["/destination-marketing", "/destination-marketing/"], (_req, res) => {
   res.redirect(301, "/");
 });
 
-app.get(
-  ["/indian-outbound-tourism-report", "/indian-outbound-tourism-report/"],
-  (_req, res) => {
-    if (!fs.existsSync(REPORT_PDF)) {
-      res.status(404).send("Report PDF not found");
-      return;
-    }
-    res.type("application/pdf");
-    res.set(
-      "Content-Disposition",
-      'inline; filename="The Indian Outbound Inspiration report 2026.pdf"'
-    );
-    fs.createReadStream(REPORT_PDF).pipe(res);
-  }
-);
+// /indian-outbound-tourism-report is a prerendered page now (it used to stream the PDF, which left
+// crawlers with no HTML head). The PDF itself is at /assets/reports/.
 
 // Clear sitemap cache API for Admin triggers
 app.post("/api/sitemap/clear-cache", (_req, res) => {

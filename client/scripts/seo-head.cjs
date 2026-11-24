@@ -144,6 +144,15 @@ const PAGE_META = {
     description:
       "Cookie Policy for Mélange Digital to understand our use of cookies.",
   },
+  "/indian-outbound-tourism-report": {
+    title: "The Indian Outbound Inspiration Report 2026 | Mélange Digital",
+    description:
+      "We surveyed 4,200 Indian outbound-eligible travellers across 12 cities to find out what triggers a destination decision. Read the 2026 report free.",
+    image: `${ORIGIN}/destination-marketing-agency/images/report/report-desk-cover.png`,
+    imageAlt: "The Indian Outbound Inspiration Report 2026 on a desk",
+    imageWidth: 352,
+    imageHeight: 320,
+  },
   "/blogs": {
     title: "Blog & Insights | Mélange Digital",
     description: "Insights, ideas, and stories from the Mélange Digital team.",
@@ -451,10 +460,17 @@ function resolveMeta(reqPath, index = {}) {
   }
 
   const preset = PAGE_META[path] || PAGE_META[known] || {};
+  // Case studies: same rule as CaseStudyDetail.jsx, so the server title and the title React
+  // sets after load never differ (audits report a mismatch as a duplicate title).
+  const cmsSeoTitle = String(cms?.seoTitle || "").trim();
+  const cmsTitle = String(cms?.title || "").trim();
+  const workTitle =
+    caseStudySlug && cms ? cmsSeoTitle || (cmsTitle && `${cmsTitle} | Mélange Digital's Work`) : "";
   const title =
     (caseStudy?.displayTitle &&
       `${caseStudy.displayTitle} | Mélange Digital's Work`) ||
     preset.title ||
+    workTitle ||
     (cms && (cms.seoTitle || cms.title)) ||
     titleFromPath(path);
   const description =
@@ -827,7 +843,15 @@ if (require.main === module) {
     }),
   );
   assert(slug.includes("https://melangedigital.co/work/acme"));
-  assert(slug.includes("Acme Case"));
+  assert(slug.includes("<title data-rh=\"true\">Acme Case | Mélange Digital's Work</title>"));
+  assert.strictEqual(
+    resolveMeta("/work/acme", {
+      routes: new Set(),
+      byPath: { "/work/acme": { title: "Acme SEO", seoTitle: " Acme SEO " } },
+      origin: ORIGIN,
+    }).title,
+    "Acme SEO",
+  );
 
   const blogShell = applyHead(
     shell,
