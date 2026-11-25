@@ -1,9 +1,13 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Helmet } from "react-helmet-async";
 import Navbar from "../../layout/Navbar";
 import Footer from "../../layout/Footer";
 import ReportLeadForm from "../../layout/ReportLeadForm";
+// Below-the-fold Skiper UI effects pull in framer-motion: load them only after window load so
+// they never compete with the hero for bandwidth or main-thread time.
+const HoverExpandGallery = lazy(() => import("../../skiper/HoverExpandGallery"));
+const SpringCursorFollow = lazy(() => import("../../skiper/SpringCursorFollow"));
 import {
   readReportParam,
   storePendingReport,
@@ -88,6 +92,19 @@ const Home = () => {
   // The prerendered page already has these sheets applied: start visible, don't blank it.
   const [cssReady, setCssReady] = useState(() => stylesheetsApplied(CSS));
   const [formMount, setFormMount] = useState(null);
+  const [galleryMount, setGalleryMount] = useState(null);
+  const [ctaSection, setCtaSection] = useState(null);
+  const [enhance, setEnhance] = useState(false);
+
+  useEffect(() => {
+    let off = false;
+    afterWindowLoad().then(() => {
+      if (!off) setEnhance(true);
+    });
+    return () => {
+      off = true;
+    };
+  }, []);
 
   // Before paint, or the markup's first frame is a blank gated page and the spinner returns late.
   useLayoutEffect(() => {
@@ -151,7 +168,10 @@ const Home = () => {
 
   useEffect(() => {
     if (!cssReady || !rootRef.current) return;
-    setFormMount(rootRef.current.querySelector("#report-form-mount"));
+    const root = rootRef.current;
+    setFormMount(root.querySelector("#report-form-mount"));
+    setCtaSection(root.querySelector(".home-prefooter-cta"));
+    setGalleryMount(root.querySelector("#work-gallery-mount"));
   }, [cssReady]);
 
   return (
@@ -235,6 +255,26 @@ const Home = () => {
           body.dma-react .section-8 .faq-more-btn {
             align-self: center !important;
           }
+          /* Skiper hover-expand gallery fills the formerly hidden video section */
+          body.dma-react .home-video-section {
+            display: block;
+          }
+          /* Reserve the gallery's height before its lazy chunk lands, so nothing below shifts
+             (matches HoverExpandGallery: 1 open tile + 8 strips on mobile, row height above). */
+          body.dma-react .home-video-section .work-gallery {
+            width: 100%;
+            min-height: 784px;
+          }
+          @media (min-width: 768px) {
+            body.dma-react .home-video-section .work-gallery {
+              min-height: 26rem;
+            }
+          }
+          @media (min-width: 1024px) {
+            body.dma-react .home-video-section .work-gallery {
+              min-height: 30rem;
+            }
+          }
         `}</style>
       </Helmet>
 
@@ -252,6 +292,22 @@ const Home = () => {
         dangerouslySetInnerHTML={{ __html: markup }}
       />
       {formMount ? createPortal(<ReportLeadForm />, formMount) : null}
+      {enhance && galleryMount
+        ? createPortal(
+            <Suspense fallback={null}>
+              <HoverExpandGallery />
+            </Suspense>,
+            galleryMount,
+          )
+        : null}
+      {enhance && ctaSection
+        ? createPortal(
+            <Suspense fallback={null}>
+              <SpringCursorFollow target={ctaSection} href="/contact" />
+            </Suspense>,
+            ctaSection,
+          )
+        : null}
       <Footer />
     </>
   );

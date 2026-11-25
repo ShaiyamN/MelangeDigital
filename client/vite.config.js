@@ -59,6 +59,18 @@ function marketingDevMiddleware() {
           }
         }
 
+        // Mirror server.cjs: CMS images (/uploads/<cloudinaryId>.<ext>) live on Cloudinary.
+        const upload = /^\/uploads\/([A-Za-z0-9_-]+)\.(webp|png|jpe?g|gif|avif)$/i.exec(url);
+        if (upload) {
+          res.statusCode = 302;
+          res.setHeader(
+            "Location",
+            `https://res.cloudinary.com/dbhrpsnzg/image/upload/q_auto,c_limit,w_1200/${upload[1]}.${upload[2].toLowerCase()}`,
+          );
+          res.end();
+          return;
+        }
+
         if (url === "/api/sitemap/clear-cache") {
           clearSitemapCache();
           res.setHeader("Content-Type", "application/json");

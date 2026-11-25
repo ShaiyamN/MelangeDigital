@@ -318,6 +318,14 @@ try {
         routeMeta,
       );
       html = html.replace(/[ \t]+$/gm, "");
+      // Home lazy-loads its Skiper UI effects (and framer-motion) after window load; the snapshot
+      // kept their modulepreloads, which would fetch them at high priority before the hero.
+      if (route === "/") {
+        html = html.replace(
+          /\s*<link rel="modulepreload"[^>]*href="\/assets\/(?:HoverExpandGallery|SpringCursorFollow|motion)-[^"]+\.js"[^>]*>/g,
+          "",
+        );
+      }
       // These pages import Firestore on idle, but the snapshot ran that import and kept
       // Vite's modulepreload for it: ~500KB fetched at high priority on every load.
       if (
