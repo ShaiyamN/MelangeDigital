@@ -1,0 +1,687 @@
+<!DOCTYPE html><html lang="en" class="lenis lenis-smooth"><head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico" sizes="32x32">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <base href="/">
+  <link rel="preconnect" href="https://res.cloudinary.com">
+
+  <!-- Fonts + shared tokens. These used to be @import chains inside the CSS bundle, which
+       serialized three round-trips before first paint. The font sheet is non-blocking
+       (display=swap); prerender.js restores media="print" so snapshots keep it that way. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet" href="/destination-marketing-agency/css/melange-tokens.css">
+  <link rel="stylesheet" data-nonblocking-css="" href="https://fonts.googleapis.com/css2?family=Alan+Sans:wght@400;500;600;700;800&amp;family=Baskervville:ital@1&amp;family=Libre+Baskerville:ital@1&amp;family=Bricolage+Grotesque:opsz,wght@12..96,200..800&amp;family=Lato:wght@400;500;600;700;800;900&amp;family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" media="print" onload="this.media='all'">
+  <!-- Deliberately no noscript fallback for fonts: prerender.js strips the Meta pixel with a
+       regex that would swallow everything from a noscript tag in head down to the pixel's. -->
+
+  <!-- Meta Tags -->
+  <title data-rh="true">In-House Destination Marketing vs Agency: What to Choose | Melange</title>
+  <meta data-rh="true" name="description" content="Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.">
+
+
+
+
+
+
+
+
+
+
+
+
+  <meta data-rh="true" property="og:type" content="article">
+  <meta data-rh="true" property="og:url" content="https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency">
+  <meta data-rh="true" property="og:title" content="In-House Destination Marketing vs Agency: What to Choose | Melange">
+  <meta data-rh="true" property="og:description" content="Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.">
+  <meta data-rh="true" property="og:image" content="https://melangedigital.co/in-house-destination-marketing-vs-agency-og.jpg">
+  <meta data-rh="true" property="og:image:width" content="1200">
+  <meta data-rh="true" property="og:image:height" content="630">
+  <meta data-rh="true" property="og:image:type" content="image/jpeg">
+  <meta data-rh="true" property="og:image:alt" content="In-House Destination Marketing vs Agency: What to Choose | Mélange Digital">
+  <meta data-rh="true" name="twitter:card" content="summary_large_image">
+  <meta data-rh="true" name="twitter:title" content="In-House Destination Marketing vs Agency: What to Choose | Melange">
+  <meta data-rh="true" name="twitter:description" content="Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.">
+  <meta data-rh="true" name="twitter:image" content="https://melangedigital.co/in-house-destination-marketing-vs-agency-og.jpg">
+  <!-- End of Meta Tags -->
+
+  <!-- Schema Markup -->
+  <!-- Injected per-route by Express seo-head.cjs (page-schemas.cjs). Do not paste static JSON-LD here. -->
+  <!-- End of Schema Markup -->
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      background: #fff;
+    }
+
+    #root {
+      min-height: 100vh;
+      background: #fff;
+    }
+
+    /* Loader overlay (shows instantly, no FOUC) */
+    #boot-loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      z-index: 99999;
+    }
+
+    #boot-loader.hidden {
+      display: none;
+    }
+
+    /* The marketing markup ships its own stylesheets, fetched at runtime. This gate must live in the
+       static head: put it in a React-injected \3c style> and it lands a paint too late, so the raw
+       markup flashes unstyled on every reload. */
+    .dma-react-root:not(.dma-css-ready),
+    .svc-react-root:not(.svc-css-ready),
+    .wrk-react-root:not(.wrk-css-ready),
+    .abt-react-root:not(.abt-css-ready) {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    .dma-react-root,
+    .svc-react-root,
+    .wrk-react-root,
+    .abt-react-root {
+      transition: opacity .2s ease;
+    }
+
+    .boot-spinner {
+      width: 44px;
+      height: 44px;
+      border: 4px solid rgba(0, 0, 0, .15);
+      border-top-color: rgba(0, 0, 0, .65);
+      border-radius: 50%;
+      animation: bootspin .8s linear infinite;
+    }
+
+    @keyframes bootspin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Intro loader (public/intro/melange-intro.js). This cover holds the screen from the first
+       paint until the animation's own overlay lands on top of it. */
+    html.mlg-intro {
+      overflow: hidden;
+    }
+
+    html.mlg-intro::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: #FBF9FF;
+    }
+  </style>
+  <script>
+    /* Intro loader: the paper-fan logo plays on the first page of a visit only. Never for
+       crawlers, the prerender snapshot, reduced motion or /admin. If the animation file is slow
+       or fails, the cover lifts and the page shows as normal. */
+    (function () {
+      try {
+        var d = document.documentElement, n = navigator;
+        if (window.__PRERENDERING__ || n.webdriver) return;
+        if (/bot|crawl|spider|slurp|facebookexternalhit|preview|headless/i.test(n.userAgent)) return;
+        if (/^\/admin/.test(location.pathname)) return;
+        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        if (sessionStorage.getItem("mlg-intro")) return;
+        sessionStorage.setItem("mlg-intro", "1");
+        d.classList.add("mlg-intro");
+        var s = document.createElement("script");
+        s.src = "/intro/melange-intro.js?v=20261124a";
+        s.async = true;
+        s.onerror = function () { d.classList.remove("mlg-intro"); };
+        document.head.appendChild(s);
+        setTimeout(function () { if (!window.__mlgIntro) d.classList.remove("mlg-intro"); }, 1500);
+      } catch (e) {}
+    })();
+  </script>
+  <script type="module" crossorigin="" src="/assets/index-Co6ZGrTI.js"></script>
+  <link rel="stylesheet" crossorigin="" href="/assets/index-jHMcsZUZ.css">
+<link rel="modulepreload" as="script" crossorigin="" href="/assets/BlogDetail-DFXmn3y8.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/BreadCrumbs-mWgT1Qwb.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/blogSchema-BMPpUylp.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/index-CbBI60lB.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/blogCategories-ug5Vor-1.js"><link rel="modulepreload" as="script" crossorigin="" href="/assets/firestoreRest-CJaoeS0a.js"><script type="application/json" id="__blog_prerender_data__">{"slug":"in-house-destination-marketing-vs-agency","blog":{"title":"Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for India?","breadcrumbTitle":"","slug":"in-house-destination-marketing-vs-agency","date":"Nov 26, 2026","author":"Mélange Digital","description":"Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.","image":"https://res.cloudinary.com/dbhrpsnzg/image/upload/v1795683032/taycycvgllx1c3e8laan.jpg","bannerFit":"cover","bannerHeight":"medium","category":"destination-marketing","categories":["destination-marketing","tourism-marketing"],"seoTitle":"n-House Destination Marketing vs Agency: What to Choose","metaDescription":"Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.","focusKeywords":"in house destination marketing vs agency","altText":"Hiring a destination marketing agency vs in house set up","hasTable":false,"tableHeaders":["Column 1","Column 2"],"tableRows":[{"cells":["",""]}],"tablePosition":"after-intro","contentBlocks":[],"schemaMode":"custom","generatedSchema":{"@context":"https://schema.org","@type":"BlogPosting","headline":"n-House Destination Marketing vs Agency: What to Choose","description":"Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.","image":"https://res.cloudinary.com/dbhrpsnzg/image/upload/v1795683032/taycycvgllx1c3e8laan.jpg","author":{"@type":"Organization","name":"Mélange Digital"},"datePublished":"2026-11-25T18:30:00.000Z","dateModified":"2026-11-26T09:17:17.943Z","publisher":{"@type":"Organization","name":"Mélange Digital","url":"https://melangedigital.co","logo":"https://melangedigital.co/logo.png"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency"},"url":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency","articleSection":"destination-marketing, tourism-marketing","keywords":"in house destination marketing vs agency"},"customSchema":{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency#blogposting","headline":"Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for India?","alternativeHeadline":"In-House Destination Marketing vs Agency: What to Choose","description":"Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.","url":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency","image":{"@type":"ImageObject","url":"https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_1280/taycycvgllx1c3e8laan.jpg","width":1280,"height":680,"caption":"Hiring a destination marketing agency vs in house set up"},"datePublished":"2026-11-26T00:00:00+05:30","dateModified":"2026-11-26T14:37:09+05:30","author":{"@type":"Organization","@id":"https://melangedigital.co/#organization","name":"Melange Digital","alternateName":"Mélange Digital","url":"https://melangedigital.co/","logo":{"@type":"ImageObject","url":"https://melangedigital.co/logo.png","width":774,"height":192},"email":"hello@melangedigital.co","telephone":"+91-93725-67722","sameAs":["https://www.linkedin.com/company/melangedigital/","https://www.instagram.com/melangedigital.co"]},"publisher":{"@type":"Organization","@id":"https://melangedigital.co/#organization","name":"Melange Digital","url":"https://melangedigital.co/","logo":{"@type":"ImageObject","url":"https://melangedigital.co/logo.png","width":774,"height":192}},"articleSection":["Destination Marketing","Tourism Marketing"],"keywords":"in house destination marketing vs agency, destination marketing agency, tourism board marketing India, full-service destination marketing agency","about":[{"@type":"Thing","name":"Destination marketing"},{"@type":"Thing","name":"Tourism board marketing in India"}],"wordCount":1230,"inLanguage":"en","isAccessibleForFree":true,"mainEntityOfPage":{"@type":"WebPage","@id":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency","url":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency","name":"Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for India?","inLanguage":"en","isPartOf":{"@type":"WebSite","@id":"https://melangedigital.co/#website","url":"https://melangedigital.co/","name":"Melange Digital"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://melangedigital.co/"},{"@type":"ListItem","position":2,"name":"Blogs","item":"https://melangedigital.co/blogs"},{"@type":"ListItem","position":3,"name":"Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for India?","item":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency"}]}},"hasPart":{"@type":"FAQPage","@id":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency#faq","mainEntity":[{"@type":"Question","name":"Can an in-house team handle the Indian market?","acceptedAnswer":{"@type":"Answer","text":"Yes, if the destination already has local staff, trade relationships and a steady programme. Starting from zero is harder, so when weighing up hiring a destination marketing agency vs in-house teams, most first-time entrants work with an agency first and bring work in-house later."}},{"@type":"Question","name":"Do hosted influencer trips have to be disclosed as ads in India?","acceptedAnswer":{"@type":"Answer","text":"Yes. Under ASCI's guidelines, a free trip creates a material connection, so the content needs a disclosure label. A creator who travels at their own expense has no material connection."}}]}},"content":"\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">A tourism board marketing to Indian travellers can hire a full-service destination marketing agency, appoint a lead agency that brings in specialist partners, or build an in-house team, often supported by a market representative. When it comes to in-house destination marketing vs agency support, the right choice depends on how new you are to India, how many disciplines you need at once, and whether you can report campaign activity against arrivals.\u003c/span>\u003c/p>\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">The market is worth getting right. The Ministry of Tourism's\u003c/span>\u003ca href=\"https://data.tourism.gov.in/dashboard\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(0, 0, 0); background-color: transparent;\"> \u003c/a>\u003ca href=\"https://data.tourism.gov.in/dashboard\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 85, 204); background-color: transparent;\">data dashboard\u003c/a>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\"> records 32.83 million Indian national departures in 2025, up 6.3 per cent on the previous year.\u003c/span>\u003c/p>","sections":[{"id":"1795683421300","subheading":"When does a tourism board need an agency in India?","paragraph":"\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">For most boards, the case for hiring a destination marketing agency vs. in-house resourcing comes down to capacity: outside help comes in when the work outgrows the team available to do it. The usual triggers are:\u003c/span>\u003c/p>\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">First-time market entry:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> no trade relationships, creator shortlist or baseline data yet.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">A campaign launch:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> creators, media, trade and content need to land together, often around a trade fair or new air route.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">No team on the ground:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> casting creators, hosting media and following up with operators needs people in India.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Government reporting:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> ministries expect results in arrivals, spend and trade terms.\u003c/span>\u003c/li>\u003c/ul>"},{"id":"1795683421887","subheading":"What are the three setups?","paragraph":"\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">Full-service integrated destination marketing agency:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> one team owns strategy, creator casting, PR and FAM trips, content, trade engagement, and reporting.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Lead agency with specialist partners:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> a lead agency sets strategy and coordinates specialist firms, such as a creator agency, PR firm, or production house.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">In-house team, with or without a market representative:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> your own marketers run campaigns. A market representative typically handles trade liaison and trade fairs, but rarely runs consumer campaigns.\u003c/span>\u003c/li>\u003c/ul>"},{"id":"1795683422493","subheading":"What should you compare?","paragraph":"\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">Five capabilities separate real India depth from a strong pitch:\u003c/span>\u003c/p>\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">Regional creator casting:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> audiences in Chennai, Hyderabad or Kolkata often respond better to creators who speak their language than to metro English-language influencers. Ask whether creators are cast by audience fit or follower count.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">ASCI disclosure compliance:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> the Advertising Standards Council of India's\u003c/span>\u003ca href=\"https://www.ascionline.in/social/wp-content/uploads/2025/04/ASCI-Influencer-Guidelines.pdf\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(0, 0, 0);\"> \u003c/a>\u003ca href=\"https://www.ascionline.in/social/wp-content/uploads/2025/04/ASCI-Influencer-Guidelines.pdf\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(17, 85, 204);\">influencer guidelines\u003c/a>\u003cspan style=\"background-color: transparent;\"> require a label such as Ad, Sponsored or Collaboration whenever there is a material connection, and free perks such as a hosted trip count. On videos of 15 seconds or less, the label must stay on screen for at least 3 seconds. Advertisers share responsibility, so disclosure belongs in every brief and contract.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">PR and FAM trip depth:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> strong\u003c/span>\u003ca href=\"https://melangedigital.co/services/fam-trips-pr\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(0, 0, 0);\"> \u003c/a>\u003ca href=\"https://melangedigital.co/services/fam-trips-pr\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(17, 85, 204);\">FAM trips and PR\u003c/a>\u003cspan style=\"background-color: transparent;\"> mix trade media with lifestyle press, and build itineraries around what Indian travellers actually book.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Trade relationships:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> outbound operators and agents remain an important channel, particularly for packaged and group holidays. Look for named relationships and experience at OTM Mumbai and SATTE Delhi.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Measurement tied to arrivals:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> ask for reporting that links activity to visa applications, flight searches, trade leads and arrivals, against a baseline agreed before launch.\u003c/span>\u003c/li>\u003c/ul>"},{"id":"1795683422990","subheading":"How do the three setups compare?","paragraph":""},{"id":"1795683423428","subheading":"Full-service integrated destination marketing agency","paragraph":"\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">Works when:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> you are entering India for the first time, want one accountable partner, and need creators, PR and trade telling one story with one report.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Falls short when:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> the agency is strong in one discipline and thin in the rest, or you need specialist production outside its core team.\u003c/span>\u003c/li>\u003c/ul>","headingLevel":"h3"},{"id":"1795683423840","subheading":"Lead agency with specialist partners","paragraph":"\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">Works when:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> you already have an India strategy and need extra depth in one or two disciplines.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Falls short when:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> partners report separately, handoffs slow down time-bound launches, and accountability is split.\u003c/span>\u003c/li>\u003c/ul>","headingLevel":"h3"},{"id":"1795683424231","subheading":"In-house marketing team, with or without a market representative","paragraph":"\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">Works when:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> you have an established India presence, local staff, and a steady programme, and want full control of relationships and data.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Falls short when:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> creator networks and trade relationships must be built from scratch, or the team is too small to run creators, media, trade and reporting at once.\u003c/span>\u003c/li>\u003c/ul>","headingLevel":"h3"},{"id":"1795683424621","subheading":"What does this look like in practice?","paragraph":"\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">Melange Digital has run integrated programmes for national tourism boards targeting Indian travellers:\u003c/span>\u003c/p>\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">Singapore Tourism Board, \"Is This Even Singapore?\":\u003c/strong>\u003cspan style=\"background-color: transparent;\"> 190 million views and an 18 per cent year-on-year increase in arrivals from India's under-35 travellers.\u003c/span>\u003ca href=\"https://melangedigital.co/work/singapore-tourism-board-isthisevensingapore\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(0, 0, 0);\"> \u003c/a>\u003ca href=\"https://melangedigital.co/work/singapore-tourism-board-isthisevensingapore\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(17, 85, 204);\">Read the case study\u003c/a>\u003cspan style=\"background-color: transparent;\">.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Hong Kong Tourism Board, #HerHongKong:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> 22 per cent year-on-year growth in South Indian female arrivals.\u003c/span>\u003ca href=\"https://melangedigital.co/work/hong-kong-tourism-board-herhongkong\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(0, 0, 0);\"> \u003c/a>\u003ca href=\"https://melangedigital.co/work/hong-kong-tourism-board-herhongkong\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(17, 85, 204);\">Read the case study\u003c/a>\u003cspan style=\"background-color: transparent;\">.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Zambia Tourism Authority at OTM Mumbai:\u003c/strong>\u003cspan style=\"background-color: transparent;\"> more than 500 trade connections on its first entry into the Indian outbound market.\u003c/span>\u003ca href=\"https://melangedigital.co/work/zambia-tourism-otm-mumbai-2026\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(0, 0, 0);\"> \u003c/a>\u003ca href=\"https://melangedigital.co/work/zambia-tourism-otm-mumbai-2026\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"background-color: transparent; color: rgb(17, 85, 204);\">Read the case study\u003c/a>\u003cspan style=\"background-color: transparent;\">.\u003c/span>\u003c/li>\u003c/ul>\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">Each result is reported in arrivals or trade terms, not reach. That is the standard to hold any setup to.\u003c/span>\u003c/p>"},{"id":"1795683425120","subheading":"What should you ask before you appoint anyone?","paragraph":"\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">\"What arrivals-linked results have you delivered for a tourism board?\"\u003c/strong>\u003cspan style=\"background-color: transparent;\"> Red flag: only likes, reach and views.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">\"How do you handle ASCI disclosure on hosted creator trips?\"\u003c/strong>\u003cspan style=\"background-color: transparent;\"> Red flag: disclosure left to the creator.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">\"Which trade relationships will you use for us?\"\u003c/strong>\u003cspan style=\"background-color: transparent;\"> Red flag: a vague \"network\" with no names.\u003c/span>\u003c/li>\u003c/ul>\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">For a fuller list of criteria, pricing models and red flags, see our guide on\u003c/span>\u003ca href=\"https://melangedigital.co/blogs/how-to-choose-a-destination-marketing-agency-in-india\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(0, 0, 0); background-color: transparent;\"> \u003c/a>\u003ca href=\"https://melangedigital.co/blogs/how-to-choose-a-destination-marketing-agency-in-india\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 85, 204); background-color: transparent;\">how to choose a destination marketing agency in India\u003c/a>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">.\u003c/span>\u003c/p>"},{"id":"1795683425580","subheading":"Which setup should you choose?","paragraph":"\u003cul>\u003cli>\u003cstrong style=\"background-color: transparent;\">Full-service integrated agency\u003c/strong>\u003cspan style=\"background-color: transparent;\"> if you are entering India for the first time, launching a major campaign, or need one partner accountable for arrivals.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">Lead agency with specialist partners\u003c/strong>\u003cspan style=\"background-color: transparent;\"> if you have an India strategy and need depth in one or two disciplines.\u003c/span>\u003c/li>\u003cli>\u003cstrong style=\"background-color: transparent;\">In-house team with a market representative\u003c/strong>\u003cspan style=\"background-color: transparent;\"> if you have an established India presence and want full control.\u003c/span>\u003c/li>\u003c/ul>\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">The in-house destination marketing vs agency decision is rarely permanent. Many boards move between these setups over time: full-service at market entry, then a lighter setup once relationships and reporting are in place.\u003c/span>\u003c/p>","headingLevel":"h2"},{"id":"1795683426030","subheading":"Frequently asked questions","paragraph":""},{"id":"1795683426537","subheading":"Can an in-house team handle the Indian market?","paragraph":"\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">Yes, if the destination already has local staff, trade relationships and a steady programme. Starting from zero is harder, so when weighing up hiring a destination marketing agency vs in-house teams, most first-time entrants work with an agency first and bring work in-house later.\u003c/span>\u003c/p>","headingLevel":"h3"},{"id":"1795683426995","subheading":"Do hosted influencer trips have to be disclosed as ads in India?","paragraph":"\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">Yes. Under ASCI's guidelines, a free trip creates a material connection, so the content needs a disclosure label. A creator who travels at their own expense has no material connection.\u003c/span>\u003c/p>\u003cp>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\">If you are weighing these options for your destination,\u003c/span>\u003ca href=\"https://melangedigital.co/contact\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(0, 0, 0); background-color: transparent;\"> \u003c/a>\u003ca href=\"https://melangedigital.co/contact\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(17, 85, 204); background-color: transparent;\">talk to the Melange team\u003c/a>\u003cspan style=\"color: rgb(0, 0, 0); background-color: transparent;\"> about your India setup.\u003c/span>\u003c/p>","headingLevel":"h3"}],"updatedAt":"2026-11-26T09:17:17.943Z"},"insights":[{"title":"7 Travel Marketing Trends 2027 ","date":"tourism-marketing - Oct 23, 2026","image":"/uploads/hh4ju2i7o8tg17iw20tq.webp","link":"/blogs/7-travel-marketing-trends"},{"title":"Airlines Marketing and Tourism Boards: Joint Marketing Campaigns Beat Solo Ones","date":"tourism-marketing - Sep 21, 2026","image":"/uploads/xs7iwdwtpujkkdeb8b1s.webp","link":"/blogs/airlines-marketing"},{"title":"Destination Marketing in Tourism: What It Is, Why It Matters, and How to Get It Right","date":"destination-marketing - Aug 27, 2026","image":"/uploads/jbwgg5dejvxfskequtlz.webp","link":"/blogs/destination-marketing-in-tourism"}]}</script><link rel="canonical" href="https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency" data-rh="true"><meta name="title" content="In-House Destination Marketing vs Agency: What to Choose | Melange" data-rh="true"><meta name="keywords" content="in house destination marketing vs agency" data-rh="true"><script type="application/ld+json" data-rh="true">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency#blogposting","headline":"Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for India?","alternativeHeadline":"In-House Destination Marketing vs Agency: What to Choose","description":"Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.","url":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency","image":{"@type":"ImageObject","url":"https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_1280/taycycvgllx1c3e8laan.jpg","width":1280,"height":680,"caption":"Hiring a destination marketing agency vs in house set up"},"datePublished":"2026-11-26T00:00:00+05:30","dateModified":"2026-11-26T14:37:09+05:30","author":{"@type":"Organization","@id":"https://melangedigital.co/#organization","name":"Melange Digital","alternateName":"Mélange Digital","url":"https://melangedigital.co/","logo":{"@type":"ImageObject","url":"https://melangedigital.co/logo.png","width":774,"height":192},"email":"hello@melangedigital.co","telephone":"+91-93725-67722","sameAs":["https://www.linkedin.com/company/melangedigital/","https://www.instagram.com/melangedigital.co"]},"publisher":{"@type":"Organization","@id":"https://melangedigital.co/#organization","name":"Melange Digital","url":"https://melangedigital.co/","logo":{"@type":"ImageObject","url":"https://melangedigital.co/logo.png","width":774,"height":192}},"articleSection":["Destination Marketing","Tourism Marketing"],"keywords":"in house destination marketing vs agency, destination marketing agency, tourism board marketing India, full-service destination marketing agency","about":[{"@type":"Thing","name":"Destination marketing"},{"@type":"Thing","name":"Tourism board marketing in India"}],"wordCount":1230,"inLanguage":"en","isAccessibleForFree":true,"mainEntityOfPage":{"@type":"WebPage","@id":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency","url":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency","name":"Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for India?","inLanguage":"en","isPartOf":{"@type":"WebSite","@id":"https://melangedigital.co/#website","url":"https://melangedigital.co/","name":"Melange Digital"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://melangedigital.co/"},{"@type":"ListItem","position":2,"name":"Blogs","item":"https://melangedigital.co/blogs"},{"@type":"ListItem","position":3,"name":"Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for India?","item":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency"}]}},"hasPart":{"@type":"FAQPage","@id":"https://melangedigital.co/blogs/in-house-destination-marketing-vs-agency#faq","mainEntity":[{"@type":"Question","name":"Can an in-house team handle the Indian market?","acceptedAnswer":{"@type":"Answer","text":"Yes, if the destination already has local staff, trade relationships and a steady programme. Starting from zero is harder, so when weighing up hiring a destination marketing agency vs in-house teams, most first-time entrants work with an agency first and bring work in-house later."}},{"@type":"Question","name":"Do hosted influencer trips have to be disclosed as ads in India?","acceptedAnswer":{"@type":"Answer","text":"Yes. Under ASCI's guidelines, a free trip creates a material connection, so the content needs a disclosure label. A creator who travels at their own expense has no material connection."}}]}}</script>  <!-- prerendered-route:/blogs/in-house-destination-marketing-vs-agency -->
+</head>
+
+<body class="">
+  <!-- Meta Pixel Code -->
+  <!-- End Meta Pixel Code -->
+
+  <div id="boot-loader" aria-label="Loading" class="hidden">
+    <div class="boot-spinner"></div>
+  </div>
+
+  <div id="root"><div><style>
+        /* Universal Navbar Reset & Typography */
+        .font-bricolage.fixed,
+        .font-bricolage.fixed *,
+        body > .font-bricolage,
+        body > .font-bricolage * {
+          font-family: "Bricolage Grotesque", sans-serif !important;
+        }
+
+        .font-bricolage.fixed a,
+        .font-bricolage.fixed a:hover,
+        .font-bricolage.fixed a:focus,
+        .font-bricolage.fixed a:active,
+        body > .font-bricolage a,
+        body > .font-bricolage a:hover,
+        body > .font-bricolage a:focus,
+        body > .font-bricolage a:active {
+          text-decoration: none !important;
+        }
+
+        .navbar-link {
+          display: inline-block;
+          padding: 0.5rem;
+          text-decoration: none !important;
+          color: #1a1a1a !important;
+          position: relative;
+        }
+
+        .navbar-link a,
+        .navbar-link .nav-link,
+        .nav-link {
+          display: inline-block;
+          color: #1a1a1a !important;
+          text-decoration: none !important;
+          transition: color 0.2s ease;
+          background: none;
+          -webkit-text-fill-color: initial;
+        }
+
+        .navbar-link:hover,
+        .navbar-link:hover a,
+        .navbar-link:hover .nav-link,
+        .navbar-link a:hover,
+        .nav-link:hover {
+          background: linear-gradient(
+            268.81deg,
+            #3858ff 28.07%,
+            #b745ff 74.52%,
+            #d940ff 101.17%
+          ) !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          background-clip: text !important;
+          text-fill-color: transparent !important;
+          color: transparent !important;
+          text-decoration: none !important;
+        }
+
+        .nav-link.activePath,
+        .navbar-link .nav-link.activePath {
+          background: linear-gradient(
+            268.81deg,
+            #3858ff 28.07%,
+            #b745ff 74.52%,
+            #d940ff 101.17%
+          ) !important;
+          -webkit-background-clip: text !important;
+          -webkit-text-fill-color: transparent !important;
+          background-clip: text !important;
+          text-fill-color: transparent !important;
+          color: transparent !important;
+          text-decoration: none !important;
+          position: relative;
+        }
+
+        .nav-cta-link,
+        .nav-cta-link:hover,
+        .nav-cta-link:focus,
+        .nav-cta-link:active,
+        .nav-cta-link *,
+        .nav-cta-link:hover *,
+        .contact-btn,
+        .contact-btn:hover,
+        .contact-btn:focus,
+        .contact-btn:active,
+        .contact-btn *,
+        .contact-btn:hover * {
+          text-decoration: none !important;
+        }
+
+        @keyframes fadeSlideIn {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeCitiesIn {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nb-global-btn {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          cursor: pointer;
+          font-weight: 800;
+          font-size: 17px;
+          color: #1a1a1a;
+          background: none;
+          border: none;
+          padding: 0;
+          font-family: inherit;
+          transition: color 0.2s ease;
+          line-height: 1;
+        }
+
+        .nb-global-btn:hover,
+        .nb-global-btn.nb-active {
+          color: #d940ff;
+        }
+
+        .nb-chevron {
+          width: 11px;
+          height: 11px;
+          transition: transform 0.25s ease;
+          opacity: 0.45;
+        }
+
+        .nb-global-btn.nb-active .nb-chevron {
+          transform: rotate(180deg);
+          opacity: 1;
+        }
+
+        /* The outer wrap covers button + gap + dropdown so mouse never leaves */
+        .nb-global-outer {
+          position: relative;
+        }
+
+        .nb-services-outer {
+          position: relative;
+        }
+
+        .nb-services-trigger {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .navbar-link .nb-services-trigger {
+          display: inline-flex;
+        }
+
+        .nb-services-chevron {
+          width: 11px;
+          height: 11px;
+          opacity: 0.55;
+          transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .nb-services-trigger[aria-expanded="true"] .nb-services-chevron {
+          transform: rotate(180deg);
+          opacity: 1;
+        }
+
+        .nb-services-dropdown {
+          position: absolute;
+          top: calc(100% + 14px);
+          left: 50%;
+          transform: translateX(-50%);
+          width: 300px;
+          z-index: 300;
+          padding: 8px;
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.98);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+          animation: fadeSlideIn 0.18s ease forwards;
+        }
+
+        .nb-services-dropdown a {
+          display: block;
+          padding: 11px 12px;
+          border-radius: 9px;
+          color: #1a1a1a;
+          font-size: 14px;
+          font-weight: 650;
+          line-height: 1.35;
+          text-decoration: none;
+          transition: background 0.18s ease, color 0.18s ease;
+        }
+
+        .nb-services-dropdown a:hover,
+        .nb-services-dropdown a:focus-visible,
+        .nb-services-dropdown a.activePath {
+          color: #a126d8;
+          background: rgba(217, 64, 255, 0.07);
+          outline: none;
+        }
+
+        .nb-services-bridge {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          height: 18px;
+          z-index: 299;
+        }
+
+        .mb-service-list {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          width: 100%;
+          padding: 0 0 8px 16px;
+        }
+
+        .mb-service-list a {
+          display: block;
+          padding: 10px 12px;
+          border-left: 1px solid rgba(26, 26, 26, 0.15);
+          color: #333;
+          font-size: 15px;
+          line-height: 1.35;
+          text-decoration: none;
+        }
+
+        .mb-service-list a.activePath {
+          color: #a126d8;
+          border-left-color: #a126d8;
+        }
+
+        .mb-service-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 44px;
+          margin-left: 8px;
+          border: 0;
+          background: transparent;
+          color: #1a1a1a;
+          cursor: pointer;
+        }
+
+        .mb-service-toggle svg {
+          width: 12px;
+          height: 8px;
+          transition: transform 0.2s ease;
+        }
+
+        .mb-service-toggle[aria-expanded="true"] svg {
+          transform: rotate(180deg);
+        }
+
+        /* Invisible bridge fills the gap between button and dropdown */
+        .nb-hover-bridge {
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: min(900px, calc(100vw - 40px));
+          height: 18px; /* covers the gap */
+          z-index: 299;
+        }
+
+        .nb-dropdown-wrap {
+          position: absolute;
+          top: calc(100% + 14px);
+          left: 50%;
+          transform: translateX(-50%);
+          width: min(900px, calc(100vw - 40px));
+          z-index: 300;
+        }
+
+        .nb-dropdown {
+          width: 100%;
+          background: rgba(255, 255, 255, 0.97);
+          backdrop-filter: blur(24px) saturate(1.6);
+          -webkit-backdrop-filter: blur(24px) saturate(1.6);
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          border-radius: 16px;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10), 0 1px 2px rgba(0,0,0,0.04);
+          padding: 12px 10px;
+          animation: fadeSlideIn 0.18s ease forwards;
+        }
+
+        .nb-country-row {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 4px;
+          align-items: center;
+        }
+
+        .nb-country-col {
+          min-width: 0;
+          padding: 10px 14px;
+          border-radius: 12px;
+          border: 1px solid transparent;
+          transition: background 0.18s ease, border-color 0.18s ease;
+          position: relative;
+          cursor: pointer;
+          /* Ensure all cols are same height baseline */
+          display: flex;
+          align-items: center;
+        }
+
+        .nb-country-col:hover {
+          background: rgba(217, 64, 255, 0.05);
+          border-color: rgba(217, 64, 255, 0.12);
+        }
+
+        /* FIX: Country link is now fully clickable (removed pointer-events: none) */
+        .nb-country-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          text-decoration: none;
+          color: #1a1a1a;
+          font-weight: 800;
+          font-size: 14px;
+          line-height: 1.2;
+        }
+
+        .nb-country-link:hover {
+          text-decoration: none;
+        }
+
+        .nb-country-col:hover .nb-country-link {
+          color: #d940ff;
+        }
+
+        .nb-country-flag {
+          font-size: 18px;
+          line-height: 1;
+        }
+
+        .nb-country-name {
+          white-space: nowrap;
+        }
+
+        /* Cities float as absolute popover — never affect bar height */
+        .nb-city-popover {
+          position: absolute;
+          top: calc(100% + 4px);
+          left: 0;
+          min-width: 160px;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(217, 64, 255, 0.12);
+          border-radius: 12px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+          padding: 6px;
+          z-index: 400;
+          animation: fadeCitiesIn 0.14s ease forwards;
+        }
+
+        .nb-city-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 6px;
+          text-decoration: none;
+          color: #333;
+          font-size: 13px;
+          font-weight: 600;
+          padding: 7px 10px;
+          border-radius: 8px;
+          transition: all 0.15s ease;
+          white-space: nowrap;
+        }
+
+        .nb-city-link:hover {
+          text-decoration: none;
+          color: #d940ff;
+          background: rgba(217, 64, 255, 0.07);
+        }
+
+        .nb-city-arrow {
+          font-size: 9px;
+          color: #ccc;
+          transition: color 0.15s ease;
+        }
+
+        .nb-city-link:hover .nb-city-arrow {
+          color: #d940ff;
+        }
+
+        /* Mobile */
+        .mb-g-chev {
+          width: 13px;
+          height: 13px;
+          color: #1a1a1a;
+          opacity: 0.3;
+          transition: transform 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .mb-g-chev.open {
+          transform: rotate(180deg);
+          opacity: 0.5;
+        }
+
+        .mb-country-list {
+          padding-left: 14px;
+        }
+
+        .mb-country-btn {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          background: none;
+          border: none;
+          border-bottom: 1px solid rgba(0,0,0,0.06);
+          padding: 9px 0;
+          cursor: pointer;
+          font-family: inherit;
+          font-size: 18px;
+          font-weight: 700;
+          color: #1a1a1a;
+          text-align: left;
+          outline: none;
+          -webkit-tap-highlight-color: transparent;
+        }
+
+        .mb-country-btn:last-of-type {
+          border-bottom: none;
+        }
+
+        .mb-c-left {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          color: #1a1a1a !important;
+          text-decoration: none !important;
+          font-size: 18px;
+          font-weight: 700;
+          flex: 1;
+        }
+
+        .mb-c-left:hover {
+          color: #d940ff !important;
+        }
+
+        .mb-c-flag {
+          font-size: 17px;
+          line-height: 1;
+        }
+
+        .mb-c-chev {
+          width: 11px;
+          height: 11px;
+          color: #1a1a1a;
+          opacity: 0.25;
+          transition: transform 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .mb-c-chev.open {
+          transform: rotate(180deg);
+          opacity: 0.5;
+        }
+
+        .mb-city-list {
+          padding-left: 28px;
+          padding-bottom: 4px;
+        }
+
+        .mb-city-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 7px 0;
+          font-size: 15px;
+          font-weight: 500;
+          color: #1a1a1a;
+          text-decoration: none;
+          border-bottom: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .mb-city-link:last-child {
+          border-bottom: none;
+        }
+
+        .mb-city-link:hover {
+          color: #d940ff;
+          text-decoration: none;
+        }
+
+        .mb-city-arr {
+          font-size: 10px;
+          color: #ccc;
+        }
+
+        .mb-city-link:hover .mb-city-arr {
+          color: #d940ff;
+        }
+
+        @media (max-width: 1200px) {
+          .nb-country-row {
+            grid-template-columns: repeat(3, 1fr);
+          }
+        }
+
+        @media (max-width: 900px) {
+          .nb-country-row {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .nb-dropdown-wrap {
+            width: calc(100vw - 20px);
+          }
+          .nb-country-row {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style><div class="fixed top-0 left-0 z-20 w-full transition-transform duration-300 font-bricolage mb-5 translate-y-0"><div class="bg-white shadow-md"><div class="max-w-[1440px] mx-auto"><div class="flex justify-between items-center px-4 md:px-12 lg:px-20 h-16 sm:h-[5.3rem]"><div style="position: relative; isolation: isolate; width: 176px; height: 45px;"><div style="width: 176px; height: 45px; overflow: hidden;"><a href="/" data-discover="true"><img src="/assets/mainLogo-DY4-8pkk.webp" alt="Mélange Digital logo" class="w-full md:w-auto h-full md:h-auto"></a></div></div><div class="sm:hidden"><button class="hamburger-menu " aria-label="Toggle Menu"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="hamburger-icon w-10 h-8" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 4H21V6H3V4ZM9 11H21V13H9V11ZM3 18H21V20H3V18Z"></path></svg></button></div><div class="hidden sm:flex font-extrabold text-body justify-around items-center w-2/3 md:w-[60%] lg:w-[65%]"><div class="nb-global-outer hidden"><button class="nb-global-btn ">Global<svg class="nb-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div><div class="navbar-link nb-services-outer"><a aria-haspopup="true" aria-expanded="false" aria-controls="desktop-service-submenu" class="nav-link nb-services-trigger " href="/services" data-discover="true">Services<svg class="nb-services-chevron" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></div><div class="navbar-link cursor-pointer"><a class="nav-link " href="/work" data-discover="true">Work</a></div><div class="navbar-link cursor-pointer"><a class="nav-link " href="/about" data-discover="true">About&nbsp;Us</a></div><div class="navbar-link cursor-pointer"><a class="nav-link " href="/careers" data-discover="true">Careers</a></div><a class="nav-cta-link no-underline hover:no-underline" href="/contact" data-discover="true" style="text-decoration: none;"><div class="contact-btn h-[56px] px-6 flex items-center justify-center rounded-full cursor-pointer bg-[#1A1A1A] font-medium text-body whitespace-nowrap"><span style="text-decoration: none;">Book a Strategy Call</span></div></a></div></div></div></div></div><div class="lg:px-[80px] lg:pb-section-y px-5 py-10 lg:pt-0 pt-6 max-container"><div class="font-nunito lg:pt-32 pt-20 text-[16px] lg:text-[18px] ml-0 lg:ml-0 mb-6 lg:mb-10"><div class="" style="margin-top: 20px;"><a href="/" data-discover="true" style="opacity: 0.6;">Home</a><span style="opacity: 0.6;">&nbsp;&gt;&nbsp;</span><a href="/blogs" data-discover="true" style="opacity: 0.6;"> Blogs</a><span style="opacity: 1;">&nbsp;&gt;&nbsp;</span><span style="opacity: 1;"> Full-Service, Specialist or In-House:&nbsp;Wh...</span></div></div><div class="text-stone-400 text-base font-normal font-nunito">Destination Marketing, Tourism&nbsp;Marketing - Nov 26,&nbsp;2026</div><h1 class="text-display font-display my-[16px] lg:font-semibold font-bold font-nunito mt-4 lg:mt-4">Full-Service, Specialist or In-House: Which Destination Marketing Setup Should a Tourism Board Choose for&nbsp;India?</h1><div class="w-full mt-5"><picture><img src="https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_1280/taycycvgllx1c3e8laan.jpg" srcset="https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_640/taycycvgllx1c3e8laan.jpg 640w, https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_960/taycycvgllx1c3e8laan.jpg 960w, https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_1280/taycycvgllx1c3e8laan.jpg 1280w, https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_1600/taycycvgllx1c3e8laan.jpg 1600w" sizes="(min-width: 1440px) 1280px, (min-width: 1024px) calc(100vw - 160px), calc(100vw - 40px)" fetchpriority="high" decoding="async" alt="Hiring a destination marketing agency vs in house set up" class="w-full lg:rounded-[30px] rounded-xl shadow-md" style="object-fit: cover; object-position: center center; height: clamp(220px, 35vw, 450px); display: block;"></picture></div><div class="lg:flex lg:gap-x-10 lg:mt-[32px] mt-5"><div class="firstSection font-nunito lg:w-[70%] w-full"><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] lg:mt-4 mt-2 blog-content cs-rendered-content"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">A tourism board marketing to Indian travellers can hire a full-service destination marketing agency, appoint a lead agency that brings in specialist partners, or build an in-house team, often supported by a market representative. When it comes to in-house destination marketing vs agency support, the right choice depends on how new you are to India, how many disciplines you need at once, and whether you can report campaign activity against&nbsp;arrivals.</span></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">The market is worth getting right. The Ministry of&nbsp;Tourism's</span><a href="https://data.tourism.gov.in/dashboard" rel="noopener noreferrer" target="_blank" style="color: rgb(0, 0, 0); background-color: transparent;"> </a><a href="https://data.tourism.gov.in/dashboard" rel="noopener noreferrer" target="_blank" style="color: rgb(17, 85, 204); background-color: transparent;">data&nbsp;dashboard</a><span style="color: rgb(0, 0, 0); background-color: transparent;"> records 32.83 million Indian national departures in 2025, up 6.3 per cent on the previous&nbsp;year.</span></p></div><div class="mt-8 space-y-8"><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-0">When does a tourism board need an agency in&nbsp;India?</h2><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">For most boards, the case for hiring a destination marketing agency vs. in-house resourcing comes down to capacity: outside help comes in when the work outgrows the team available to do it. The usual triggers&nbsp;are:</span></p><ul><li><strong style="background-color: transparent;">First-time market&nbsp;entry:</strong><span style="background-color: transparent;"> no trade relationships, creator shortlist or baseline data&nbsp;yet.</span></li><li><strong style="background-color: transparent;">A campaign&nbsp;launch:</strong><span style="background-color: transparent;"> creators, media, trade and content need to land together, often around a trade fair or new air&nbsp;route.</span></li><li><strong style="background-color: transparent;">No team on the&nbsp;ground:</strong><span style="background-color: transparent;"> casting creators, hosting media and following up with operators needs people in&nbsp;India.</span></li><li><strong style="background-color: transparent;">Government&nbsp;reporting:</strong><span style="background-color: transparent;"> ministries expect results in arrivals, spend and trade&nbsp;terms.</span></li></ul></div></div><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-1">What are the three&nbsp;setups?</h2><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><ul><li><strong style="background-color: transparent;">Full-service integrated destination marketing&nbsp;agency:</strong><span style="background-color: transparent;"> one team owns strategy, creator casting, PR and FAM trips, content, trade engagement, and&nbsp;reporting.</span></li><li><strong style="background-color: transparent;">Lead agency with specialist&nbsp;partners:</strong><span style="background-color: transparent;"> a lead agency sets strategy and coordinates specialist firms, such as a creator agency, PR firm, or production&nbsp;house.</span></li><li><strong style="background-color: transparent;">In-house team, with or without a market&nbsp;representative:</strong><span style="background-color: transparent;"> your own marketers run campaigns. A market representative typically handles trade liaison and trade fairs, but rarely runs consumer&nbsp;campaigns.</span></li></ul></div></div><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-2">What should you&nbsp;compare?</h2><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Five capabilities separate real India depth from a strong&nbsp;pitch:</span></p><ul><li><strong style="background-color: transparent;">Regional creator&nbsp;casting:</strong><span style="background-color: transparent;"> audiences in Chennai, Hyderabad or Kolkata often respond better to creators who speak their language than to metro English-language influencers. Ask whether creators are cast by audience fit or follower&nbsp;count.</span></li><li><strong style="background-color: transparent;">ASCI disclosure&nbsp;compliance:</strong><span style="background-color: transparent;"> the Advertising Standards Council of&nbsp;India's</span><a href="https://www.ascionline.in/social/wp-content/uploads/2025/04/ASCI-Influencer-Guidelines.pdf" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(0, 0, 0);"> </a><a href="https://www.ascionline.in/social/wp-content/uploads/2025/04/ASCI-Influencer-Guidelines.pdf" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(17, 85, 204);">influencer&nbsp;guidelines</a><span style="background-color: transparent;"> require a label such as Ad, Sponsored or Collaboration whenever there is a material connection, and free perks such as a hosted trip count. On videos of 15 seconds or less, the label must stay on screen for at least 3 seconds. Advertisers share responsibility, so disclosure belongs in every brief and&nbsp;contract.</span></li><li><strong style="background-color: transparent;">PR and FAM trip&nbsp;depth:</strong><span style="background-color: transparent;"> strong</span><a href="https://melangedigital.co/services/fam-trips-pr" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(0, 0, 0);"> </a><a href="https://melangedigital.co/services/fam-trips-pr" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(17, 85, 204);">FAM trips and&nbsp;PR</a><span style="background-color: transparent;"> mix trade media with lifestyle press, and build itineraries around what Indian travellers actually&nbsp;book.</span></li><li><strong style="background-color: transparent;">Trade&nbsp;relationships:</strong><span style="background-color: transparent;"> outbound operators and agents remain an important channel, particularly for packaged and group holidays. Look for named relationships and experience at OTM Mumbai and SATTE&nbsp;Delhi.</span></li><li><strong style="background-color: transparent;">Measurement tied to&nbsp;arrivals:</strong><span style="background-color: transparent;"> ask for reporting that links activity to visa applications, flight searches, trade leads and arrivals, against a baseline agreed before&nbsp;launch.</span></li></ul></div></div><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-3">How do the three setups&nbsp;compare?</h2></div><div class="section-block"><h3 class="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">Full-service integrated destination marketing&nbsp;agency</h3><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><ul><li><strong style="background-color: transparent;">Works&nbsp;when:</strong><span style="background-color: transparent;"> you are entering India for the first time, want one accountable partner, and need creators, PR and trade telling one story with one&nbsp;report.</span></li><li><strong style="background-color: transparent;">Falls short&nbsp;when:</strong><span style="background-color: transparent;"> the agency is strong in one discipline and thin in the rest, or you need specialist production outside its core&nbsp;team.</span></li></ul></div></div><div class="section-block"><h3 class="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">Lead agency with specialist&nbsp;partners</h3><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><ul><li><strong style="background-color: transparent;">Works&nbsp;when:</strong><span style="background-color: transparent;"> you already have an India strategy and need extra depth in one or two&nbsp;disciplines.</span></li><li><strong style="background-color: transparent;">Falls short&nbsp;when:</strong><span style="background-color: transparent;"> partners report separately, handoffs slow down time-bound launches, and accountability is&nbsp;split.</span></li></ul></div></div><div class="section-block"><h3 class="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">In-house marketing team, with or without a market&nbsp;representative</h3><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><ul><li><strong style="background-color: transparent;">Works&nbsp;when:</strong><span style="background-color: transparent;"> you have an established India presence, local staff, and a steady programme, and want full control of relationships and&nbsp;data.</span></li><li><strong style="background-color: transparent;">Falls short&nbsp;when:</strong><span style="background-color: transparent;"> creator networks and trade relationships must be built from scratch, or the team is too small to run creators, media, trade and reporting at&nbsp;once.</span></li></ul></div></div><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-4">What does this look like in&nbsp;practice?</h2><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Melange Digital has run integrated programmes for national tourism boards targeting Indian&nbsp;travellers:</span></p><ul><li><strong style="background-color: transparent;">Singapore Tourism Board, "Is This Even&nbsp;Singapore?":</strong><span style="background-color: transparent;"> 190 million views and an 18 per cent year-on-year increase in arrivals from India's under-35&nbsp;travellers.</span><a href="https://melangedigital.co/work/singapore-tourism-board-isthisevensingapore" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(0, 0, 0);"> </a><a href="https://melangedigital.co/work/singapore-tourism-board-isthisevensingapore" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(17, 85, 204);">Read the case&nbsp;study</a><span style="background-color: transparent;">.</span></li><li><strong style="background-color: transparent;">Hong Kong Tourism Board,&nbsp;#HerHongKong:</strong><span style="background-color: transparent;"> 22 per cent year-on-year growth in South Indian female&nbsp;arrivals.</span><a href="https://melangedigital.co/work/hong-kong-tourism-board-herhongkong" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(0, 0, 0);"> </a><a href="https://melangedigital.co/work/hong-kong-tourism-board-herhongkong" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(17, 85, 204);">Read the case&nbsp;study</a><span style="background-color: transparent;">.</span></li><li><strong style="background-color: transparent;">Zambia Tourism Authority at OTM&nbsp;Mumbai:</strong><span style="background-color: transparent;"> more than 500 trade connections on its first entry into the Indian outbound&nbsp;market.</span><a href="https://melangedigital.co/work/zambia-tourism-otm-mumbai-2026" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(0, 0, 0);"> </a><a href="https://melangedigital.co/work/zambia-tourism-otm-mumbai-2026" rel="noopener noreferrer" target="_blank" style="background-color: transparent; color: rgb(17, 85, 204);">Read the case&nbsp;study</a><span style="background-color: transparent;">.</span></li></ul><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Each result is reported in arrivals or trade terms, not reach. That is the standard to hold any setup&nbsp;to.</span></p></div></div><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-5">What should you ask before you appoint&nbsp;anyone?</h2><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><ul><li><strong style="background-color: transparent;">"What arrivals-linked results have you delivered for a tourism&nbsp;board?"</strong><span style="background-color: transparent;"> Red flag: only likes, reach and&nbsp;views.</span></li><li><strong style="background-color: transparent;">"How do you handle ASCI disclosure on hosted creator&nbsp;trips?"</strong><span style="background-color: transparent;"> Red flag: disclosure left to the&nbsp;creator.</span></li><li><strong style="background-color: transparent;">"Which trade relationships will you use for&nbsp;us?"</strong><span style="background-color: transparent;"> Red flag: a vague "network" with no&nbsp;names.</span></li></ul><p><span style="color: rgb(0, 0, 0); background-color: transparent;">For a fuller list of criteria, pricing models and red flags, see our guide&nbsp;on</span><a href="https://melangedigital.co/blogs/how-to-choose-a-destination-marketing-agency-in-india" rel="noopener noreferrer" target="_blank" style="color: rgb(0, 0, 0); background-color: transparent;"> </a><a href="https://melangedigital.co/blogs/how-to-choose-a-destination-marketing-agency-in-india" rel="noopener noreferrer" target="_blank" style="color: rgb(17, 85, 204); background-color: transparent;">how to choose a destination marketing agency in&nbsp;India</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p></div></div><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-6">Which setup should you&nbsp;choose?</h2><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><ul><li><strong style="background-color: transparent;">Full-service integrated&nbsp;agency</strong><span style="background-color: transparent;"> if you are entering India for the first time, launching a major campaign, or need one partner accountable for&nbsp;arrivals.</span></li><li><strong style="background-color: transparent;">Lead agency with specialist&nbsp;partners</strong><span style="background-color: transparent;"> if you have an India strategy and need depth in one or two&nbsp;disciplines.</span></li><li><strong style="background-color: transparent;">In-house team with a market&nbsp;representative</strong><span style="background-color: transparent;"> if you have an established India presence and want full&nbsp;control.</span></li></ul><p><span style="color: rgb(0, 0, 0); background-color: transparent;">The in-house destination marketing vs agency decision is rarely permanent. Many boards move between these setups over time: full-service at market entry, then a lighter setup once relationships and reporting are in&nbsp;place.</span></p></div></div><div class="section-block"><h2 class="text-[28px] md:text-[32px] font-bold text-zinc-900 mb-4" id="heading-7">Frequently asked&nbsp;questions</h2></div><div class="section-block"><h3 class="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">Can an in-house team handle the Indian&nbsp;market?</h3><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Yes, if the destination already has local staff, trade relationships and a steady programme. Starting from zero is harder, so when weighing up hiring a destination marketing agency vs in-house teams, most first-time entrants work with an agency first and bring work in-house&nbsp;later.</span></p></div></div><div class="section-block"><h3 class="text-[20px] md:text-[22px] font-bold text-zinc-900 mb-4">Do hosted influencer trips have to be disclosed as ads in&nbsp;India?</h3><div class="text-zinc-900 lg:text-xl text-base font-normal lg:leading-[30px] blog-content cs-rendered-content"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Yes. Under ASCI's guidelines, a free trip creates a material connection, so the content needs a disclosure label. A creator who travels at their own expense has no material&nbsp;connection.</span></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">If you are weighing these options for your&nbsp;destination,</span><a href="https://melangedigital.co/contact" rel="noopener noreferrer" target="_blank" style="color: rgb(0, 0, 0); background-color: transparent;"> </a><a href="https://melangedigital.co/contact" rel="noopener noreferrer" target="_blank" style="color: rgb(17, 85, 204); background-color: transparent;">talk to the Melange&nbsp;team</a><span style="color: rgb(0, 0, 0); background-color: transparent;"> about your India&nbsp;setup.</span></p></div></div></div><nav aria-labelledby="related-articles" class="mt-12 border-t border-gray-200 pt-8"><h2 id="related-articles" class="text-black lg:text-[28px] text-2xl font-bold leading-tight mb-6">Related&nbsp;articles</h2><ul class="grid gap-6 sm:grid-cols-3"><li><a class="group block" href="/blogs/7-travel-marketing-trends" data-discover="true"><img loading="lazy" decoding="async" src="https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_480/hh4ju2i7o8tg17iw20tq.webp" alt="" class="w-full aspect-video object-cover rounded-xl mb-3"><span class="block text-zinc-900 text-base font-semibold leading-snug group-hover:text-[#3858ff] transition-colors">7 Travel Marketing Trends&nbsp;2027 </span></a></li><li><a class="group block" href="/blogs/airlines-marketing" data-discover="true"><img loading="lazy" decoding="async" src="https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_480/xs7iwdwtpujkkdeb8b1s.webp" alt="" class="w-full aspect-video object-cover rounded-xl mb-3"><span class="block text-zinc-900 text-base font-semibold leading-snug group-hover:text-[#3858ff] transition-colors">Airlines Marketing and Tourism Boards: Joint Marketing Campaigns Beat Solo&nbsp;Ones</span></a></li><li><a class="group block" href="/blogs/destination-marketing-in-tourism" data-discover="true"><img loading="lazy" decoding="async" src="https://res.cloudinary.com/dbhrpsnzg/image/upload/f_auto,q_auto,c_limit,w_480/jbwgg5dejvxfskequtlz.webp" alt="" class="w-full aspect-video object-cover rounded-xl mb-3"><span class="block text-zinc-900 text-base font-semibold leading-snug group-hover:text-[#3858ff] transition-colors">Destination Marketing in Tourism: What It Is, Why It Matters, and How to Get It&nbsp;Right</span></a></li></ul></nav><div class="mt-10 border-t border-gray-200 pt-6"><div class="text-black lg:text-[24px] text-xl font-bold leading-[27px] lg:leading-[34px]">Follow&nbsp;us:</div><div class="flex mt-2"><a href="https://www.linkedin.com/company/melangedigital/" class="hover:opacity-85 transition-opacity" target="_blank" rel="noopener noreferrer"><img src="data:image/svg+xml,%3csvg%20width='36'%20height='36'%20viewBox='0%200%2036%2036'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3ccircle%20cx='18'%20cy='18'%20r='18'%20fill='url(%23paint0_linear_2144_62)'/%3e%3cpath%20d='M27.8957%2026.7014V26.7006H27.9005V19.6587C27.9005%2016.2138%2027.1589%2013.5601%2023.1315%2013.5601C21.1954%2013.5601%2019.8962%2014.6225%2019.3658%2015.6297H19.3098V13.8817H15.4912V26.7006H19.4674V20.3531C19.4674%2018.6819%2019.7842%2017.0658%2021.8539%2017.0658C23.8931%2017.0658%2023.9235%2018.9731%2023.9235%2020.4603V26.7014H27.8957Z'%20fill='white'/%3e%3cpath%20d='M9.01562%2013.8818H12.9966V26.7007H9.01562V13.8818Z'%20fill='white'/%3e%3cpath%20d='M11.0059%207.49854C9.73303%207.49854%208.7002%208.53138%208.7002%209.80422C8.7002%2011.0771%209.73303%2012.1315%2011.0059%2012.1315C12.2787%2012.1315%2013.3116%2011.0771%2013.3116%209.80422C13.3108%208.53138%2012.2779%207.49854%2011.0059%207.49854V7.49854Z'%20fill='white'/%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_2144_62'%20x1='26.0644'%20y1='18.2222'%20x2='-0.785976'%20y2='18.7792'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20stop-color='%233858FF'/%3e%3cstop%20offset='0.635417'%20stop-color='%23B745FF'/%3e%3cstop%20offset='1'%20stop-color='%23D940FF'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e" alt="linkedin"></a><a href="https://www.instagram.com/melangedigital.in/" class="ml-3 hover:opacity-85 transition-opacity" target="_blank" rel="noopener noreferrer"><img src="/assets/instagram-By6fPX3f.svg" alt="instagram"></a></div></div></div><div class="secSection lg:block hidden font-nunito w-[30%]"><div class="w-full h-auto bg-zinc-100 p-6 rounded-2xl mb-10"><p class="text-zinc-900 text-2xl font-bold leading-[27px] lg:leading-[34px] mb-4">Table of&nbsp;Contents</p><ul class="space-y-3"><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">When does a tourism board need an agency in&nbsp;India?</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">What are the three&nbsp;setups?</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">What should you&nbsp;compare?</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">How do the three setups&nbsp;compare?</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">What does this look like in&nbsp;practice?</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">What should you ask before you appoint&nbsp;anyone?</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">Which setup should you&nbsp;choose?</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">Frequently asked&nbsp;questions</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li><li class="border-b border-zinc-200 pb-3 last:border-0 last:pb-0"><button class="text-left text-zinc-700 text-base font-semibold hover:text-[#3858ff] transition-colors flex items-center w-full group"><span class="pr-2 flex-1">Related&nbsp;articles</span><span class="transform transition-transform group-hover:translate-x-1 text-lg font-normal">→</span></button></li></ul></div><div class="w-full h-auto bg-zinc-100 p-6 rounded-2xl"><p class="text-zinc-900 text-2xl font-bold leading-[27px] lg:leading-[34px]">Our&nbsp;Services</p><div class="mt-4 space-y-2"><a class="block text-zinc-700 text-base font-semibold hover:underline" href="/services#influencer" data-discover="true">Influencer &amp; Celebrity&nbsp;Marketing</a><a class="block text-zinc-700 text-base font-semibold hover:underline" href="/services#branded" data-discover="true">Branded Content &amp;&nbsp;IP's</a><a class="block text-zinc-700 text-base font-semibold hover:underline" href="/services#experiential" data-discover="true">Experiential &amp;&nbsp;On-ground</a><a class="block text-zinc-700 text-base font-semibold hover:underline" href="/services#fam" data-discover="true">Trade FAMs &amp; Media&nbsp;Trips</a></div></div><div class="w-full h-auto bg-zinc-100 p-6 lg:mt-10 rounded-2xl"><p class="text-zinc-900 text-2xl font-bold leading-[27px] lg:leading-[34px]">Popular&nbsp;tags</p><div class="flex flex-wrap gap-2 mt-4"><span class="border border-[#1a1a1a] rounded-[8px] px-3 py-1.5 text-xs text-zinc-800">Digital&nbsp;Marketing</span><span class="border border-[#1a1a1a] rounded-[8px] px-3 py-1.5 text-xs text-zinc-800">Growth&nbsp;Strategy</span><span class="border border-[#1a1a1a] rounded-[8px] px-3 py-1.5 text-xs text-zinc-800">Creator&nbsp;Economy</span><span class="border border-[#1a1a1a] rounded-[8px] px-3 py-1.5 text-xs text-zinc-800">Travel Brand&nbsp;Strategy</span></div></div></div></div></div><footer class="site-foot"><div class="site-foot__wrap site-foot__grid"><div class="site-foot__brand"><img loading="lazy" decoding="async" class="site-foot__logo" src="/destination-marketing-agency/images/site/logo-footer.webp" alt="Mélange Digital logo" width="220" height="40"><p class="site-foot__follow">Follow&nbsp;us</p><div class="site-foot__social"><a href="https://www.linkedin.com/company/melangedigital" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><img src="/destination-marketing-agency/images/site/si-linkedin.svg" alt="Mélange Digital on LinkedIn"></a><a href="https://www.instagram.com/melangedigital.co" target="_blank" rel="noopener noreferrer" aria-label="Instagram @melangedigital.co"><img src="/destination-marketing-agency/images/site/si-insta.svg" alt="Mélange Digital on Instagram"></a></div></div><div><h3>Company</h3><ul><li><a href="/about" data-discover="true">About&nbsp;Us</a></li><li><a href="/services" data-discover="true">Our&nbsp;Services</a></li><li><a href="/work" data-discover="true">Our&nbsp;Work</a></li><li><a href="/indian-outbound-tourism-report" data-discover="true">Travel&nbsp;Reports</a></li><li><a href="/careers" data-discover="true">Careers</a></li><li><a href="/blogs" data-discover="true">Blogs</a></li></ul></div><div><h3>Our&nbsp;Services</h3><ul><li><a href="/services/influencer-marketing" data-discover="true">Influencer&nbsp;Marketing</a></li><li><a href="/services/branded-content-ips" data-discover="true">Branded Content &amp;&nbsp;IP's</a></li><li><a href="/services/experiential-marketing" data-discover="true">Experiential&nbsp;Marketing</a></li><li><a href="/services/fam-trips-pr" data-discover="true">FAM Trips +&nbsp;PR</a></li></ul></div><div><h3>Global&nbsp;Presence</h3><ul><li><a href="https://www.google.com/search?q=MELANGE+DIGITAL+PTE.+LTD.&amp;stick=H4sIAAAAAAAA_-NgU1I1qDA2TEk0tLQwMTE1s0gzSrK0MqhINbYwTjMyszBITTG0TDM1W8Qq6evq4-jn7qrg4unuGeLooxAQ4qqn4BPiogcAyWX5C0UAAAA&amp;hl=en&amp;mat=CVKJ58F_zJeDElYBTVDHniK3LW54ibQQkNlBN0r5dy93PQImQSnSABny6grSXEp7-eTU8FbhDpwt5WaVrG1WDWDTs05ukqA4FcAoFoEVLvQYZf3QS9kBza1ECLrko0a9PA&amp;authuser=0" target="_blank" rel="noopener noreferrer">Singapore</a></li><li><a href="https://www.google.com/search?q=Melange+Digital+FZE&amp;stick=H4sIAAAAAAAA_-NgU1I1qEhMtLAwMDFLS0w1SzRNMk2zMqiwME5MTTFPS0lOTjE3MDIwXcQq7Juak5iXnqrgkpmeWZKYo-AW5QoAceOjEj8AAAA&amp;hl=en&amp;mat=CRx5A0_Sekm2ElYBTVDHni1ERTRD6poMtBcS_iFoK9L-oNxxfsy1Y02ohpOq06pvDWhZfRKVxpeD4BCnrL1af5URQ3FWIFHmaj-zyvd30acipXv2pVaDuy2L8214lw9F0A&amp;authuser=0" target="_blank" rel="noopener noreferrer">United Arab&nbsp;Emirates</a></li><li><a href="https://www.google.com/search?q=M%C3%A9lange+Digital+-+Digital+Marketing+Agency+in+United+Kingdom&amp;stick=H4sIAAAAAAAA_-NgU1I1qDBJSzVPtkg0NDIxSkkyt7C0MqhINTE3STUxNjUxSEtNMTIwXMRq63t4ZU5iXnqqgktmemZJYo6CLpzlm1iUnVqSmZeu4JiempdcqZCZpxCal1mSmqLgDRRNyc8FANT9lOZpAAAA&amp;hl=en&amp;mat=CX8owslq2k0pElYBTVDHnm-NhFjmSo-V6S8R81AdPlgHLF0Kpoy01jkJXDWmPyJEWF0nxEPUGKbSr3We0u8oyKXz_BGQIPr65XGX5JwHqBdAWNDRGq2hs5deTetn-b79JQ&amp;authuser=0" target="_blank" rel="noopener noreferrer">United&nbsp;Kingdom</a></li><li><a href="https://www.google.com/search?q=Melange+Digital+Zambia+Limited&amp;stick=H4sIAAAAAAAA_-NgU1I1qDC0NDGwSDIwS05MtDRKNTK1MqhIMjG1MDC3SLIwSjU3T0uyXMQq55uak5iXnqrgkpmeWZKYoxCVmJuUmajgk5mbWZKaAgCUzw7SSgAAAA&amp;hl=en&amp;mat=CeJKO4PjPRYaElcBTVDHnogff8Oyop7N7KV1GM92mWWy1e-aIi2Z0CA2V1utDtSB5vWI8V1wtcWjNvPtOkdio8SrXvAXWfrRA85ur7QHqFcnT-JRdavnGMcCgiN8XvvSqLA&amp;authuser=0" target="_blank" rel="noopener noreferrer">Zambia</a></li></ul></div><div><h3>Contact</h3><ul><li><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=hello@melangedigital.co" target="_blank" rel="noopener noreferrer">hello@melangedigital.co</a></li><li><a href="tel:+919372567722">+91 93725&nbsp;67722</a></li></ul></div></div><div class="site-foot__wrap site-foot__legal"><span>© 2026 Mélange Digital. All rights&nbsp;reserved.</span><div class="site-foot__legal-links"><a href="/terms-of-service" data-discover="true">Terms of&nbsp;Service</a><a href="/privacy-policy" data-discover="true">Privacy&nbsp;Policy</a><a href="/cookie-policy" data-discover="true">Cookie&nbsp;Policy</a></div></div></footer></div></div>
+
+
+
+</body></html>
