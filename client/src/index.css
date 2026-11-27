@@ -189,6 +189,26 @@
   line-height: 1.7;
 }
 
+/* Case study pages only: every paragraph and list uses the section's one text style. Text pasted
+   into the CMS editor carries its own sizes and colours (e.g. color: rgb(0,0,0)); ignore those so
+   all case studies read the same. Bold, italics and links keep their own styling. */
+.cs-case-body p,
+.cs-case-body li,
+.cs-case-body span,
+.cs-case-body strong,
+.cs-case-body b,
+.cs-case-body em,
+.cs-case-body i,
+.cs-case-body u,
+.cs-case-body div {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+.cs-case-body [style*="color"]:not(a) {
+  color: inherit !important;
+}
+
 /* ─── Quill editor — admin panel styling ─────────────────────────────────── */
 .cs-quill-editor .ql-toolbar {
   border-radius: 8px 8px 0 0;

@@ -250,6 +250,10 @@ const CaseStudyDetail = () => {
       )
     : cs.contentBlocks;
   // Same rule as resolveMeta in scripts/seo-head.cjs, so the server title and this one match.
+  // One heading style and one text style for every case study section, so CMS sections, the
+  // introduction and the extra sections all match ("The Insight" heading is the reference).
+  const CS_H2 = "font-display font-semibold text-[28px] md:text-[36px] leading-[34px] md:leading-[42px] text-[#0f0330] mb-4 break-words";
+  const CS_BODY = "cs-case-body font-body text-[16px] md:text-[18px] leading-[1.7] text-slate-700";
   const pageTitle = caseSeo.displayTitle
     ? `${caseSeo.displayTitle} | Mélange Digital's Work`
     : String(cs.seoTitle || "").trim() || `${String(cs.title || "").trim()} | Mélange Digital's Work`;
@@ -333,14 +337,14 @@ const CaseStudyDetail = () => {
             )}
 
             {/* Introduction heading — Alan Sans H2 */}
-            <h2 className="font-display font-semibold text-display text-[#0f0330] pb-2">
+            <h2 className={CS_H2}>
               Introduction
             </h2>
-            <p className="text-lg md:text-xl w-auto lg:w-[90%] leading-relaxed font-body text-slate-700">
+            <p className={`${CS_BODY} w-auto lg:w-[90%]`}>
               {cs.intro}
             </p>
             {caseSeo.clientReportedResults && (
-              <p className="mt-4 text-lg md:text-xl w-auto lg:w-[90%] leading-relaxed font-body text-slate-700">
+              <p className={`${CS_BODY} mt-4 w-auto lg:w-[90%]`}>
                 {caseSeo.clientReportedResults}
               </p>
             )}
@@ -381,7 +385,7 @@ const CaseStudyDetail = () => {
         {/* Approach Section */}
         {cs.approach && cs.approach.length > 0 && (
           <div className="mt-2 lg:mt-4 px-5 md:px-16 lg:px-20 max-container animate-fade-in">
-            <h2 className="font-display font-semibold text-display text-[#0f0330] pb-3">
+            <h2 className={CS_H2}>
               Our <span className="multiverse-text font-accent italic font-normal">Approach</span>
             </h2>
 
@@ -428,13 +432,13 @@ const CaseStudyDetail = () => {
                 {block.type === 'section' && (
                   <div className="flex flex-col">
                     {block.subheading && (
-                      <h2 className="font-display font-semibold text-[28px] md:text-[36px] leading-[34px] md:leading-[42px] text-[#0f0330] mb-4 break-words">
+                      <h2 className={CS_H2}>
                         {block.subheading}
                       </h2>
                     )}
                     {block.paragraph && (
                       <div
-                        className="cs-rendered-content font-body text-[16px] md:text-[18px] lg:text-[20px] leading-relaxed text-slate-700"
+                        className={`cs-rendered-content ${CS_BODY}`}
                         dangerouslySetInnerHTML={{ __html: block.paragraph }}
                       />
                     )}
@@ -483,13 +487,13 @@ const CaseStudyDetail = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center py-6 lg:py-10">
                     <div className={`lg:col-span-7 flex flex-col justify-center ${block.imagePosition === 'left' ? 'lg:order-2 order-2' : 'lg:order-1 order-2'}`}>
                       {block.subheading && (
-                        <h2 className="font-display font-semibold text-[28px] md:text-[36px] leading-[34px] md:leading-[42px] text-[#0f0330] mb-6 break-words">
+                        <h2 className={CS_H2}>
                           {block.subheading}
                         </h2>
                       )}
                       {block.paragraph && (
                         <div
-                          className="cs-rendered-content font-body text-[#1a1a1a] text-[18px] md:text-[20px] leading-[32px] opacity-90 break-words"
+                          className={`cs-rendered-content ${CS_BODY} break-words`}
                           dangerouslySetInnerHTML={{ __html: block.paragraph }}
                         />
                       )}
@@ -518,7 +522,7 @@ const CaseStudyDetail = () => {
       {/* Results Section — displayed as blocks */}
       {cs.results && cs.results.length > 0 && (
         <div className="px-5 md:px-16 lg:px-20 mt-12 md:mt-20 max-container mb-16">
-          <h2 className="font-display font-semibold text-display text-[#0f0330] pb-6 md:pb-8">
+          <h2 className={`${CS_H2} md:mb-6`}>
             Results
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
