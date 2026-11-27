@@ -202,7 +202,10 @@ const BlogDetail = () => {
   const isWhatAreFamTrips = slug === "what-are-fam-trip";
   const isFilmInducedTourism = slug === "film-induced-tourism";
   const isHotelInfluencerMarketing = slug === "hotel-influencer-marketing";
-  const seoTitle = isHotelInfluencerMarketing
+  const isInHouseVsAgency = slug === "in-house-destination-marketing-vs-agency";
+  const seoTitle = isInHouseVsAgency
+    ? "In-House Destination Marketing vs Agency: What to Choose | Melange"
+    : isHotelInfluencerMarketing
     ? "Influencer Marketing for Hotels: A Bookings Guide | Melange"
     : isDestinationMarketingInTourism
     ? "Destination Marketing in Tourism: What It Is & Why It Matters"
@@ -227,7 +230,9 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination Marketing Strategies by Goal | Blog by Melange Digital"
               : blog.seoTitle || blog.title;
-  const seoDescription = isHotelInfluencerMarketing
+  const seoDescription = isInHouseVsAgency
+    ? "Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards."
+    : isHotelInfluencerMarketing
     ? "Influencer marketing for hotels that fills rooms: choosing creators, barter vs paid, contracts, disclosure rules, and tracking bookings. Read the guide"
     : isDestinationMarketingInTourism
     ? "Destination marketing in tourism drives real visitor spend and repeat travel, not just awareness. See what DMOs and travel brands should do next"
@@ -252,7 +257,9 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "Destination marketing strategies work best when matched to a goal. See which fits awareness, perception change, launches, new segments and recovery"
               : blog.metaDescription || blog.description || "";
-  const seoImage = isHotelInfluencerMarketing
+  const seoImage = isInHouseVsAgency
+    ? "https://melangedigital.co/in-house-destination-marketing-vs-agency-og.jpg"
+    : isHotelInfluencerMarketing
     ? "https://melangedigital.co/hotel-influencer-marketing-og.jpg"
     : isDestinationMarketingInTourism
     ? "https://melangedigital.co/destination-marketing-in-tourism-og.jpg"
@@ -277,7 +284,9 @@ const BlogDetail = () => {
             : isDestinationMarketingStrategies
               ? "https://melangedigital.co/destination-marketing-strategies-og.jpg"
               : cloudinaryUrl(blog.image || "", 1200);
-  const seoImageAlt = isHotelInfluencerMarketing
+  const seoImageAlt = isInHouseVsAgency
+    ? "In-House Destination Marketing vs Agency: What to Choose | Mélange Digital"
+    : isHotelInfluencerMarketing
     ? "Influencer Marketing for Hotels: A Bookings Guide | Mélange Digital"
     : isDestinationMarketingInTourism
     ? "Destination Marketing in Tourism – Mélange Digital"
@@ -314,7 +323,8 @@ const BlogDetail = () => {
     isDestinationMarketingStrategies ||
     isTravelMarketingTrends2027 ||
     isChoosingDestinationMarketingAgencyIndia ||
-    isHotelInfluencerMarketing;
+    isHotelInfluencerMarketing ||
+    isInHouseVsAgency;
   const canonicalUrl = `https://melangedigital.co/blogs/${(blog.slug || slug || "").replace(/\/+$/, "")}`;
 
   const breadcrumbs = [
@@ -431,7 +441,8 @@ const BlogDetail = () => {
               isWhatAreFamTrips ||
               isCruiseBranding ||
               isChoosingDestinationMarketingAgencyIndia ||
-              isHotelInfluencerMarketing) && (
+              isHotelInfluencerMarketing ||
+              isInHouseVsAgency) && (
               <meta property="og:image:type" content="image/jpeg" data-rh="true" />
             )}
             <meta name="twitter:card" content="summary_large_image" data-rh="true" />

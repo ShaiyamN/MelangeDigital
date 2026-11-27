@@ -338,6 +338,21 @@ const PAGE_META = {
     twitterDescription:
       "Influencer marketing for hotels that fills rooms: choosing creators, barter vs paid, contracts, disclosure rules, and tracking bookings. Read the guide",
   },
+  "/blogs/in-house-destination-marketing-vs-agency": {
+    title: "In-House Destination Marketing vs Agency: What to Choose | Melange",
+    ogTitle: "In-House Destination Marketing vs Agency: What to Choose | Melange",
+    description:
+      "Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.",
+    image: `${ORIGIN}/in-house-destination-marketing-vs-agency-og.jpg`,
+    imageAlt: "In-House Destination Marketing vs Agency: What to Choose | Mélange Digital",
+    imageWidth: 1200,
+    imageHeight: 630,
+    imageType: "image/jpeg",
+    ogType: "article",
+    twitterTitle: "In-House Destination Marketing vs Agency: What to Choose | Melange",
+    twitterDescription:
+      "Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.",
+  },
   "/careers": {
     title: "Careers: Join Our Global Team | Mélange Digital",
     description:
@@ -1326,6 +1341,49 @@ if (require.main === module) {
     assert(hotelInfluencerShell.includes(`${tag} content="${esc(value)}"`));
     assert.strictEqual(
       (hotelInfluencerShell.match(new RegExp(tag, "g")) || []).length,
+      1,
+      `${tag} must occur once`,
+    );
+  }
+
+  const inHouseVsAgencyPath = "/blogs/in-house-destination-marketing-vs-agency";
+  const inHouseVsAgencyTitle = "In-House Destination Marketing vs Agency: What to Choose | Melange";
+  const inHouseVsAgencyDescription =
+    "Hiring a destination marketing agency vs. in-house? See how full-service, specialist, and in-house setups compare for tourism boards.";
+  const inHouseVsAgencyImage = `${ORIGIN}/in-house-destination-marketing-vs-agency-og.jpg`;
+  const inHouseVsAgencyMeta = resolveMeta(inHouseVsAgencyPath, {
+    routes: new Set([inHouseVsAgencyPath]),
+    byPath: {
+      [inHouseVsAgencyPath]: {
+        seoTitle: "n-House Destination Marketing vs Agency: What to Choose",
+        metaDescription: inHouseVsAgencyDescription,
+        title: "n-House Destination Marketing vs Agency: What to Choose",
+      },
+    },
+    origin: ORIGIN,
+  });
+  assert.strictEqual(inHouseVsAgencyMeta.title, inHouseVsAgencyTitle);
+  assert.strictEqual(inHouseVsAgencyMeta.description, inHouseVsAgencyDescription);
+  assert.strictEqual(inHouseVsAgencyMeta.image, inHouseVsAgencyImage);
+  const inHouseVsAgencyShell = applyHead(shell, inHouseVsAgencyMeta);
+  for (const [tag, value] of [
+    ['property="og:type"', "article"],
+    ['property="og:url"', `${ORIGIN}${inHouseVsAgencyPath}`],
+    ['property="og:title"', inHouseVsAgencyTitle],
+    ['property="og:description"', inHouseVsAgencyDescription],
+    ['property="og:image"', inHouseVsAgencyImage],
+    ['property="og:image:width"', "1200"],
+    ['property="og:image:height"', "630"],
+    ['property="og:image:type"', "image/jpeg"],
+    ['property="og:image:alt"', "In-House Destination Marketing vs Agency: What to Choose | Mélange Digital"],
+    ['name="twitter:card"', "summary_large_image"],
+    ['name="twitter:title"', inHouseVsAgencyTitle],
+    ['name="twitter:description"', inHouseVsAgencyDescription],
+    ['name="twitter:image"', inHouseVsAgencyImage],
+  ]) {
+    assert(inHouseVsAgencyShell.includes(`${tag} content="${esc(value)}"`), `${tag} missing`);
+    assert.strictEqual(
+      (inHouseVsAgencyShell.match(new RegExp(tag, "g")) || []).length,
       1,
       `${tag} must occur once`,
     );
